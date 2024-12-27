@@ -9,8 +9,6 @@ import {
   subMonths,
 } from "date-fns";
 import { es } from "date-fns/locale";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { format } from "path";
 import { useState } from "react";
 
 const CalendarItem = ({ date }: { date: Date }) => {
@@ -58,23 +56,32 @@ export default function MonthCalendar() {
     setDate(addMonths(date, 1));
   };
 
-  const handleYearChange = (year: string) => {
-    const newDate = new Date(date);
-    newDate.setFullYear(parseInt(year));
-    setDate(newDate);
-  };
+  // const handleYearChange = (year: string) => {
+  //   const newDate = new Date(date);
+  //   newDate.setFullYear(parseInt(year));
+  //   setDate(newDate);
+  // };
 
-  const years = Array.from(
-    { length: 2 },
-    (_, i) => new Date().getFullYear() + i
-  );
+  // const years = Array.from(
+  //   { length: 2 },
+  //   (_, i) => new Date().getFullYear() + i
+  // );
   return (
     <div className="w-full flex-1 flex flex-col gap-2 place-content-between py-2 ">
       <ul className="grid grid-cols-7 gap-1">
         {["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"].map((day, index) => (
           <div
             key={index}
-            className="text-sm font-medium uppercase text-gray-500 text-center py-2 border-2 rounded-lg"
+            className={`text-sm font-medium uppercase text-gray-500 text-center py-2 border-2 rounded-lg ${
+              index === 6 || index === 0 ? "cursor-pointer" : ""
+            }`}
+            onClick={() =>
+              index === 6
+                ? handleNextMonth()
+                : index === 0
+                ? handlePreviousMonth()
+                : ""
+            }
           >
             {day}
           </div>
