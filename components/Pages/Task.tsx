@@ -1,6 +1,6 @@
-import TareasElement from "../Elements/Tareas/TareasElement";
+import TaskElement from "@/components/Elements/Task/TaskElement";
 
-type tareasType = {
+type TaskType = {
   id: number;
   title: string;
   description: string;
@@ -9,7 +9,7 @@ type tareasType = {
   dueDate: string;
 };
 
-const pendientes: tareasType[] = [
+const pendientes: TaskType[] = [
   {
     id: 1,
     title: "Comprar ingredientes para la cena",
@@ -27,7 +27,7 @@ const pendientes: tareasType[] = [
     dueDate: "2024-12-30",
   },
 ];
-const enProgreso: tareasType[] = [
+const enProgreso: TaskType[] = [
   {
     id: 2,
     title: "Enviar reporte semanal",
@@ -38,9 +38,9 @@ const enProgreso: tareasType[] = [
   },
 ];
 
-const enRevision: tareasType[] = [];
-const noCompletados: tareasType[] = [];
-const completados: tareasType[] = [
+const enRevision: TaskType[] = [];
+const noCompletados: TaskType[] = [];
+const completados: TaskType[] = [
   {
     id: 4,
     title: "Actualizar portafolio",
@@ -51,8 +51,8 @@ const completados: tareasType[] = [
   },
 ];
 
-export default function Tareas() {
-  const tareas = [
+export default function Task() {
+  const Task = [
     "Pendientes",
     "En Progreso",
     "En Revision",
@@ -60,8 +60,8 @@ export default function Tareas() {
     "No Completados",
   ];
 
-  const renderTareas: (tarea: string) => tareasType[] = (tarea: string) => {
-    switch (tarea) {
+  const renderTask: (task: string) => TaskType[] = (task: string) => {
+    switch (task) {
       case "Pendientes":
         return pendientes;
       case "En Progreso":
@@ -79,12 +79,8 @@ export default function Tareas() {
   return (
     <main className="p-4 flex">
       <ul className="flex w-full gap-3 place-content-between">
-        {tareas.map((items) => (
-          <TareasElement
-            key={items}
-            items={renderTareas(items)}
-            title={items}
-          />
+        {Task.map((items) => (
+          <TaskElement key={items} items={renderTask(items)} title={items} />
         ))}
       </ul>
     </main>

@@ -1,20 +1,20 @@
 "use client";
 import { useState } from "react";
-import ListTareas from "./ListTareas";
+import ListTask from "@/components/Elements/Dashboard/ListTask";
 import TemplateDashboard from "./TemplateDashboard";
-import StatusCards from "./TusTareas/StatusCards";
+import StatusCards from "@/components/Elements/Dashboard/TusTask/StatusCards";
 
-export default function TusTareas() {
+export default function Task() {
   const [filter, setFilter] = useState<string>("");
 
   return (
     <TemplateDashboard
       grid="col-span-2 row-span-4 row-start-6"
-      title="Tus Tareas"
-      link="/tareas"
+      title="Tus Task"
+      link="/task"
     >
       <StatusCards filter={filter} setFilter={setFilter} />
-      <ListTareas filter={filter} />
+      <ListTask filter={filter} />
     </TemplateDashboard>
   );
 }

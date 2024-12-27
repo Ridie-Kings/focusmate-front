@@ -1,6 +1,6 @@
 import PriorityBadge from "../General/PriorityBadge";
 
-export type tareasType = {
+export type taskType = {
   id: number;
   title: string;
   description: string;
@@ -9,7 +9,7 @@ export type tareasType = {
   dueDate: string;
 }[];
 
-const pendientes: tareasType = [
+const pendientes: taskType = [
   {
     id: 1,
     title: "Comprar ingredientes para la cena",
@@ -27,7 +27,7 @@ const pendientes: tareasType = [
     dueDate: "2024-12-30",
   },
 ];
-const enProgreso: tareasType = [
+const enProgreso: taskType = [
   {
     id: 2,
     title: "Enviar reporte semanal",
@@ -38,9 +38,9 @@ const enProgreso: tareasType = [
   },
 ];
 
-const enRevision: tareasType = [];
-const noCompletados: tareasType = [];
-const completados: tareasType = [
+const enRevision: taskType = [];
+const noCompletados: taskType = [];
+const completados: taskType = [
   {
     id: 4,
     title: "Actualizar portafolio",
@@ -51,7 +51,7 @@ const completados: tareasType = [
   },
 ];
 
-export default function ListTareas({ filter }: { filter: string }) {
+export default function ListTask({ filter }: { filter: string }) {
   const getAllTasks = () => [
     ...pendientes,
     ...enProgreso,
@@ -97,16 +97,14 @@ export default function ListTareas({ filter }: { filter: string }) {
             </li>
           ))
         ) : (
-          <p className="text-gray-500 text-center">
-            No hay tareas disponibles.
-          </p>
+          <p className="text-gray-500 text-center">No hay task disponibles.</p>
         )}
       </div>
       <button
-        onClick={() => console.log("Agregar Tarea")}
+        onClick={() => console.log("Agregar Task")}
         className="w-full bg-black py-2 rounded-full bg-black-100 text-white-100 text-lg"
       >
-        Agregar Tarea
+        Agregar Task
       </button>
     </>
   );

@@ -3,7 +3,7 @@ import Animate from "@/components/Elements/Dashboard/Animate";
 import Pomodoro from "../Elements/Dashboard/Pomodoro";
 import Habits from "../Elements/Dashboard/Habits";
 import Agenda from "../Elements/Dashboard/Agenda";
-import TusTareas from "../Elements/Dashboard/TusTareas";
+import TusTask from "../Elements/Dashboard/YourTask";
 
 export default function Dashboard() {
   return (
@@ -11,7 +11,7 @@ export default function Dashboard() {
       <Date />
       <Animate />
       <Pomodoro />
-      <TusTareas />
+      <TusTask />
       <Habits />
       <Agenda />
     </div>

@@ -9,8 +9,8 @@ export default function TopBar() {
     if (pathname === "/") {
       return "Dashboard";
     }
-    if (pathname === "/tareas") {
-      return "Tus Tareas";
+    if (pathname === "/task") {
+      return "Tus Task";
     }
     if (pathname === "/habitacion") {
       return "Mi Habitación";
