@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import TemplateDashboard from "./TemplateDashboard";
+import TemplateDashboard from "../General/TemplateBox";
 import CircleProgressBar from "./Habits/CircularProgress";
 import HabitsList from "./Habits/HabitsList";
 

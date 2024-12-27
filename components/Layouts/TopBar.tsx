@@ -12,8 +12,8 @@ export default function TopBar() {
     if (pathname === "/task") {
       return "Tus Task";
     }
-    if (pathname === "/habitacion") {
-      return "Mi Habitación";
+    if (pathname === "/calendar") {
+      return "Calendar";
     }
     if (pathname === "/habitaciones") {
       return "Habitaciones";

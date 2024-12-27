@@ -1,5 +1,5 @@
 import { Frown, Laugh, Meh, Smile } from "lucide-react";
-import TemplateDashboard from "./TemplateDashboard";
+import TemplateDashboard from "../General/TemplateBox";
 
 const items = [
   {

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import ListTask from "@/components/Elements/Dashboard/ListTask";
-import TemplateDashboard from "./TemplateDashboard";
+import TemplateDashboard from "../General/TemplateBox";
 import StatusCards from "@/components/Elements/Dashboard/TusTask/StatusCards";
 
 export default function Task() {

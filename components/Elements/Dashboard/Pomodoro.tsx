@@ -3,7 +3,7 @@ import { Brain, Coffee, Sofa } from "lucide-react";
 import Timer from "./Pomodoro/Timer";
 import { useState } from "react";
 import MenuButtons from "./Pomodoro/MenuButtons";
-import TemplateDashboard from "./TemplateDashboard";
+import TemplateDashboard from "../General/TemplateBox";
 
 const items = [
   {

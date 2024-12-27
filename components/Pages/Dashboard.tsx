@@ -1,4 +1,4 @@
-import Date from "@/components/Elements/Dashboard/Date";
+import Date from "@/components/Elements/General/CurrentDate";
 import Animate from "@/components/Elements/Dashboard/Animate";
 import Pomodoro from "../Elements/Dashboard/Pomodoro";
 import Habits from "../Elements/Dashboard/Habits";
