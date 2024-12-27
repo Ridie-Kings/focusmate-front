@@ -1,5 +1,5 @@
 import TemplateDashboard from "./TemplateDashboard";
-import Calender from "./Agenda/Calender";
+import Calender from "../General/Calender";
 import Timeline from "./Agenda/Timeline";
 
 export default function Agenda() {

@@ -1,3 +1,4 @@
+import { BedDouble, Bike, Book, ChefHat, CircleHelp } from "lucide-react";
 import Divider from "../../General/Divider";
 import { itemsType } from "../Habits";
 
@@ -8,12 +9,27 @@ export default function HabitsList({
   habits: itemsType[];
   handleToggle: (id: number) => void;
 }) {
+  const renderIcon = (type: string) => {
+    switch (type) {
+      case "study":
+        return <Book />;
+      case "food":
+        return <ChefHat />;
+      case "sleep":
+        return <BedDouble />;
+      case "sport":
+        return <Bike />;
+      default:
+        return <CircleHelp />;
+    }
+  };
+
   return (
     <ul className="flex-1 w-full flex flex-col gap-4">
       {habits.map((habit) => (
         <li key={habit.id} className="flex gap-4">
           <div className="flex-1 flex gap-5 border px-4 py-1 rounded-lg items-center hover:shadow-lg transition-all duration-300 ease-in-out">
-            <div className="w-5 h-5 bg-black-100" />
+            {renderIcon(habit.type)}
             <Divider width="1px" height="80%" />
             <div>
               <p>{habit.label}</p>
