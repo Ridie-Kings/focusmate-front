@@ -50,7 +50,7 @@ const CalendarItem = ({
           {day.getDate()}
           <div className="absolute top-6 left-1 right-1 text-xs text-gray-600">
             {events
-              .filter((event) => isSameDay(new Date(event.date), day))
+              .filter((event) => isSameDay(new Date(event.date.start), day))
               .map((event, i) => (
                 <div
                   key={i}

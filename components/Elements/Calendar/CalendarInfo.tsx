@@ -4,7 +4,6 @@ import DayCalender from "./CalendarInfo/DayCalendar";
 import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
 import { useState } from "react";
-import { addDays } from "date-fns";
 import { EventType } from "@/services/interfaces/Calendar/EventType";
 
 export default function CalendarInfo({
@@ -15,8 +14,20 @@ export default function CalendarInfo({
   setNavType: (navType: string) => void;
 }) {
   const [events] = useState<EventType[]>([
-    { date: new Date("Decembre 28, 2024 10:13:00"), title: "Réunion" },
-    { date: addDays(new Date(), 1), title: "Déjeuner" },
+    {
+      date: {
+        start: new Date("Decembre 28, 2024 18:37:00"),
+        end: new Date("Decembre 28, 2024 20:00:00"),
+      },
+      title: "calla bobo",
+    },
+    {
+      date: {
+        start: new Date("Decembre 31, 2024 08:37:00"),
+        end: new Date("Decembre 31, 2024 10:00:00"),
+      },
+      title: "31",
+    },
   ]);
 
   const renderCalenderType = () => {

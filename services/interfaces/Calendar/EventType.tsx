@@ -1,4 +1,4 @@
 export type EventType = {
-  date: Date;
+  date: { start: Date; end: Date };
   title: string;
 };
