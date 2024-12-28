@@ -10,7 +10,7 @@ export default function NavInfo({
 }) {
   return (
     <div className="flex w-full items-center place-content-between">
-      <CurrentDate className="border-none" />
+      <CurrentDate className="border-none px-1 hover:shadow-none" />
       <ul className="flex gap-3">
         {items.map((item) => (
           <li

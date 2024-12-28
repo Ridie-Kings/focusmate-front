@@ -24,7 +24,7 @@ export default function TopBar() {
     return "Dashboard";
   };
   return (
-    <section className="flex place-content-between px-5 py-10 w-full">
+    <section className="flex place-content-between px-5 pt-10 w-full">
       <div className="flex flex-col">
         <h1 className="text-5xl ">{title()}</h1>
         <p className="text-lg">Bienvenido, Mateo!</p>

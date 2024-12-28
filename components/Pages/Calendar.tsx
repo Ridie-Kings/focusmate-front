@@ -5,7 +5,7 @@ import Calendar from "@/components/Elements/General/Calendar";
 import { useState } from "react";
 
 export default function CalendarPage() {
-  const [navType, setNavType] = useState("Month");
+  const [navType, setNavType] = useState("Week");
 
   return (
     <section className="flex flex-1 gap-4 p-4 overflow-hidden">

@@ -23,13 +23,16 @@ export default function Categories({ inView }: { inView: boolean }) {
                 <label>{item}</label>
               </div>
               <div className="flex gap-1 text-gray-100">
-                <Pen size={20} />
-                <Trash size={20} />
-                <Ellipsis size={20} />
+                <Pen size={20} className=" cursor-pointer" />
+                <Trash size={20} className=" cursor-pointer" />
+                <Ellipsis size={20} className=" cursor-pointer" />
               </div>
             </li>
           ))}
         </ul>
+        <button className="rounded-full w-full items-center bg-black-100 justify-center py-2 text-white-100">
+          Añadir Categoría
+        </button>
       </TemplateBox>
     </motion.div>
   );
