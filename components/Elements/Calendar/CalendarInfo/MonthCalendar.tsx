@@ -80,16 +80,6 @@ export default function MonthCalendar({ events }: { events: EventType[] }) {
     setDate(addMonths(date, 1));
   };
 
-  // const handleYearChange = (year: string) => {
-  //   const newDate = new Date(date);
-  //   newDate.setFullYear(parseInt(year));
-  //   setDate(newDate);
-  // };
-
-  // const years = Array.from(
-  //   { length: 2 },
-  //   (_, i) => new Date().getFullYear() + i
-  // );
   return (
     <div className="w-full flex-1 flex flex-col gap-2 place-content-between">
       <div className="flex justify-between items-center py-2">

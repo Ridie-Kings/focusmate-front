@@ -80,26 +80,49 @@ const WeekCalendarItem = ({
       {days.map((day, index) => (
         <div key={index} className="flex flex-col gap-5">
           <div
-            className={`relative text-sm font-medium flex flex-col items-center uppercase text-gray-500 group text-center py-2 border-2 rounded-lg`}
+            className={`relative text-lg font-medium flex flex-col items-center uppercase text-gray-500 group text-center py-2 border-2 rounded-lg ${
+              isSameDay(new Date(), day) ? "bg-black-100 text-white-100" : ""
+            }`}
           >
             {WeekDay[getDay(day)]}
             <Divider width="90%" />
             {day.getDate()}
           </div>
           <div
-            className={`text-center p-1 h-full cursor-pointer border rounded-lg hover:bg-gray-100 transition-all duration-200 relative`}
+            className={`text-center p-1 h-full cursor-pointer rounded-lg hover:bg-gray-100/25 transition-all duration-200 relative`}
           >
             {events
               .filter((event) => isSameDay(new Date(event.date.start), day))
-              .map((event, i) => (
-                <div
-                  key={i}
-                  className="absolute w-[95%] bg-blue-100 p-1 rounded mb-1"
-                  style={{ top: `${getNowPosition(event.date.start)}%` }}
-                >
-                  {event.title}
-                </div>
-              ))}
+              .map((event, i) => {
+                const eventStartPosition = getNowPosition(event.date.start);
+                const eventEndPosition = getNowPosition(event.date.end);
+                return (
+                  <div
+                    key={i}
+                    className="absolute w-[95%] bg-blue-100 p-1 rounded mb-1 flex flex-col place-content-between"
+                    style={{
+                      top: `${eventStartPosition}%`,
+                      height: `${eventEndPosition - eventStartPosition}%`,
+                    }}
+                  >
+                    <p>{event.title}</p>
+                    <div className="flex place-content-between w-full text-gray-100 text-sm p-1">
+                      <span>
+                        {event.date.start.toLocaleTimeString("es-ES", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                      <span>
+                        {event.date.end.toLocaleTimeString("es-ES", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       ))}

@@ -9,6 +9,7 @@ import {
 } from "date-fns";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import SelectDate from "../../General/SelectDate";
 
 const getNowPosition = (date: Date) => {
   const hours = getHours(date);
@@ -119,6 +120,19 @@ export default function DayCalendar({ events }: { events: EventType[] }) {
     setDate(addDays(date, 1));
   };
 
+  const handleDayChange = (day: string) =>
+    setDate((currentDate) => {
+      const newDate = new Date(currentDate);
+      newDate.setDate(Number(day));
+      return newDate;
+    });
+
+  const days = Array.from({ length: 5 }, (_, i) => {
+    const currentDate = new Date(date);
+    currentDate.setDate(currentDate.getDate() + i);
+    return currentDate.getDate();
+  }).filter((_, i, arr) => i < 5 && arr[i] >= arr[0]);
+
   return (
     <div className="w-full flex-1 flex flex-col gap-2 place-content-between">
       <div className="flex justify-between items-center py-2">
@@ -129,10 +143,15 @@ export default function DayCalendar({ events }: { events: EventType[] }) {
           <ArrowLeft className="mr-2" /> Last Day
         </button>
         <span className="font-semibold text-lg">
+          <SelectDate
+            handleDateChange={handleDayChange}
+            dateType="day"
+            dates={days}
+            date={date}
+          />
           {date.toLocaleDateString("es-ES", {
             year: "numeric",
             month: "long",
-            day: "numeric",
           })}
         </span>
         <button

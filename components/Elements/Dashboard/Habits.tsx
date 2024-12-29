@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import TemplateDashboard from "../General/TemplateBox";
 import CircleProgressBar from "./Habits/CircularProgress";
 import HabitsList from "./Habits/HabitsList";
+import { Variants } from "motion/react";
 
 export type itemsType = {
   id: number;
@@ -43,7 +44,7 @@ const items: itemsType[] = [
   },
 ];
 
-export default function Habits() {
+export default function Habits({ itemVariants }: { itemVariants: Variants }) {
   const [habits, setHabits] = useState<itemsType[]>(items);
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
@@ -67,6 +68,7 @@ export default function Habits() {
       grid="col-span-2 row-span-6 col-start-3 row-start-4"
       title="Hábitos"
       link="/habits"
+      motionElement={{ variants: itemVariants, index: 5 }}
     >
       <div className="w-full flex items-center place-content-evenly">
         <CircleProgressBar

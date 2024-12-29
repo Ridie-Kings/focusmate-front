@@ -15,6 +15,7 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState } from "react";
+import SelectDate from "./SelectDate";
 
 const WEEK_DAYS = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
@@ -110,17 +111,12 @@ export default function Calendar({
         </button>
         <div className="text-center text-lg font-semibold">
           <p>{format(date, "MMMM", { locale: es })}</p>
-          <select
-            onChange={(e) => handleYearChange(e.target.value)}
-            value={date.getFullYear().toString()}
-            className="rounded px-2 py-1 appearance-none cursor-pointer"
-          >
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+          <SelectDate
+            handleDateChange={handleYearChange}
+            dateType="year"
+            date={date}
+            dates={years}
+          />
         </div>
         <button
           onClick={handleNextMonth}

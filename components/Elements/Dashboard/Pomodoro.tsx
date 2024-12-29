@@ -4,6 +4,7 @@ import Timer from "./Pomodoro/Timer";
 import { useState } from "react";
 import MenuButtons from "./Pomodoro/MenuButtons";
 import TemplateDashboard from "../General/TemplateBox";
+import { Variants } from "motion/react";
 
 const items = [
   {
@@ -15,7 +16,7 @@ const items = [
   { id: 3, label: "Descanso Largo", icon: <Sofa /> },
 ];
 
-export default function Pomodoro() {
+export default function Pomodoro({ itemVariants }: { itemVariants: Variants }) {
   const [menu, setMenu] = useState("Concentracion");
 
   const handleMenuChange = (label: string) => {
@@ -26,6 +27,7 @@ export default function Pomodoro() {
       grid="col-span-2 row-span-3"
       title="Pomodoro"
       link="/pomodoro"
+      motionElement={{ variants: itemVariants, index: 3 }}
     >
       <MenuButtons
         items={items}

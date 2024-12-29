@@ -1,5 +1,6 @@
 import { Frown, Laugh, Meh, Smile } from "lucide-react";
 import TemplateDashboard from "../General/TemplateBox";
+import { Variants } from "motion/react";
 
 const items = [
   {
@@ -20,7 +21,7 @@ const items = [
   },
 ];
 
-export default function Animate() {
+export default function Animate({ itemVariants }: { itemVariants: Variants }) {
   const Humor = 1;
 
   return (
@@ -28,6 +29,7 @@ export default function Animate() {
       title="¿Como te sientes hoy?"
       grid="text-base"
       link="/animate"
+      motionElement={{ variants: itemVariants, index: 2 }}
     >
       <ul className="flex gap-2">
         {items.map((item) => (
