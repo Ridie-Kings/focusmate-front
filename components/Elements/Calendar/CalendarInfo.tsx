@@ -3,15 +3,19 @@ import NavInfo from "./CalendarInfo/NavInfo";
 import DayCalender from "./CalendarInfo/DayCalendar";
 import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { EventType } from "@/services/interfaces/Calendar/EventType";
 
 export default function CalendarInfo({
   navType,
   setNavType,
+  date,
+  setDate,
 }: {
   navType: string;
-  setNavType: (navType: string) => void;
+  setNavType: Dispatch<SetStateAction<string>>;
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date>>;
 }) {
   const [events] = useState<EventType[]>([
     {
@@ -33,13 +37,13 @@ export default function CalendarInfo({
   const renderCalenderType = () => {
     switch (navType) {
       case "Day":
-        return <DayCalender events={events} />;
+        return <DayCalender events={events} date={date} setDate={setDate} />;
       case "Week":
-        return <WeekCalendar events={events} />;
+        return <WeekCalendar events={events} date={date} setDate={setDate} />;
       case "Month":
-        return <MonthCalendar events={events} />;
+        return <MonthCalendar events={events} date={date} setDate={setDate} />;
       default:
-        return <MonthCalendar events={events} />;
+        return <MonthCalendar events={events} date={date} setDate={setDate} />;
     }
   };
   return (

@@ -1,13 +1,14 @@
 import { BedDouble, Bike, Book, ChefHat, CircleHelp } from "lucide-react";
 import Divider from "../../General/Divider";
 import { itemsType } from "../Habits";
+import { Dispatch, SetStateAction } from "react";
 
 export default function HabitsList({
   habits,
   handleToggle,
 }: {
   habits: itemsType[];
-  handleToggle: (id: number) => void;
+  handleToggle: Dispatch<SetStateAction<number>>;
 }) {
   const renderIcon = (type: string) => {
     switch (type) {

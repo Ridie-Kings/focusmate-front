@@ -12,7 +12,6 @@ export default function SelectDate({
   dates: number[];
 }) {
   const getFullDate = (date: Date) => {
-    console.log(date);
     switch (dateType) {
       case "day":
         return date.getDay().toString();

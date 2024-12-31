@@ -11,7 +11,7 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import Dot from "../../General/Dot";
 
 const CalendarItem = ({
@@ -69,9 +69,15 @@ const CalendarItem = ({
   );
 };
 
-export default function MonthCalendar({ events }: { events: EventType[] }) {
-  const [date, setDate] = useState<Date>(new Date());
-
+export default function MonthCalendar({
+  events,
+  date,
+  setDate,
+}: {
+  events: EventType[];
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date>>;
+}) {
   const handlePreviousMonth = () => {
     setDate(subMonths(date, 1));
   };

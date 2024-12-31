@@ -34,7 +34,7 @@ export default function Pomodoro({ itemVariants }: { itemVariants: Variants }) {
         handleMenuChange={handleMenuChange}
         menu={menu}
       />
-      <Timer />
+      <Timer menu={menu} />
     </TemplateDashboard>
   );
 }

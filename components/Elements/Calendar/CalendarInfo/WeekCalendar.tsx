@@ -12,7 +12,7 @@ import {
   getMinutes,
 } from "date-fns";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import Divider from "../../General/Divider";
 
 const WeekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -130,9 +130,15 @@ const WeekCalendarItem = ({
   );
 };
 
-export default function WeekCalendar({ events }: { events: EventType[] }) {
-  const [date, setDate] = useState<Date>(new Date());
-
+export default function WeekCalendar({
+  events,
+  date,
+  setDate,
+}: {
+  events: EventType[];
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date>>;
+}) {
   const handlePreviousWeek = () => {
     setDate(subDays(date, 7));
   };

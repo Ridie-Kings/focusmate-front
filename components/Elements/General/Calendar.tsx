@@ -14,8 +14,8 @@ import {
   isSameDay,
 } from "date-fns";
 import { es } from "date-fns/locale";
-import { useState } from "react";
 import SelectDate from "./SelectDate";
+import { Dispatch, SetStateAction } from "react";
 
 const WEEK_DAYS = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
@@ -34,7 +34,13 @@ const generateMonthDays = (date: Date) => {
   return days;
 };
 
-const CalendarItem = ({ date }: { date: Date }) => {
+const CalendarItem = ({
+  date,
+  setDate,
+}: {
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date>>;
+}) => {
   const days = generateMonthDays(date);
 
   const isToday = (day: Date) => isSameDay(day, new Date());
@@ -58,7 +64,8 @@ const CalendarItem = ({ date }: { date: Date }) => {
             isToday(day)
               ? "bg-black-100 text-white-100"
               : "hover:bg-black-100/80 hover:text-white-100"
-          }`}
+          } ${isSameDay(day, date) && "bg-black-100/80 text-white-100"}`}
+          onClick={() => setDate(day)}
         >
           {day.getDate()}
         </div>
@@ -70,16 +77,18 @@ const CalendarItem = ({ date }: { date: Date }) => {
 export default function Calendar({
   className = "",
   inView = true,
+  setDate,
+  date,
 }: {
   className?: string;
   inView?: boolean;
+  setDate: Dispatch<SetStateAction<Date>>;
+  date: Date;
 }) {
-  const [date, setDate] = useState<Date>(new Date());
-
   const handlePreviousMonth = () => setDate(subMonths(date, 1));
   const handleNextMonth = () => setDate(addMonths(date, 1));
   const handleYearChange = (year: string) =>
-    setDate((currentDate) => {
+    setDate((currentDate: Date) => {
       const newDate = new Date(currentDate);
       newDate.setFullYear(parseInt(year));
       return newDate;
@@ -126,7 +135,7 @@ export default function Calendar({
           <ChevronRight className="h-5 w-5" />
         </button>
       </div>
-      <CalendarItem date={date} />
+      <CalendarItem date={date} setDate={setDate} />
       <button className="bg-black-100 w-full py-2 rounded-full text-white-100">
         Nuevo Evento
       </button>

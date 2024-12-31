@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 const items = [
   { label: "Pendientes", number: 2 },
   { label: "En Progreso", number: 1 },
@@ -8,7 +10,7 @@ export default function StatusCards({
   setFilter,
   filter,
 }: {
-  setFilter: (filter: string) => void;
+  setFilter: Dispatch<SetStateAction<string>>;
   filter: string;
 }) {
   return (
