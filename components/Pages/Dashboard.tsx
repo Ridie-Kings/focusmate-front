@@ -5,17 +5,18 @@ import Pomodoro from "../Elements/Dashboard/Pomodoro";
 import Habits from "../Elements/Dashboard/Habits";
 import Agenda from "../Elements/Dashboard/Agenda";
 import TusTask from "../Elements/Dashboard/YourTask";
-import { motion } from "motion/react";
+import { easeInOut, motion } from "motion/react";
 
 export default function Dashboard() {
   const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 20 },
     visible: (index: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: index * 0.075,
+        delay: index * 0.1,
         duration: 1,
+        easeInOut,
       },
     }),
   };
@@ -24,7 +25,7 @@ export default function Dashboard() {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.5,
       },
     },
   };
@@ -34,7 +35,7 @@ export default function Dashboard() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="grid grid-cols-4 grid-rows-9 gap-4 w-full h-full p-5"
+      className="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-9 gap-4 w-full h-full p-5"
     >
       <Date itemVariants={itemVariants} />
       <Animate itemVariants={itemVariants} />

@@ -8,43 +8,31 @@ const items = [
   {
     id: 1,
     label: "Home",
-    href: "/",
     icon: <Home />,
   },
   {
     id: 2,
-    label: "General",
-    href: "/general",
+    label: "Animate",
     icon: <Grid2x2 />,
   },
   {
     id: 3,
-    label: "general",
-    href: "/general",
+    label: "Pomodoro",
     icon: <Grid2x2 />,
   },
   {
     id: 4,
-    label: "general",
-    href: "/general",
+    label: "Calendar",
     icon: <Grid2x2 />,
   },
   {
     id: 5,
-    label: "general",
-    href: "/general",
+    label: "Habits",
     icon: <Grid2x2 />,
   },
   {
     id: 6,
-    label: "general",
-    href: "/general",
-    icon: <Grid2x2 />,
-  },
-  {
-    id: 7,
-    label: "general",
-    href: "/general",
+    label: "Your Task",
     icon: <Grid2x2 />,
   },
 ];
@@ -61,10 +49,14 @@ export default function NavBar() {
           {items.map((item) => (
             <li key={item.id}>
               <Link
-                href={item.href}
+                href={
+                  item.label === "Home"
+                    ? "/"
+                    : "/" + item.label.toLowerCase().replace(" ", "")
+                }
                 className="text-lg flex gap-5 h-full group font-extralight"
               >
-                {pathname.split("/")[1] === item.href.split("/")[1] && (
+                {pathname.split("/")[1] === item.label.toLowerCase() && (
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: "0.125rem" }}

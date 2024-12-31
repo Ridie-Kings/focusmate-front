@@ -17,7 +17,7 @@ const item = [
   },
 ];
 
-export default function Timer() {
+export default function Timer({ menu }: { menu: string }) {
   const [min, setMin] = useState(25);
   const [seg, setSeg] = useState(0);
   const [isCountdown, setIsCountdown] = useState(false);
@@ -59,6 +59,27 @@ export default function Timer() {
         break;
     }
   };
+
+  useEffect(() => {
+    switch (menu) {
+      case "Concentracion":
+        setMin(25);
+        setSeg(0);
+        break;
+      case "Descanso Corto":
+        setMin(5);
+        setSeg(0);
+        break;
+      case "Descanso Largo":
+        setMin(15);
+        setSeg(0);
+        break;
+      default:
+        setMin(25);
+        setSeg(0);
+        break;
+    }
+  }, [menu]);
 
   useEffect(() => {
     if (!isPlay) return;

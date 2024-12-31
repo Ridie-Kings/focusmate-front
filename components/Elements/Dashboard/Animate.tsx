@@ -31,7 +31,7 @@ export default function Animate({ itemVariants }: { itemVariants: Variants }) {
       link="/animate"
       motionElement={{ variants: itemVariants, index: 2 }}
     >
-      <ul className="flex gap-2">
+      <ul className="flex gap-2 lg:p-0 p-2">
         {items.map((item) => (
           <li
             key={item.id}

@@ -8,9 +8,9 @@ import {
   isSameDay,
 } from "date-fns";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { SetStateAction } from "react";
 import SelectDate from "../../General/SelectDate";
-
+import { Dispatch } from "react";
 const getNowPosition = (date: Date) => {
   const hours = getHours(date);
   const minutes = getMinutes(date);
@@ -109,9 +109,15 @@ const DayCalendarItem = ({
   );
 };
 
-export default function DayCalendar({ events }: { events: EventType[] }) {
-  const [date, setDate] = useState<Date>(new Date());
-
+export default function DayCalendar({
+  events,
+  date,
+  setDate,
+}: {
+  events: EventType[];
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date>>;
+}) {
   const handlePreviousDay = () => {
     setDate(subDays(date, 1));
   };

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import CurrentDate from "../../General/CurrentDate";
 
 const items = ["Day", "Week", "Month"];
@@ -6,7 +7,7 @@ export default function NavInfo({
   setNavType,
 }: {
   navType: string;
-  setNavType: (navType: string) => void;
+  setNavType: Dispatch<SetStateAction<string>>;
 }) {
   return (
     <div className="flex w-full items-center place-content-between">
