@@ -2,7 +2,7 @@ import { Clock, Plus } from "lucide-react";
 import Divider from "../General/Divider";
 import PriorityBadge from "../General/PriorityBadge";
 
-type tareasType = {
+type taskType = {
   id: number;
   title: string;
   description: string;
@@ -11,11 +11,11 @@ type tareasType = {
   dueDate: string;
 };
 
-export default function TareasElement({
+export default function TaskElement({
   items,
   title,
 }: {
-  items: tareasType[];
+  items: taskType[];
   title: string;
 }) {
   return (
@@ -44,7 +44,7 @@ export default function TareasElement({
           ))}
         </ul>
         <button className="border rounded-lg flex w-full items-center justify-center py-2 text-gray-100 gap-2">
-          <Plus /> Nueva Tarea
+          <Plus /> Nueva Task
         </button>
       </div>
     </li>

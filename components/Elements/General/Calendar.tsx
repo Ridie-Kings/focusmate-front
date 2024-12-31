@@ -1,5 +1,7 @@
 "use client";
+
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "motion/react";
 import {
   addMonths,
   subMonths,
@@ -13,12 +15,15 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState } from "react";
+import SelectDate from "./SelectDate";
 
-const CalendarItem = ({ date }: { date: Date }) => {
+const WEEK_DAYS = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+
+const generateMonthDays = (date: Date) => {
   const startDate = startOfWeek(startOfMonth(date), { locale: es });
   const endDate = endOfWeek(endOfMonth(date), { locale: es });
 
-  const days = [];
+  const days: Date[] = [];
   let currentDate = startDate;
 
   while (currentDate <= endDate) {
@@ -26,11 +31,17 @@ const CalendarItem = ({ date }: { date: Date }) => {
     currentDate = addDays(currentDate, 1);
   }
 
+  return days;
+};
+
+const CalendarItem = ({ date }: { date: Date }) => {
+  const days = generateMonthDays(date);
+
   const isToday = (day: Date) => isSameDay(day, new Date());
 
   return (
     <div className="grid grid-cols-7 gap-1">
-      {["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"].map((day, index) => (
+      {WEEK_DAYS.map((day, index) => (
         <div
           key={index}
           className="text-sm font-medium text-gray-500 text-center"
@@ -56,30 +67,41 @@ const CalendarItem = ({ date }: { date: Date }) => {
   );
 };
 
-export default function Calender() {
+export default function Calendar({
+  className = "",
+  inView = true,
+}: {
+  className?: string;
+  inView?: boolean;
+}) {
   const [date, setDate] = useState<Date>(new Date());
 
-  const handlePreviousMonth = () => {
-    setDate(subMonths(date, 1));
-  };
-
-  const handleNextMonth = () => {
-    setDate(addMonths(date, 1));
-  };
-
-  const handleYearChange = (year: string) => {
-    const newDate = new Date(date);
-    newDate.setFullYear(parseInt(year));
-    setDate(newDate);
-  };
+  const handlePreviousMonth = () => setDate(subMonths(date, 1));
+  const handleNextMonth = () => setDate(addMonths(date, 1));
+  const handleYearChange = (year: string) =>
+    setDate((currentDate) => {
+      const newDate = new Date(currentDate);
+      newDate.setFullYear(parseInt(year));
+      return newDate;
+    });
 
   const years = Array.from(
     { length: 2 },
     (_, i) => new Date().getFullYear() + i
   );
+
   return (
-    <div className="w-1/2 h-full flex flex-col place-content-between py-2">
-      <div className="flex place-content-between">
+    <motion.div
+      className={`flex flex-col gap-2 py-2 overflow-hidden ${className}`}
+      initial={{ height: "100%", width: "100%" }}
+      animate={{
+        display: inView ? "flex" : ["flex", "none"],
+        height: inView ? "100%" : ["100%", "0"],
+        opacity: inView ? 1 : 0,
+      }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+    >
+      <div className="flex justify-between items-center">
         <button
           onClick={handlePreviousMonth}
           aria-label="Mois précédent"
@@ -89,17 +111,12 @@ export default function Calender() {
         </button>
         <div className="text-center text-lg font-semibold">
           <p>{format(date, "MMMM", { locale: es })}</p>
-          <select
-            onChange={(e) => handleYearChange(e.target.value)}
-            value={date.getFullYear().toString()}
-            className="rounded px-2 py-1 appearance-none cursor-pointer"
-          >
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+          <SelectDate
+            handleDateChange={handleYearChange}
+            dateType="year"
+            date={date}
+            dates={years}
+          />
         </div>
         <button
           onClick={handleNextMonth}
@@ -113,6 +130,6 @@ export default function Calender() {
       <button className="bg-black-100 w-full py-2 rounded-full text-white-100">
         Nuevo Evento
       </button>
-    </div>
+    </motion.div>
   );
 }
