@@ -22,7 +22,7 @@ export default function TemplateBox({
         <motion.div
           variants={motionElement?.variants}
           custom={motionElement?.index}
-          className={`relative border-2 rounded-xl p-3 place-content-between items-center hover:shadow-lg transition-all duration-200 ease-out ${grid} flex flex-col`}
+          className={`relative border-2 rounded-xl p-3 place-content-between items-center hover:shadow-lg transition-all duration-200 ease-out ${grid}  flex flex-col`}
         >
           {title !== "" && (
             <div className="w-full flex flex-col gap-4">

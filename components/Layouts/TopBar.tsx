@@ -4,6 +4,9 @@ import { usePathname } from "next/navigation";
 
 export default function TopBar() {
   const pathname = usePathname();
+  const prohibedUrl = ["login", "register"];
+
+  if (prohibedUrl.includes(pathname.split("/")[1])) return;
 
   const title = () => {
     if (pathname === "/") {

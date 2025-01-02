@@ -3,13 +3,15 @@ export default function MenuButtons({
   items,
   handleMenuChange,
   menu,
+  className,
 }: {
   items: { id: number; label: string; icon: React.ReactNode }[];
   handleMenuChange: (label: string) => void;
   menu: string;
+  className?: string;
 }) {
   return (
-    <ul className="flex w-full place-content-evenly lg:p-0 p-2">
+    <ul className={`flex w-full place-content-evenly lg:p-0 p-2 ${className}`}>
       {items.map((item) => (
         <li
           key={item.id}

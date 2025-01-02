@@ -1,7 +1,7 @@
 "use client";
 import Date from "@/components/Elements/General/CurrentDate";
 import Animate from "@/components/Elements/Dashboard/Animate";
-import Pomodoro from "../Elements/Dashboard/Pomodoro";
+import Pomodoro from "../Elements/General/PomodoroComponent";
 import Habits from "../Elements/Dashboard/Habits";
 import Agenda from "../Elements/Dashboard/Agenda";
 import TusTask from "../Elements/Dashboard/YourTask";

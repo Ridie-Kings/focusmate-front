@@ -19,6 +19,11 @@ export default {
           100: "#8F9BB3",
         },
       },
+      borderColor: {
+        black: {
+          100: "#202020",
+        },
+      },
       backgroundColor: {
         black: {
           100: "#202020",
