@@ -1,31 +1,20 @@
-export type AuthType = 'login' | 'register';
+export type AuthType = "login" | "register";
 
 export interface AuthField {
-	name: string;
-	type: string;
-	label: string;
-	icon?: React.ReactNode;
+  name: string;
+  type: string;
+  label: string;
+  icon?: React.ReactNode;
+  placeholder: string;
 }
 
 export interface AuthConfig {
-	title: string
-	fields: AuthField[];
-	otherElements?: React.ReactNode;
-}
-
-export interface InputFieldProps {
-	name: string;
-	type: string;
-	label: string;
-	icon?: React.ReactNode;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  title: string;
+  description?: string;
+  fields: AuthField[];
+  otherElements?: React.ReactNode;
 }
 
 export interface AuthHeaderProps {
-	type: AuthType;
-}
-
-export interface AuthFormProps {
-	type: AuthType;
-	onSubmit: (data: Record<string, string>) => void;
+  type: AuthType;
 }

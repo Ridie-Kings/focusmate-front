@@ -39,9 +39,6 @@ const items = [
 
 export default function NavBar() {
   const pathname = usePathname();
-  const prohibedUrl = ["login", "register"];
-
-  if (prohibedUrl.includes(pathname.split("/")[1])) return;
 
   return (
     <div className="sticky top-0 left-0 h-screen w-60 bg-black-100 text-white-100 flex flex-col py-10 px-8 gap-10">

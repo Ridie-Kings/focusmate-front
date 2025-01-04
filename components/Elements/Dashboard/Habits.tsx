@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import TemplateDashboard from "../General/TemplateBox";
-import CircleProgressBar from "./Habits/CircularProgress";
-import HabitsList from "./Habits/HabitsList";
+import CircleProgressBar from "../General/HabitsElements/CircleProgress";
+import HabitsList from "../General/HabitsElements/HabitsList";
 import { Variants } from "motion/react";
 
 export type itemsType = {
@@ -68,7 +68,7 @@ export default function Habits({ itemVariants }: { itemVariants: Variants }) {
       grid="col-span-2 row-span-6 col-start-3 row-start-4"
       title="Hábitos"
       link="/habits"
-      motionElement={{ variants: itemVariants, index: 5 }}
+      motionElement={{ variants: itemVariants ?? {}, index: 5 }}
     >
       <div className="w-full flex items-center place-content-evenly">
         <CircleProgressBar

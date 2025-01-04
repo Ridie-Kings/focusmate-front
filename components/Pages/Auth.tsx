@@ -1,5 +1,5 @@
 import { Key, PersonStanding } from "lucide-react";
-import Carousel from "../Elements/Auth/Carousel";
+import Carousel from "../Layouts/Carousel";
 import Form from "../Elements/Auth/Form";
 
 export type itemsForm = {
@@ -75,10 +75,7 @@ export default function Auth({ type }: { type: "Login" | "Register" }) {
   return (
     <div className="flex w-full h-screen px-12 py-6">
       <Carousel />
-      <Form
-        page={type}
-        itemsForm={renderForm(type)}
-      />
+      <Form page={type} itemsForm={renderForm(type)} />
     </div>
   );
 }
