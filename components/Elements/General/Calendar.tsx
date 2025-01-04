@@ -79,11 +79,13 @@ export default function Calendar({
   inView = true,
   setDate,
   date,
+  btn,
 }: {
   className?: string;
   inView?: boolean;
   setDate: Dispatch<SetStateAction<Date>>;
   date: Date;
+  btn?: boolean;
 }) {
   const handlePreviousMonth = () => setDate(subMonths(date, 1));
   const handleNextMonth = () => setDate(addMonths(date, 1));
@@ -136,9 +138,11 @@ export default function Calendar({
         </button>
       </div>
       <CalendarItem date={date} setDate={setDate} />
-      <button className="bg-black-100 w-full py-2 rounded-full text-white-100">
-        Nuevo Evento
-      </button>
+      {btn && (
+        <button className="bg-black-100 w-full py-2 rounded-full text-white-100">
+          Nuevo Evento
+        </button>
+      )}
     </motion.div>
   );
 }

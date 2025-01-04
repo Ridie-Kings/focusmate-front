@@ -18,7 +18,7 @@ export default function TopBar() {
     if (pathname === "/habitaciones") {
       return "Habitaciones";
     }
-    if (pathname === "/habitos") {
+    if (pathname === "/habits") {
       return "Mis Hábitos";
     }
     return "Dashboard";

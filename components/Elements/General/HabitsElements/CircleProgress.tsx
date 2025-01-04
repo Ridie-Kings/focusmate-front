@@ -1,4 +1,4 @@
-import { itemsType } from "../Habits";
+import { itemsType } from "@/components/Pages/Habits";
 
 type CircleProgressBarProps = {
   percent: number;

@@ -18,6 +18,7 @@ export default function CalendarPage() {
           setDate={setDate}
           className="w-full border-2 rounded-lg p-2"
           inView={navType === "Month" ? false : true}
+          btn
         />
         <Categories inView={navType === "Month" ? false : true} />
       </div>

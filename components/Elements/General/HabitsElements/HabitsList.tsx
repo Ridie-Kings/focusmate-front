@@ -1,14 +1,13 @@
 import { BedDouble, Bike, Book, ChefHat, CircleHelp } from "lucide-react";
-import Divider from "../../General/Divider";
-import { itemsType } from "../Habits";
-import { Dispatch, SetStateAction } from "react";
+import Divider from "@/components/Elements/General/Divider";
+import { itemsType } from "@/components/Elements/Dashboard/Habits";
 
 export default function HabitsList({
   habits,
   handleToggle,
 }: {
   habits: itemsType[];
-  handleToggle: Dispatch<SetStateAction<number>>;
+  handleToggle: (id: number) => void;
 }) {
   const renderIcon = (type: string) => {
     switch (type) {
@@ -26,7 +25,7 @@ export default function HabitsList({
   };
 
   return (
-    <ul className="flex-1 w-full flex flex-col gap-4">
+    <ul className="w-full flex flex-col gap-4">
       {habits.map((habit) => (
         <li key={habit.id} className="flex gap-4">
           <div className="flex-1 flex gap-5 border px-4 py-1 rounded-lg items-center hover:shadow-lg transition-all duration-300 ease-in-out">

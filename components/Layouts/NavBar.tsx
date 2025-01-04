@@ -41,7 +41,7 @@ export default function NavBar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed h-screen w-52 bg-black-100 text-white-100 flex flex-col py-10 px-6 gap-10">
+    <div className="sticky top-0 left-0 h-screen w-60 bg-black-100 text-white-100 flex flex-col py-10 px-8 gap-10">
       <p className="text-4xl text-center">Tasko</p>
       <div className="flex flex-col gap-4">
         <p className="text-2xl ml-2">Menu</p>
