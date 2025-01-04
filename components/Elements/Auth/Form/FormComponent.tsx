@@ -1,5 +1,5 @@
 import { itemsForm } from "@/components/Pages/Auth";
-import { Link as LinkIcon } from "lucide-react";
+import { Eye, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function FormComponent({
@@ -30,6 +30,9 @@ export default function FormComponent({
               {items.icon}
               {items.label}
             </label>
+            {items.type === "password" && (
+              <Eye className="absolute right-2 top-1" />
+            )}
           </div>
         </div>
       ))}

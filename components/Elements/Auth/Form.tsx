@@ -5,11 +5,9 @@ import { itemsForm } from "@/components/Pages/Auth";
 import FormComponent from "./Form/FormComponent";
 
 export default function Form({
-  title,
   page,
   itemsForm,
 }: {
-  title: string;
   page: "Login" | "Register";
   itemsForm: itemsForm[];
 }) {
@@ -23,7 +21,7 @@ export default function Form({
           alt="logo"
         />
       )}
-      <h1 className="text-6xl">{title}</h1>
+      <h1 className="text-6xl">{page === "Login" ? "asada" : "asdasd"}</h1>
       <LinkElement page={page} />
       <FormComponent itemsForm={itemsForm} page={page} />
     </section>

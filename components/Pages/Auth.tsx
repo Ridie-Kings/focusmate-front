@@ -75,19 +75,10 @@ export default function Auth({ type }: { type: "Login" | "Register" }) {
   return (
     <div className="flex w-full h-screen px-12 py-6">
       <Carousel />
-      {type === "Login" ? (
-        <Form
-          title="¡Bienvenido de Nuevo!"
-          page={type}
-          itemsForm={renderForm(type)}
-        />
-      ) : (
-        <Form
-          title="Registro de Usuario"
-          page={type}
-          itemsForm={renderForm(type)}
-        />
-      )}
+      <Form
+        page={type}
+        itemsForm={renderForm(type)}
+      />
     </div>
   );
 }
