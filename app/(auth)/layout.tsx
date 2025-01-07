@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "../globals.css";
-import Carousel from "@/components/Layouts/Carousel";
+import Carousel from "@/components/Layouts/Marquee";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        <main className="flex min-h-screen h-full flex-1">
+        <main className="flex w-screen min-h-screen h-full flex-1">
           <Carousel />
           {children}
         </main>
