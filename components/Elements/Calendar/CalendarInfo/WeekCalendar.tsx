@@ -99,7 +99,7 @@ const WeekCalendarItem = ({
                 return (
                   <div
                     key={i}
-                    className="absolute w-[95%] bg-blue-100 p-1 rounded mb-1 flex flex-col place-content-between"
+                    className="absolute w-[95%] bg-blue-100 p-1 rounded-sm mb-1 flex flex-col place-content-between"
                     style={{
                       top: `${eventStartPosition}%`,
                       height: `${eventEndPosition - eventStartPosition}%`,
