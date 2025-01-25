@@ -18,11 +18,10 @@ const CarouselColumn = ({
   src,
   textColor,
 }: CarouselColumnProps) => {
+
   return (
     <div className="relative flex flex-col overflow-hidden flex-1 h-screen">
-      <div
-        className={`h-full flex flex-col gap-2 ${animation} whitespace-nowrap`}
-      >
+      <div className={`h-full flex flex-col gap-2 ${animation} whitespace-nowrap`}>
         {sizes.map((size, index) => (
           <span
             key={`normal-${index}`}
