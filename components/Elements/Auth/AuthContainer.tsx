@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { InputField } from "./InputField";
 import { AuthHeader } from "./AuthHeader";
-import { AUTH_CONFIG } from "@/services/config/AuthConfig";
+import { AUTH_CONFIG } from "@/config/AuthConfig";
 
 export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
   const config = AUTH_CONFIG[type];
