@@ -92,4 +92,3 @@ export const AUTH_CONFIG: Record<AuthType, AuthConfig> = {
     ],
   },
 };
-
