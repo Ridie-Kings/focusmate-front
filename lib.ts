@@ -15,31 +15,61 @@ export async function getToken() {
 
 export async function updateSession(req: NextRequest) {
 	const existedCookies = await cookies();
-	const accessToken = getToken();
+	const accessToken = await getToken();
 	const refreshToken = existedCookies.get("session");
 	const url = req.url;
 	const { pathname } = req.nextUrl;
 	const publicPaths = new Set(["/login", "/register"]);
-	if (!accessToken && refreshToken) refreshSession(refreshToken);
 
-	if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
-		return NextResponse.redirect("/login");
+	if (!accessToken && refreshToken) await refreshSession(refreshToken);
+
+	if (!pathname.includes(".")) {
+		if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
+			// return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
+		}
+
+		if (accessToken && refreshToken && publicPaths.has(pathname)) {
+			// return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+		}
 	}
 }
 
 export async function refreshSession(refreshToken: RequestCookie | undefined) {
-	const existedCookies = await cookies();
-	const res = await apiConnection.post("auth/refresh", refreshToken);
-	const newAccessToken = res.data.accessToken;
-	existedCookies.set("token", newAccessToken, {
-		expires: new Date(Date.now() + 1000 * 60 * 60 * 12),
-		httpOnly: true,
-	});
+	try {
+		const existedCookies = await cookies();
+		const res = await apiConnection.post("auth/refresh", { refreshToken });
+		const newAccessToken = res.data.accessToken;
+		if (!newAccessToken) {
+			console.error(
+				"Failed to refresh session: No access token returned"
+			);
+			return undefined;
+		}
+		existedCookies.set("token", newAccessToken, {
+			expires: new Date(Date.now() + 1000 * 60 * 60 * 12),
+			httpOnly: true,
+		});
+		return newAccessToken;
+	} catch (error) {
+		console.error("Error refreshing session:", error);
+		return undefined;
+	}
 }
 
-export async function logout() {
+export async function logout(req: NextRequest) {
 	const existedCookies = await cookies();
-	existedCookies.set("token", "", { expires: new Date(0) });
-	existedCookies.set("session", "", { expires: new Date(0) });
-	return NextResponse.redirect("/login");
+	const url = req.url;
+	existedCookies.set("token", "", {
+		expires: new Date(0),
+		path: "/",
+		secure: true,
+		httpOnly: true,
+	});
+	existedCookies.set("session", "", {
+		expires: new Date(0),
+		path: "/",
+		secure: true,
+		httpOnly: true,
+	});
+	return NextResponse.redirect(new URL("/login", url));
 }
