@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Image from "next/image";
-import { AuthFormProps } from "@/services/interfaces/Auth/AuthType";
+import { AuthField } from "@/interfaces/Auth/AuthType";
 import { InputField } from "./InputField";
 import { AuthHeader } from "./AuthHeader";
-import { AUTH_CONFIG } from "@/services/config/AuthConfig";
+import { AUTH_CONFIG } from "@/config/AuthConfig";
 
-export const AuthForm = ({ type, onSubmit }: AuthFormProps) => {
+export const AuthForm = ({ type, onSubmit }: AuthField) => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const config = AUTH_CONFIG[type];
 

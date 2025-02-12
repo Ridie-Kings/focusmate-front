@@ -1,4 +1,4 @@
-import { AuthHeaderProps } from "@/services/interfaces/Auth/AuthType";
+import { AuthHeaderProps } from "@/interfaces/Auth/AuthType";
 import Link from "next/link";
 
 export const AuthHeader = ({ type }: AuthHeaderProps) => (

@@ -1,4 +1,5 @@
-import { AuthField } from "@/services/interfaces/Auth/AuthType";
+import { AuthField } from "@/interfaces/Auth/AuthType";
+
 
 export const InputField = ({
   name,
