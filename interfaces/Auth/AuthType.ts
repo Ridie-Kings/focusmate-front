@@ -18,15 +18,3 @@ export interface AuthConfig {
 export interface AuthHeaderProps {
   type: AuthType;
 }
-
-export interface LoginProps {
-  email: string;
-  password: string;
-}
-
-export interface RegisterProps {
-  fullName: string;
-  username: string;
-  email: string;
-  password: string;
-}

@@ -42,16 +42,10 @@ export const AUTH_CONFIG: Record<AuthType, AuthConfig> = {
       "Completa estos datos para empezar tu camino hacia la organización y el exito acedemico. !Es muy sencillo¡",
     fields: [
       {
-        name: "name",
+        name: "fullname",
         type: "text",
         label: "Nombre",
-        placeholder: "Juan",
-      },
-      {
-        name: "lastname",
-        placeholder: "Perez",
-        type: "text",
-        label: "Apellidos",
+        placeholder: "Federico Garcia",
       },
       {
         name: "username",
@@ -64,12 +58,6 @@ export const AUTH_CONFIG: Record<AuthType, AuthConfig> = {
         type: "email",
         label: "Correo Electrónico",
         placeholder: "juanperez@gmail.com",
-      },
-      {
-        name: "phone",
-        type: "tel",
-        label: "Número de Teléfono",
-        placeholder: "+",
       },
       {
         name: "password",
