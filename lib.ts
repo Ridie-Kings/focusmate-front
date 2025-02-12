@@ -24,12 +24,29 @@ export async function updateSession(req: NextRequest) {
   if (!accessToken && refreshToken) {
     await refreshSession(refreshToken);
   }
+	const existedCookies = await cookies();
+	const accessToken = await getToken();
+	const refreshToken = existedCookies.get("session");
+	const url = req.url;
+	const { pathname } = req.nextUrl;
+	const publicPaths = new Set(["/login", "/register"]);
+
+	if (!accessToken && refreshToken) await refreshSession(refreshToken);
 
   if (!pathname.includes(".")) {
     if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
       return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
     }
   }
+	if (!pathname.includes(".")) {
+		if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
+			// return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
+		}
+
+		if (accessToken && refreshToken && publicPaths.has(pathname)) {
+			// return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+		}
+	}
 }
 
 export async function refreshSession(refreshToken: RequestCookie | undefined) {
@@ -49,6 +66,25 @@ export async function refreshSession(refreshToken: RequestCookie | undefined) {
   } catch (error) {
     console.error("Error refreshing session:", error);
   }
+	try {
+		const existedCookies = await cookies();
+		const res = await apiConnection.post("auth/refresh", { refreshToken });
+		const newAccessToken = res.data.accessToken;
+		if (!newAccessToken) {
+			console.error(
+				"Failed to refresh session: No access token returned"
+			);
+			return undefined;
+		}
+		existedCookies.set("token", newAccessToken, {
+			expires: new Date(Date.now() + 1000 * 60 * 60 * 12),
+			httpOnly: true,
+		});
+		return newAccessToken;
+	} catch (error) {
+		console.error("Error refreshing session:", error);
+		return undefined;
+	}
 }
 
 export async function logout() {
@@ -57,4 +93,20 @@ export async function logout() {
   existedCookies.set("session", "", { expires: new Date(0) });
 
   return NextResponse.redirect("/login");
+export async function logout(req: NextRequest) {
+	const existedCookies = await cookies();
+	const url = req.url;
+	existedCookies.set("token", "", {
+		expires: new Date(0),
+		path: "/",
+		secure: true,
+		httpOnly: true,
+	});
+	existedCookies.set("session", "", {
+		expires: new Date(0),
+		path: "/",
+		secure: true,
+		httpOnly: true,
+	});
+	return NextResponse.redirect(new URL("/login", url));
 }
