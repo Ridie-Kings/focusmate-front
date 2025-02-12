@@ -55,12 +55,12 @@ const DayCalendarItem = ({
         />
       </div>
       <div className="relative w-full h-full">
-        <div
-          className="absolute left-0 right-0 h-0.5 bg-red-500"
-          style={{
-            top: `${getNowPosition(date)}%`,
-          }}
-        />
+          <div
+            className="absolute left-0 right-0 h-0.5 bg-red-500"
+            style={{
+              top: `${getNowPosition(date)}%`,
+            }}
+          />
 
         {events
           .filter((event) => isSameDay(new Date(event.date.start), date))

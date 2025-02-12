@@ -1,5 +1,6 @@
 import { AuthField } from "@/interfaces/Auth/AuthType";
 
+
 export const InputField = ({
   name,
   type,
@@ -14,7 +15,7 @@ export const InputField = ({
         name={name}
         type={type}
         placeholder={placeholder}
-        className="border-b w-full outline-none border-black-100 peer py-0.5"
+        className="border-b w-full outline-hidden border-black-100 peer py-0.5"
       />
       <label
         htmlFor=""

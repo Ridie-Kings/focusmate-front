@@ -29,7 +29,7 @@ export default function SelectDate({
     <select
       onChange={(e) => handleDateChange(e.target.value)}
       value={getFullDate(date)}
-      className="rounded pl-2 pr-1 appearance-none cursor-pointer"
+      className="rounded-sm pl-2 pr-1 appearance-none cursor-pointer"
     >
       {dates.map((date) => (
         <option key={date} value={date}>

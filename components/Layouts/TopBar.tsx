@@ -32,7 +32,7 @@ export default function TopBar() {
       <div className="flex items-center gap-3">
         <div className="relative flex items-center">
           <input
-            className="lg:flex hidden shadow-lg border border-gray-100 px-3 py-1 rounded-full w-96 transition-all focus:w-[400px] outline-none"
+            className="lg:flex hidden shadow-lg border border-gray-100 px-3 py-1 rounded-full w-96 transition-all focus:w-[400px] outline-hidden"
             name="search"
             type="text"
           />
