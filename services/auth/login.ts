@@ -19,7 +19,6 @@ export async function login(prevState: any, formData: FormData) {
 			}
 		}
 		const res = await apiConnection.post("auth/login", userData);
-		console.log(res);
 		const accessToken = res.data.accessToken;
 		const refreshToken = res.data.refreshToken;
 		const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12);
