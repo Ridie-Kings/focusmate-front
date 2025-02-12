@@ -4,7 +4,7 @@ import DayCalender from "./CalendarInfo/DayCalendar";
 import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
 import { Dispatch, SetStateAction, useState } from "react";
-import { EventType } from "@/services/interfaces/Calendar/EventType";
+import { EventType } from "@/interfaces/Calendar/EventType";
 
 export default function CalendarInfo({
   navType,

@@ -1,4 +1,4 @@
-import { EventType } from "@/services/interfaces/Calendar/EventType";
+import { EventType } from "@/interfaces/Calendar/EventType";
 import { differenceInMinutes, format, isSameDay } from "date-fns";
 import { useState } from "react";
 
