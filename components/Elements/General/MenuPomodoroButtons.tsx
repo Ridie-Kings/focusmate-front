@@ -27,7 +27,7 @@ export default function MenuPomodoroButtons({
       {items.map((item) => (
         <li
           key={item.id}
-          className={`flex gap-2 border border-gray-100 items-center justify-center lg:px-4 lg:py-2 p-2 flex-1 rounded-lg transition-all duration-200 ease-out cursor-pointer ${
+          className={`flex gap-2 border text-lg font-medium border-white-100 items-center justify-center lg:px-4 lg:py-2 p-2 flex-1 rounded-lg transition-all duration-200 ease-out cursor-pointer ${
             item.label === menu
               ? "bg-white-100 text-black"
               : "hover:bg-black-100 hover:text-white-100 text-white"

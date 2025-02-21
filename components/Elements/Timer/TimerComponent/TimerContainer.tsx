@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import MenuPomodoroButtons from "../../General/MenuPomodoroButtons";
 import BarTimer from "../../General/BarTimer";
-import { Ellipsis, Pause, Play, StepForward } from "lucide-react";
+import { Ellipsis, Minus, Pause, Play, Plus, StepForward } from "lucide-react";
 
 interface Time {
   min: number;
@@ -22,11 +22,24 @@ export default function TimerContainer() {
     []
   );
 
-  const [time, setTime] = useState<Time>(menuTimes["Concentracion"]);
+  const getInitialTime = useCallback(() => {
+    const storedTime = localStorage.getItem("timer");
+    return storedTime ? JSON.parse(storedTime) : menuTimes["Concentracion"];
+  }, [menuTimes]);
+
+  const [time, setTime] = useState<Time>(getInitialTime);
 
   useEffect(() => {
-    setTime(menuTimes[menu] || menuTimes["Concentracion"]);
+    setTime(getInitialTime);
+  }, [getInitialTime]);
+
+  useEffect(() => {
+    setTime(menuTimes[menu]);
   }, [menu, menuTimes]);
+
+  useEffect(() => {
+    localStorage.setItem("timer", JSON.stringify(time));
+  }, [time]);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -86,24 +99,29 @@ export default function TimerContainer() {
     <div className="w-4/6 flex flex-col gap-3">
       <MenuPomodoroButtons handleMenuChange={handleMenuChange} menu={menu} />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
-        <button
-          onClick={() => updateTime(-1)}
-          className="w-12 text-white-100 cursor-pointer absolute -left-18"
-          disabled={time.hours === 0 && time.min === 0 && time.seg === 0}
-        >
-          -
-        </button>
-        <p className="flex text-[15rem] gap-4 cursor-default w-full font-bold">
+        <Minus
+          onClick={() => isPlaying && updateTime(-1)}
+          className="text-white-100 absolute -left-18"
+          size={40}
+          style={{
+            cursor: isPlaying ? "not-allowed" : "pointer",
+            color: isPlaying ? "gray" : "white",
+          }}
+        />
+        <p className="flex text-[17.5rem] gap-4 cursor-default w-full font-bold">
           {time.hours > 0 && renderDigits(time.hours)}
           {renderDigits(time.min)}
           {renderDigits(time.seg)}
         </p>
-        <button
-          onClick={() => updateTime(1)}
-          className="w-12 text-white-100 cursor-pointer absolute -right-18"
-        >
-          +
-        </button>
+        <Plus
+          onClick={() => !isPlaying && updateTime(-1)}
+          className="text-white-100 absolute -right-18"
+          size={40}
+          style={{
+            cursor: isPlaying ? "not-allowed" : "pointer",
+            color: isPlaying ? "gray" : "white",
+          }}
+        />
       </div>
       <BarTimer dotColor="#202020" />
       <ul className="flex items-center justify-center gap-16 w-full text-white-100">
