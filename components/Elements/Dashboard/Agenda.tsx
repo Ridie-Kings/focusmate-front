@@ -2,10 +2,10 @@
 import TemplateDashboard from "../General/TemplateBox";
 import Calendar from "../General/Calendar";
 import Timeline from "./Agenda/Timeline";
-import { Variants } from "motion/react";
 import { useState } from "react";
+import { itemVariants } from "@/components/Pages/Dashboard";
 
-export default function Agenda({ itemVariants }: { itemVariants: Variants }) {
+export default function Agenda() {
   const [date, setDate] = useState<Date>(new Date());
   return (
     <TemplateDashboard

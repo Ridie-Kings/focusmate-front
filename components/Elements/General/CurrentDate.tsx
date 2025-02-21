@@ -1,13 +1,8 @@
+import { itemVariants } from "@/components/Pages/Dashboard";
 import { format } from "date-fns";
-import { motion, Variants } from "motion/react";
+import { motion } from "motion/react";
 
-export default function CurrentDate({
-  className,
-  itemVariants,
-}: {
-  className?: string;
-  itemVariants?: Variants;
-}) {
+export default function CurrentDate({ className }: { className?: string }) {
   const today = new Date();
 
   return (

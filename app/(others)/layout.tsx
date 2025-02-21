@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
 import TopBar from "@/components/Layouts/TopBar";
+import TimerFullScreenProvider from "@/components/Provider/TimerFullScreenProvider";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -24,11 +25,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        <NavBar />
-        <main className="flex flex-col min-h-screen h-full flex-1">
-          <TopBar />
-          {children}
-        </main>
+        <TimerFullScreenProvider>
+          <NavBar />
+          <main className="flex flex-col min-h-screen h-full flex-1">
+            <TopBar />
+            {children}
+          </main>
+        </TimerFullScreenProvider>
       </body>
     </html>
   );

@@ -116,7 +116,7 @@ export default function Calendar({
         <button
           onClick={handlePreviousMonth}
           aria-label="Mois précédent"
-          className="p-1 rounded-sm hover:bg-gray-100"
+          className="p-1 rounded-sm hover:bg-gray-100 cursor-pointer"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -132,7 +132,7 @@ export default function Calendar({
         <button
           onClick={handleNextMonth}
           aria-label="Mois suivant"
-          className="p-1 rounded-sm hover:bg-gray-100"
+          className="p-1 rounded-sm hover:bg-gray-100 cursor-pointer"
         >
           <ChevronRight className="h-5 w-5" />
         </button>

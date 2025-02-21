@@ -68,7 +68,7 @@ const WeekCalendarItem = ({
           })}
         </div>
       </div>
-      <div className="h-[96.2%]  w-full absolute top-24 left-0 z-10 pointer-events-none">
+      <div className="h-[96.2%] w-full absolute top-24 left-0 z-10 pointer-events-none">
         <div
           className="absolute left-0 right-0 h-0.5 bg-gray-100"
           style={{

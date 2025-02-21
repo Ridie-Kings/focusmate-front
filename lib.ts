@@ -29,7 +29,7 @@ export async function updateSession(req: NextRequest) {
 
   if (!pathname.includes(".")) {
     if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
-      return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
+      // return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
     }
   }
   if (!pathname.includes(".")) {

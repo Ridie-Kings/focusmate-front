@@ -1,6 +1,6 @@
 import { Frown, Laugh, Meh, Smile } from "lucide-react";
 import TemplateDashboard from "../General/TemplateBox";
-import { Variants } from "motion/react";
+import { itemVariants } from "@/components/Pages/Dashboard";
 
 const items = [
   {
@@ -21,7 +21,7 @@ const items = [
   },
 ];
 
-export default function Animate({ itemVariants }: { itemVariants: Variants }) {
+export default function Animate() {
   const Humor = 1;
 
   return (

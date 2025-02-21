@@ -3,9 +3,9 @@ import { useState } from "react";
 import ListTask from "@/components/Elements/Dashboard/ListTask";
 import TemplateDashboard from "../General/TemplateBox";
 import StatusCards from "@/components/Elements/Dashboard/TusTask/StatusCards";
-import { Variants } from "motion/react";
+import { itemVariants } from "@/components/Pages/Dashboard";
 
-export default function Task({ itemVariants }: { itemVariants: Variants }) {
+export default function Task() {
   const [filter, setFilter] = useState<string>("");
 
   return (

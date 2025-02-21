@@ -8,7 +8,6 @@ import { CalendarContext } from "../Provider/CalendarProvider";
 export default function CalendarPage() {
   const [navType, setNavType] = useState("Day");
   const { date, setDate } = useContext(CalendarContext);
-  console.log(date);
 
   return (
     <section className="flex flex-1 gap-4 p-4 overflow-hidden">

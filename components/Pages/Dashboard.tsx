@@ -7,20 +7,19 @@ import Agenda from "../Elements/Dashboard/Agenda";
 import TusTask from "../Elements/Dashboard/YourTask";
 import { easeInOut, motion } from "motion/react";
 
+export const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: index * 0.1,
+      duration: 1,
+      easeInOut,
+    },
+  }),
+};
 export default function Dashboard() {
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (index: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: index * 0.1,
-        duration: 1,
-        easeInOut,
-      },
-    }),
-  };
-
   const containerVariants = {
     hidden: {},
     visible: {
@@ -37,12 +36,12 @@ export default function Dashboard() {
       animate="visible"
       className="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-9 gap-4 w-full h-full p-5"
     >
-      <Date itemVariants={itemVariants} />
-      <Animate itemVariants={itemVariants} />
-      <Pomodoro itemVariants={itemVariants} />
-      <TusTask itemVariants={itemVariants} />
-      <Habits itemVariants={itemVariants} />
-      <Agenda itemVariants={itemVariants} />
+      <Date />
+      <Animate />
+      <Pomodoro />
+      <TusTask />
+      <Habits />
+      <Agenda />
     </motion.div>
   );
 }
