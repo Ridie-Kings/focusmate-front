@@ -44,7 +44,7 @@ const WeekCalendarItem = ({
   }
 
   return (
-    <div className="grid grid-cols-8 w-full h-full rounded-xl relative gap-2">
+    <div className="grid grid-cols-8 w-full h-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-320px)] xl:h-[calc(100vh-200px)]">
       <div className="flex flex-col gap-5 relative">
         <div
           className={`text-sm flex flex-col text-transparent py-2 border-2 border-transparent pointer-events-none`}
@@ -80,8 +80,10 @@ const WeekCalendarItem = ({
       {days.map((day, index) => (
         <div key={index} className="flex flex-col gap-5">
           <div
-            className={`relative text-lg font-medium flex flex-col items-center uppercase text-gray-500 group text-center py-2 border-2 rounded-lg ${
-              isSameDay(new Date(), day) ? "bg-black-100 text-white-100" : ""
+            className={`text-lg font-medium flex flex-col items-center uppercase text-gray-500 group text-center py-2 border-2 rounded-lg sticky top-0 z-10 ${
+              isSameDay(new Date(), day)
+                ? "bg-black-100 text-white-100"
+                : "bg-white"
             }`}
           >
             {WeekDay[getDay(day)]}
@@ -89,7 +91,7 @@ const WeekCalendarItem = ({
             {day.getDate()}
           </div>
           <div
-            className={`text-center p-1 h-full cursor-pointer rounded-lg hover:bg-gray-100/25 transition-all duration-200 relative`}
+            className={`text-center p-1 h-full cursor-pointer rounded-lg hover:bg-gray-100/25 rounded-lg transition-all duration-200 relative`}
           >
             {events
               .filter((event) => isSameDay(new Date(event.date.start), day))

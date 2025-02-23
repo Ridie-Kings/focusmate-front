@@ -76,7 +76,7 @@ const CalendarItem = ({
 
 export default function Calendar({
   className = "",
-  inView = true,
+  inView,
   setDate,
   date,
   btn,

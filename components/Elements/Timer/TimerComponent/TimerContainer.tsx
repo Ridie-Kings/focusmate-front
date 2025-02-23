@@ -100,7 +100,7 @@ export default function TimerContainer() {
       <MenuPomodoroButtons handleMenuChange={handleMenuChange} menu={menu} />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
-          onClick={() => isPlaying && updateTime(-1)}
+          onClick={() => !isPlaying && updateTime(-1)}
           className="text-white-100 absolute -left-18"
           size={40}
           style={{
@@ -114,7 +114,7 @@ export default function TimerContainer() {
           {renderDigits(time.seg)}
         </p>
         <Plus
-          onClick={() => !isPlaying && updateTime(-1)}
+          onClick={() => !isPlaying && updateTime(1)}
           className="text-white-100 absolute -right-18"
           size={40}
           style={{

@@ -11,13 +11,33 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SetStateAction } from "react";
 import SelectDate from "../../General/SelectDate";
 import { Dispatch } from "react";
+
 const getNowPosition = (date: Date) => {
-  const hours = getHours(date);
+  const hours = getHours(date) - 1;
   const minutes = getMinutes(date);
-  const totalMinutesInDay = hours * 60 + minutes;
-  const totalMinutesInWeekday = 24 * 60;
-  return (totalMinutesInDay / totalMinutesInWeekday) * 99.9;
+
+  const minutesIndex = Math.floor(minutes / 15);
+
+  return 24 * (hours * 4 + minutesIndex) + 7;
 };
+
+// const getNowPosition = (date: Date) => {
+//   const hours = getHours(date);
+//   const minutes = getMinutes(date);
+
+//   const nowIndex = hours - 10;
+//   const minutesIndex = Math.floor(minutes / 20);
+
+//   return 24 * (nowIndex * 3 + minutesIndex) + 7;
+// };
+
+// const getNowPosition = (date: Date) => {
+//   const hours = getHours(date);
+//   const minutes = getMinutes(date);
+//   const totalMinutesInDay = hours * 60 + minutes;
+//   const totalMinutesInWeekday = 24 * 60;
+//   return (totalMinutesInDay / totalMinutesInWeekday) * 99.9;
+// };
 
 const DayCalendarItem = ({
   date,
@@ -27,7 +47,7 @@ const DayCalendarItem = ({
   events: EventType[];
 }) => {
   return (
-    <div className="flex w-full h-full rounded-xl relative gap-2">
+    <div className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-320px)] xl:h-[calc(100vh-200px)]">
       <div className="flex flex-col gap-5 relative">
         <div className="h-full flex flex-col gap-5 text-sm text-gray-600 relative">
           {Array.from({ length: 97 }, (_, i) => {
@@ -50,17 +70,17 @@ const DayCalendarItem = ({
         <div
           className="absolute left-0 right-0 h-0.5 bg-gray-100"
           style={{
-            top: `${getNowPosition(date)}%`,
+            top: `${getNowPosition(date)}px`,
           }}
         />
       </div>
       <div className="relative w-full h-full">
-          <div
-            className="absolute left-0 right-0 h-0.5 bg-red-500"
-            style={{
-              top: `${getNowPosition(date)}%`,
-            }}
-          />
+        <div
+          className="absolute left-0 right-0 h-0.5 bg-red-500"
+          style={{
+            top: `${getNowPosition(date)}px`,
+          }}
+        />
 
         {events
           .filter((event) => isSameDay(new Date(event.date.start), date))
@@ -75,8 +95,8 @@ const DayCalendarItem = ({
                 key={index}
                 className="absolute w-full bg-gray-100/25 hover:shadow-lg text-white p-5 rounded-lg shadow-md flex flex-col place-content-between transition-all duration-300 ease-in-out"
                 style={{
-                  top: `${eventStartPosition}%`,
-                  height: `${eventEndPosition - eventStartPosition}%`,
+                  top: `${eventStartPosition}px`,
+                  height: `${eventEndPosition - eventStartPosition}px`,
                 }}
               >
                 <p className="text-3xl text-gray-100">{event.title}</p>

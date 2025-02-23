@@ -9,6 +9,10 @@ export default function NavInfo({
   navType: string;
   setNavType: Dispatch<SetStateAction<string>>;
 }) {
+  const handleCalendar = (item: string) => {
+    setNavType(item);
+    localStorage.setItem("navCalendar", item);
+  };
   return (
     <div className="flex w-full items-center place-content-between">
       <CurrentDate className="border-none px-1 hover:shadow-none" />
@@ -16,7 +20,7 @@ export default function NavInfo({
         {items.map((item) => (
           <li
             key={item}
-            onClick={() => setNavType(item)}
+            onClick={() => handleCalendar(item)}
             className={`cursor-pointer border-2 text-gray-100 rounded-xl w-20 text-center py-2 transition-all duration-200 ease-out ${
               navType === item ? "bg-black-100 text-white-100 shadow-lg" : ""
             }`}

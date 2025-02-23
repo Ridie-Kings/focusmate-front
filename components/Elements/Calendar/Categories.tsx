@@ -5,10 +5,12 @@ import { motion } from "motion/react";
 const items = ["Trabajo", "Estudios", "Universidad", "Salud"];
 
 export default function Categories({ inView }: { inView: boolean }) {
+  console.log(inView);
+
   return (
     <motion.div
       layout
-      className={!inView ? "flex-1" : "h-80 max-h-96"}
+      className={!inView ? "flex-1 h-full" : "h-80 max-h-96"}
       transition={{
         duration: 0.5,
         ease: "easeInOut",
