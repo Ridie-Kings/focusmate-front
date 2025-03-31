@@ -143,9 +143,7 @@ export default function DayCalendar({
       setDate(subDays(date, 1));
     }
   };
-  if (date) {
-    setDate(addDays(date, 1));
-  }
+
   const handleNextDay = () => {
     if (date) {
       setDate(addDays(date, 1));
