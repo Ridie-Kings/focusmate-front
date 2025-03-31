@@ -2,22 +2,22 @@
 @import "tailwindcss";
 
 @theme {
-  --animate-marquee-vertical: marquee-vertical 20s linear infinite;
-  --animate-marquee2-vertical: marquee2-vertical 20s linear infinite;
-  --animate-marquee-vertical-reverse: marquee-vertical-reverse 95s linear
-    infinite;
-  --animate-marquee2-vertical-reverse: marquee2-vertical-reverse 95s linear
-    infinite;
+	--animate-marquee-vertical: marquee-vertical 20s linear infinite;
+	--animate-marquee2-vertical: marquee2-vertical 20s linear infinite;
+	--animate-marquee-vertical-reverse: marquee-vertical-reverse 95s linear
+		infinite;
+	--animate-marquee2-vertical-reverse: marquee2-vertical-reverse 95s linear
+		infinite;
 
   --font-poppins: "Poppins", sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --color-white-100: #fff9f9;
-  --color-white-default: #ffffff;
+	--color-white-100: #fff9f9;
+	--color-white-default: #ffffff;
 
-  --color-gray-100: #8f9bb3;
+	--color-gray-100: #8f9bb3;
 
   --color-color-black-100: #202020;
 
@@ -43,48 +43,48 @@
     }
   }
 
-  @keyframes marquee-vertical-reverse {
-    0% {
-      transform: translateY(0%);
-    }
-    100% {
-      transform: translateY(100%);
-    }
-  }
-  @keyframes marquee2-vertical-reverse {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(0%);
-    }
-  }
-  @keyframes marquee-vertical {
-    0% {
-      transform: translateY(0%);
-    }
-    100% {
-      transform: translateY(-100%);
-    }
-  }
-  @keyframes marquee2-vertical {
-    0% {
-      transform: translateY(100%);
-    }
-    100% {
-      transform: translateY(0%);
-    }
-  }
+	@keyframes marquee-vertical-reverse {
+		0% {
+			transform: translateY(0%);
+		}
+		100% {
+			transform: translateY(100%);
+		}
+	}
+	@keyframes marquee2-vertical-reverse {
+		0% {
+			transform: translateY(-100%);
+		}
+		100% {
+			transform: translateY(0%);
+		}
+	}
+	@keyframes marquee-vertical {
+		0% {
+			transform: translateY(0%);
+		}
+		100% {
+			transform: translateY(-100%);
+		}
+	}
+	@keyframes marquee2-vertical {
+		0% {
+			transform: translateY(100%);
+		}
+		100% {
+			transform: translateY(0%);
+		}
+	}
 }
 
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentColor);
+	}
 }
 
 body {
