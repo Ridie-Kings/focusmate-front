@@ -1,7 +1,7 @@
 export default function Divider({
   width = "100%",
-  height = "2px",
-  backgroundColor = "#8F9BB3",
+  height = "1px",
+  backgroundColor = "#B0C8C5",
   className = "",
 }: {
   width?: string;

@@ -1,45 +1,37 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import MenuPomodoroButtons from "../../General/MenuPomodoroButtons";
-import BarTimer from "../../General/BarTimer";
-import { Ellipsis, Minus, Pause, Play, Plus, StepForward } from "lucide-react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import MenuPomodoroButtons from "@/components/Elements/General/MenuPomodoroButtons";
+import BarTimer from "@/components/Elements/General/BarTimer";
+import { Minus, Plus } from "lucide-react";
+import Commands from "@/components/Elements/General/PomodoroComponent/Commands";
+import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 
-interface Time {
-  min: number;
-  seg: number;
-  hours: number;
-}
-
-export default function TimerContainer() {
-  const [menu, setMenu] = useState("Concentracion");
+export default function TimerContainer({
+  fullScreen = false,
+  time,
+  setTime,
+}: {
+  time: TimeType;
+  setTime: Dispatch<SetStateAction<TimeType>>;
+  fullScreen?: boolean;
+}) {
+  const [menu, setMenu] = useState("concentracion");
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const menuTimes = useMemo(
+  const menuTimes = useMemo<Record<string, TimeType>>(
     () => ({
-      Concentracion: { hours: 0, min: 25, seg: 0 },
-      "Descanso Corto": { hours: 0, min: 5, seg: 0 },
-      "Descanso Largo": { hours: 0, min: 15, seg: 0 },
+      concentracion: { hours: 0, min: 25, seg: 0 },
+      "D/Corto": { hours: 0, min: 5, seg: 0 },
+      "D/Largo": { hours: 0, min: 15, seg: 0 },
     }),
     []
   );
-
-  const getInitialTime = useCallback(() => {
-    const storedTime = localStorage.getItem("timer");
-    return storedTime ? JSON.parse(storedTime) : menuTimes["Concentracion"];
-  }, [menuTimes]);
-
-  const [time, setTime] = useState<Time>(getInitialTime);
-
-  useEffect(() => {
-    setTime(getInitialTime);
-  }, [getInitialTime]);
-
-  useEffect(() => {
-    setTime(menuTimes[menu]);
-  }, [menu, menuTimes]);
-
-  useEffect(() => {
-    localStorage.setItem("timer", JSON.stringify(time));
-  }, [time]);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -70,7 +62,7 @@ export default function TimerContainer() {
   const handleReset = useCallback(() => {
     setIsPlaying(false);
     setTime(menuTimes[menu]);
-  }, [menu, menuTimes]);
+  }, [menu]);
 
   const handleClick = useCallback(
     (id: string) => {
@@ -87,17 +79,24 @@ export default function TimerContainer() {
       .map((digit, index) => (
         <span
           key={index}
-          className="w-full flex items-center justify-center bg-white-100 rounded-lg px-7 py-20"
+          className={`${
+            fullScreen ? "w-[220px]" : "w-1/2"
+          } flex items-center justify-center bg-white-100 rounded-lg px-7 py-20`}
         >
-          <span key={digit} className=" animate-opacStart">
+          <span key={digit} className="animate-opacStart">
             {digit}
           </span>
         </span>
       ));
 
   return (
-    <div className="w-4/6 flex flex-col gap-3">
-      <MenuPomodoroButtons handleMenuChange={handleMenuChange} menu={menu} />
+    <div className="w-4/6 flex flex-col gap-3 z-10">
+      <MenuPomodoroButtons
+        setTime={setTime}
+        setMenu={setMenu}
+        menu={menu}
+        fullScreen={fullScreen}
+      />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
           onClick={() => !isPlaying && updateTime(-1)}
@@ -108,7 +107,9 @@ export default function TimerContainer() {
             color: isPlaying ? "gray" : "white",
           }}
         />
-        <p className="flex text-[17.5rem] gap-4 cursor-default w-full font-bold">
+        <p
+          className={`flex text-[17.5rem] gap-4 cursor-default w-full justify-center font-bold`}
+        >
           {time.hours > 0 && renderDigits(time.hours)}
           {renderDigits(time.min)}
           {renderDigits(time.seg)}
@@ -124,32 +125,11 @@ export default function TimerContainer() {
         />
       </div>
       <BarTimer dotColor="#202020" />
-      <ul className="flex items-center justify-center gap-16 w-full text-white-100">
-        {[
-          {
-            id: "toggleCountdown",
-            icon: <Ellipsis size={40} />,
-          },
-          {
-            id: "togglePlay",
-            icon: isPlaying ? (
-              <Pause size={40} fill="white" />
-            ) : (
-              <Play size={40} fill="white" />
-            ),
-          },
-          {
-            id: "reset",
-            icon: <StepForward size={30} fill="white" />,
-          },
-        ].map(({ id, icon }) => (
-          <li key={id}>
-            <button onClick={() => handleClick(id)} className="cursor-pointer">
-              {icon}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Commands
+        handleClick={handleClick}
+        isPlay={isPlaying}
+        fullScreen={fullScreen}
+      />
     </div>
   );
 }

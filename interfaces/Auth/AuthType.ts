@@ -1,20 +1,25 @@
 export type AuthType = "login" | "register";
 
-export interface AuthField {
+export type AuthField = {
   name: string;
   type: string;
   label: string;
   icon?: React.ReactNode;
   placeholder: string;
-}
+};
 
-export interface AuthConfig {
+export type AuthConfig = {
   title: string;
   description?: string;
   fields: AuthField[];
   otherElements?: React.ReactNode;
-}
+};
 
-export interface AuthHeaderProps {
+export type AuthHeaderProps = {
   type: AuthType;
-}
+};
+
+export type AuthResponse = {
+  success: boolean;
+  message: string;
+};

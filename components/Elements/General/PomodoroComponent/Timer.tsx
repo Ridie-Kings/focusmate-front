@@ -1,45 +1,39 @@
 "use client";
-import { Ellipsis, Eye, Pause, Play, StepForward } from "lucide-react";
-import React, {
+import { Eye } from "lucide-react";
+import {
   useEffect,
   useState,
   useCallback,
   useMemo,
   useContext,
+  Dispatch,
 } from "react";
-import { TimerFullScreenContext } from "@/components/Provider/TimerFullScreenProvider";
+import { TimerContext } from "@/components/Provider/TimerProvider";
 import BarTimer from "../BarTimer";
+import Time from "./Time";
+import Commands from "./Commands";
 
 interface TimerProps {
-  menu: string;
+  time: TimeType;
+  setTime: Dispatch<React.SetStateAction<TimeType>>;
 }
 
-interface Time {
+export type TimeType = {
   min: number;
   seg: number;
   hours: number;
-}
+};
 
-export default function Timer({ menu }: TimerProps) {
-  const { setIsOpen } = useContext(TimerFullScreenContext);
-  const menuTimes = useMemo<Record<string, Time>>(
-    () => ({
-      Concentracion: { hours: 0, min: 25, seg: 0 },
-      "Descanso Corto": { hours: 0, min: 5, seg: 0 },
-      "Descanso Largo": { hours: 0, min: 15, seg: 0 },
-    }),
-    []
-  );
+export default function Timer({ time, setTime }: TimerProps) {
+  const { setIsOpen } = useContext(TimerContext);
 
-  const [maxTime, setMaxTime] = useState<Time>(menuTimes["Concentracion"]);
-  const [time, setTime] = useState<Time>(menuTimes["Concentracion"]);
-  const [isCountdown, setIsCountdown] = useState(false);
+  const [hiddenTime, sethiddenTime] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
 
   const updateTime = useCallback((delta: number) => {
     setTime((prev) => {
       let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg + delta;
-      totalSeconds = Math.max(0, totalSeconds); // Évite les valeurs négatives
+      totalSeconds = Math.max(0, totalSeconds);
 
       return {
         hours: Math.floor(totalSeconds / 3600),
@@ -51,16 +45,14 @@ export default function Timer({ menu }: TimerProps) {
 
   const handleClick = (action: string) => {
     switch (action) {
-      case "toggleCountdown":
-        setIsCountdown((prev) => !prev);
+      case "openFullScreen":
+        setIsOpen(true);
         break;
       case "togglePlay":
         setIsPlay((prev) => !prev);
         break;
       case "reset":
         setIsPlay(false);
-        setIsCountdown(false);
-        setTime(maxTime);
         break;
       default:
         break;
@@ -68,69 +60,21 @@ export default function Timer({ menu }: TimerProps) {
   };
 
   useEffect(() => {
-    const selectedTime = menuTimes[menu] || menuTimes["Concentracion"];
-    setMaxTime(selectedTime);
-    setTime(selectedTime);
-  }, [menu, menuTimes]);
-
-  useEffect(() => {
     if (!isPlay) return;
     const interval = setInterval(() => updateTime(-1), 1000);
     return () => clearInterval(interval);
-  }, [isPlay, updateTime]);
+  }, [isPlay]);
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full">
+    <div className="flex flex-col items-center gap-2 w-full">
       <Eye
-        size={25}
-        className="cursor-pointer"
-        onClick={() => setIsOpen(true)}
+        size={40}
+        className="cursor-pointer text-primary-green"
+        onClick={() => sethiddenTime(!hiddenTime)}
       />
-      <div className="flex gap-5 text-6xl relative">
-        {!isCountdown && (
-          <button
-            onClick={() => updateTime(-1)}
-            className="w-10"
-            disabled={time.hours === 0 && time.min === 0 && time.seg === 0}
-          >
-            -
-          </button>
-        )}
-        <p>
-          {time.hours > 0 && `${String(time.hours).padStart(2, "0")}:`}
-          {String(time.min).padStart(2, "0")}:
-          {String(time.seg).padStart(2, "0")}
-        </p>
-        {!isCountdown && (
-          <button onClick={() => updateTime(1)} className="w-10">
-            +
-          </button>
-        )}
-      </div>
+      <Time hiddenTime={hiddenTime} time={time} updateTime={updateTime} />
       <BarTimer />
-      <ul className="flex items-center gap-16">
-        {[
-          {
-            id: "toggleCountdown",
-            icon: <Ellipsis size={30} />,
-          },
-          {
-            id: "togglePlay",
-            icon: isPlay ? (
-              <Pause size={30} fill="black" />
-            ) : (
-              <Play size={30} fill="black" />
-            ),
-          },
-          { id: "reset", icon: <StepForward size={30} fill="black" /> },
-        ].map(({ id, icon }) => (
-          <li key={id}>
-            <button onClick={() => handleClick(id)} className="cursor-pointer">
-              {icon}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Commands handleClick={handleClick} isPlay={isPlay} />
     </div>
   );
 }

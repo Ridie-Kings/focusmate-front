@@ -1,19 +1,28 @@
-import { itemVariants } from "@/components/Pages/Dashboard";
 import { format } from "date-fns";
-import { motion } from "motion/react";
+import CircularTextTop from "../Svg/CircularTextTop";
+import CircularTextBottom from "../Svg/CircularTextBottom";
 
-export default function CurrentDate({ className }: { className?: string }) {
+export default function CurrentDate({
+  background = true,
+}: {
+  background?: boolean;
+}) {
   const today = new Date();
 
   return (
-    <motion.div
-      variants={itemVariants}
-      custom={1}
-      className={`border-2 rounded-xl px-5 py-2 -space-y-2 hover:shadow-lg transition-all duration-200 ease-out ${className}`}
+    <div
+      className={`relative overflow-hidden rounded-2xl px-4 py-6 transition-all duration-200 ease-out ${
+        background && "bg-primary-green text-white hover:shadow-lg"
+      }`}
     >
-      <p className="text-lg">{format(today, "eeee")}</p>
-      <p className="text-4xl">{format(today, "HH:mm")}</p>
-      <p className="text-4xl">{format(today, "MMMM")}</p>
-    </motion.div>
+      <p className="text-4xl">{format(today, "eeee")}</p>
+      <p className="text-2xl">{format(today, "dd MMMM yyyy")}</p>
+      {background && (
+        <>
+          <CircularTextTop className="absolute right-0 -top-3" />
+          <CircularTextBottom className="absolute right-2 -bottom-2" />
+        </>
+      )}
+    </div>
   );
 }

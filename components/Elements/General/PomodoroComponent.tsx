@@ -1,25 +1,22 @@
 "use client";
-import Timer from "./PomodoroComponent/Timer";
-import { useState } from "react";
+import Timer, { TimeType } from "./PomodoroComponent/Timer";
+import { useContext, useState } from "react";
 import MenuButtons from "./MenuPomodoroButtons";
 import TemplateDashboard from "./TemplateBox";
-import { itemVariants } from "@/components/Pages/Dashboard";
+import { TimerContext } from "@/components/Provider/TimerProvider";
 
 export default function PomodoroComponent() {
-  const [menu, setMenu] = useState("Concentracion");
+  const [menu, setMenu] = useState("concentracion");
+  const { time, setTime } = useContext(TimerContext);
 
-  const handleMenuChange = (label: string) => {
-    setMenu(label);
-  };
   return (
     <TemplateDashboard
       grid="col-span-2 row-span-3"
       title="Pomodoro"
       link="/pomodoro"
-      motionElement={{ variants: itemVariants ?? {}, index: 3 }}
     >
-      <MenuButtons handleMenuChange={handleMenuChange} menu={menu} />
-      <Timer menu={menu} />
+      <MenuButtons menu={menu} setMenu={setMenu} setTime={setTime} />
+      <Timer time={time} setTime={setTime} />
     </TemplateDashboard>
   );
 }

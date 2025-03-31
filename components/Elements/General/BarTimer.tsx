@@ -10,15 +10,12 @@ export default function BarTimer({
   dotBorderColor?: string;
 }) {
   return (
-    <div className=" w-full flex place-content-between items-center rounded-full  relative">
+    <div className=" w-3/4 flex place-content-between items-center rounded-full  relative mx-auto">
       <DotTimer dotBorderColor={dotBorderColor} dotColor={dotColor} />
       <DotTimer dotBorderColor={dotBorderColor} dotColor={dotColor} />
       <DotTimer dotBorderColor={dotBorderColor} dotColor={dotColor} />
       <DotTimer dotBorderColor={dotBorderColor} dotColor={dotColor} />
-      <div
-        className="h-0.5 w-full absolute"
-        style={{ backgroundColor: barColor ?? "#8f9bb3" }}
-      />
+      <div className="h-0.5 w-full absolute bg-accent" />
     </div>
   );
 }

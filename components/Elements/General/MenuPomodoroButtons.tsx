@@ -1,43 +1,86 @@
+import Chips, { chipsIconType } from "@/components/Reusable/Chips";
 import { Brain, Coffee, Sofa } from "lucide-react";
-import React from "react";
+import React, { Dispatch, SetStateAction, useMemo } from "react";
+import { TimeType } from "./PomodoroComponent/Timer";
 
-const items = [
+const items: { id: number; label: string; type: chipsIconType }[] = [
   {
     id: 1,
-    label: "Concentracion",
-    icon: <Brain />,
+    label: "Enfoque",
+    type: "concentracion",
   },
-  { id: 2, label: "Descanso Corto", icon: <Coffee /> },
-  { id: 3, label: "Descanso Largo", icon: <Sofa /> },
+  { id: 2, label: "Descanso", type: "D/Corto" },
+  { id: 3, label: "Siesta", type: "D/Largo" },
 ];
 
 export default function MenuPomodoroButtons({
-  handleMenuChange,
   menu,
+  setMenu,
+  setTime,
   className,
+  fullScreen,
 }: {
-  handleMenuChange: (label: string) => void;
   menu: string;
+  setMenu: Dispatch<SetStateAction<string>>;
+  setTime: Dispatch<SetStateAction<TimeType>>;
   className?: string;
+  fullScreen?: boolean;
 }) {
+  const menuTimes = useMemo<Record<string, TimeType>>(
+    () => ({
+      concentracion: { hours: 0, min: 25, seg: 0 },
+      "D/Corto": { hours: 0, min: 5, seg: 0 },
+      "D/Largo": { hours: 0, min: 15, seg: 0 },
+    }),
+    []
+  );
   return (
     <ul
-      className={`flex w-full place-content-evenly gap-3 lg:p-0 p-2 ${className}`}
+      className={`flex w-full place-content-evenly gap-2 lg:p-0 p-2 ${className}`}
     >
-      {items.map((item) => (
-        <li
-          key={item.id}
-          className={`flex gap-2 border text-lg font-medium border-white-100 items-center justify-center lg:px-4 lg:py-2 p-2 flex-1 rounded-lg transition-all duration-200 ease-out cursor-pointer ${
-            item.label === menu
-              ? "bg-white-100 text-black"
-              : "hover:bg-black-100 hover:text-white-100 text-white"
-          }`}
-          onClick={() => handleMenuChange(item.label)}
-        >
-          <span className="xl:flex lg:hidden flex">{item.icon}</span>
-          <p className="md:flex hidden">{item.label}</p>
-        </li>
-      ))}
+      {fullScreen ? (
+        <>
+          {items.map((item) => (
+            <button
+              key={item.id}
+              className={`p-2 flex-1 rounded-lg border border-white gap-1 flex items-center justify-center cursor-pointer ${
+                item.label === menu
+                  ? "bg-primary-green text-white"
+                  : "text-primary-green bg-white hover:bg-primary-green-hover hover:text-white"
+              } transition-all duration-300`}
+              onClick={() => {
+                setTime(menuTimes[item.type]);
+                setMenu(item.label);
+              }}
+            >
+              {item.type === "concentracion" ? (
+                <Brain />
+              ) : item.type === "D/Corto" ? (
+                <Coffee />
+              ) : (
+                item.type === "D/Largo" && <Sofa />
+              )}
+              {item.label}
+            </button>
+          ))}
+        </>
+      ) : (
+        <>
+          {items.map((item) => (
+            <Chips
+              key={item.id}
+              status={item.label === menu ? "pressed" : "enabled"}
+              icon={item.type}
+              onClick={() => {
+                setTime(menuTimes[item.type]);
+                setMenu(item.label);
+              }}
+            >
+              {item.label}
+            </Chips>
+          ))}
+        </>
+      )}
     </ul>
   );
 }
