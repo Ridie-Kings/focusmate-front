@@ -4,12 +4,12 @@ import Image from "next/image";
 import { InputField } from "./InputField";
 import { AUTH_CONFIG } from "@/config/AuthConfig";
 import { register } from "@/services/Auth/register";
-import { login } from "@/services/Auth/login";
 import { useActionState, useEffect, useCallback } from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/Reusable/Button";
 import LinkButtons from "./LinkButtons";
+import login from "@/services/Auth/login";
 
 const REDIRECT_PATHS: Record<"login" | "register", string> = {
   login: "/",
