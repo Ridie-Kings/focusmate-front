@@ -18,11 +18,13 @@ const CalendarItem = ({
   date,
   events,
 }: {
-  date: Date;
+  date: Date | undefined;
   events: EventType[];
 }) => {
-  const startDate = startOfWeek(startOfMonth(date), { locale: es });
-  const endDate = endOfWeek(endOfMonth(date), { locale: es });
+  const startDate = startOfWeek(startOfMonth(date ?? new Date()), {
+    locale: es,
+  });
+  const endDate = endOfWeek(endOfMonth(date ?? new Date()), { locale: es });
 
   const days = [];
   let currentDate = startDate;
@@ -40,7 +42,7 @@ const CalendarItem = ({
         <div
           key={index}
           className={`text-center pt-1 h-full cursor-pointer border text-xl relative ${
-            day.getMonth() === date.getMonth() ? "text-black" : "text-gray-400"
+            day.getMonth() === (date?.getMonth() ?? new Date().getMonth()) ? "text-black" : "text-gray-400"
           } ${
             isToday(day)
               ? "bg-primary-green text-white-100"
@@ -75,15 +77,15 @@ export default function MonthCalendar({
   setDate,
 }: {
   events: EventType[];
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date>>;
+  date: Date | undefined;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
   const handlePreviousMonth = () => {
-    setDate(subMonths(date, 1));
+    setDate(subMonths(date ?? new Date(), 1));
   };
 
   const handleNextMonth = () => {
-    setDate(addMonths(date, 1));
+    setDate(addMonths(date ?? new Date(), 1));
   };
 
   return (
@@ -96,7 +98,7 @@ export default function MonthCalendar({
           <ArrowLeft className="mr-2" /> Last Month
         </button>
         <span className="font-semibold text-lg">
-          {date.toLocaleDateString("es-ES", {
+          {(date ?? new Date()).toLocaleDateString("es-ES", {
             year: "numeric",
             month: "long",
           })}

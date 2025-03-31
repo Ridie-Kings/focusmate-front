@@ -1,5 +1,5 @@
 "use client";
-import Timer, { TimeType } from "./PomodoroComponent/Timer";
+import Timer from "./PomodoroComponent/Timer";
 import { useContext, useState } from "react";
 import MenuButtons from "./MenuPomodoroButtons";
 import TemplateDashboard from "./TemplateBox";

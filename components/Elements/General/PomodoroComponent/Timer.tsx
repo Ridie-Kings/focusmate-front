@@ -1,13 +1,6 @@
 "use client";
 import { Eye } from "lucide-react";
-import {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-  useContext,
-  Dispatch,
-} from "react";
+import { useEffect, useState, useCallback, useContext, Dispatch } from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import BarTimer from "../BarTimer";
 import Time from "./Time";

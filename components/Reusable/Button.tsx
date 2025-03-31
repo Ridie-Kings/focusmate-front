@@ -3,12 +3,10 @@ import { ReactNode } from "react";
 
 export default function Button({
   button,
-  breakpoint,
   type,
   children,
 }: {
   button: "primary" | "secondary" | "tertiary";
-  breakpoint?: string;
   type: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
 }) {

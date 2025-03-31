@@ -1,6 +1,6 @@
 import { BedDouble, Bike, Book, ChefHat, CircleHelp } from "lucide-react";
 import Divider from "@/components/Elements/General/Divider";
-import { itemsType } from "@/components/Elements/Dashboard/Habits";
+import { itemsType } from "@/components/Pages/Habits";
 
 export default function HabitsList({
   habits,

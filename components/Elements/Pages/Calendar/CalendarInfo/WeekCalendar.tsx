@@ -29,11 +29,13 @@ const WeekCalendarItem = ({
   date,
   events,
 }: {
-  date: Date;
+  date: Date | undefined;
   events: EventType[];
 }) => {
-  const startDate = startOfDay(startOfWeek(date, { weekStartsOn: 1 }));
-  const endDate = endOfDay(endOfWeek(date, { weekStartsOn: 1 }));
+  const startDate = startOfDay(
+    startOfWeek(date ?? new Date(), { weekStartsOn: 1 })
+  );
+  const endDate = endOfDay(endOfWeek(date ?? new Date(), { weekStartsOn: 1 }));
 
   const days = [];
   let currentDate = startDate;
@@ -72,7 +74,7 @@ const WeekCalendarItem = ({
         <div
           className="absolute left-0 right-0 h-0.5 bg-gray-100"
           style={{
-            top: `${getNowPosition(date)}%`,
+            top: `${getNowPosition(date ?? new Date())}%`,
           }}
         />
       </div>
@@ -138,15 +140,15 @@ export default function WeekCalendar({
   setDate,
 }: {
   events: EventType[];
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date>>;
+  date: Date | undefined;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
   const handlePreviousWeek = () => {
-    setDate(subDays(date, 7));
+    setDate(subDays(date ?? new Date(), 7));
   };
 
   const handleNextWeek = () => {
-    setDate(addDays(date, 7));
+    setDate(addDays(date ?? new Date(), 7));
   };
 
   return (
@@ -159,7 +161,7 @@ export default function WeekCalendar({
           <ArrowLeft className="mr-2" /> Last Week
         </button>
         <span className="font-semibold text-lg">
-          {date.toLocaleDateString("es-ES", {
+          {(date ?? new Date()).toLocaleDateString("es-ES", {
             year: "numeric",
             month: "long",
           })}

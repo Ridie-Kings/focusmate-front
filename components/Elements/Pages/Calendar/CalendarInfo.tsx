@@ -14,8 +14,8 @@ export default function CalendarInfo({
 }: {
   navType: string;
   setNavType: Dispatch<SetStateAction<string>>;
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date>>;
+  date: Date | undefined;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
   const [events] = useState<EventType[]>([
     {

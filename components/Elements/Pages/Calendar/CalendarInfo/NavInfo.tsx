@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
 import CurrentDate from "@/components/Elements/General/CurrentDate";
-import Button from "@/components/Reusable/Button";
 import Chips from "@/components/Reusable/Chips";
 
 const items = ["Day", "Week", "Month"];
@@ -13,7 +12,7 @@ export default function NavInfo({
 }) {
   const handleCalendar = (item: string) => {
     setNavType(item);
-    localStorage.setItem("navCalendar", item);
+    if (localStorage) localStorage.setItem("navCalendar", item);
   };
   return (
     <div className="flex w-full items-center place-content-between">

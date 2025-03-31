@@ -56,9 +56,9 @@ export default function Timer() {
     });
   }, []);
 
-  const handleMenuChange = useCallback((label: string) => {
-    setMenu(label);
-  }, []);
+  // const handleMenuChange = useCallback((label: string) => {
+  //   setMenu(label);
+  // }, []);
 
   const handleTogglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);

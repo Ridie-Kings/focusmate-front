@@ -7,13 +7,12 @@ import { Plus } from "lucide-react";
 
 type AddCardProps = {
   status: StatusType;
-  cards: TaskType[];
   setCards: Dispatch<SetStateAction<TaskType[]>>;
 };
 
-export const AddCard = ({ status, setCards, cards }: AddCardProps) => {
+export const AddCard = ({ status, setCards }: AddCardProps) => {
   const [text, setText] = useState("");
-  const [priority, setPriority] = useState("high");
+  const [priority, setPriority] = useState<"high" | "medium" | "low">("high");
   const [adding, setAdding] = useState(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -21,12 +20,18 @@ export const AddCard = ({ status, setCards, cards }: AddCardProps) => {
 
     if (!text.trim().length) return;
 
-    const newCard = {
+    const newCard: TaskType = {
       status,
       title: text.trim(),
-      id: Math.random().toString(),
+      _id: Math.random().toString(),
       dueDate: new Date(),
       priority: priority,
+      userId: "defaultUserId",
+      description: "",
+      isDeleted: false,
+      tags: [],
+      subTasks: [],
+      category: "",
     };
 
     setCards((pv) => [...pv, newCard]);
@@ -43,7 +48,7 @@ export const AddCard = ({ status, setCards, cards }: AddCardProps) => {
           className="flex flex-col gap-2"
         >
           <select
-            onChange={(e) => setPriority(e.target.value)}
+            onChange={(e) => setPriority(e.target.value as "high" | "medium" | "low")}
             className="text-black w-full border-2 border-black rounded pl-2"
           >
             <option value="high">High</option>

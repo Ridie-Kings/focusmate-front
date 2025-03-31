@@ -30,6 +30,7 @@ export default function TimerProvider({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [time, setTime] = useState({ hours: 0, min: 0, seg: 0 });
+  const [isClient, setIsClient] = useState(false);
 
   const menuTimes = useMemo<Record<string, TimeType>>(
     () => ({
@@ -43,18 +44,28 @@ export default function TimerProvider({
   useEffect(() => {
     if (time.hours === 0 && time.min === 0 && time.seg === 0)
       setTime(menuTimes["concentracion"]);
+  }, [time.hours, time.min, time.seg, setTime, menuTimes]);
+
+  useEffect(() => {
+    setIsClient(true);
   }, []);
 
   useEffect(() => {
-    const storedTime = localStorage.getItem("time");
+    if (!isClient) return;
 
-    if (storedTime && time.hours !== 0 && time.min !== 0 && time.seg !== 0) {
-      const parsedTime = JSON.parse(storedTime);
-      setTime(parsedTime);
-    } else {
-      localStorage.setItem("time", JSON.stringify(time));
+    try {
+      const storedTime = localStorage.getItem("time");
+
+      if (storedTime && time.hours !== 0 && time.min !== 0 && time.seg !== 0) {
+        const parsedTime = JSON.parse(storedTime);
+        setTime(parsedTime);
+      } else {
+        localStorage.setItem("time", JSON.stringify(time));
+      }
+    } catch (error) {
+      console.error("localStorage error:", error);
     }
-  }, [time]);
+  }, [time, isClient]);
 
   useEffect(() => {
     if (isOpen) {

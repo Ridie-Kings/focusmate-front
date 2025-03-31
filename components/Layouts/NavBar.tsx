@@ -9,13 +9,10 @@ import {
   Settings,
   Sparkles,
   LogOut,
-  User,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
-// Type pour les éléments de navigation
 interface NavItem {
   id: number;
   label: string;
@@ -23,7 +20,6 @@ interface NavItem {
   icon: React.ReactNode;
 }
 
-// Configuration des éléments de navigation
 const navigationItems: NavItem[] = [
   {
     id: 1,
