@@ -1,4 +1,4 @@
-import { itemsType } from "../Dashboard/Habits";
+import { itemsType } from "@/components/Pages/Habits";
 import HabitsList from "../General/HabitsElements/HabitsList";
 
 export default function ListHabits({

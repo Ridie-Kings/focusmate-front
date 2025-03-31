@@ -1,7 +1,5 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "motion/react";
 import {
   addMonths,
   subMonths,
@@ -10,18 +8,20 @@ import {
   startOfWeek,
   endOfWeek,
   addDays,
-  format,
   isSameDay,
 } from "date-fns";
 import { es } from "date-fns/locale";
-import SelectDate from "./SelectDate";
 import { Dispatch, SetStateAction } from "react";
+import Button from "@/components/Reusable/Button";
+import WeekDays from "./Calendar/WeekDays";
+import DaysCalendar from "./Calendar/DaysCalendar";
+import CalendarNav from "./Calendar/CalendarNav";
 
-const WEEK_DAYS = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+const generateMonthDays = (date: Date | undefined): Date[] => {
+  const safeDate = date || new Date();
 
-const generateMonthDays = (date: Date) => {
-  const startDate = startOfWeek(startOfMonth(date), { locale: es });
-  const endDate = endOfWeek(endOfMonth(date), { locale: es });
+  const startDate = startOfWeek(startOfMonth(safeDate), { locale: es });
+  const endDate = endOfWeek(endOfMonth(safeDate), { locale: es });
 
   const days: Date[] = [];
   let currentDate = startDate;
@@ -34,67 +34,60 @@ const generateMonthDays = (date: Date) => {
   return days;
 };
 
-const CalendarItem = ({
-  date,
-  setDate,
-}: {
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date>>;
-}) => {
+interface CalendarItemProps {
+  date: Date | undefined;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
+}
+
+const CalendarItem: React.FC<CalendarItemProps> = ({ date, setDate }) => {
   const days = generateMonthDays(date);
 
-  const isToday = (day: Date) => isSameDay(day, new Date());
+  const isToday = (day: Date): boolean => isSameDay(day, new Date());
 
   return (
-    <div className="grid grid-cols-7 gap-1">
-      {WEEK_DAYS.map((day, index) => (
-        <div
-          key={index}
-          className="text-sm font-medium text-gray-500 text-center"
-        >
-          {day}
-        </div>
-      ))}
-      {days.map((day, index) => (
-        <div
-          key={index}
-          className={`text-center p-2 rounded cursor-pointer ${
-            day.getMonth() === date.getMonth() ? "text-black" : "text-gray-400"
-          } ${
-            isToday(day)
-              ? "bg-black-100 text-white-100"
-              : "hover:bg-black-100/80 hover:text-white-100"
-          } ${isSameDay(day, date) && "bg-black-100/80 text-white-100"}`}
-          onClick={() => setDate(day)}
-        >
-          {day.getDate()}
-        </div>
-      ))}
+    <div className="flex flex-col gap-4">
+      <WeekDays />
+      <DaysCalendar
+        isToday={isToday}
+        date={date}
+        days={days}
+        setDate={setDate}
+      />
     </div>
   );
 };
 
-export default function Calendar({
+interface CalendarProps {
+  className?: string;
+  inView?: boolean;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
+  date: Date | undefined;
+  btn?: boolean;
+}
+
+const Calendar: React.FC<CalendarProps> = ({
   className = "",
-  inView = true,
+  inView,
   setDate,
   date,
   btn,
-}: {
-  className?: string;
-  inView?: boolean;
-  setDate: Dispatch<SetStateAction<Date>>;
-  date: Date;
-  btn?: boolean;
-}) {
-  const handlePreviousMonth = () => setDate(subMonths(date, 1));
-  const handleNextMonth = () => setDate(addMonths(date, 1));
-  const handleYearChange = (year: string) =>
-    setDate((currentDate: Date) => {
+}) => {
+  const handlePreviousMonth = () => {
+    setDate(subMonths(date ?? new Date(), 1));
+  };
+
+  const handleNextMonth = () => {
+    setDate(addMonths(date ?? new Date(), 1));
+  };
+
+  const handleYearChange = (year: string) => {
+    setDate((currentDate) => {
+      if (!currentDate) return undefined;
       const newDate = new Date(currentDate);
       newDate.setFullYear(parseInt(year));
       return newDate;
     });
+  };
 
   const years = Array.from(
     { length: 2 },
@@ -102,47 +95,26 @@ export default function Calendar({
   );
 
   return (
-    <motion.div
-      className={`flex flex-col gap-2 py-2 overflow-hidden ${className}`}
-      initial={{ height: "100%", width: "100%" }}
-      animate={{
-        display: inView ? "flex" : ["flex", "none"],
-        height: inView ? "100%" : ["100%", "0"],
-        opacity: inView ? 1 : 0,
-      }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+    <div
+      className={`w-full h-full flex flex-col gap-4 py-2 overflow-hidden ${className} ${
+        !inView && "hidden"
+      } transition-all duration-300`}
     >
-      <div className="flex justify-between items-center">
-        <button
-          onClick={handlePreviousMonth}
-          aria-label="Mois précédent"
-          className="p-1 rounded-sm hover:bg-gray-100"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <div className="text-center text-lg font-semibold">
-          <p>{format(date, "MMMM", { locale: es })}</p>
-          <SelectDate
-            handleDateChange={handleYearChange}
-            dateType="year"
-            date={date}
-            dates={years}
-          />
-        </div>
-        <button
-          onClick={handleNextMonth}
-          aria-label="Mois suivant"
-          className="p-1 rounded-sm hover:bg-gray-100"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      </div>
+      <CalendarNav
+        handleNextMonth={handleNextMonth}
+        handlePreviousMonth={handlePreviousMonth}
+        handleYearChange={handleYearChange}
+        date={date}
+        years={years}
+      />
       <CalendarItem date={date} setDate={setDate} />
       {btn && (
-        <button className="bg-black-100 w-full py-2 rounded-full text-white-100">
+        <Button button="tertiary" type="button">
           Nuevo Evento
-        </button>
+        </Button>
       )}
-    </motion.div>
+    </div>
   );
-}
+};
+
+export default Calendar;
