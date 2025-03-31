@@ -6,14 +6,10 @@ import Button from "@/components/Reusable/Button";
 const DEFAULT_ITEMS = ["Trabajo", "Estudios", "Universidad", "Salud"];
 
 interface CategoriesProps {
-  inView?: boolean;
   items?: string[];
 }
 
-export default function Categories({
-  inView = false,
-  items = DEFAULT_ITEMS,
-}: CategoriesProps) {
+export default function Categories({ items = DEFAULT_ITEMS }: CategoriesProps) {
   return (
     <TemplateBox grid="h-full gap-4 flex-1" link="" title="Categories">
       <ul className="flex flex-col gap-4 h-full w-full">

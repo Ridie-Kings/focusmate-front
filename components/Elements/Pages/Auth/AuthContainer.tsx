@@ -34,7 +34,8 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
     if (state.message === "") return;
     console.log(state.success);
 
-    state.success ? redirect(REDIRECT_PATHS[type]) : handleError(state.message);
+    if (state.success) redirect(REDIRECT_PATHS[type]);
+    else handleError(state.message);
   }, [state, type, handleError]);
 
   return (

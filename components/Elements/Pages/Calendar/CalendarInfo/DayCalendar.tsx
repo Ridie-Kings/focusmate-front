@@ -41,7 +41,7 @@ const DayCalendarItem = ({
   date,
   events,
 }: {
-  date: Date;
+  date: Date | undefined;
   events: EventType[];
 }) => {
   return (
@@ -68,7 +68,7 @@ const DayCalendarItem = ({
         <div
           className="absolute left-0 right-0 h-0.5 bg-gray-100"
           style={{
-            top: `${getNowPosition(date)}px`,
+            top: `${date ? getNowPosition(date) : 0}px`,
           }}
         />
       </div>
@@ -76,12 +76,14 @@ const DayCalendarItem = ({
         <div
           className="absolute left-0 right-0 h-0.5 bg-red-500"
           style={{
-            top: `${getNowPosition(date)}px`,
+            top: `${getNowPosition(date ?? new Date())}px`,
           }}
         />
 
         {events
-          .filter((event) => isSameDay(new Date(event.date.start), date))
+          .filter(
+            (event) => date && isSameDay(new Date(event.date.start), date)
+          )
           .map((event, index) => {
             const eventStartPosition = getNowPosition(event.date.start);
             const eventEndPosition = getNowPosition(event.date.end);
@@ -133,29 +135,35 @@ export default function DayCalendar({
   setDate,
 }: {
   events: EventType[];
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date>>;
+  date: Date | undefined;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
   const handlePreviousDay = () => {
-    setDate(subDays(date, 1));
+    if (date) {
+      setDate(subDays(date, 1));
+    }
   };
-
-  const handleNextDay = () => {
+  if (date) {
     setDate(addDays(date, 1));
+  }
+  const handleNextDay = () => {
+    if (date) {
+      setDate(addDays(date, 1));
+    }
   };
 
-  const handleDayChange = (day: string) =>
-    setDate((currentDate) => {
-      const newDate = new Date(currentDate);
-      newDate.setDate(Number(day));
-      return newDate;
-    });
+  // const handleDayChange = (day: string) =>
+  //   setDate((currentDate) => {
+  //     const newDate = new Date(currentDate);
+  //     newDate.setDate(Number(day));
+  //     return newDate;
+  //   });
 
-  const days = Array.from({ length: 5 }, (_, i) => {
-    const currentDate = new Date(date);
-    currentDate.setDate(currentDate.getDate() + i);
-    return currentDate.getDate();
-  }).filter((_, i, arr) => i < 5 && arr[i] >= arr[0]);
+  // const days = Array.from({ length: 5 }, (_, i) => {
+  //   const currentDate = new Date(date);
+  //   currentDate.setDate(currentDate.getDate() + i);
+  //   return currentDate.getDate();
+  // }).filter((_, i, arr) => i < 5 && arr[i] >= arr[0]);
 
   return (
     <div className="w-full flex-1 flex flex-col gap-2 place-content-between">
@@ -167,11 +175,13 @@ export default function DayCalendar({
           <ArrowLeft className="mr-2" /> Last Day
         </button>
         <span className="font-semibold text-lg">
-          {date.toLocaleDateString("es-ES", {
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-          })}
+          {date
+            ? date.toLocaleDateString("es-ES", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit",
+              })
+            : "Invalid Date"}
         </span>
         <button
           onClick={handleNextDay}

@@ -3,12 +3,6 @@
 import Image from "next/image";
 
 export default function Carousel() {
-  const imgs: string[] = [
-    "/images/test1.png",
-    "/images/test2.png",
-    "/images/test3.png",
-  ];
-
   return (
     <div className="w-[55%] flex-1 flex gap-3 px-1 py-5">
       <Image

@@ -14,16 +14,15 @@ type StatusProps = {
 export const Status = ({ title, cards, status, setCards }: StatusProps) => {
   const [active, setActive] = useState(false);
 
-  const handleDragStart = (e: DragEvent, card: TaskType) => {
+  // Changed to React.DragEvent<Element> to match Card component
+  const handleDragStart = (e: DragEvent<Element>, card: TaskType) => {
     e.dataTransfer?.setData("cardId", card._id);
     e.dataTransfer?.setData("originalStatus", card.status);
   };
 
-  const handleDragEnd = (e: DragEvent) => {
+  // Changed to React.DragEvent<Element>
+  const handleDragEnd = (e: React.DragEvent<Element>) => {
     const cardId = e.dataTransfer?.getData("cardId");
-    const originalStatus = e.dataTransfer?.getData(
-      "originalStatus"
-    ) as StatusType;
 
     setActive(false);
     clearHighlights();
@@ -37,14 +36,11 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
 
     let copy = [...cards];
 
-    // Find the card to transfer across ALL cards, not just in the current status
     let cardToTransfer = copy.find((c) => c._id === cardId);
     if (!cardToTransfer) return;
 
-    // Always update the status, even if moving within the same column
     cardToTransfer = { ...cardToTransfer, status };
 
-    // Remove the card from its original location
     copy = copy.filter((c) => c._id !== cardId);
 
     const moveToBack = before === "-1";
@@ -61,7 +57,8 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
     setCards(copy);
   };
 
-  const handleDragOver = (e: DragEvent) => {
+  // Changed to React.DragEvent<Element>
+  const handleDragOver = (e: React.DragEvent<Element>) => {
     e.preventDefault();
     highlightIndicator(e);
     setActive(true);
@@ -74,7 +71,8 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
     });
   };
 
-  const highlightIndicator = (e: DragEvent) => {
+  // Changed to React.DragEvent<Element>
+  const highlightIndicator = (e: React.DragEvent<Element>) => {
     const indicators = getIndicators();
     clearHighlights(indicators);
 
@@ -82,7 +80,11 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
     el.element.style.opacity = "1";
   };
 
-  const getNearestIndicator = (e: DragEvent, indicators: HTMLElement[]) => {
+  // Changed to React.DragEvent<Element>
+  const getNearestIndicator = (
+    e: React.DragEvent<Element>,
+    indicators: HTMLElement[]
+  ) => {
     const DISTANCE_OFFSET = 50;
 
     return indicators.reduce(
@@ -137,7 +139,7 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
           <Card key={c._id} {...c} handleDragStart={handleDragStart} />
         ))}
         <DropIndicator beforeId={null} status={status} />
-        <AddCard status={status} setCards={setCards} cards={cards} />
+        <AddCard status={status} setCards={setCards} />
       </div>
     </div>
   );

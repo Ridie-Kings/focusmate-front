@@ -51,9 +51,9 @@ export default function TimerContainer({
     });
   }, []);
 
-  const handleMenuChange = useCallback((label: string) => {
-    setMenu(label);
-  }, []);
+  // const handleMenuChange = useCallback((label: string) => {
+  //   setMenu(label);
+  // }, []);
 
   const handleTogglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
@@ -124,7 +124,7 @@ export default function TimerContainer({
           }}
         />
       </div>
-      <BarTimer dotColor="#202020" />
+      <BarTimer />
       <Commands
         handleClick={handleClick}
         isPlay={isPlaying}
