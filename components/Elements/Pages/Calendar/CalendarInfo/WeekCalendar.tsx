@@ -20,9 +20,9 @@ const WeekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const getNowPosition = (date: Date) => {
   const hours = getHours(date);
   const minutes = getMinutes(date);
-  const totalMinutesInDay = hours * 60 + minutes;
-  const totalMinutesInWeekday = 24 * 60;
-  return (totalMinutesInDay / totalMinutesInWeekday) * 99.9;
+
+  return 95 + hours * 2 * 48 + minutes * (48 / 30);
+  // return 95;
 };
 
 const WeekCalendarItem = ({
@@ -70,11 +70,11 @@ const WeekCalendarItem = ({
           })}
         </div>
       </div>
-      <div className="h-[96.2%] w-full absolute top-24 left-0 z-10 pointer-events-none">
+      <div className="h-[96.2%] w-full absolute top-0 left-0 z-10 pointer-events-none">
         <div
           className="absolute left-0 right-0 h-0.5 bg-gray-100"
           style={{
-            top: `${getNowPosition(date ?? new Date())}%`,
+            top: `${getNowPosition(date ?? new Date())}px`,
           }}
         />
       </div>
@@ -105,8 +105,8 @@ const WeekCalendarItem = ({
                     key={i}
                     className="absolute w-[95%] bg-blue-100 p-1 rounded-sm mb-1 flex flex-col place-content-between"
                     style={{
-                      top: `${eventStartPosition}%`,
-                      height: `${eventEndPosition - eventStartPosition}%`,
+                      top: `${eventStartPosition}px`,
+                      height: `${eventEndPosition - eventStartPosition}px`,
                     }}
                   >
                     <p>{event.title}</p>

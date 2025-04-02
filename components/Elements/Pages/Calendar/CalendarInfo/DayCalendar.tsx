@@ -11,31 +11,11 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SetStateAction, Dispatch } from "react";
 
 const getNowPosition = (date: Date) => {
-  const hours = getHours(date) - 1;
+  const hours = getHours(date);
   const minutes = getMinutes(date);
 
-  const minutesIndex = Math.floor(minutes / 15);
-
-  return 24 * (hours * 4 + minutesIndex) + 7;
+  return 14 + hours * 4 * 48 + minutes * (48 / 15);
 };
-
-// const getNowPosition = (date: Date) => {
-//   const hours = getHours(date);
-//   const minutes = getMinutes(date);
-
-//   const nowIndex = hours - 10;
-//   const minutesIndex = Math.floor(minutes / 20);
-
-//   return 24 * (nowIndex * 3 + minutesIndex) + 7;
-// };
-
-// const getNowPosition = (date: Date) => {
-//   const hours = getHours(date);
-//   const minutes = getMinutes(date);
-//   const totalMinutesInDay = hours * 60 + minutes;
-//   const totalMinutesInWeekday = 24 * 60;
-//   return (totalMinutesInDay / totalMinutesInWeekday) * 99.9;
-// };
 
 const DayCalendarItem = ({
   date,
