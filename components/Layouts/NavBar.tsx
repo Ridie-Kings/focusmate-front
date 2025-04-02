@@ -23,25 +23,25 @@ interface NavItem {
 const navigationItems: NavItem[] = [
   {
     id: 1,
-    label: "Tableau de bord",
+    label: "Dashboard",
     link: "/",
     icon: <Grid2x2 />,
   },
   {
     id: 2,
-    label: "Calendrier",
+    label: "Calendar",
     link: "/calendar",
     icon: <Calendar />,
   },
   {
     id: 3,
-    label: "Signets",
+    label: "BookMark",
     link: "/bookmark",
     icon: <Bookmark />,
   },
   {
     id: 4,
-    label: "Idées",
+    label: "Ideas",
     link: "/ideas",
     icon: <Lightbulb />,
   },
@@ -53,7 +53,7 @@ const navigationItems: NavItem[] = [
   },
   {
     id: 6,
-    label: "Paramètres",
+    label: "Settings",
     link: "/settings",
     icon: <Settings />,
   },

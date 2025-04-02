@@ -3,7 +3,7 @@ import { AuthResponse } from "@/interfaces/Auth/AuthType";
 import { apiConnection } from "../axiosConfig";
 import { cookies } from "next/headers";
 
-export async function login(
+export default async function login(
   prevState: any,
   formData: FormData
 ): Promise<AuthResponse> {
