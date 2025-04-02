@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import ListHabits from "../Elements/Habits/ListHabits";
-import HabitsTracker from "../Elements/Habits/HabitsTracker";
+
+import HabitsTracker from "@/components/Pages/Habits/HabitsTracker";
+import ListHabits from "@/components/Pages/Habits/ListHabits";
 
 export type itemsType = {
   id: number;

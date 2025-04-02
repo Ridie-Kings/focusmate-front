@@ -1,5 +1,5 @@
+import HabitsList from "@/components/Elements/General/HabitsElements/HabitsList";
 import { itemsType } from "@/components/Pages/Habits";
-import HabitsList from "../General/HabitsElements/HabitsList";
 
 export default function ListHabits({
   items,
