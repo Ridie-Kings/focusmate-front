@@ -14,6 +14,8 @@ import {
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import Divider from "@/components/Elements/General/Divider";
+import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
+import TimeBar from "@/components/Elements/Calendar/TimeBar";
 
 const WeekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -54,30 +56,9 @@ const WeekCalendarItem = ({
           <Divider backgroundColor="white" />
           at the code
         </div>
-        <div className="h-full flex flex-col gap-5 text-sm text-gray-600 relative">
-          {Array.from({ length: 49 }, (_, i) => {
-            const hours = Math.floor(i / 2);
-            const minutes = i % 2 === 0 ? "00" : "30";
-
-            return (
-              <div key={i} className="relative flex items-center">
-                <div className="flex-1 px-7 text-center text-lg cursor-pointer">
-                  {`${hours.toString().padStart(2, "0")}:${minutes}`}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <TimeLeftBar length={49} divider={2} calc={1} />
       </div>
-      <div className="h-[96.2%] w-full absolute top-0 left-0 z-10 pointer-events-none">
-        <div
-          className="absolute left-0 right-0 h-0.5 bg-gray-100"
-          style={{
-            top: `${getNowPosition(date ?? new Date())}px`,
-          }}
-        />
-      </div>
-
+      <TimeBar pos={getNowPosition(new Date())} />
       {days.map((day, index) => (
         <div key={index} className="flex flex-col gap-5">
           <div

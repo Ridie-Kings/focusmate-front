@@ -25,10 +25,19 @@ export default function Timer({ time, setTime, menu }: TimerProps) {
 
   const [hiddenTime, sethiddenTime] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
+  const [choseUpdate, setChoseUpdate] = useState<string>("seg");
 
-  const updateTime = useCallback((delta: number) => {
+  const updateTime = useCallback((delta: number, choseUpdate: string) => {
     setTime((prev) => {
-      let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg + delta;
+      let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg;
+
+      if (choseUpdate === "min") {
+        const additionalSeconds = delta * 60;
+        totalSeconds += additionalSeconds;
+      } else if (choseUpdate === "seg") {
+        totalSeconds += delta;
+      }
+
       totalSeconds = Math.max(0, totalSeconds);
 
       return {
@@ -45,6 +54,7 @@ export default function Timer({ time, setTime, menu }: TimerProps) {
         setIsOpen(true);
         break;
       case "togglePlay":
+        setChoseUpdate("");
         setIsPlay((prev) => !prev);
         break;
       case "reset":
@@ -61,7 +71,7 @@ export default function Timer({ time, setTime, menu }: TimerProps) {
 
   useEffect(() => {
     if (!isPlay) return;
-    const interval = setInterval(() => updateTime(-1), 1000);
+    const interval = setInterval(() => updateTime(-1, "seg"), 1000);
     return () => clearInterval(interval);
   }, [isPlay]);
 
@@ -72,7 +82,14 @@ export default function Timer({ time, setTime, menu }: TimerProps) {
         className="cursor-pointer text-primary-green"
         onClick={() => sethiddenTime(!hiddenTime)}
       />
-      <Time hiddenTime={hiddenTime} time={time} updateTime={updateTime} isPlay={isPlay} />
+      <Time
+        hiddenTime={hiddenTime}
+        time={time}
+        updateTime={updateTime}
+        isPlay={isPlay}
+        setChoseUpdate={setChoseUpdate}
+        choseUpdate={choseUpdate}
+      />
       <BarTimer />
       <Commands handleClick={handleClick} isPlay={isPlay} />
     </div>

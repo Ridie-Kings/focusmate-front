@@ -1,3 +1,5 @@
+import TimeBar from "@/components/Elements/Calendar/TimeBar";
+import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import { EventType } from "@/interfaces/Calendar/EventType";
 import {
   addDays,
@@ -10,7 +12,7 @@ import {
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SetStateAction, Dispatch } from "react";
 
-const getNowPosition = (date: Date) => {
+const getPosition = (date: Date) => {
   const hours = getHours(date);
   const minutes = getMinutes(date);
 
@@ -26,47 +28,16 @@ const DayCalendarItem = ({
 }) => {
   return (
     <div className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]">
-      <div className="flex flex-col gap-5 relative">
-        <div className="h-full flex flex-col gap-5 text-sm text-gray-600 relative">
-          {Array.from({ length: 97 }, (_, i) => {
-            const hours = Math.floor(i / 4);
-            const minutes = (i % 4) * 15;
-
-            return (
-              <div key={i} className="relative flex items-center">
-                <div className="flex-1 px-7 text-center text-lg cursor-pointer">
-                  {`${hours.toString().padStart(2, "0")}:${
-                    minutes === 0 ? "00" : minutes
-                  }`}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="h-full  w-full absolute top-0 left-0 z-10 pointer-events-none">
-        <div
-          className="absolute left-0 right-0 h-0.5 bg-gray-100"
-          style={{
-            top: `${date ? getNowPosition(date) : 0}px`,
-          }}
-        />
-      </div>
+      <TimeLeftBar length={97} divider={4} calc={2}/>
+      <TimeBar pos={getPosition(new Date())} />
       <div className="relative w-full h-full">
-        <div
-          className="absolute left-0 right-0 h-0.5 bg-red-500"
-          style={{
-            top: `${getNowPosition(date ?? new Date())}px`,
-          }}
-        />
-
         {events
           .filter(
             (event) => date && isSameDay(new Date(event.date.start), date)
           )
           .map((event, index) => {
-            const eventStartPosition = getNowPosition(event.date.start);
-            const eventEndPosition = getNowPosition(event.date.end);
+            const eventStartPosition = getPosition(event.date.start);
+            const eventEndPosition = getPosition(event.date.end);
             const totalMinutes = Math.abs(
               differenceInMinutes(event.date.end, event.date.start)
             );

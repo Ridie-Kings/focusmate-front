@@ -1,11 +1,11 @@
 import HabitsList from "@/components/Elements/General/HabitsElements/HabitsList";
-import { itemsType } from "@/components/Pages/Habits";
+import { HabitsItemType } from "@/interfaces/Habits/Habits";
 
 export default function ListHabits({
   items,
   handleToggle,
 }: {
-  items: itemsType[];
+  items: HabitsItemType[];
   handleToggle: (id: number) => void;
 }) {
   return (

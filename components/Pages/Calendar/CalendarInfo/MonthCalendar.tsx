@@ -37,7 +37,7 @@ const CalendarItem = ({
   const isToday = (day: Date) => isSameDay(day, new Date());
 
   return (
-    <div className="grid grid-cols-7 w-full h-full border rounded-xl overflow-hidden">
+    <div className="grid grid-cols-7 w-full h-full border rounded-xl overflow-hidden min-h-[500px]">
       {days.map((day, index) => (
         <div
           key={index}
