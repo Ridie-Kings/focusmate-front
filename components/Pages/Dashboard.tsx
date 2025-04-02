@@ -8,6 +8,7 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default async function Dashboard() {
   const tasks: TaskType[] = [];
+  
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-9 gap-4 w-full h-full p-5">
       <Date />

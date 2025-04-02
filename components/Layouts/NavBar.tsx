@@ -1,4 +1,5 @@
 "use client";
+import { NavItem } from "@/interfaces/Nav/NavTypes";
 import {
   Bell,
   Bookmark,
@@ -12,13 +13,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-interface NavItem {
-  id: number;
-  label: string;
-  link: string;
-  icon: React.ReactNode;
-}
 
 const navigationItems: NavItem[] = [
   {

@@ -3,6 +3,7 @@ import CurrentDate from "@/components/Elements/General/CurrentDate";
 import Chips from "@/components/Reusable/Chips";
 
 const items = ["Day", "Week", "Month"];
+
 export default function NavInfo({
   navType,
   setNavType,

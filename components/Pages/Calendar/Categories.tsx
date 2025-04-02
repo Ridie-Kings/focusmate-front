@@ -2,12 +2,9 @@ import { EllipsisVertical } from "lucide-react";
 import Dot from "@/components/Elements/General/Dot";
 import TemplateBox from "@/components/Elements/General/TemplateBox";
 import Button from "@/components/Reusable/Button";
+import { CategoriesProps } from "@/interfaces/Calendar/CalendarType";
 
 const DEFAULT_ITEMS = ["Trabajo", "Estudios", "Universidad", "Salud"];
-
-interface CategoriesProps {
-  items?: string[];
-}
 
 export default function Categories({ items = DEFAULT_ITEMS }: CategoriesProps) {
   return (

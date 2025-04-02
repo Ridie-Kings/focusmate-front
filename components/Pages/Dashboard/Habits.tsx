@@ -4,16 +4,9 @@ import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import CircleProgressBar from "@/components/Elements/General/HabitsElements/CircleProgress";
 import HabitsList from "@/components/Elements/General/HabitsElements/HabitsList";
 import Button from "@/components/Reusable/Button";
+import { HabitsItemType } from "@/interfaces/Habits/Habits";
 
-export type itemsType = {
-  id: number;
-  label: string;
-  type: string;
-  done: boolean;
-  time: string;
-};
-
-const items: itemsType[] = [
+const items: HabitsItemType[] = [
   {
     id: 1,
     label: "Estudio",
@@ -45,7 +38,7 @@ const items: itemsType[] = [
 ];
 
 export default function Habits() {
-  const [habits, setHabits] = useState<itemsType[]>(items);
+  const [habits, setHabits] = useState<HabitsItemType[]>(items);
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
 

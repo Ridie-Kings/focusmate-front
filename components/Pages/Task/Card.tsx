@@ -3,12 +3,8 @@ import { DropIndicator } from "./dropIndicator";
 import { motion } from "motion/react";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import Divider from "@/components/Elements/General/Divider";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { DragEvent } from "react";
-
-type CardProps = TaskType & {
-  handleDragStart: (e: DragEvent<Element>, card: TaskType) => void; // Updated function type
-};
+import { CardProps } from "@/interfaces/Task/TaskType";
 
 export const Card = ({
   title,
@@ -52,7 +48,6 @@ export const Card = ({
                   month: "long",
                 })
               : "No date"}{" "}
-            {/* Added check if dueDate is a Date and fixed method */}
           </div>
           <PriorityBadge priority={priority} />
         </div>

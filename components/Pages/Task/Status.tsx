@@ -1,26 +1,17 @@
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
-import { Dispatch, DragEvent, SetStateAction, useState } from "react";
+import { StatusProps, TaskType } from "@/interfaces/Task/TaskType";
+import { DragEvent, useState } from "react";
 import { AddCard } from "./AddCard";
 import { DropIndicator } from "@/components/Pages/Task/dropIndicator";
 import { Card } from "./Card";
 
-type StatusProps = {
-  title: string;
-  cards: TaskType[];
-  status: StatusType;
-  setCards: Dispatch<SetStateAction<TaskType[]>>;
-};
-
 export const Status = ({ title, cards, status, setCards }: StatusProps) => {
   const [active, setActive] = useState(false);
 
-  // Changed to React.DragEvent<Element> to match Card component
   const handleDragStart = (e: DragEvent<Element>, card: TaskType) => {
     e.dataTransfer?.setData("cardId", card._id);
     e.dataTransfer?.setData("originalStatus", card.status);
   };
 
-  // Changed to React.DragEvent<Element>
   const handleDragEnd = (e: React.DragEvent<Element>) => {
     const cardId = e.dataTransfer?.getData("cardId");
 
@@ -57,7 +48,6 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
     setCards(copy);
   };
 
-  // Changed to React.DragEvent<Element>
   const handleDragOver = (e: React.DragEvent<Element>) => {
     e.preventDefault();
     highlightIndicator(e);
@@ -71,7 +61,6 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
     });
   };
 
-  // Changed to React.DragEvent<Element>
   const highlightIndicator = (e: React.DragEvent<Element>) => {
     const indicators = getIndicators();
     clearHighlights(indicators);
@@ -80,7 +69,6 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
     el.element.style.opacity = "1";
   };
 
-  // Changed to React.DragEvent<Element>
   const getNearestIndicator = (
     e: React.DragEvent<Element>,
     indicators: HTMLElement[]

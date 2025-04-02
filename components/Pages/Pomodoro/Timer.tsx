@@ -7,14 +7,14 @@ import Commands from "../../Elements/General/PomodoroComponent/Commands";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 
 export default function Timer() {
-  const [menu, setMenu] = useState<string>("Concentracion");
+  const [menu, setMenu] = useState<string>("concentracion");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const { setTime, time } = useContext(TimerContext);
 
   const menuTimes = useMemo(
     () => ({
-      Concentracion: { hours: 0, min: 25, seg: 0 },
+      concentracion: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
       "D/Largo": { hours: 0, min: 15, seg: 0 },
     }),

@@ -1,14 +1,9 @@
 "use client";
 
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { AddCardProps, TaskType } from "@/interfaces/Task/TaskType";
+import { FormEvent, useState } from "react";
 import { motion } from "motion/react";
 import { Plus } from "lucide-react";
-
-type AddCardProps = {
-  status: StatusType;
-  setCards: Dispatch<SetStateAction<TaskType[]>>;
-};
 
 export const AddCard = ({ status, setCards }: AddCardProps) => {
   const [text, setText] = useState("");
@@ -48,7 +43,9 @@ export const AddCard = ({ status, setCards }: AddCardProps) => {
           className="flex flex-col gap-2"
         >
           <select
-            onChange={(e) => setPriority(e.target.value as "high" | "medium" | "low")}
+            onChange={(e) =>
+              setPriority(e.target.value as "high" | "medium" | "low")
+            }
             className="text-black w-full border-2 border-black rounded pl-2"
           >
             <option value="high">High</option>

@@ -22,7 +22,6 @@ const getNowPosition = (date: Date) => {
   const minutes = getMinutes(date);
 
   return 95 + hours * 2 * 48 + minutes * (48 / 30);
-  // return 95;
 };
 
 const WeekCalendarItem = ({

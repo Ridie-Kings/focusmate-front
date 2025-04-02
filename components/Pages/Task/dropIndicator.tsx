@@ -1,7 +1,5 @@
-type DropIndicatorProps = {
-  beforeId: string | null;
-  status: string;
-};
+import { DropIndicatorProps } from "@/interfaces/Task/TaskType";
+
 
 export const DropIndicator = ({ beforeId, status }: DropIndicatorProps) => {
   return (

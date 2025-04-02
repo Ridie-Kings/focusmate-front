@@ -1,23 +1,26 @@
 "use client";
 import { Eye } from "lucide-react";
-import { useEffect, useState, useCallback, useContext, Dispatch } from "react";
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useContext,
+  Dispatch,
+  use,
+} from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import BarTimer from "../BarTimer";
 import Time from "./Time";
 import Commands from "./Commands";
+import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 
 interface TimerProps {
   time: TimeType;
   setTime: Dispatch<React.SetStateAction<TimeType>>;
+  menu: string;
 }
 
-export type TimeType = {
-  min: number;
-  seg: number;
-  hours: number;
-};
-
-export default function Timer({ time, setTime }: TimerProps) {
+export default function Timer({ time, setTime, menu }: TimerProps) {
   const { setIsOpen } = useContext(TimerContext);
 
   const [hiddenTime, sethiddenTime] = useState(false);
@@ -53,6 +56,10 @@ export default function Timer({ time, setTime }: TimerProps) {
   };
 
   useEffect(() => {
+    setIsPlay(false);
+  }, [menu]);
+
+  useEffect(() => {
     if (!isPlay) return;
     const interval = setInterval(() => updateTime(-1), 1000);
     return () => clearInterval(interval);
@@ -65,7 +72,7 @@ export default function Timer({ time, setTime }: TimerProps) {
         className="cursor-pointer text-primary-green"
         onClick={() => sethiddenTime(!hiddenTime)}
       />
-      <Time hiddenTime={hiddenTime} time={time} updateTime={updateTime} />
+      <Time hiddenTime={hiddenTime} time={time} updateTime={updateTime} isPlay={isPlay} />
       <BarTimer />
       <Commands handleClick={handleClick} isPlay={isPlay} />
     </div>
