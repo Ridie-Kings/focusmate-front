@@ -1,9 +1,9 @@
 import Date from "@/components/Elements/General/CurrentDate";
-import Animate from "@/components/Elements/Pages/Dashboard/Animate";
+import Animate from "@/components/Pages/Dashboard/Animate";
 import Pomodoro from "../Elements/General/PomodoroComponent";
-import Habits from "@/components/Elements/Pages/Dashboard/Habits";
-import Agenda from "@/components/Elements/Pages/Dashboard/Agenda";
-import TusTask from "@/components/Elements/Pages/Dashboard/YourTask";
+import Habits from "@/components/Pages/Dashboard/Habits";
+import Agenda from "@/components/Pages/Dashboard/Agenda";
+import TusTask from "@/components/Pages/Dashboard/YourTask";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default async function Dashboard() {

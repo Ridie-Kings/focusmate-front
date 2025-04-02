@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import ListTask from "@/components/Elements/Pages/Dashboard/ListTask";
+import ListTask from "@/components/Pages/Dashboard/ListTask";
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
-import StatusCards from "@/components/Elements/Pages/Dashboard/TusTask/StatusCards";
+import StatusCards from "@/components/Pages/Dashboard/TusTask/StatusCards";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default function Task({ tasks }: { tasks: TaskType[] }) {

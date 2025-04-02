@@ -1,6 +1,6 @@
 import React from "react";
 import Divider from "./Divider";
-import GoTo from "@/components/Elements/Pages/Dashboard/GoTo";
+import GoTo from "@/components/Pages/Dashboard/GoTo";
 
 export default function TemplateBox({
   children,

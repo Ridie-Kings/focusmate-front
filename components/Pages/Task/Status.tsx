@@ -1,7 +1,7 @@
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { Dispatch, DragEvent, SetStateAction, useState } from "react";
 import { AddCard } from "./AddCard";
-import { DropIndicator } from "@/components/Elements/Pages/Task/dropIndicator";
+import { DropIndicator } from "@/components/Pages/Task/dropIndicator";
 import { Card } from "./Card";
 
 type StatusProps = {

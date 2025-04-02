@@ -1,9 +1,9 @@
 "use client";
 import { Minus, Plus } from "lucide-react";
-import MenuPomodoroButtons from "../../General/MenuPomodoroButtons";
-import BarTimer from "../../General/BarTimer";
+import MenuPomodoroButtons from "../../Elements/General/MenuPomodoroButtons";
+import BarTimer from "../../Elements/General/BarTimer";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import Commands from "../../General/PomodoroComponent/Commands";
+import Commands from "../../Elements/General/PomodoroComponent/Commands";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 
 export default function Timer() {
