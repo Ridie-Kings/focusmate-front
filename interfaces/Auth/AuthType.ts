@@ -4,7 +4,7 @@ export type AuthField = {
   name: string;
   type: string;
   label: string;
-  icon?: React.ReactNode;
+  icon?: React.ReactElement;
   placeholder: string;
 };
 

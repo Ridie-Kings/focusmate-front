@@ -10,6 +10,7 @@ import Link from "next/link";
 import Button from "@/components/Reusable/Button";
 import LinkButtons from "./LinkButtons";
 import login from "@/services/Auth/login";
+import Input from "@/components/Reusable/Input";
 
 const REDIRECT_PATHS: Record<"login" | "register", string> = {
   login: "/",
@@ -27,7 +28,6 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
 
   const handleError = useCallback((message: string) => {
     console.error("Authentication Error:", message);
-    // TODO: Implement a user-friendly error display
   }, []);
 
   useEffect(() => {
@@ -59,7 +59,14 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
 
         <form action={action} className="flex flex-col gap-7 w-full">
           {config.fields.map((field, index) => (
-            <InputField key={field.name || index} {...field} />
+            <Input
+              key={index}
+              field={field.type === "password" ? 3 : 2}
+              label={field.label}
+              placeholder={field.placeholder}
+              state=""
+              icon={field.icon}
+            />
           ))}
           <Link href="#" className="underline">
             ¿Olvidaste tu contraseña?
