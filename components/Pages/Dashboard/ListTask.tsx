@@ -9,13 +9,15 @@ export default function ListTask({
   filter: string;
   tasks: TaskType[];
 }) {
+  console.log(filter);
+
   const render = () => {
     switch (filter) {
       case "Pendientes":
-        return tasks.filter((e) => e.status === "completed");
+        return tasks.filter((e) => e.status === "pending");
       case "En Progreso":
         return tasks.filter((e) => e.status === "progress");
-      case "En Revisión":
+      case "En Revision":
         return tasks.filter((e) => e.status === "revision");
       case "No Completados":
         return tasks.filter((e) => e.status === "dropped");
@@ -36,16 +38,20 @@ export default function ListTask({
           tasksRender.map((task) => (
             <li
               key={task._id}
-              className="flex gap-4 py-3 px-3 bg-[#D9D9D9] rounded-lg"
+              className="flex p-4 border border-accent rounded-lg"
             >
               <div className="flex w-full items-center justify-between">
-                <p>{task.title}</p>
+                <p className="text-primary-green">{task.title}</p>
                 <PriorityBadge priority={task.priority} />
               </div>
             </li>
           ))
         ) : (
-          <p className="text-gray-500 text-center">No hay task disponibles.</p>
+          <p className="text-gray-500 text-center">
+            {filter !== ""
+              ? `No tienes task ${filter} .`
+              : "No tienes ningun task"}
+          </p>
         )}
       </div>
       <Button button="tertiary" type="button">

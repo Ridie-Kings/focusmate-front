@@ -35,12 +35,38 @@ export default function StatusCards({
 
   return (
     <ul className="flex w-full gap-3">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <li key={item.label} className="w-1/5">
           <div
             style={{
-              backgroundColor: filter === item.label ? "#202020" : "",
-              color: filter === item.label ? "#fff9f9" : "",
+              backgroundColor:
+                filter === item.label
+                  ? "#202020"
+                  : index === 0
+                  ? "#014e44"
+                  : index === 1
+                  ? "#248277"
+                  : index === 2
+                  ? "#56ab91"
+                  : index === 3
+                  ? "#78c6a3"
+                  : index === 4
+                  ? "#d5ede2"
+                  : "",
+              color:
+                filter === item.label
+                  ? "#fff9f9"
+                  : index === 0
+                  ? "white"
+                  : index === 1
+                  ? "white"
+                  : index === 2
+                  ? "white"
+                  : index === 3
+                  ? "black"
+                  : index === 4
+                  ? "black"
+                  : "",
             }}
             className="flex flex-col border w-full h-full px-2 py-3 text-sm rounded-lg cursor-pointer transition-all duration-300 ease-in-out"
             onClick={() => setFilter(filter === item.label ? "" : item.label)}

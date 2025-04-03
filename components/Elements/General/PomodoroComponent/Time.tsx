@@ -41,7 +41,7 @@ export default function Time({
           >
             {time.hours > 0 && `${String(time.hours).padStart(2, "0")}:`}
             <span
-              className={`cursor-pointer ${
+              className={`cursor-pointer transition-colors duration-300 ${
                 choseUpdate === "min" ? "text-gray-100" : ""
               }`}
               onClick={() =>
@@ -52,7 +52,7 @@ export default function Time({
             </span>
             :
             <span
-              className={`cursor-pointer ${
+              className={`cursor-pointer transition-colors duration-300 ${
                 choseUpdate === "seg" ? "text-gray-100" : ""
               }`}
               onClick={() =>

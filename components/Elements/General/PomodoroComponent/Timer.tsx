@@ -25,7 +25,7 @@ export default function Timer({ time, setTime, menu }: TimerProps) {
 
   const [hiddenTime, sethiddenTime] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
-  const [choseUpdate, setChoseUpdate] = useState<string>("seg");
+  const [choseUpdate, setChoseUpdate] = useState<string>("");
 
   const updateTime = useCallback((delta: number, choseUpdate: string) => {
     setTime((prev) => {
