@@ -1,21 +1,8 @@
 "use client";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
+import { createContext, useEffect, useMemo, useState } from "react";
+import { TimerContextType, TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import TimerFullScreen from "../Elements/Timer/TimerFullScreen";
 
-type TimerContextType = {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setTime: Dispatch<SetStateAction<TimeType>>;
-  time: TimeType;
-};
 export const TimerContext = createContext<TimerContextType>({
   isOpen: false,
   setIsOpen: () => {},

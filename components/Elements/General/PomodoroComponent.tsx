@@ -16,7 +16,7 @@ export default function PomodoroComponent() {
       link="/pomodoro"
     >
       <MenuButtons menu={menu} setMenu={setMenu} setTime={setTime} />
-      <Timer time={time} setTime={setTime} />
+      <Timer time={time} setTime={setTime} menu={menu} />
     </TemplateDashboard>
   );
 }

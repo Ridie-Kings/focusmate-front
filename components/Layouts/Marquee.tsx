@@ -10,7 +10,7 @@ export default function Carousel() {
         width={100}
         height={100}
         alt="svg"
-        className="w-[100vw] h-[95vh]"
+        className="w-[100vw] h-[95vh] sticky top-10"
       />
     </div>
   );

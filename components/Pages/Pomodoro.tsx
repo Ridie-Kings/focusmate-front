@@ -1,5 +1,5 @@
-import HistoryTimer from "../Elements/Pages/Pomodoro/HistoryTimer";
-import Timer from "../Elements/Pages/Pomodoro/Timer";
+import HistoryTimer from "./Pomodoro/HistoryTimer";
+import Timer from "./Pomodoro/Timer";
 
 export default function Pomodoro() {
   return (

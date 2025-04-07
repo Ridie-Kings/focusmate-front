@@ -4,11 +4,13 @@ import { apiConnection } from "../axiosConfig";
 export async function getMyProfile() {
   try {
     const token = await getToken();
+
     const res = await apiConnection.get("profile/@me", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
     return res.data;
   } catch (error: any) {
     console.error("Error fetching user profile:", error.response.data.message);

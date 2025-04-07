@@ -1,17 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import ListHabits from "../Elements/Habits/ListHabits";
-import HabitsTracker from "../Elements/Habits/HabitsTracker";
 
-export type itemsType = {
-  id: number;
-  label: string;
-  type: string;
-  done: boolean;
-  time: string;
-};
+import HabitsTracker from "@/components/Pages/Habits/HabitsTracker";
+import ListHabits from "@/components/Pages/Habits/ListHabits";
+import { HabitsItemType } from "@/interfaces/Habits/Habits";
 
-const initialItems: itemsType[] = [
+const initialItems: HabitsItemType[] = [
   { id: 1, label: "Estudio", type: "study", done: false, time: "9:30PM" },
   { id: 2, label: "Comida", type: "food", done: false, time: "9:30PM" },
   { id: 3, label: "Dormir", type: "sleep", done: true, time: "9:30PM" },
@@ -19,7 +13,7 @@ const initialItems: itemsType[] = [
 ];
 
 export default function Habits() {
-  const [habits, setHabits] = useState<itemsType[]>(initialItems);
+  const [habits, setHabits] = useState<HabitsItemType[]>(initialItems);
   const [porcent, setPorcent] = useState(0);
 
   useEffect(() => {

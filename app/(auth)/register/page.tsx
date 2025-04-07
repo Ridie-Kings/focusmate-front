@@ -1,4 +1,4 @@
-import { AuthContainer } from "@/components/Elements/Pages/Auth/AuthContainer";
+import { AuthContainer } from "@/components/Pages/Auth/AuthContainer";
 
 export default function RegisterPage() {
   return <AuthContainer type="register" />;
