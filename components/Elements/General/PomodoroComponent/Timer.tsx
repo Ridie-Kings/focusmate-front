@@ -7,11 +7,11 @@ import Time from "./Time";
 import Commands from "./Commands";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 
-interface TimerProps {
+type TimerProps = {
   time: TimeType;
   setTime: Dispatch<React.SetStateAction<TimeType>>;
   menu: string;
-}
+};
 
 export default function Timer({ time, setTime, menu }: TimerProps) {
   const { setIsOpen } = useContext(TimerContext);
@@ -24,7 +24,6 @@ export default function Timer({ time, setTime, menu }: TimerProps) {
     (delta: number, updateType: string) => {
       setTime((prev) => {
         let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg;
-        console.log(prev);
 
         if (updateType === "hours") {
           totalSeconds += delta * 3600;
@@ -36,15 +35,15 @@ export default function Timer({ time, setTime, menu }: TimerProps) {
 
         totalSeconds = Math.max(0, totalSeconds);
 
+        const hours = Math.floor(totalSeconds / 3600);
+        const min = Math.floor((totalSeconds % 3600) / 60);
+        const seg = totalSeconds % 60;
+
         if (totalSeconds === 0 && isPlay) {
           setIsPlay(false);
         }
 
-        return {
-          hours: Math.floor(totalSeconds / 3600),
-          min: Math.floor((totalSeconds % 3600) / 60),
-          seg: totalSeconds % 60,
-        };
+        return { hours, min, seg };
       });
     },
     [isPlay]
