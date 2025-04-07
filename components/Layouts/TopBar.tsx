@@ -5,13 +5,12 @@ import { getMyProfile } from "@/services/Profile/getMyProfile";
 
 export default async function TopBar() {
   const profil = await getMyProfile();
-  console.log("profil:", profil);
 
   return (
     <section className="flex place-content-between p-6 w-full">
       <div className="flex flex-col flex-1">
         <PageTitle />
-        <p className="text-lg">Bienvenido, Mateo!</p>
+        <p className="text-lg">Bienvenido, {profil?.user.fullname}!</p>
       </div>
       <div className="flex items-end justify-end gap-3 flex-1">
         <Search

@@ -2,26 +2,14 @@
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 
-export async function CreateTask({
-  task,
-}: {
-  task: {
-    title: string;
-    description: string;
-    status: string;
-    startDate: Date;
-    endDate: Date;
-    dueDate: Date;
-    tags: string[];
-  };
-}): Promise<{
+export async function DeleteTask({ _id }: { _id: string }): Promise<{
   success: boolean;
   message: string;
 }> {
   try {
     const token = await getToken();
 
-    const res = await apiConnection.post("tasks", task, {
+    const res = await apiConnection.delete(`tasks/${_id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -30,7 +18,7 @@ export async function CreateTask({
     return { success: true, message: res.data };
   } catch (error: any) {
     console.error(
-      "Error creating task:",
+      "Error deleting task:",
       error.response?.data || error.response || error
     );
     return {

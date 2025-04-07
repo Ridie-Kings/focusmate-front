@@ -34,7 +34,7 @@ export default function Timeline({ date, events }: TimelineProps) {
   }, [date, events]);
 
   return (
-    <div className="w-full min-h-44 max-h-96 overflow-auto flex flex-col gap-4 py-2">
+    <div className="flex-1 min-h-44 max-h-96 overflow-auto flex flex-col gap-4 py-2">
       <p className="text-2xl px-4">Timeline</p>
       <div className="flex gap-4 pl-4">
         <TimeLeftBar filteredEvents={filteredEvents} />
