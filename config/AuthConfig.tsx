@@ -58,12 +58,6 @@ export const AUTH_CONFIG: Record<AuthType, AuthConfig> = {
         label: "Repite Contraseña",
         placeholder: "***************",
       },
-      {
-        name: "birthdate",
-        type: "date",
-        label: "Cumpleaños",
-        placeholder: "DD/MM/YYYY",
-      },
     ],
   },
 };

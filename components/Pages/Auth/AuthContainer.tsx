@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { InputField } from "./InputField";
 import { AUTH_CONFIG } from "@/config/AuthConfig";
 import { register } from "@/services/Auth/register";
-import { useActionState, useEffect, useCallback } from "react";
+import { useActionState, useEffect, useCallback, useState } from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/Reusable/Button";
@@ -19,6 +18,7 @@ const REDIRECT_PATHS: Record<"login" | "register", string> = {
 
 export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
   const config = AUTH_CONFIG[type];
+  const [error, setError] = useState<string>("");
   const handleAuth = type === "login" ? login : register;
 
   const [state, action] = useActionState(handleAuth, {
@@ -27,6 +27,11 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
   });
 
   const handleError = useCallback((message: string) => {
+    setError(
+      message === "Invalid credentials"
+        ? "El email o/y la contraseña esta mal"
+        : message
+    );
     console.error("Authentication Error:", message);
   }, []);
 
@@ -61,6 +66,7 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
           {config.fields.map((field, index) => (
             <Input
               key={index}
+              name={field.name}
               field={field.type === "password" ? 3 : 2}
               label={field.label}
               placeholder={field.placeholder}
@@ -71,6 +77,7 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
           <Link href="#" className="underline">
             ¿Olvidaste tu contraseña?
           </Link>
+          {error && <div className="text-red-500 text-sm">{error}</div>}
 
           <div className="flex flex-col gap-4">
             <Button type="submit" button="primary">

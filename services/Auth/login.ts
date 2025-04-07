@@ -24,6 +24,7 @@ export default async function login(
     }
 
     const res = await apiConnection.post("auth/login", userData);
+
     const { access_token, refresh_token } = res.data;
 
     const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
@@ -46,6 +47,8 @@ export default async function login(
       message: "Login successful",
     };
   } catch (error: any) {
+    console.log(error.response);
+
     return {
       success: false,
       message: error.response?.data?.message || "Unexpected error during login",

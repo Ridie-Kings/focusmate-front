@@ -28,48 +28,45 @@ const DayCalendarItem = ({
 }) => {
   return (
     <div className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]">
-      <TimeLeftBar length={97} divider={4} calc={2}/>
+      <TimeLeftBar length={97} divider={4} calc={2} />
       <TimeBar pos={getPosition(new Date())} />
       <div className="relative w-full h-full">
         {events
-          .filter(
-            (event) => date && isSameDay(new Date(event.date.start), date)
-          )
+          .filter((event) => date && isSameDay(event.date.start, date))
           .map((event, index) => {
             const eventStartPosition = getPosition(event.date.start);
             const eventEndPosition = getPosition(event.date.end);
             const totalMinutes = Math.abs(
               differenceInMinutes(event.date.end, event.date.start)
             );
+
             return (
               <div
                 key={index}
-                className="absolute w-full bg-gray-100/25 hover:shadow-lg text-white p-5 rounded-lg shadow-md flex flex-col place-content-between transition-all duration-300 ease-in-out"
+                className="absolute w-full bg-[#e9d2ee] hover:shadow-lg text-black px-8 py-6 rounded-lg drop-shadow-xl flex flex-col place-content-between transition-all duration-300 ease-in-out border-l-8 border-[#baa8be]"
                 style={{
                   top: `${eventStartPosition}px`,
                   height: `${eventEndPosition - eventStartPosition}px`,
                 }}
               >
-                <p className="text-3xl text-gray-100">{event.title}</p>
+                <p className="text-2xl">{event.title}</p>
                 <div className="flex place-content-between w-full">
                   <span className="text-lg flex flex-col">
                     {event.date.start.toLocaleTimeString("es-ES", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
-                    <p>Start</p>
+                    <p>Empieza</p>
                   </span>
-                  <div className="flex items-center px-10 text-2xl bg-gray-100 rounded-lg text-white-100">
-                    <p>
-                      {Math.floor(totalMinutes / 60)}:{totalMinutes % 60} min{" "}
-                    </p>
-                  </div>
+                  <p className="flex items-center py-2 px-4 text-xl bg-black rounded text-white-100">
+                    {Math.floor(totalMinutes / 60)}:{totalMinutes % 60} min{" "}
+                  </p>
                   <span className="text-lg ml-2">
                     {event.date.end.toLocaleTimeString("es-ES", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
-                    <p>Finish</p>
+                    <p>Termina</p>
                   </span>
                 </div>
               </div>
@@ -100,19 +97,6 @@ export default function DayCalendar({
       setDate(addDays(date, 1));
     }
   };
-
-  // const handleDayChange = (day: string) =>
-  //   setDate((currentDate) => {
-  //     const newDate = new Date(currentDate);
-  //     newDate.setDate(Number(day));
-  //     return newDate;
-  //   });
-
-  // const days = Array.from({ length: 5 }, (_, i) => {
-  //   const currentDate = new Date(date);
-  //   currentDate.setDate(currentDate.getDate() + i);
-  //   return currentDate.getDate();
-  // }).filter((_, i, arr) => i < 5 && arr[i] >= arr[0]);
 
   return (
     <div className="w-full flex-1 flex flex-col gap-2 place-content-between">

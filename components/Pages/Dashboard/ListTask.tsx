@@ -1,6 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { CreateTask } from "@/services/Task/CreateTask";
 
 export default function ListTask({
   filter,
@@ -9,8 +10,6 @@ export default function ListTask({
   filter: string;
   tasks: TaskType[];
 }) {
-  console.log(filter);
-
   const render = () => {
     switch (filter) {
       case "Pendientes":
@@ -30,6 +29,16 @@ export default function ListTask({
     }
   };
   const tasksRender = render();
+
+  const handleCreateTask = async () => {
+    const res = await CreateTask();
+
+    if (res.success) {
+      console.log("Task created successfully");
+    } else {
+      console.log("Failed to create task");
+    }
+  };
 
   return (
     <>
@@ -54,7 +63,7 @@ export default function ListTask({
           </p>
         )}
       </div>
-      <Button button="tertiary" type="button">
+      <Button onClick={handleCreateTask} button="tertiary" type="button">
         Nueva Tarea
       </Button>
     </>

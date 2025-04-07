@@ -1,30 +1,31 @@
 import TimeLeftBar from "@/components/Elements/Calendar/Timeline/TimeLeftBar";
 import TimelineCard from "@/components/Elements/Calendar/Timeline/TimelineCard";
 import { EventType } from "@/interfaces/Calendar/EventType";
-import { differenceInMinutes, format, isSameDay } from "date-fns";
-import { useState, useMemo } from "react";
+import { isSameDay } from "date-fns";
+import { useMemo } from "react";
 
 interface TimelineProps {
   date: Date | undefined;
+  events: EventType[];
 }
 
-export default function Timeline({ date }: TimelineProps) {
-  const [events] = useState<EventType[]>([
-    {
-      date: {
-        start: new Date("April 2, 2025 18:37:00"),
-        end: new Date("April 2, 2025 20:00:00"),
-      },
-      title: "calla bobo",
-    },
-    {
-      date: {
-        start: new Date("April 3, 2025 08:37:00"),
-        end: new Date("April 3, 2025 10:00:00"),
-      },
-      title: "31",
-    },
-  ]);
+export default function Timeline({ date, events }: TimelineProps) {
+  // const [events] = useState<EventType[]>([
+  //   {
+  //     date: {
+  //       start: new Date("April 2, 2025 18:37:00"),
+  //       end: new Date("April 2, 2025 20:00:00"),
+  //     },
+  //     title: "calla bobo",
+  //   },
+  //   {
+  //     date: {
+  //       start: new Date("April 3, 2025 08:37:00"),
+  //       end: new Date("April 3, 2025 10:00:00"),
+  //     },
+  //     title: "31",
+  //   },
+  // ]);
 
   const filteredEvents = useMemo(() => {
     return events.filter((event) =>

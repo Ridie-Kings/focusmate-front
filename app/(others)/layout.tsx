@@ -4,6 +4,7 @@ import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
 import TopBar from "@/components/Layouts/TopBar";
 import TimerProvider from "@/components/Provider/TimerProvider";
+import { logout } from "@/lib";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -21,12 +22,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const handleLogout = async () => {
+    "use server";
+    console.log("Logging out...");
+
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <html lang="en">
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
         <TimerProvider>
-          <NavBar />
+          <NavBar handleLogout={handleLogout} />
           <main className="flex flex-col min-h-screen h-full flex-1">
             <TopBar />
             {children}

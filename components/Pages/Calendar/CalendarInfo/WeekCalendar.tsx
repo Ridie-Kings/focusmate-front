@@ -23,7 +23,7 @@ const getNowPosition = (date: Date) => {
   const hours = getHours(date);
   const minutes = getMinutes(date);
 
-  return 95 + hours * 2 * 48 + minutes * (48 / 30);
+  return hours * 2 * 48 + minutes * (48 / 30);
 };
 
 const WeekCalendarItem = ({
@@ -60,9 +60,9 @@ const WeekCalendarItem = ({
       </div>
       <TimeBar pos={getNowPosition(new Date())} />
       {days.map((day, index) => (
-        <div key={index} className="flex flex-col gap-5">
+        <div key={index} className="flex flex-col gap-5 ">
           <div
-            className={`text-xl flex flex-col items-center text-center py-2 border border-primary-green rounded-lg sticky top-0 z-10 ${
+            className={`text-xl flex flex-col items-center drop-shadow-lg text-center py-2 border border-primary-green rounded-lg sticky top-0 z-10 ${
               isSameDay(new Date(), day)
                 ? "bg-primary-green text-white-100"
                 : "bg-white text-primary-green"
@@ -73,7 +73,7 @@ const WeekCalendarItem = ({
             {day.getDate()}
           </div>
           <div
-            className={`text-center p-1 h-full cursor-pointer hover:bg-gray-100/25 rounded-lg transition-all duration-200 relative`}
+            className={`text-center p-1 h-full rounded-lg transition-all duration-200 relative`}
           >
             {events
               .filter((event) => isSameDay(new Date(event.date.start), day))
@@ -83,14 +83,14 @@ const WeekCalendarItem = ({
                 return (
                   <div
                     key={i}
-                    className="absolute w-[95%] bg-blue-100 p-1 rounded-sm mb-1 flex flex-col place-content-between"
+                    className="absolute w-[95%] bg-[#e9d2ee] py-4 px-2 rounded flex flex-col items-start place-content-between border-l-2 border-[#baa8be]"
                     style={{
                       top: `${eventStartPosition}px`,
                       height: `${eventEndPosition - eventStartPosition}px`,
                     }}
                   >
-                    <p>{event.title}</p>
-                    <div className="flex place-content-between w-full text-gray-100 text-sm p-1">
+                    <p className="">{event.title}</p>
+                    <div className="flex place-content-between w-full text-gray-100 text-xs p-1">
                       <span>
                         {event.date.start.toLocaleTimeString("es-ES", {
                           hour: "2-digit",

@@ -11,12 +11,14 @@ interface InputProps {
   icon?: React.ReactElement;
   label: string;
   supportMessage?: string;
+  name: string;
 }
 
 export default function Input({
   field,
   state,
   placeholder,
+  name,
   icon,
   label,
   supportMessage,
@@ -34,6 +36,7 @@ export default function Input({
       </label>
       <div className="relative w-full flex items-center">
         <input
+          name={name}
           type={field === 3 && !showPassword ? "password" : "text"}
           className="w-full py-2 pr-2 pl-4 placeholder:text-[#959595] text-black border border-[#959595] rounded focus:outline-[#8882CC]"
           placeholder={placeholder}

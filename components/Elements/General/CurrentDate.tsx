@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import CircularTextTop from "../Svg/CircularTextTop";
 import CircularTextBottom from "../Svg/CircularTextBottom";
+import { es } from "date-fns/locale";
 
 export default function CurrentDate({
   background = true,
@@ -15,8 +16,10 @@ export default function CurrentDate({
         background && "bg-primary-green text-white hover:shadow-lg"
       }`}
     >
-      <p className="text-4xl">{format(today, "eeee")}</p>
-      <p className="text-2xl">{format(today, "dd MMMM yyyy")}</p>
+      <p className="text-4xl">{format(today, "eeee", { locale: es })}</p>
+      <p className="text-2xl">
+        {format(today, "dd MMMM yyyy", { locale: es })}
+      </p>
       {background && (
         <>
           <CircularTextTop className="absolute right-0 -top-3" />

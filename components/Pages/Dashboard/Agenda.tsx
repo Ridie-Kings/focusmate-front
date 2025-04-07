@@ -3,8 +3,9 @@ import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import Calendar from "@/components/Elements/General/Calendar";
 import Timeline from "./Agenda/Timeline";
 import { useState } from "react";
+import { EventType } from "@/interfaces/Calendar/EventType";
 
-export default function Agenda() {
+export default function Agenda({ events }: { events: EventType[] }) {
   const [date, setDate] = useState<Date | undefined>(undefined);
   return (
     <TemplateDashboard
@@ -14,7 +15,7 @@ export default function Agenda() {
     >
       <div className="flex w-full h-full">
         <Calendar setDate={setDate} date={date} inView btn />
-        <Timeline date={date} />
+        <Timeline date={date} events={events} />
       </div>
     </TemplateDashboard>
   );

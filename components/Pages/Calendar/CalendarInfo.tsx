@@ -20,15 +20,23 @@ export default function CalendarInfo({
   const [events] = useState<EventType[]>([
     {
       date: {
-        start: new Date("Decembre 28, 2024 18:37:00"),
-        end: new Date("Decembre 28, 2024 20:00:00"),
+        start: new Date("April 03, 2025 18:37:00"),
+        end: new Date("April 03, 2025 20:00:00"),
       },
       title: "calla bobo",
     },
     {
       date: {
-        start: new Date("Decembre 31, 2024 08:37:00"),
-        end: new Date("Decembre 31, 2024 10:00:00"),
+        start: new Date("April 03, 2025 08:37:00"),
+        end: new Date("April 03, 2025 10:00:00"),
+      },
+      title: "31",
+    },
+
+    {
+      date: {
+        start: new Date("April 03, 2025 13:37:00"),
+        end: new Date("April 03, 2025 16:00:00"),
       },
       title: "31",
     },
