@@ -40,8 +40,8 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
         ${isCurrentMonth ? "text-black" : "text-gray-400"}
         ${
           isToday
-            ? "bg-primary-green text-white-100"
-            : "hover:bg-secondary-green hover:text-white-100"
+            ? "bg-primary-500 text-white-100"
+            : "hover:bg-secondary-700 hover:text-white-100"
         }`}
       aria-label={format(day, "EEEE, d MMMM yyyy", { locale: es })}
     >

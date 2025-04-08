@@ -83,7 +83,7 @@ export default function Time({
   }, [time.hours]);
 
   return (
-    <div className="flex gap-4 text-8xl text-primary-green font-light relative">
+    <div className="flex gap-4 text-8xl text-primary-500 font-light relative">
       {!hiddenTime && (
         <p
           className={`
@@ -152,9 +152,7 @@ export default function Time({
           )}
           :
           <span
-            className={`cursor-pointer transition-colors duration-300 ${
-              choseUpdate === "seg" ? "text-gray-100" : ""
-            }`}
+            className="cursor-pointer transition-colors duration-300"
             onClick={() =>
               setChoseUpdate((prev) => (prev === "seg" ? "" : "seg"))
             }

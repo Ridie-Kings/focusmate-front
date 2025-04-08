@@ -39,7 +39,7 @@ export default function StatusCards({
         <li key={item.label} className="w-1/5">
           <div
             style={{
-              backgroundColor: filter === item.label ? "#248277" : "#d5ede2",
+              backgroundColor: filter === item.label ? "#248277" : "#D5EDE2",
               color: filter === item.label ? "white" : "black",
             }}
             className="flex flex-col border w-full h-full px-2 py-3 text-sm rounded-lg cursor-pointer transition-all duration-300 ease-in-out"

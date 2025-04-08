@@ -1,7 +1,8 @@
-import Chips, { chipsIconType } from "@/components/Reusable/Chips";
+import Button from "@/components/Reusable/Button";
+import { chipsIconType } from "@/components/Reusable/Chips";
+import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { Brain, Coffee, Sofa } from "lucide-react";
 import React, { Dispatch, SetStateAction, useMemo } from "react";
-import { TimeType } from "./PomodoroComponent/Timer";
 
 const items: { id: number; label: string; type: chipsIconType }[] = [
   {
@@ -19,12 +20,14 @@ export default function MenuPomodoroButtons({
   setTime,
   className,
   fullScreen,
+  setInitialTime,
 }: {
   menu: string;
   setMenu: Dispatch<SetStateAction<string>>;
   setTime: Dispatch<SetStateAction<TimeType>>;
   className?: string;
   fullScreen?: boolean;
+  setInitialTime: Dispatch<SetStateAction<TimeType>>;
 }) {
   const menuTimes = useMemo<Record<string, TimeType>>(
     () => ({
@@ -45,8 +48,8 @@ export default function MenuPomodoroButtons({
               key={item.id}
               className={`p-2 flex-1 rounded-lg border border-white gap-1 flex items-center justify-center cursor-pointer ${
                 item.label === menu
-                  ? "bg-primary-green text-white"
-                  : "text-primary-green bg-white hover:bg-primary-green-hover hover:text-white"
+                  ? "bg-primary-500 text-white"
+                  : "text-primary-500 bg-white hover:bg-primary-500-hover hover:text-white"
               } transition-all duration-300`}
               onClick={() => {
                 setTime(menuTimes[item.type]);
@@ -67,17 +70,20 @@ export default function MenuPomodoroButtons({
       ) : (
         <>
           {items.map((item) => (
-            <Chips
+            <Button
               key={item.id}
-              status={item.label === menu ? "pressed" : "enabled"}
-              icon={item.type}
+              type="button"
+              button="pomodoro"
+              state={item.label === menu ? "pressed" : "enabled"}
+              icon={item.type as "concentracion" | "D/Corto" | "D/Largo"}
               onClick={() => {
                 setTime(menuTimes[item.type]);
                 setMenu(item.label);
+                setInitialTime(menuTimes[item.type]);
               }}
             >
               {item.label}
-            </Chips>
+            </Button>
           ))}
         </>
       )}

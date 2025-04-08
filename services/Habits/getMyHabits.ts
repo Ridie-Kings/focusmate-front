@@ -1,15 +1,11 @@
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
-import { TaskType } from "@/interfaces/Task/TaskType";
 
-export async function getMyTask(): Promise<{
-  success: boolean;
-  res: TaskType[];
-}> {
+export async function getMyHabits(): Promise<{ success: boolean; res: any }> {
   try {
     const token = await getToken();
 
-    const res = await apiConnection.get("tasks", {
+    const res = await apiConnection.get("habits", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

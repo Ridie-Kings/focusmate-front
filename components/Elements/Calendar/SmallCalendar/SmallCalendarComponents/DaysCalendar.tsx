@@ -1,5 +1,5 @@
 import { isSameDay } from "date-fns";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 
 interface DaysCalendarProps {
   isToday: (day: Date) => boolean;
@@ -14,23 +14,41 @@ export default function DaysCalendar({
   days,
   setDate,
 }: DaysCalendarProps) {
+  const currentMonth = date?.getMonth();
+
+  const getDayClasses = (day: Date) => {
+    const isCurrentMonth = day.getMonth() === currentMonth;
+    const isTodayDay = isToday(day);
+    const isSelected = date && isSameDay(day, date);
+
+    const baseClasses =
+      "text-center size-10 flex items-center justify-center rounded-full text-sm cursor-pointer transition-colors duration-200";
+    const monthClasses = isCurrentMonth ? "text-black" : "text-gray-400";
+    const todayClasses = isTodayDay
+      ? "border border-secondary-700 text-secondary-700 hover:bg-secondary-700/25"
+      : "hover:bg-secondary-600 hover:text-white-100";
+    const selectedClasses = isSelected ? "bg-secondary-700 text-white-100" : "";
+
+    return `${todayClasses} ${baseClasses}  ${monthClasses} ${selectedClasses}`;
+  };
+
+  const handleDayClick = (day: Date) => {
+    if (isToday(day) && date && isSameDay(day, date)) {
+      setDate(undefined);
+    } else {
+      setDate(day);
+    }
+  };
+
   return (
-    <div className="grid grid-cols-7 space-y-1.5 space-x-0.5">
+    <div className="grid grid-cols-7 gap-1.5">
       {days.map((day, index) => (
         <div
-          key={index}
-          className={`text-center size-10 flex items-center justify-center rounded-full text-sm cursor-pointer transition-colors duration-200 ${
-            date && day.getMonth() === date.getMonth()
-              ? "text-black"
-              : "text-gray-400"
-          } ${
-            isToday(day)
-              ? "bg-primary-green text-white-100"
-              : "hover:bg-secondary-green-hover hover:text-white-100"
-          } ${
-            date && isSameDay(day, date) && "bg-secondary-green text-white-100"
-          }`}
-          onClick={() => setDate(isToday(day) ? undefined : day)}
+          key={`day-${day.toISOString()}`}
+          className={getDayClasses(day)}
+          onClick={() => handleDayClick(day)}
+          aria-selected={date && isSameDay(day, date)}
+          role="gridcell"
         >
           {day.getDate()}
         </div>

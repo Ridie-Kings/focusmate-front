@@ -2,7 +2,7 @@
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 
-export async function DeleteTask({ _id }: { _id: string }): Promise<{
+export async function deleteTask({ _id }: { _id: string }): Promise<{
   success: boolean;
   message: string;
 }> {

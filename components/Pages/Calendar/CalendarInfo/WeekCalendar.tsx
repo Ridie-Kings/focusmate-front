@@ -62,10 +62,10 @@ const WeekCalendarItem = ({
       {days.map((day, index) => (
         <div key={index} className="flex flex-col gap-5 ">
           <div
-            className={`text-xl flex flex-col items-center drop-shadow-lg text-center py-2 border border-primary-green rounded-lg sticky top-0 z-10 ${
+            className={`text-xl flex flex-col items-center drop-shadow-lg text-center py-2 border border-primary-500 rounded-lg sticky top-0 z-10 ${
               isSameDay(new Date(), day)
-                ? "bg-primary-green text-white-100"
-                : "bg-white text-primary-green"
+                ? "bg-primary-500 text-white-100"
+                : "bg-white text-primary-500"
             }`}
           >
             {WeekDay[getDay(day)]}

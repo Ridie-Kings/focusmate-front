@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import HabitsTracker from "@/components/Pages/Habits/HabitsTracker";
 import ListHabits from "@/components/Pages/Habits/ListHabits";
-import { HabitsItemType } from "@/interfaces/Habits/Habits";
+import { HabitsItemType } from "@/interfaces/Habits/HabitsType";
 
 const initialItems: HabitsItemType[] = [
   { id: 1, label: "Estudio", type: "study", done: false, time: "9:30PM" },

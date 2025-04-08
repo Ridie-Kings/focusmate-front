@@ -13,7 +13,7 @@ export default function CurrentDate({
   return (
     <div
       className={`relative overflow-hidden rounded-2xl px-4 py-6 transition-all duration-200 ease-out ${
-        background && "bg-primary-green text-white hover:shadow-lg"
+        background && "bg-primary-500 text-white hover:shadow-lg"
       }`}
     >
       <p className="text-4xl">{format(today, "eeee", { locale: es })}</p>

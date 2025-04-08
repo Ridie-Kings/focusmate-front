@@ -1,9 +1,10 @@
 import Button from "@/components/Reusable/Button";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { CreateTask } from "@/services/Task/CreateTask";
+import { createTask } from "@/services/Task/createTask";
 import { EllipsisVertical } from "lucide-react";
-import { DeleteTask } from "@/services/Task/DeleteTask";
+import { deleteTask } from "@/services/Task/deleteTask";
+import MountainTask from "@/components/Elements/Svg/MountainTask";
 
 export default function ListTask({
   filter,
@@ -45,7 +46,7 @@ export default function ListTask({
       tags: ["tag1", "tag2"],
     };
 
-    const res = await CreateTask({ task });
+    const res = await createTask({ task });
 
     setTasks((prev) => [...prev, res.message]);
 
@@ -57,7 +58,7 @@ export default function ListTask({
   };
 
   const handleDeleteTask = async (id: string) => {
-    const res = await DeleteTask({ _id: id });
+    const res = await deleteTask({ _id: id });
 
     if (res.success) {
       setTasks((prev) => prev.filter((task) => task._id !== id));
@@ -73,25 +74,26 @@ export default function ListTask({
         {tasksRender.length > 0 ? (
           tasksRender.map((task) => (
             <li key={task._id} className="flex gap-2 group">
-              <div className="h-full w-0 rounded-full bg-primary-green/25 group-hover:w-1 transition-all duration-200" />
+              <div className="h-full w-0 rounded-full bg-primary-500/25 group-hover:w-1 transition-all duration-200" />
               <div className="flex w-full p-4 items-center justify-between bg-[#ecf3f0] rounded-lg">
-                <p className="text-primary-green">{task.title}</p>
+                <p className="text-primary-500">{task.title}</p>
                 <div className="flex gap-1">
                   <PriorityBadge priority={task.priority} />
                   <EllipsisVertical
                     onClick={() => handleDeleteTask(task._id)}
-                    className="text-primary-green cursor-pointer"
+                    className="text-primary-500 cursor-pointer"
                   />
                 </div>
               </div>
             </li>
           ))
         ) : (
-          <p className="text-gray-500 text-center">
-            {filter !== ""
-              ? `No tienes task ${filter} .`
-              : "No tienes ningun task"}
-          </p>
+          <div className="flex flex-col items-center justify-center h-[265px]">
+            <MountainTask />
+            <p className="text-primary-500 text-xl">
+              El día está en blanco. ¡Agregá tus tareas!
+            </p>
+          </div>
         )}
       </div>
       <Button onClick={handleCreateTask} button="tertiary" type="button">

@@ -14,7 +14,7 @@ export default function TimelineCard({ event }: { event: EventType }) {
   };
 
   return (
-    <div className="w-full h-26 bg-primary-green text-white px-2 py-4 rounded-lg flex flex-col justify-between transition-all duration-300 ease-in-out">
+    <div className="w-full h-26 bg-primary-500 text-white px-2 py-4 rounded-lg flex flex-col justify-between transition-all duration-300 ease-in-out">
       <p>{event.title}</p>
       <div className="flex items-center justify-between w-full">
         <span className="flex flex-col items-center gap-1">
@@ -26,7 +26,7 @@ export default function TimelineCard({ event }: { event: EventType }) {
           </p>
           <p className="text-xs text-white font-medium">Empieza</p>
         </span>
-        <p className="bg-secondary-green px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-black">
+        <p className="bg-secondary-700 px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-black">
           {formatDuration(event.date.start, event.date.end)}
         </p>
         <span className="flex flex-col items-center gap-1">

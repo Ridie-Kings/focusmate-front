@@ -2,7 +2,7 @@
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 
-export async function CreateTask({
+export async function createTask({
   task,
 }: {
   task: {

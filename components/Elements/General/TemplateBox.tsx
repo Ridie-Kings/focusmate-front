@@ -1,6 +1,6 @@
 import React from "react";
 import Divider from "./Divider";
-import GoTo from "@/components/Pages/Dashboard/GoTo";
+import GoTo from "@/components/Elements/General/TemplateBox/GoTo";
 
 export default function TemplateBox({
   children,
@@ -16,11 +16,13 @@ export default function TemplateBox({
   return (
     <>
       <div
-        className={`relative border-2 rounded-xl p-3 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} flex flex-col gap-4`}
+        className={`relative border-1 border-primary-200 rounded-xl p-3 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} flex flex-col gap-4`}
       >
         {title !== "" && (
           <div className="w-full flex flex-col gap-4">
-            <p className={`text-center text-lg 2xl:text-2xl`}>{title}</p>
+            <p className={`text-center text-xl 2xl:text-2xl text-primary-500`}>
+              {title}
+            </p>
             <Divider />
           </div>
         )}

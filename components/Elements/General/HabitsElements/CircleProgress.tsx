@@ -12,7 +12,6 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
   doneCount,
   habits,
 }) => {
-  // Memoize calculations to prevent unnecessary re-renders
   const progressDetails = useMemo(() => {
     const radius = 100;
     const circumference = 2 * Math.PI * radius;
@@ -27,17 +26,15 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
     };
   }, [percent]);
 
-  // Ensure percent is between 0 and 100
   const safePercent = Math.min(Math.max(percent, 0), 100);
 
   return (
-    <div className="relative flex items-center justify-center text-primary-green">
+    <div className="relative flex items-center justify-center text-primary-500">
       <svg
         className="transform -rotate-90 w-72 h-72"
         aria-label={`Progress: ${safePercent}%`}
         role="img"
       >
-        {/* Background circle avec extrémités arrondies */}
         <circle
           cx="145"
           cy="145"
@@ -46,10 +43,9 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
           strokeWidth="10"
           strokeLinecap="round"
           fill="transparent"
-          className="text-gray-100/30"
+          className="text-secondary-200"
         />
 
-        {/* Progress circle avec extrémités arrondies */}
         <circle
           cx="145"
           cy="145"
@@ -60,11 +56,10 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
           fill="transparent"
           strokeDasharray={progressDetails.circumference}
           strokeDashoffset={progressDetails.strokeDashoffset}
-          className="transition-all duration-300 ease-in-out text-primary-green"
+          className="transition-all duration-300 ease-in-out text-secondary-700"
         />
       </svg>
 
-      {/* Texte centré */}
       <div className="absolute flex flex-col items-center gap-1 text-center">
         <p className="flex items-center text-5xl">
           <span key={safePercent} className="animate-opacStart">

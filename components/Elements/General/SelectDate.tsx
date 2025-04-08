@@ -13,7 +13,6 @@ export default function SelectDate({
   dateType,
   dates,
 }: SelectDateProps) {
-  
   const getFullDate = (date: Date | undefined): string => {
     if (!date) return dates[0].toString();
 
@@ -33,7 +32,7 @@ export default function SelectDate({
     <select
       onChange={(e) => handleDateChange(e.target.value)}
       value={getFullDate(date)}
-      className="rounded-sm pl-2 pr-1 text-primary-green cursor-pointer"
+      className="rounded-sm pl-2 pr-1 text-primary-500 cursor-pointer"
     >
       {dates.map((dateValue) => (
         <option key={dateValue} value={dateValue}>

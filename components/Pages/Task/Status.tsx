@@ -109,7 +109,7 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
 
   return (
     <div className="flex-1 shrink-0">
-      <div className="flex flex-col text-sm border border-primary-green text-primary-green rounded-lg px-3 py-2">
+      <div className="flex flex-col text-sm border border-primary-500 text-primary-500 rounded-lg px-3 py-2">
         <h3>{title}</h3>
         <span className="rounded text-sm animate-opacStart">
           {filteredCards.length}

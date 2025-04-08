@@ -1,7 +1,7 @@
 "use client";
 import { Minus, Plus } from "lucide-react";
-import MenuPomodoroButtons from "../../Elements/General/MenuPomodoroButtons";
-import BarTimer from "../../Elements/General/BarTimer";
+import MenuPomodoroButtons from "../Dashboard/Pomodoro/Timer/MenuPomodoroButtons";
+import BarTimer from "../Dashboard/Pomodoro/Timer/BarTimer";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import Commands from "../../Elements/General/PomodoroComponent/Commands";
 import { TimerContext } from "@/components/Provider/TimerProvider";
@@ -104,21 +104,21 @@ export default function Timer() {
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
           onClick={() => !isPlaying && updateTime(-60)}
-          className="text-primary-green"
+          className="text-primary-500"
           size={48}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",
             color: isPlaying ? "gray" : "#014e44",
           }}
         />
-        <p className="flex flex-wrap justify-center text-primary-green text-[17.5rem] flex-1 font-semibold gap-4 cursor-default">
+        <p className="flex flex-wrap justify-center text-primary-500 text-[17.5rem] flex-1 font-semibold gap-4 cursor-default">
           {time.hours > 0 && renderDigits(time.hours)}
           {renderDigits(time.min)}
           {renderDigits(time.seg)}
         </p>
         <Plus
           onClick={() => !isPlaying && updateTime(60)}
-          className="text-primary-green"
+          className="text-primary-500"
           size={48}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",
