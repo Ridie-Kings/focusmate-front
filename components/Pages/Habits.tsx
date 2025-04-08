@@ -1,17 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import ListHabits from "../Elements/Habits/ListHabits";
-import HabitsTracker from "../Elements/Habits/HabitsTracker";
 
-export type itemsType = {
-  id: number;
-  label: string;
-  type: string;
-  done: boolean;
-  time: string;
-};
+import HabitsTracker from "@/components/Pages/Habits/HabitsTracker";
+import ListHabits from "@/components/Pages/Habits/ListHabits";
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
-const initialItems: itemsType[] = [
+const initialItems: HabitsItemType[] = [
   { id: 1, label: "Estudio", type: "study", done: false, time: "9:30PM" },
   { id: 2, label: "Comida", type: "food", done: false, time: "9:30PM" },
   { id: 3, label: "Dormir", type: "sleep", done: true, time: "9:30PM" },
@@ -19,19 +13,19 @@ const initialItems: itemsType[] = [
 ];
 
 export default function Habits() {
-  const [habits, setHabits] = useState<itemsType[]>(initialItems);
+  const [habits, setHabits] = useState<HabitsType[]>(initialItems);
   const [porcent, setPorcent] = useState(0);
 
   useEffect(() => {
-    const doneCount = habits.filter((habit) => habit.done).length;
+    const doneCount = habits.filter((habit) => habit.status).length;
     const percent = Math.round((doneCount / habits.length) * 100);
     setPorcent(percent);
   }, [habits]);
 
-  const handleToggle = (id: number) => {
+  const handleToggle = (id: string) => {
     setHabits((prev) =>
       prev.map((habit) =>
-        habit.id === id ? { ...habit, done: !habit.done } : habit
+        habit._id === id ? { ...habit, done: !habit.status } : habit
       )
     );
   };
@@ -40,10 +34,10 @@ export default function Habits() {
     <section className="flex flex-1">
       <HabitsTracker
         porcent={porcent}
-        doneCount={habits.filter((h) => h.done).length}
+        doneCount={habits.filter((h) => h.status).length}
         items={habits}
       />
-      <ListHabits items={habits} handleToggle={handleToggle} />
+      <ListHabits items={habits} setHabits={setHabits} />
     </section>
   );
 }

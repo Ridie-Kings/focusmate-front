@@ -1,44 +1,40 @@
-"use client";
-import { Bell, Search } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import NotificationMenu from "../Elements/Notification/NotificationMenu";
+import { Search } from "lucide-react";
+import Notification from "./TopBar/Notification";
+import PageTitle from "./TopBar/PageTitle";
+import { getMyProfile } from "@/services/Profile/getMyProfile";
+import Image from "next/image";
 
-export default function TopBar() {
-  const pathname = usePathname();
-  const [notifOpen, setNotifOpen] = useState<boolean>(false);
+export default async function TopBar() {
+  const profil = await getMyProfile();
 
-  const title = () => {
-    if (pathname === "/") return "Dashboard";
-    if (pathname === "/task") return "Tus Task";
-    if (pathname === "/calendar") return "Calendar";
-    if (pathname === "/habitaciones") return "Habitaciones";
-    if (pathname === "/habits") return "Mis Hábitos";
-    return "Dashboard";
-  };
   return (
-    <section className="flex place-content-between p-6 w-full">
+    <header className="flex place-content-between p-6 w-full border-b border-primary-200 bg-white">
       <div className="flex flex-col flex-1">
-        <h1 className="text-5xl ">{title()}</h1>
-        <p className="text-lg">Bienvenido, Mateo!</p>
+        <p className="text-lg text-primary-500">
+          Bienvenido, {profil?.user.fullname}!
+        </p>
+        <PageTitle />
       </div>
       <div className="flex items-end justify-end gap-3 flex-1">
         <Search
           size={36}
-          className="border border-accent cursor-pointer rounded-full text-accent p-2"
+          className="border border-secondary-700 cursor-pointer rounded-full bg-secondary-100 text-secondary-700 p-2"
         />
-        <div className="relative">
-          <Bell
-            size={36}
-            onClick={() => setNotifOpen(!notifOpen)}
-            className="border border-accent cursor-pointer rounded-full text-accent p-2"
+        <Notification />
+        <div className="overflow-hidden rounded-full cursor-pointer size-9">
+          <Image
+            src={
+              profil && profil?.avatar !== ""
+                ? profil?.avatar
+                : "/images/errors/errorImage.png"
+            }
+            width={36}
+            height={36}
+            alt="avatar"
+            className="w-full h-full object-contain"
           />
-          {notifOpen && (
-            <NotificationMenu onClick={() => setNotifOpen(false)} />
-          )}
         </div>
-        <div className="rounded-full bg-gray-100 size-9 cursor-pointer"></div>
       </div>
-    </section>
+    </header>
   );
 }

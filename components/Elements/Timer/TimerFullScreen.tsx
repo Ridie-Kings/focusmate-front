@@ -6,8 +6,8 @@ import TimerContainer from "./TimerComponent/TimerContainer";
 export default function TimerFullScreen() {
   const { setIsOpen, setTime, time } = useContext(TimerContext);
   return (
-    <main className="w-full h-screen flex items-center justify-center p-1 absolute left-0 top-0 z-60 bg-white animate-opacStart">
-      <div className="bg-primary-green-hover w-full h-full rounded-2xl flex flex-col items-center justify-center overflow-hidden relative">
+    <main className="w-full h-screen flex items-center justify-center p-1 fixed left-0 top-0 z-60 bg-white animate-opacStart">
+      <div className="bg-primary-500-hover w-full h-full rounded-2xl flex flex-col items-center justify-center overflow-hidden relative">
         <svg
           width="1440"
           height="1024"

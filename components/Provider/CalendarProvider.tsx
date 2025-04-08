@@ -1,15 +1,7 @@
 "use client";
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useState,
-} from "react";
+import { CalendarContextType } from "@/interfaces/Calendar/CalendarType";
+import { createContext, useState } from "react";
 
-type CalendarContextType = {
-  date: Date | undefined;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
-};
 export const CalendarContext = createContext<CalendarContextType>({
   date: new Date(),
   setDate: () => {},

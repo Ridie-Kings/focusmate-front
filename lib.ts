@@ -6,14 +6,13 @@ import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 export async function getToken() {
   const existedCookies = await cookies();
-  return existedCookies.get("token")?.value;
+  return existedCookies.get("session")?.value;
 }
 
 export async function updateSession(req: NextRequest) {
   const existedCookies = await cookies();
   const accessToken = await getToken();
   const refreshToken = existedCookies.get("session");
-  const url = req.url;
   const { pathname } = req.nextUrl;
   const publicPaths = new Set(["/login", "/register"]);
 
@@ -21,11 +20,11 @@ export async function updateSession(req: NextRequest) {
 
   if (!pathname.includes(".")) {
     if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
-      // return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
+      return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
     }
 
     if (accessToken && refreshToken && publicPaths.has(pathname)) {
-      // return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+      return NextResponse.redirect(new URL("/", req.nextUrl.origin));
     }
   }
 }
@@ -50,9 +49,14 @@ export async function refreshSession(refreshToken: RequestCookie | undefined) {
   }
 }
 
-export async function logout(req: NextRequest) {
+export async function logout() {
   const existedCookies = await cookies();
-  const url = req.url;
+  const token = await getToken();
+
+  const res = await apiConnection.post("auth/logout", {
+    Authorization: `Bearer ${token}`,
+  });
+
   existedCookies.set("token", "", {
     expires: new Date(0),
     path: "/",
@@ -65,5 +69,4 @@ export async function logout(req: NextRequest) {
     secure: true,
     httpOnly: true,
   });
-  return NextResponse.redirect(new URL("/login", url));
 }

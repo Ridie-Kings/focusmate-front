@@ -1,3 +1,5 @@
+import { Dispatch, DragEvent, SetStateAction } from "react";
+
 export type StatusType =
   | "pending"
   | "progress"
@@ -17,4 +19,25 @@ export type TaskType = {
   category: string;
   subTasks: TaskType[];
   dueDate: Date;
+};
+
+export type StatusProps = {
+  title: string;
+  cards: TaskType[];
+  status: StatusType;
+  setCards: Dispatch<SetStateAction<TaskType[]>>;
+};
+
+export type DropIndicatorProps = {
+  beforeId: string | null;
+  status: string;
+};
+
+export type CardProps = TaskType & {
+  handleDragStart: (e: DragEvent<Element>, card: TaskType) => void; // Updated function type
+};
+
+export type AddCardProps = {
+  status: StatusType;
+  setCards: Dispatch<SetStateAction<TaskType[]>>;
 };
