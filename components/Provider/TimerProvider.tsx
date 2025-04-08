@@ -2,6 +2,7 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import { TimerContextType, TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import TimerFullScreen from "../Elements/Timer/TimerFullScreen";
+import { startTimer } from "@/services/Timers/startTimer";
 
 export const TimerContext = createContext<TimerContextType>({
   isOpen: false,
@@ -71,8 +72,13 @@ export default function TimerProvider({
     });
   };
 
-  const togglePlay = () => {
+  const togglePlay = async () => {
     setIsPlay((prev) => !prev);
+    // if (isPlay) {
+    //   const res = await startTimer({ task: "test task", title: "test title" });
+    // } else {
+    //   const res = await
+    // }
   };
 
   const resetTimer = () => {

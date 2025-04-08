@@ -91,7 +91,7 @@ export default function ListTask({
           <div className="flex flex-col items-center justify-center h-[265px]">
             <MountainTask />
             <p className="text-primary-500 text-xl">
-              El día está en blanco. ¡Agregá tus tareas!
+              El día está en blanco. ¡Agregá tus tareas {filter}!
             </p>
           </div>
         )}

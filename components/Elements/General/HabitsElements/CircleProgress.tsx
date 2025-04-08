@@ -1,10 +1,10 @@
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import React, { useMemo } from "react";
-import { itemsType } from "@/components/Pages/Habits";
 
 type CircleProgressBarProps = {
   percent: number;
   doneCount: number;
-  habits: itemsType[];
+  habits: HabitsType[];
 };
 
 const CircleProgressBar: React.FC<CircleProgressBarProps> = ({

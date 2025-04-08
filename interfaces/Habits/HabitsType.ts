@@ -1,5 +1,5 @@
 export type HabitsType = {
-  _id: number;
+  _id: string;
   bestStreak: number;
   completedDates: Date[];
   createdAt: Date;

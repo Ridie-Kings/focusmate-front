@@ -1,11 +1,15 @@
 "use client";
+
 import { useEffect, useState } from "react";
+
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import CircleProgressBar from "@/components/Elements/General/HabitsElements/CircleProgress";
 import HabitsList from "@/components/Elements/General/HabitsElements/HabitsList";
 import Button from "@/components/Reusable/Button";
+
 import { createHabit } from "@/services/Habits/createHabit";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import MountainHabits from "@/components/Elements/Svg/MountainHabits";
 
 export default function Habits({ habits }: { habits: HabitsType[] }) {
   const [habitsList, setHabitsList] = useState<HabitsType[]>([]);
@@ -29,8 +33,11 @@ export default function Habits({ habits }: { habits: HabitsType[] }) {
       description: "habit test description",
       frequency: "daily",
     };
+
     const res = await createHabit({ habit });
+
     setHabitsList((prev) => [...prev, habit]);
+
     if (res.success) {
       console.log("habit created", res.res);
     } else {
@@ -61,7 +68,17 @@ export default function Habits({ habits }: { habits: HabitsType[] }) {
           </div>
         </div>
       </div>
-      <HabitsList habits={habitsList} setHabits={setHabitsList} />
+      {habitsList.length > 0 ? (
+        <HabitsList habits={habitsList} setHabits={setHabitsList} />
+      ) : (
+        <>
+          <MountainHabits />
+          <div className="flex flex-col items-center text-primary-500 gap-1">
+            <p className="text-xl">¡Ups! No hay hábitos por aquí...</p>
+            <p> Creá uno y empezá a sumar pequeños logros</p>
+          </div>
+        </>
+      )}
       <Button onClick={handleCreateHabit} button="tertiary" type="button">
         Nuevo Habito
       </Button>

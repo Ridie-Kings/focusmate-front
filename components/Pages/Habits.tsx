@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import HabitsTracker from "@/components/Pages/Habits/HabitsTracker";
 import ListHabits from "@/components/Pages/Habits/ListHabits";
-import { HabitsItemType } from "@/interfaces/Habits/HabitsType";
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 const initialItems: HabitsItemType[] = [
   { id: 1, label: "Estudio", type: "study", done: false, time: "9:30PM" },
@@ -13,19 +13,19 @@ const initialItems: HabitsItemType[] = [
 ];
 
 export default function Habits() {
-  const [habits, setHabits] = useState<HabitsItemType[]>(initialItems);
+  const [habits, setHabits] = useState<HabitsType[]>(initialItems);
   const [porcent, setPorcent] = useState(0);
 
   useEffect(() => {
-    const doneCount = habits.filter((habit) => habit.done).length;
+    const doneCount = habits.filter((habit) => habit.status).length;
     const percent = Math.round((doneCount / habits.length) * 100);
     setPorcent(percent);
   }, [habits]);
 
-  const handleToggle = (id: number) => {
+  const handleToggle = (id: string) => {
     setHabits((prev) =>
       prev.map((habit) =>
-        habit.id === id ? { ...habit, done: !habit.done } : habit
+        habit._id === id ? { ...habit, done: !habit.status } : habit
       )
     );
   };
@@ -34,10 +34,10 @@ export default function Habits() {
     <section className="flex flex-1">
       <HabitsTracker
         porcent={porcent}
-        doneCount={habits.filter((h) => h.done).length}
+        doneCount={habits.filter((h) => h.status).length}
         items={habits}
       />
-      <ListHabits items={habits} handleToggle={handleToggle} />
+      <ListHabits items={habits} setHabits={setHabits} />
     </section>
   );
 }

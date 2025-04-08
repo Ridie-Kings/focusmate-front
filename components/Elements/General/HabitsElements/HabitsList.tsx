@@ -9,9 +9,12 @@ import {
   Clock,
   EllipsisVertical,
 } from "lucide-react";
-import { HabitsType } from "@/interfaces/Habits/HabitsType";
+
 import { Dispatch, SetStateAction } from "react";
+
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import { updateHabit } from "@/services/Habits/updateHabit";
+import { removeHabit } from "@/services/Habits/removeHabit";
 
 export default function HabitsList({
   habits,
@@ -60,14 +63,45 @@ export default function HabitsList({
     }
   };
 
-  const handleToggle = (id: number) => {
+  const handleToggle = async (id: string) => {
     const updatedHabits = habits.map((habit) =>
       habit._id === id ? { ...habit, status: !habit.status } : habit
     );
     setHabits(updatedHabits);
-    const res = updateHabit({
-      habit: updatedHabits.find((prev) => prev._id === id),
-    });
+
+    const habitToUpdate = updatedHabits.find((habit) => habit._id === id);
+    if (habitToUpdate) {
+      try {
+        const res = await updateHabit({
+          habit: habitToUpdate,
+        });
+        console.log("Habit updated:", res);
+      } catch (error) {
+        console.error("Error updating habit:", error);
+        setHabits(habits);
+      }
+    }
+  };
+
+  const handleRemoveHabit = async (_id: string) => {
+    const habitToRemove = habits.find((habit) => habit._id === _id);
+
+    if (!habitToRemove) return;
+
+    setHabits((prev) => prev.filter((habit) => habit._id !== _id));
+
+    try {
+      const res = await removeHabit({ _id });
+      if (res.success) {
+        console.log("Habit deleted:", res.res);
+      } else {
+        console.error("Failed to delete habit:", res.res);
+        setHabits((prev) => [...prev, habitToRemove]);
+      }
+    } catch (error) {
+      console.error("Error deleting habit:", error);
+      setHabits((prev) => [...prev, habitToRemove]);
+    }
   };
 
   return (
@@ -98,6 +132,7 @@ export default function HabitsList({
             </div>
             <EllipsisVertical
               size={24}
+              onClick={() => handleRemoveHabit(habit._id)}
               className="text-primary-500 group-hover:text-white cursor-pointer transition-all duration-300"
             />
           </div>
@@ -107,7 +142,7 @@ export default function HabitsList({
             onChange={() => handleToggle(habit._id)}
             className={`cursor-pointer size-6 border-2 rounded appearance-none ${
               habit.status
-                ? "bg-primary-500 border-primary-bg-primary-500"
+                ? "bg-primary-500 border-primary-500"
                 : "bg-white border-black"
             }`}
           />
