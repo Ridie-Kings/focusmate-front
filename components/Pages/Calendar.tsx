@@ -1,7 +1,7 @@
 "use client";
 
-import CalendarInfo from "@/components/Elements/Pages/Calendar/CalendarInfo";
-import Categories from "@/components/Elements/Pages/Calendar/Categories";
+import CalendarInfo from "@/components/Pages/Calendar/CalendarInfo";
+import Categories from "@/components/Pages/Calendar/Categories";
 import Calendar from "@/components/Elements/General/Calendar";
 import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "../Provider/CalendarProvider";

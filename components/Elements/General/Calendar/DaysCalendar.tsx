@@ -25,10 +25,10 @@ export default function DaysCalendar({
               : "text-gray-400"
           } ${
             isToday(day)
-              ? "bg-primary-green text-white-100"
-              : "hover:bg-secondary-green-hover hover:text-white-100"
+              ? "bg-primary-500 text-white-100"
+              : "hover:bg-secondary-700-hover hover:text-white-100"
           } ${
-            date && isSameDay(day, date) && "bg-secondary-green text-white-100"
+            date && isSameDay(day, date) && "bg-secondary-700 text-white-100"
           }`}
           onClick={() => setDate(isToday(day) ? undefined : day)}
         >

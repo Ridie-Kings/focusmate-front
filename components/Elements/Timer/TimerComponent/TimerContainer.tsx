@@ -6,11 +6,11 @@ import {
   useMemo,
   useState,
 } from "react";
-import MenuPomodoroButtons from "@/components/Elements/General/MenuPomodoroButtons";
-import BarTimer from "@/components/Elements/General/BarTimer";
+import MenuPomodoroButtons from "@/components/Pages/Dashboard/Pomodoro/Timer/MenuPomodoroButtons";
+import BarTimer from "@/components/Pages/Dashboard/Pomodoro/Timer/BarTimer";
 import { Minus, Plus } from "lucide-react";
-import Commands from "@/components/Elements/General/PomodoroComponent/Commands";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
+import Commands from "@/components/Pages/Dashboard/Pomodoro/Timer/Commands";
 
 export default function TimerContainer({
   fullScreen = false,

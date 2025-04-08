@@ -1,16 +1,28 @@
 export default function PriorityBadge({ priority }: { priority: string }) {
   return (
-    <div className="flex gap-2 px-2 h-7 w-18 items-center place-content-between font-medium rounded-full bg-gray-100">
+    <div
+      className={`${
+        priority === "high"
+          ? "bg-[#fccbca] border border-[#f3403b]"
+          : priority === "medium"
+          ? "bg-[#ffeccd] border border-[#f27e11]"
+          : priority === "low"
+          ? "bg-[#aad1c4] border border-[#248277]"
+          : "bg-black/25 border border-black"
+      } flex gap-2 py-1 px-2 items-center place-content-between font-medium rounded-full`}
+    >
       <div
         className={`w-4 h-4 rounded-full ${
           priority === "high"
-            ? "bg-red-500"
+            ? "bg-[#f3403b]"
             : priority === "medium"
-            ? "bg-yellow-500"
-            : "bg-green-500"
+            ? "bg-[#f27e11]"
+            : priority === "low"
+            ? "bg-[#248277]"
+            : "bg-black"
         }`}
       />
-      <p className="text-sm text-gray-600">{priority}</p>
+      <p className="text-xs text-gray-600">{priority ?? "Unknown Priority"}</p>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Board } from "@/components/Elements/Pages/Task/Board";
+import { Board } from "@/components/Pages/Task/Board";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default async function Task() {
