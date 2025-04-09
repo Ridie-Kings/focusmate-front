@@ -6,13 +6,12 @@ import {
   endOfWeek,
   format,
   isSameDay,
-  isSameMonth,
   startOfMonth,
   startOfWeek,
   subMonths,
 } from "date-fns";
 import { es } from "date-fns/locale";
-import { ArrowLeft, ArrowRight, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Dispatch, SetStateAction, memo, useMemo } from "react";
 import Dot from "@/components/Elements/General/Dot";
 
@@ -40,8 +39,8 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
         ${isCurrentMonth ? "text-black" : "text-gray-400"}
         ${
           isToday
-            ? "bg-primary-green text-white-100"
-            : "hover:bg-secondary-green hover:text-white-100"
+            ? "bg-primary-500 text-white-100"
+            : "hover:bg-secondary-700 hover:text-white-100"
         }`}
       aria-label={format(day, "EEEE, d MMMM yyyy", { locale: es })}
     >

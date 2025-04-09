@@ -26,7 +26,7 @@ export default function Animate() {
   return (
     <TemplateDashboard
       title="¿Como te sientes hoy?"
-      grid="text-base"
+      grid="text-base items-center"
       link="/animate"
     >
       <ul className="flex gap-2 lg:p-0 p-2">

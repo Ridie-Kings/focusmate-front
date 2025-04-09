@@ -1,3 +1,4 @@
+import HiddenTimerPlant from "@/components/Elements/Svg/HiddenTimerPlant";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { Dispatch, SetStateAction, useState, useRef, useEffect } from "react";
 
@@ -6,7 +7,6 @@ export default function Time({
   time,
   updateTime,
   isPlay,
-  choseUpdate,
   setChoseUpdate,
 }: {
   hiddenTime: boolean;
@@ -83,8 +83,8 @@ export default function Time({
   }, [time.hours]);
 
   return (
-    <div className="flex gap-4 text-8xl text-primary-green font-light relative">
-      {!hiddenTime && (
+    <div className="flex gap-4 text-8xl text-primary-500 font-light relative">
+      {!hiddenTime ? (
         <p
           className={`
             transition-all duration-200
@@ -152,9 +152,7 @@ export default function Time({
           )}
           :
           <span
-            className={`cursor-pointer transition-colors duration-300 ${
-              choseUpdate === "seg" ? "text-gray-100" : ""
-            }`}
+            className="cursor-pointer transition-colors duration-300"
             onClick={() =>
               setChoseUpdate((prev) => (prev === "seg" ? "" : "seg"))
             }
@@ -162,6 +160,8 @@ export default function Time({
             {String(time.seg).padStart(2, "0")}
           </span>
         </p>
+      ) : (
+        <HiddenTimerPlant />
       )}
     </div>
   );

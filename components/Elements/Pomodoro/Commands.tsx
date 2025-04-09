@@ -56,7 +56,7 @@ export default function Commands({
             className={`cursor-pointer ${
               fullScreen
                 ? "text-white "
-                : " text-primary-green bg-secondary-green/25"
+                : " text-primary-500 bg-secondary-700/25"
             }  rounded-2xl ${
               [0, 2].includes(index) ? "p-3 2xl:p-4" : "p-7 2xl:p-8"
             }`}

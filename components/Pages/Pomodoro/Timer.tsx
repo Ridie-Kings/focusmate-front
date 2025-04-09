@@ -1,16 +1,17 @@
 "use client";
 import { Minus, Plus } from "lucide-react";
-import MenuPomodoroButtons from "../../Elements/General/MenuPomodoroButtons";
-import BarTimer from "../../Elements/General/BarTimer";
+import BarTimer from "../../Elements/Pomodoro/BarTimer";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import Commands from "../../Elements/General/PomodoroComponent/Commands";
 import { TimerContext } from "@/components/Provider/TimerProvider";
+import TypeTimeButtons from "../../Elements/Pomodoro/TypeTimeButtons";
+import Commands from "@/components/Elements/Pomodoro/Commands";
 
 export default function Timer() {
   const [menu, setMenu] = useState<string>("concentracion");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-  const { setTime, time } = useContext(TimerContext);
+  const { setTime, time, setInitialTime, initialTime } =
+    useContext(TimerContext);
 
   const menuTimes = useMemo(
     () => ({
@@ -56,10 +57,6 @@ export default function Timer() {
     });
   }, []);
 
-  // const handleMenuChange = useCallback((label: string) => {
-  //   setMenu(label);
-  // }, []);
-
   const handleTogglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
   }, []);
@@ -100,25 +97,30 @@ export default function Timer() {
 
   return (
     <div className="w-1/2 max-h-[95vh] overflow-hidden flex-1 flex flex-col place-content-between items-center border border-accent p-4 gap-6 rounded-2xl">
-      <MenuPomodoroButtons setMenu={setMenu} setTime={setTime} menu={menu} />
+      <TypeTimeButtons
+        setInitialTime={setInitialTime}
+        setMenu={setMenu}
+        setTime={setTime}
+        menu={menu}
+      />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
           onClick={() => !isPlaying && updateTime(-60)}
-          className="text-primary-green"
+          className="text-primary-500"
           size={48}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",
             color: isPlaying ? "gray" : "#014e44",
           }}
         />
-        <p className="flex flex-wrap justify-center text-primary-green text-[17.5rem] flex-1 font-semibold gap-4 cursor-default">
+        <p className="flex flex-wrap justify-center text-primary-500 text-[17.5rem] flex-1 font-semibold gap-4 cursor-default">
           {time.hours > 0 && renderDigits(time.hours)}
           {renderDigits(time.min)}
           {renderDigits(time.seg)}
         </p>
         <Plus
           onClick={() => !isPlaying && updateTime(60)}
-          className="text-primary-green"
+          className="text-primary-500"
           size={48}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",
@@ -126,7 +128,7 @@ export default function Timer() {
           }}
         />
       </div>
-      <BarTimer />
+      <BarTimer time={time} initialTime={initialTime} />
       <Commands handleClick={handleClick} isPlay={isPlaying} />
     </div>
   );

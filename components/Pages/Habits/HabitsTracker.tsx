@@ -1,7 +1,7 @@
 import CircleProgressBar from "@/components/Elements/General/HabitsElements/CircleProgress";
 import { useState } from "react";
 import Calendar from "@/components/Elements/General/Calendar";
-import { HabitsItemType } from "@/interfaces/Habits/Habits";
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 export default function HabitsTracker({
   porcent,
@@ -10,7 +10,7 @@ export default function HabitsTracker({
 }: {
   porcent: number;
   doneCount: number;
-  items: HabitsItemType[];
+  items: HabitsType[];
 }) {
   const [date, setDate] = useState<Date | undefined>(new Date());
 

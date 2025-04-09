@@ -18,6 +18,8 @@ export type TaskType = {
   tags: string[];
   category: string;
   subTasks: TaskType[];
+  startDate: Date;
+  endDate: Date;
   dueDate: Date;
 };
 

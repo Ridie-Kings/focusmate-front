@@ -78,7 +78,7 @@ export const AddCard = ({ status, setCards }: AddCardProps) => {
         <motion.button
           layout
           onClick={() => setAdding(true)}
-          className="flex w-full items-center justify-center border cursor-pointer gap-2 p-2 transition-colors  border-primary-green rounded-lg bg-secondary-green/25 text-primary-green"
+          className="flex w-full items-center justify-center border cursor-pointer gap-2 p-2 transition-colors  border-primary-500 rounded-lg bg-secondary-700/25 text-primary-500"
         >
           <Plus />
           <span>Nueva Tarea</span>

@@ -6,20 +6,24 @@ import {
   useMemo,
   useState,
 } from "react";
-import MenuPomodoroButtons from "@/components/Elements/General/MenuPomodoroButtons";
-import BarTimer from "@/components/Elements/General/BarTimer";
+import TypeTimeButtons from "@/components/Elements/Pomodoro/TypeTimeButtons";
+import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
 import { Minus, Plus } from "lucide-react";
-import Commands from "@/components/Elements/General/PomodoroComponent/Commands";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
+import Commands from "@/components/Elements/Pomodoro/Commands";
 
 export default function TimerContainer({
   fullScreen = false,
   time,
   setTime,
+  initialTime,
+  setInitialTime,
 }: {
   time: TimeType;
   setTime: Dispatch<SetStateAction<TimeType>>;
   fullScreen?: boolean;
+  initialTime: TimeType;
+  setInitialTime: Dispatch<SetStateAction<TimeType>>;
 }) {
   const [menu, setMenu] = useState("concentracion");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -91,7 +95,8 @@ export default function TimerContainer({
 
   return (
     <div className="w-4/6 flex flex-col gap-3 z-10">
-      <MenuPomodoroButtons
+      <TypeTimeButtons
+        setInitialTime={setInitialTime}
         setTime={setTime}
         setMenu={setMenu}
         menu={menu}
@@ -124,7 +129,7 @@ export default function TimerContainer({
           }}
         />
       </div>
-      <BarTimer />
+      <BarTimer time={time} initialTime={initialTime} />
       <Commands
         handleClick={handleClick}
         isPlay={isPlaying}

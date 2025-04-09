@@ -11,7 +11,7 @@ export default function Notification() {
       <Bell
         size={36}
         onClick={() => setNotifOpen(!notifOpen)}
-        className="border border-accent cursor-pointer rounded-full text-accent p-2"
+        className="border border-primary-300 cursor-pointer rounded-full text-primary-300 p-2"
       />
       {notifOpen && <NotificationMenu onClick={() => setNotifOpen(false)} />}
     </div>

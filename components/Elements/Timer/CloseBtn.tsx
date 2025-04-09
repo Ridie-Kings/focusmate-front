@@ -1,10 +1,9 @@
 import { X } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
 
 export default function CloseBtn({
   setIsOpen,
 }: {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: (type: boolean) => void;
 }) {
   return (
     <div

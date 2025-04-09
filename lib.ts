@@ -33,7 +33,7 @@ export async function refreshSession(refreshToken: RequestCookie | undefined) {
   try {
     const existedCookies = await cookies();
     const res = await apiConnection.post("auth/refresh", { refreshToken });
-    const newAccessToken = res.data.accessToken;
+    const newAccessToken = res?.data.accessToken;
     if (!newAccessToken) {
       console.error("Failed to refresh session: No access token returned");
       return undefined;
