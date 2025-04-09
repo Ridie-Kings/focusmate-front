@@ -9,7 +9,7 @@ export default function NavBar({
 }) {
   return (
     <header
-      className={`sticky top-0 left-0 h-screen bg-primary-500 text-white-100 flex flex-col py-6 transition-all duration-300 ease-in-out hover:w-60 hover:px-6 w-16 overflow-hidden z-50 group`}
+      className={`sticky top-0 left-0 h-screen bg-primary-500 flex flex-col py-6 transition-all duration-300 ease-in-out hover:w-60 hover:px-6 w-16 overflow-hidden z-50 group text-secondary-100`}
     >
       <div className="flex items-center gap-3 mb-8 whitespace-nowrap">
         <Sparkles fill="white" size={24} />

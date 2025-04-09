@@ -1,7 +1,7 @@
-import { EventType } from "@/interfaces/Calendar/EventType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import { differenceInMinutes } from "date-fns";
 
-export default function TimelineCard({ event }: { event: EventType }) {
+export default function TimelineCard({ event }: { event: TaskType }) {
   const formatDuration = (start: Date, end: Date) => {
     const totalMinutes = Math.abs(differenceInMinutes(end, start));
     const hours = Math.floor(totalMinutes / 60);
@@ -19,7 +19,7 @@ export default function TimelineCard({ event }: { event: EventType }) {
       <div className="flex items-center justify-between w-full">
         <span className="flex flex-col items-center gap-1">
           <p className="text-sm">
-            {event.date.start.toLocaleTimeString("fr-FR", {
+            {new Date(event.startDate).toLocaleTimeString("es-ES", {
               hour: "2-digit",
               minute: "2-digit",
             })}
@@ -27,11 +27,11 @@ export default function TimelineCard({ event }: { event: EventType }) {
           <p className="text-xs text-white font-medium">Empieza</p>
         </span>
         <p className="bg-secondary-700 px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-black">
-          {formatDuration(event.date.start, event.date.end)}
+          {formatDuration(event.startDate, event.dueDate)}
         </p>
         <span className="flex flex-col items-center gap-1">
           <p className="text-sm">
-            {event.date.end.toLocaleTimeString("fr-FR", {
+            {new Date(event.dueDate).toLocaleTimeString("es-ES", {
               hour: "2-digit",
               minute: "2-digit",
             })}

@@ -25,7 +25,7 @@ export default async function login(
 
     const res = await apiConnection.post("auth/login", userData);
 
-    const { access_token, refresh_token } = res.data;
+    const { access_token, refresh_token } = res?.data;
 
     const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
     const hardExpired = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7j
@@ -51,7 +51,7 @@ export default async function login(
 
     return {
       success: false,
-      message: error.response?.data?.message || "Unexpected error during login",
+      message: error.response?.data || "Unexpected error during login",
     };
   }
 }

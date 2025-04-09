@@ -32,11 +32,12 @@ export default function Habits({ habits }: { habits: HabitsType[] }) {
       name: "Habit test",
       description: "habit test description",
       frequency: "daily",
+      type: "study",
     };
 
     const res = await createHabit({ habit });
 
-    setHabitsList((prev) => [...prev, habit]);
+    setHabitsList((prev) => [...prev, res.res]);
 
     if (res.success) {
       console.log("habit created", res.res);
@@ -44,6 +45,8 @@ export default function Habits({ habits }: { habits: HabitsType[] }) {
       console.log("habit error", res.res);
     }
   };
+
+  console.log(habits);
 
   return (
     <TemplateDashboard
@@ -71,13 +74,13 @@ export default function Habits({ habits }: { habits: HabitsType[] }) {
       {habitsList.length > 0 ? (
         <HabitsList habits={habitsList} setHabits={setHabitsList} />
       ) : (
-        <>
+        <div className="bg-quaternary-100 rounded-2xl py-4">
           <MountainHabits />
           <div className="flex flex-col items-center text-primary-500 gap-1">
             <p className="text-xl">¡Ups! No hay hábitos por aquí...</p>
             <p> Creá uno y empezá a sumar pequeños logros</p>
           </div>
-        </>
+        </div>
       )}
       <Button onClick={handleCreateHabit} button="tertiary" type="button">
         Nuevo Habito

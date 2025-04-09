@@ -28,13 +28,13 @@ export async function register(
 
     return {
       success: true,
-      message: response.data.message || "Registration successful",
+      message: response?.data || "Registration successful",
     };
   } catch (error: any) {
     return {
       success: false,
       message:
-        error.response?.data?.message ||
+        error.response?.data ||
         error.message ||
         "An unexpected error occurred during registration.",
     };

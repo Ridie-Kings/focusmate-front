@@ -35,7 +35,7 @@ export default function StatusCards({
 
   return (
     <ul className="flex w-full gap-3">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <li key={item.label} className="w-1/5">
           <div
             style={{

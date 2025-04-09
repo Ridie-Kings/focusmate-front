@@ -9,12 +9,9 @@ export async function getProfile({ slug }: { slug: string }) {
         Authorization: `Bearer ${token}`,
       },
     });
-    return res.data;
+    return res?.data;
   } catch (error: any) {
-    console.error(
-      `Error fetching user profile ${slug}:`,
-      error.response.data.message
-    );
+    console.error(`Error fetching user profile ${slug}:`, error.response?.data);
     return null;
   }
 }

@@ -7,7 +7,6 @@ export default function Time({
   time,
   updateTime,
   isPlay,
-  choseUpdate,
   setChoseUpdate,
 }: {
   hiddenTime: boolean;

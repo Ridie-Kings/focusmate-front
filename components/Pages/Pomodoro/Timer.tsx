@@ -1,16 +1,17 @@
 "use client";
 import { Minus, Plus } from "lucide-react";
-import MenuPomodoroButtons from "../Dashboard/Pomodoro/Timer/MenuPomodoroButtons";
-import BarTimer from "../Dashboard/Pomodoro/Timer/BarTimer";
+import BarTimer from "../../Elements/Pomodoro/BarTimer";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import Commands from "../../Elements/General/PomodoroComponent/Commands";
 import { TimerContext } from "@/components/Provider/TimerProvider";
+import TypeTimeButtons from "../../Elements/Pomodoro/TypeTimeButtons";
+import Commands from "@/components/Elements/Pomodoro/Commands";
 
 export default function Timer() {
   const [menu, setMenu] = useState<string>("concentracion");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-  const { setTime, time } = useContext(TimerContext);
+  const { setTime, time, setInitialTime, initialTime } =
+    useContext(TimerContext);
 
   const menuTimes = useMemo(
     () => ({
@@ -56,10 +57,6 @@ export default function Timer() {
     });
   }, []);
 
-  // const handleMenuChange = useCallback((label: string) => {
-  //   setMenu(label);
-  // }, []);
-
   const handleTogglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
   }, []);
@@ -100,7 +97,12 @@ export default function Timer() {
 
   return (
     <div className="w-1/2 max-h-[95vh] overflow-hidden flex-1 flex flex-col place-content-between items-center border border-accent p-4 gap-6 rounded-2xl">
-      <MenuPomodoroButtons setMenu={setMenu} setTime={setTime} menu={menu} />
+      <TypeTimeButtons
+        setInitialTime={setInitialTime}
+        setMenu={setMenu}
+        setTime={setTime}
+        menu={menu}
+      />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
           onClick={() => !isPlaying && updateTime(-60)}
@@ -126,7 +128,7 @@ export default function Timer() {
           }}
         />
       </div>
-      <BarTimer />
+      <BarTimer time={time} initialTime={initialTime} />
       <Commands handleClick={handleClick} isPlay={isPlaying} />
     </div>
   );

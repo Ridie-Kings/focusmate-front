@@ -31,7 +31,7 @@ export default async function TopBar() {
             width={36}
             height={36}
             alt="avatar"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
         </div>
       </div>

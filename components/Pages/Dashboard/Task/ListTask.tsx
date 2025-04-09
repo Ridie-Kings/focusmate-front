@@ -5,6 +5,9 @@ import { createTask } from "@/services/Task/createTask";
 import { EllipsisVertical } from "lucide-react";
 import { deleteTask } from "@/services/Task/deleteTask";
 import MountainTask from "@/components/Elements/Svg/MountainTask";
+import { useContext } from "react";
+import { ModalContext } from "@/components/Provider/ModalProvider";
+import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 
 export default function ListTask({
   filter,
@@ -15,6 +18,8 @@ export default function ListTask({
   tasks: TaskType[];
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
 }) {
+  const { isOpen, setIsOpen } = useContext(ModalContext);
+
   const render = () => {
     switch (filter) {
       case "Pendientes":
@@ -37,12 +42,12 @@ export default function ListTask({
 
   const handleCreateTask = async () => {
     const task = {
-      title: "Task",
-      description: "Description",
-      status: "completed",
-      startDate: new Date("2025-02-24T00:00:00Z"),
-      endDate: new Date("2025-02-24T00:00:00Z"),
-      dueDate: new Date("2025-02-24T00:00:00Z"),
+      title: "TEST FINAL",
+      description: "FINAL TEST",
+      status: "pending",
+      startDate: new Date("2025-04-10T00:00:00Z"),
+      endDate: new Date("2025-04-10T05:00:00Z"),
+      dueDate: new Date("2025-04-10T10:00:00Z"),
       tags: ["tag1", "tag2"],
     };
 
@@ -51,9 +56,16 @@ export default function ListTask({
     setTasks((prev) => [...prev, res.message]);
 
     if (res.success) {
-      console.log("Task created successfully");
+      console.log("Task created successfully", res.message);
+      const response = await addTaskToCalendar({ _id: res.message._id });
+
+      if (res.success) {
+        console.log("Tarea añadido al calendario:", response.res);
+      } else {
+        console.error("Error al añadidir la tarea al calendario");
+      }
     } else {
-      console.log("Failed to create task");
+      console.log("Failed to create task", res.message);
     }
   };
 
@@ -88,7 +100,7 @@ export default function ListTask({
             </li>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center h-[265px]">
+          <div className="flex flex-col items-center justify-center h-[265px] bg-quaternary-100 rounded-2xl py-4">
             <MountainTask />
             <p className="text-primary-500 text-xl">
               El día está en blanco. ¡Agregá tus tareas {filter}!

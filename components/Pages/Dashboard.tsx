@@ -11,7 +11,6 @@ import { getMyHabits } from "@/services/Habits/getMyHabits";
 export default async function Dashboard() {
   const tasks = await getMyTask();
   const habits = await getMyHabits();
-
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-9 gap-4 w-full h-full p-5">
       <Date />

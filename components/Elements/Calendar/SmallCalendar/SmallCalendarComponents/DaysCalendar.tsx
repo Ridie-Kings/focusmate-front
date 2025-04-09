@@ -1,5 +1,5 @@
 import { isSameDay } from "date-fns";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface DaysCalendarProps {
   isToday: (day: Date) => boolean;
@@ -42,7 +42,7 @@ export default function DaysCalendar({
 
   return (
     <div className="grid grid-cols-7 gap-1.5">
-      {days.map((day, index) => (
+      {days.map((day) => (
         <div
           key={`day-${day.toISOString()}`}
           className={getDayClasses(day)}

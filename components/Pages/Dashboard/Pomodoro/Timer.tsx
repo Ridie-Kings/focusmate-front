@@ -3,9 +3,9 @@ import { Eye } from "lucide-react";
 import { useState, useContext, useEffect, Dispatch } from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
-import Commands from "./Timer/Commands";
+import Commands from "../../../Elements/Pomodoro/Commands";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import BarTimer from "@/components/Pages/Dashboard/Pomodoro/Timer/BarTimer";
+import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
 
 interface TimerProps {
   time: TimeType;

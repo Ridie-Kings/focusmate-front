@@ -67,13 +67,16 @@ export default function HabitsList({
     const updatedHabits = habits.map((habit) =>
       habit._id === id ? { ...habit, status: !habit.status } : habit
     );
+
     setHabits(updatedHabits);
 
     const habitToUpdate = updatedHabits.find((habit) => habit._id === id);
+
     if (habitToUpdate) {
       try {
         const res = await updateHabit({
-          habit: habitToUpdate,
+          _id: habitToUpdate._id,
+          habit: { status: habitToUpdate.status },
         });
         console.log("Habit updated:", res);
       } catch (error) {
@@ -109,7 +112,7 @@ export default function HabitsList({
       {habits.map((habit) => (
         <li key={habit._id} className="flex items-center gap-4">
           <div className="flex-1 flex h-full gap-3 border-2 border-secondary-600 p-2 rounded-lg items-center hover:bg-secondary-600 group transition-all duration-300">
-            {renderIcon(habit.type)}
+            {renderIcon(habit._id)}
             <div className="w-0.5 rounded-full h-3/4 bg-secondary-600 group-hover:bg-white transition-all duration-300" />
             <div className="flex flex-col flex-1 gap-1">
               <p className="text-primary-500 px-2 group-hover:text-white transition-all duration-300">
@@ -126,7 +129,7 @@ export default function HabitsList({
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1">
                   <Bell />
-                  <p>10' antes</p>
+                  <p>10&apos; antes</p>
                 </div>
               </div>
             </div>

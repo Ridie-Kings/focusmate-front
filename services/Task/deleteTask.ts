@@ -15,7 +15,7 @@ export async function deleteTask({ _id }: { _id: string }): Promise<{
       },
     });
 
-    return { success: true, message: res.data };
+    return { success: true, message: res?.data };
   } catch (error: any) {
     console.error(
       "Error deleting task:",
@@ -23,8 +23,7 @@ export async function deleteTask({ _id }: { _id: string }): Promise<{
     );
     return {
       success: false,
-      message:
-        error.response?.data?.message || error.message || "Unknown error",
+      message: error.response?.data || error.message || "Unknown error",
     };
   }
 }

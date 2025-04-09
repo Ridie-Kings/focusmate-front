@@ -16,7 +16,7 @@ import Button from "@/components/Reusable/Button";
 import WeekDays from "./Calendar/WeekDays";
 import DaysCalendar from "./Calendar/DaysCalendar";
 import CalendarNav from "./Calendar/CalendarNav";
-import { createEventCalendar } from "@/services/Calendar/createEventCalendar";
+import { createEventCalendar } from "@/services/Calendar/addTaskToCalendar";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();

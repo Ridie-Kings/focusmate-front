@@ -14,7 +14,7 @@ const items: { id: number; label: string; type: chipsIconType }[] = [
   { id: 3, label: "Siesta", type: "D/Largo" },
 ];
 
-export default function MenuPomodoroButtons({
+export default function TypeTimeButtons({
   menu,
   setMenu,
   setTime,
