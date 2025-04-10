@@ -32,7 +32,7 @@ export default function SelectDate({
     <select
       onChange={(e) => handleDateChange(e.target.value)}
       value={getFullDate(date)}
-      className="rounded-sm pl-2 pr-1 text-primary-500 cursor-pointer"
+      className="rounded-sm p-2 py-2.5 text-primary-500 cursor-pointer outline-none"
     >
       {dates.map((dateValue) => (
         <option key={dateValue} value={dateValue}>

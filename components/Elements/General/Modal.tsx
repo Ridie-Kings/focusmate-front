@@ -6,18 +6,20 @@ import ModalEvent from "./Modal/ModalEvent";
 export default function Modal({
   isOpen,
   setIsOpen,
+  setItem,
 }: {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
+  setItem: Dispatch<SetStateAction<any>>;
 }) {
   const renderModal = () => {
     switch (isOpen) {
       case "task":
-        return <ModalTask setIsOpen={setIsOpen} />;
+        return <ModalTask setIsOpen={setIsOpen} setItem={setItem} />;
       case "habit":
-        return <ModalHabit setIsOpen={setIsOpen} />;
+        return <ModalHabit setIsOpen={setIsOpen} setItem={setItem} />;
       case "event":
-        return <ModalEvent setIsOpen={setIsOpen} />;
+        return <ModalEvent setIsOpen={setIsOpen} setItem={setItem} />;
       default:
         return "";
     }
