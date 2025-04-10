@@ -10,11 +10,12 @@ export default function TimelineCard({ event }: { event: TaskType }) {
     if (hours > 0) {
       return `${hours}:${minutes.toString().padStart(2, "0")} min`;
     }
-    return `${minutes}min`;
+    return `${minutes} min`;
   };
+  console.log(event);
 
   return (
-    <div className="w-full h-26 bg-primary-500 text-white px-2 py-4 rounded-lg flex flex-col justify-between transition-all duration-300 ease-in-out">
+    <div className="w-full h-26 bg-secondary-700 text-white p-4 rounded-lg flex flex-col justify-between transition-all duration-300 ease-in-out">
       <p>{event.title}</p>
       <div className="flex items-center justify-between w-full">
         <span className="flex flex-col items-center gap-1">
@@ -26,7 +27,7 @@ export default function TimelineCard({ event }: { event: TaskType }) {
           </p>
           <p className="text-xs text-white font-medium">Empieza</p>
         </span>
-        <p className="bg-secondary-700 px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-black">
+        <p className="bg-secondary-600 px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white">
           {formatDuration(event.startDate, event.dueDate)}
         </p>
         <span className="flex flex-col items-center gap-1">

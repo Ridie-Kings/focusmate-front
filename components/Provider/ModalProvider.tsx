@@ -8,6 +8,7 @@ import Modal from "../Elements/General/Modal";
 export const ModalContext = createContext<ModalContextType>({
   isOpen: "",
   setIsOpen: () => {},
+  item: null,
 });
 
 export default function ModalProvider({
@@ -16,15 +17,19 @@ export default function ModalProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState("");
+  const [item, setItem] = useState<any>();
 
   const contextValue = {
+    item,
     isOpen,
     setIsOpen,
   };
 
   return (
     <ModalContext.Provider value={contextValue}>
-      {isOpen !== "" && <Modal isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isOpen !== "" && (
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen} setItem={setItem} />
+      )}
       {children}
     </ModalContext.Provider>
   );

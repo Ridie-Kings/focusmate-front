@@ -40,7 +40,10 @@ type CalendarItemProps = {
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 };
 
-const CalendarItem: React.FC<CalendarItemProps> = ({ date, setDate }) => {
+export const CalendarItem: React.FC<CalendarItemProps> = ({
+  date,
+  setDate,
+}) => {
   const days = generateMonthDays(date);
 
   const isToday = (day: Date): boolean => isSameDay(day, new Date());

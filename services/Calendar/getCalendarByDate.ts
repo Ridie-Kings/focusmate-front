@@ -18,7 +18,6 @@ export async function getCalendarByDate({ date }: { date: Date }): Promise<{
         },
       }
     );
-    console.log(res);
 
     return { success: true, res: res?.data };
   } catch (error: any) {

@@ -3,6 +3,7 @@ import Notification from "./TopBar/Notification";
 import PageTitle from "./TopBar/PageTitle";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function TopBar() {
   const profil = await getMyProfile();
@@ -21,7 +22,10 @@ export default async function TopBar() {
           className="border border-secondary-700 cursor-pointer rounded-full bg-secondary-100 text-secondary-700 p-2"
         />
         <Notification />
-        <div className="overflow-hidden rounded-full cursor-pointer size-9">
+        <Link
+          href={"/profile"}
+          className="overflow-hidden rounded-full cursor-pointer size-9"
+        >
           <Image
             src={
               profil && profil?.avatar !== ""
@@ -33,7 +37,7 @@ export default async function TopBar() {
             alt="avatar"
             className="w-full h-full object-cover"
           />
-        </div>
+        </Link>
       </div>
     </header>
   );

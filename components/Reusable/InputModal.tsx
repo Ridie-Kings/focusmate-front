@@ -1,18 +1,51 @@
 import { ChevronDown } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState, useEffect } from "react";
 
 export default function InputModal({
   type,
   placeholder,
   icon,
   option,
+  onChange,
 }: {
   type: "text" | "select";
   placeholder: string;
   icon: ReactNode;
   option?: ReactNode;
+  onChange?: (e: any) => void;
 }) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuOpen &&
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node) &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+      }
+
+      if (document.getElementById("guardar") === event.target)
+        setMenuOpen(false);
+    };
+
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
+
+  const handleOptionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
 
   switch (type) {
     case "text":
@@ -23,26 +56,36 @@ export default function InputModal({
             type="text"
             placeholder={placeholder}
             className="text-primary outline-none"
+            onChange={onChange}
           />
         </div>
       );
     case "select":
       return (
-        <div className="flex gap-2 border-b border-neutral-200 items-center pb-2">
-          <span className="p-2">{icon}</span>
+        <div className="flex gap-2 border-b border-neutral-200 items-center pb-4 w-full">
+          {icon !== "" && <span className="px-2">{icon}</span>}
           <div
-            className={`flex flex-col relative cursor-pointer ${
-              menuOpen ? "overflow-hidden" : ""
-            }`}
+            ref={modalRef}
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="flex flex-col relative cursor-pointer w-full"
           >
-            <div
-              onClick={() => setMenuOpen(true)}
-              className="flex place-content-between w-full "
-            >
+            <div className="flex place-content-between w-full -z-10">
               {placeholder}
-              <ChevronDown />
+              <ChevronDown
+                className={`transition-all duration-300 ${
+                  menuOpen ? "rotate-180" : ""
+                }`}
+              />
             </div>
-            {option}
+            {menuOpen && (
+              <div
+                ref={menuRef}
+                onClick={handleOptionClick}
+                className="relative"
+              >
+                {option}
+              </div>
+            )}
           </div>
         </div>
       );
