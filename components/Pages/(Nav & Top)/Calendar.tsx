@@ -4,7 +4,7 @@ import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarInfo";
 import Categories from "@/components/Pages/(Nav & Top)/Calendar/Categories";
 import Calendar from "@/components/Elements/General/Calendar";
 import { useContext, useState, useEffect } from "react";
-import { CalendarContext } from "../Provider/CalendarProvider";
+import { CalendarContext } from "@/components/Provider/CalendarProvider";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<string>("Day");

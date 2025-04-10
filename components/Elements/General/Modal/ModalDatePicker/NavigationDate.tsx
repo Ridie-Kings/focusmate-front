@@ -1,14 +1,14 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import SelectDate from "../../SelectDate";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function NavigationDate({
   date,
-  setDate,
+  // setDate,
 }: {
   date: Date | undefined;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
+  // setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
   const handleYearChange = () => {};
   const handlePreviousMonth = () => {};
