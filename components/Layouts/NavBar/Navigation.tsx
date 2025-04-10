@@ -9,8 +9,6 @@ import {
   Bookmark,
   Lightbulb,
   Bell,
-  Settings,
-  CircleHelp,
   MessageCircle,
 } from "lucide-react";
 
