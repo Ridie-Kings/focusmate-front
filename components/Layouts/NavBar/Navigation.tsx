@@ -1,6 +1,8 @@
 "use client";
+
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+
 import {
   Grid2x2,
   Calendar,
@@ -9,7 +11,9 @@ import {
   Bell,
   Settings,
   CircleHelp,
+  MessageCircle,
 } from "lucide-react";
+
 import { NavItem } from "@/interfaces/Nav/NavTypes";
 
 const navigationItems: NavItem[] = [
@@ -17,81 +21,99 @@ const navigationItems: NavItem[] = [
     id: 1,
     label: "Dashboard",
     link: "/",
-    icon: <Grid2x2 />,
+    icon: <Grid2x2 size={24} />,
   },
   {
     id: 2,
     label: "Calendar",
     link: "/calendar",
-    icon: <Calendar />,
+    icon: <Calendar size={24} />,
   },
   {
     id: 3,
-    label: "BookMark",
-    link: "/bookmark",
-    icon: <Bookmark />,
+    label: "Pomodoro",
+    link: "/pomodoro",
+    icon: <Bookmark size={24} />,
   },
   {
     id: 4,
-    label: "Ideas",
-    link: "/ideas",
-    icon: <Lightbulb />,
+    label: "Tares",
+    link: "/task",
+    icon: <Lightbulb size={24} />,
   },
   {
     id: 5,
-    label: "Notifications",
-    link: "/notification",
-    icon: <Bell />,
+    label: "Habitos",
+    link: "/habits",
+    icon: <Bell size={24} />,
   },
   {
     id: 6,
-    label: "Settings",
-    link: "/settings",
-    icon: <Settings />,
-  },
-  {
-    id: 7,
-    label: "Support",
+    label: "Feedback",
     link: "/support",
-    icon: <CircleHelp />,
+    icon: <MessageCircle size={24} />,
   },
 ];
+
 export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex-grow">
-      <ul className="space-y-2">
-        {navigationItems.map((item) => (
-          <li key={item.id}>
-            <Link
-              href={item.link}
-              className={`
-              flex items-center gap-3 p-2.5 rounded-md
-              transition-all duration-300
-              ${pathname === item.link ? "bg-white/20" : "hover:bg-white/10"}
-            `}
-              aria-label={item.label}
-            >
-              <span className="flex group-hover:opacity-100 opacity-0 transition-all duration-300">
-                {item.icon}
-              </span>
-              <span
-                className={`
-                whitespace-nowrap
-                transition-all duration-300
-                group-hover:opacity-100 opacity-0
+    <nav className="flex-grow py-4 w-full">
+      <ul className="space-y-1 group w-full">
+        {navigationItems.map((item) => {
+          const isActive = pathname === item.link;
 
-              `}
+          return (
+            <li key={item.id}>
+              <Link
+                href={item.link}
+                className={`
+                  group relative flex items-center gap-3 px-4 py-2.5 w-full
+                  transition-all duration-300 hover:bg-white/10 group-hover:translate-x-0 translate-x-4
+                  ${
+                    isActive
+                      ? "bg-white/24 text-white border-l-2 border-white"
+                      : "text-gray-300"
+                  }
+                `}
+                aria-current={isActive ? "page" : undefined}
               >
-                {item.label}
-              </span>
-              <span className="absolute left-1/2 group-hover:translate-x-0 -translate-x-1/2 group-hover:opacity-0 opacity-100 transition-all duration-200">
-                {item.icon}
-              </span>
-            </Link>
-          </li>
-        ))}
+                <span
+                  className={`
+                  text-white transition-all duration-300
+                  ${
+                    isActive
+                      ? "opacity-100"
+                      : "opacity-0 group-hover:opacity-100"
+                  }
+                `}
+                >
+                  {item.icon}
+                </span>
+
+                <span
+                  className={`
+                  font-medium transition-all duration-300 opacity-0 group-hover:opacity-100
+                `}
+                >
+                  {item.label}
+                </span>
+
+                <span
+                  className={`
+                  absolute left-4 text-gray-300 transition-all duration-300
+                  ${
+                    isActive ? "opacity-0" : "opacity-100 group-hover:opacity-0"
+                  }
+                `}
+                >
+                  {item.icon}
+                </span>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

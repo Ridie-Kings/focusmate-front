@@ -80,10 +80,10 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
           {error && <div className="text-red-500 text-sm">{error}</div>}
 
           <div className="flex flex-col gap-4">
-            <Button type="submit" button="primary">
+            <Button size="large" type="submit" button="primary">
               Iniciar Sesión
             </Button>
-            <Button type="submit" button="secondary">
+            <Button size="large" type="submit" button="secondary">
               Registrarse
             </Button>
           </div>
