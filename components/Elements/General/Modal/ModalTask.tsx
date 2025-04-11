@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { Bell, Calendar, Text, X } from "lucide-react";
+import { Bell, Calendar, Text } from "lucide-react";
 
 import InputModal from "@/components/Reusable/InputModal";
 import ModalDatePicker from "./ModalDatePicker/ModalDatePicker";
@@ -11,7 +11,7 @@ import ModalColorPicker from "./ModalColorPicker/ModalColorPicker";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { StatusType } from "@/interfaces/Task/TaskType";
+import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 
@@ -20,7 +20,7 @@ export default function ModalTask({
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: any) => void;
+  setItem: (item: TaskType) => void;
 }) {
   const [task, setTask] = useState<{
     title: string;

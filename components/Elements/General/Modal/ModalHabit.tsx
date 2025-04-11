@@ -1,16 +1,16 @@
 import Button from "@/components/Reusable/Button";
 import InputModal from "@/components/Reusable/InputModal";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { createHabit } from "@/services/Habits/createHabit";
 import { Dispatch, SetStateAction, useState } from "react";
 import { AudioLines, BookHeart, Text } from "lucide-react";
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 export default function ModalHabit({
   setIsOpen,
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: any) => void;
+  setItem: (item: HabitsType) => void;
 }) {
   const [habit, setHabit] = useState<{
     name: string;
