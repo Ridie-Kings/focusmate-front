@@ -20,7 +20,7 @@ export default function ListTask({
 }) {
   const { setIsOpen, item } = useContext(ModalContext) as {
     setIsOpen: (value: string) => void;
-    item: { type: string; item: any } | null;
+    item: { type: string; item: TaskType } | null;
   };
   const { setEvents } = useContext(DashboardContext);
   const [openModal, setOpenModal] = useState<string>("");

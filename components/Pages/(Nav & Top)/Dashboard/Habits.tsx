@@ -12,10 +12,6 @@ import MountainHabits from "@/components/Elements/Svg/MountainHabits";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 
-export interface HabitModalItem {
-  type: "habit";
-  item: HabitsType;
-}
 
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
