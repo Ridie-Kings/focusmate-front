@@ -24,7 +24,9 @@ export default function ModalContact({
         body: JSON.stringify(form),
       });
   
-      const data = await res.json();
+      console.log("Status de la request:", res.status);
+    const data = await res.json();
+    console.log("Respuesta del servidor:", data);
       if (data.success) {
         setItem(form);
         setIsOpen("");
