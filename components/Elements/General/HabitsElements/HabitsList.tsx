@@ -78,7 +78,7 @@ export default function HabitsList({
           _id: habitToUpdate._id,
           habit: { status: habitToUpdate.status },
         });
-        // console.log("Habit updated:", res);
+        console.log("Habit updated:", res);
       } catch (error) {
         console.error("Error updating habit:", error);
         setHabits(habits);

@@ -8,7 +8,7 @@ export default function ModalContact({
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: any) => void;
+  setItem: (item: unknown) => void;
 }) {
   const [form, setForm] = useState({
     name: "",
