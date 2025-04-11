@@ -16,7 +16,7 @@ export default function Modal({
 }: {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (data: { type: string; item: TaskType | HabitsType }) => void;
+  setItem: (data: { type: string; item: unknown }) => void;
 }) {
   const renderModal = () => {
     switch (isOpen) {
