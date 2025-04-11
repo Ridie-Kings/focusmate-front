@@ -4,10 +4,11 @@ export type HabitsType = {
   completedDates: Date[];
   createdAt: Date;
   description: string;
-  frequency: "daily" | "monthly" | "yearly";
+  frequency: "daily" | "weekly" | "monthly";
   lastCompletedDate: Date | undefined;
   name: string;
   status: boolean;
+  type: string;
   streak: number;
   userId: string;
 };

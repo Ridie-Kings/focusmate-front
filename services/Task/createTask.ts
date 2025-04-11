@@ -1,6 +1,7 @@
 "use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 export async function createTask({
   task,
@@ -16,7 +17,7 @@ export async function createTask({
   };
 }): Promise<{
   success: boolean;
-  message: string;
+  message: TaskType;
 }> {
   try {
     const token = await getToken();
@@ -27,7 +28,7 @@ export async function createTask({
       },
     });
 
-    return { success: true, message: res.data };
+    return { success: true, message: res?.data };
   } catch (error: any) {
     console.error(
       "Error creating task:",
@@ -35,8 +36,7 @@ export async function createTask({
     );
     return {
       success: false,
-      message:
-        error.response?.data?.message || error.message || "Unknown error",
+      message: error.response?.data || error.message || "Unknown error",
     };
   }
 }

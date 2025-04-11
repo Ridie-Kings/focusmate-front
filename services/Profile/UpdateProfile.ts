@@ -9,9 +9,9 @@ export async function updateProfile({ id }: { id: string }) {
         Authorization: `Bearer ${token}`,
       },
     });
-    return res.data;
+    return res?.data;
   } catch (error: any) {
-    console.error("Error fetching user profile:", error.response.data.message);
+    console.error("Error updating user profile:", error.response?.data);
     return null;
   }
 }

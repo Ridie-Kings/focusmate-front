@@ -13,6 +13,7 @@ export async function register(
       fullname: formData.get("fullname") as string,
       password: formData.get("password") as string,
     };
+    console.log(userData);
 
     const testUser = testUserData({
       ...userData,
@@ -28,13 +29,13 @@ export async function register(
 
     return {
       success: true,
-      message: response.data.message || "Registration successful",
+      message: response?.data || "Registration successful",
     };
   } catch (error: any) {
     return {
       success: false,
       message:
-        error.response?.data?.message ||
+        error.response?.data ||
         error.message ||
         "An unexpected error occurred during registration.",
     };
@@ -59,7 +60,7 @@ function testUserData(userData: {
 
   const password = userData.password!;
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$#.!%*?&]{8,}$/;
 
   if (!passwordRegex.test(password)) {
     return {

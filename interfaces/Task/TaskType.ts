@@ -13,11 +13,13 @@ export type TaskType = {
   title: string;
   description: string;
   status: StatusType;
-  priority: "high" | "medium" | "low";
   isDeleted: boolean;
   tags: string[];
   category: string;
+  priority: "high" | "medium" | "low";
   subTasks: TaskType[];
+  startDate: Date;
+  endDate: Date;
   dueDate: Date;
 };
 

@@ -3,6 +3,7 @@ import Notification from "./TopBar/Notification";
 import PageTitle from "./TopBar/PageTitle";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function TopBar() {
   const profil = await getMyProfile();
@@ -11,7 +12,7 @@ export default async function TopBar() {
     <header className="flex place-content-between p-6 w-full border-b border-primary-200 bg-white">
       <div className="flex flex-col flex-1">
         <p className="text-lg text-primary-500">
-          Bienvenido, {profil?.user.fullname}!
+          Bienvenido, {profil?.user?.fullname}!
         </p>
         <PageTitle />
       </div>
@@ -21,7 +22,10 @@ export default async function TopBar() {
           className="border border-secondary-700 cursor-pointer rounded-full bg-secondary-100 text-secondary-700 p-2"
         />
         <Notification />
-        <div className="overflow-hidden rounded-full cursor-pointer size-9">
+        <Link
+          href={"/profile"}
+          className="overflow-hidden rounded-full cursor-pointer size-9"
+        >
           <Image
             src={
               profil && profil?.avatar !== ""
@@ -31,9 +35,9 @@ export default async function TopBar() {
             width={36}
             height={36}
             alt="avatar"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
-        </div>
+        </Link>
       </div>
     </header>
   );

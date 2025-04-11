@@ -12,9 +12,9 @@ export async function getMyProfile(): Promise<ProfileType | null> {
       },
     });
 
-    return res.data;
+    return res?.data;
   } catch (error: any) {
-    console.error("Error fetching user profile:", error.response.data.message);
-    return null;
+    console.error("Error fetching user profile:", error);
+    return error;
   }
 }

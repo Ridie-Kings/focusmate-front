@@ -33,7 +33,7 @@ export async function refreshSession(refreshToken: RequestCookie | undefined) {
   try {
     const existedCookies = await cookies();
     const res = await apiConnection.post("auth/refresh", { refreshToken });
-    const newAccessToken = res.data.accessToken;
+    const newAccessToken = res?.data.accessToken;
     if (!newAccessToken) {
       console.error("Failed to refresh session: No access token returned");
       return undefined;
@@ -51,22 +51,12 @@ export async function refreshSession(refreshToken: RequestCookie | undefined) {
 
 export async function logout() {
   const existedCookies = await cookies();
-  const token = await getToken();
+  // const token = await getToken();
 
-  const res = await apiConnection.post("auth/logout", {
-    Authorization: `Bearer ${token}`,
-  });
+  // const res = await apiConnection.post("auth/logout", {
+  //   Authorization: `Bearer ${token}`,
+  // });
 
-  existedCookies.set("token", "", {
-    expires: new Date(0),
-    path: "/",
-    secure: true,
-    httpOnly: true,
-  });
-  existedCookies.set("session", "", {
-    expires: new Date(0),
-    path: "/",
-    secure: true,
-    httpOnly: true,
-  });
+  existedCookies.delete("token");
+  existedCookies.delete("session");
 }

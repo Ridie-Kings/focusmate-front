@@ -16,9 +16,9 @@ export async function removeHabit({
       },
     });
 
-    return { success: true, res: res.data };
+    return { success: true, res: res?.data };
   } catch (error: any) {
-    console.error("Error deleting habit:", error.response.data.message);
+    console.error("Error deleting habit:", error.response?.data);
     return { success: false, res: error.response };
   }
 }

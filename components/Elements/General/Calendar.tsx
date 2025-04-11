@@ -11,12 +11,13 @@ import {
   isSameDay,
 } from "date-fns";
 import { es } from "date-fns/locale";
+
 import { Dispatch, SetStateAction } from "react";
+
 import Button from "@/components/Reusable/Button";
 import WeekDays from "./Calendar/WeekDays";
-import DaysCalendar from "./Calendar/DaysCalendar";
 import CalendarNav from "./Calendar/CalendarNav";
-import { createEventCalendar } from "@/services/Calendar/createEventCalendar";
+import DaysCalendar from "../Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -96,12 +97,12 @@ const Calendar: React.FC<CalendarProps> = ({
   );
 
   const handleCreateEvent = async () => {
-    const res = await createEventCalendar();
-    if (res) {
-      console.log("Evento creado:", res);
-    } else {
-      console.error("Error al crear el evento");
-    }
+    // const res = await createEventCalendar();
+    // if (res) {
+    //   console.log("Evento creado:", res);
+    // } else {
+    //   console.error("Error al crear el evento");
+    // }
   };
 
   return (
@@ -119,7 +120,7 @@ const Calendar: React.FC<CalendarProps> = ({
       />
       <CalendarItem date={date} setDate={setDate} />
       {btn && (
-        <Button onClick={handleCreateEvent} button="tertiary" type="button">
+        <Button size="large" onClick={handleCreateEvent} button="tertiary" type="button">
           Nuevo Evento
         </Button>
       )}
