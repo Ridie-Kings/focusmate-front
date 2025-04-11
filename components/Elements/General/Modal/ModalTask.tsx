@@ -47,16 +47,11 @@ export default function ModalTask({
     const res = await createTask({ task });
 
     if (res.success) {
-<<<<<<< HEAD
-      setItem(res.message);
-      // console.log("Task created successfully", res.message);
-=======
       setItem({ type: "task", item: res.message });
       console.log("Task created successfully", res.message);
->>>>>>> 9f3f6f648dbf5caccf280b3c991686513379d851
       setIsOpen("");
       const response = await addTaskToCalendar({ _id: res.message._id });
-      if (res.success) {
+      if (response.success) {
         // console.log("Tarea añadido al calendario:", response.res);
       } else {
         console.error("Error al añadidir la tarea al calendario");
