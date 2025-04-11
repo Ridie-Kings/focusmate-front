@@ -12,7 +12,6 @@ export default function ModalTimePicker({ onChange }: ModalTimePickerProps) {
   const [editMin, setEditMin] = useState(false);
   const [hoursValue, setHoursValue] = useState(String(0).padStart(2, "0"));
   const [minValue, setMinValue] = useState(String(0).padStart(2, "0"));
-  const [choseUpdate, setChoseUpdate] = useState("");
 
   const hoursInputRef = useRef<HTMLInputElement | null>(null);
   const minInputRef = useRef<HTMLInputElement | null>(null);
@@ -43,12 +42,6 @@ export default function ModalTimePicker({ onChange }: ModalTimePickerProps) {
     hours: number;
     min: number;
     seg: number;
-  }
-
-  interface OnChangeEvent {
-    target: {
-      value: string;
-    };
   }
 
   type UpdateUnit = "min" | "hours" | "seg";
@@ -136,7 +129,6 @@ export default function ModalTimePicker({ onChange }: ModalTimePickerProps) {
             className="cursor-pointer hover:text-secondary-400 transition-colors duration-300"
             onClick={() => {
               setEditHours(true);
-              setChoseUpdate("hours");
             }}
           >
             {String(time.hours).padStart(2, "0")}:
@@ -158,7 +150,6 @@ export default function ModalTimePicker({ onChange }: ModalTimePickerProps) {
             className="cursor-pointer hover:text-secondary-400 transition-colors duration-300"
             onClick={() => {
               setEditMin(true);
-              setChoseUpdate("min");
             }}
           >
             {String(time.min).padStart(2, "0")}

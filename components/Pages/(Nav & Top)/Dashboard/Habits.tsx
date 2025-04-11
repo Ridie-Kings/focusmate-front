@@ -23,7 +23,8 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   }, [habitsList]);
 
   useEffect(() => {
-    if (item && item.type === "habit") setHabits((prev) => [...prev, item]);
+    if (item && item.type === "habit")
+      setHabits((prev) => [...prev, item.item]);
   }, [item]);
 
   useEffect(() => {
