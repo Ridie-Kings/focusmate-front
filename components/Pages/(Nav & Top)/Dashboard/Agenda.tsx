@@ -37,7 +37,7 @@ export default function Agenda() {
       <div className="flex w-full h-full">
         <div className="flex flex-col gap-4">
           <SmallCalendar setDate={setDate} date={date} inView />
-          <Button button="tertiary" type="button">
+          <Button size="large" button="tertiary" type="button">
             Nuevo Evento
           </Button>
         </div>

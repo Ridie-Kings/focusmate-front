@@ -72,6 +72,7 @@ export default function TypeTimeButtons({
           {items.map((item) => (
             <Button
               key={item.id}
+              size="large"
               type="button"
               button="pomodoro"
               state={item.label === menu ? "pressed" : "enabled"}

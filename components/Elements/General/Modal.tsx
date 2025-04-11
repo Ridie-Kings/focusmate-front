@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
 import ModalEvent from "./Modal/ModalEvent";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default function Modal({
   isOpen,
@@ -10,16 +11,16 @@ export default function Modal({
 }: {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: Dispatch<SetStateAction<any>>;
+  setItem: (item: TaskType) => void;
 }) {
   const renderModal = () => {
     switch (isOpen) {
       case "task":
         return <ModalTask setIsOpen={setIsOpen} setItem={setItem} />;
       case "habit":
-        return <ModalHabit setIsOpen={setIsOpen} setItem={setItem} />;
+        return <ModalHabit />;
       case "event":
-        return <ModalEvent setIsOpen={setIsOpen} setItem={setItem} />;
+        return <ModalEvent />;
       default:
         return "";
     }

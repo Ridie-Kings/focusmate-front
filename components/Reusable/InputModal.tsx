@@ -1,19 +1,21 @@
 import { ChevronDown } from "lucide-react";
 import { ReactNode, useRef, useState, useEffect } from "react";
 
+interface InputModalProps {
+  type: "text" | "select";
+  placeholder: string;
+  icon: ReactNode;
+  option?: ReactNode;
+  onChange?: (e: { target: { value: string } }) => void;
+}
+
 export default function InputModal({
   type,
   placeholder,
   icon,
   option,
   onChange,
-}: {
-  type: "text" | "select";
-  placeholder: string;
-  icon: ReactNode;
-  option?: ReactNode;
-  onChange?: (e: any) => void;
-}) {
+}: InputModalProps) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -43,7 +45,7 @@ export default function InputModal({
     };
   }, [menuOpen]);
 
-  const handleOptionClick = (e: React.MouseEvent) => {
+  const handleOptionClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
 

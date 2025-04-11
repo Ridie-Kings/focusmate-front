@@ -27,6 +27,8 @@ export const AddCard = ({ status, setCards }: AddCardProps) => {
       tags: [],
       subTasks: [],
       category: "",
+      startDate: new Date(),
+      endDate: new Date(),
     };
 
     setCards((pv) => [...pv, newCard]);

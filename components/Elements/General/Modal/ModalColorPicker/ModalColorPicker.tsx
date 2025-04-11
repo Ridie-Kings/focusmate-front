@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 export default function ModalColorPicker({
   onChange,
 }: {
-  onChange: (e: any) => void;
+  onChange: (e: { target: { value: string } }) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState("#78c6a3");

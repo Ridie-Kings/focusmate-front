@@ -91,7 +91,13 @@ export default function ListTask({
                           setTasks((prev) =>
                             prev.map((t) =>
                               t._id === task._id
-                                ? { ...t, priority: e.target.value }
+                                ? {
+                                    ...t,
+                                    priority: e.target.value as
+                                      | "high"
+                                      | "medium"
+                                      | "low",
+                                  }
                                 : t
                             )
                           )
@@ -116,7 +122,12 @@ export default function ListTask({
           </div>
         )}
       </div>
-      <Button onClick={() => setIsOpen("task")} button="tertiary" type="button">
+      <Button
+        size="large"
+        onClick={() => setIsOpen("task")}
+        button="tertiary"
+        type="button"
+      >
         Nueva Tarea
       </Button>
     </>

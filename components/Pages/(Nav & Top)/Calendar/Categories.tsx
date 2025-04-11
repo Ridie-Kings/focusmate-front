@@ -23,7 +23,7 @@ export default function Categories({ items = DEFAULT_ITEMS }: CategoriesProps) {
           </li>
         ))}
       </ul>
-      <Button button="tertiary" type="button">
+      <Button size="large" button="tertiary" type="button">
         Añadir Categoría
       </Button>
     </TemplateBox>

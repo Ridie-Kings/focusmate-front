@@ -81,7 +81,12 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
           </div>
         </div>
       )}
-      <Button onClick={handleCreateHabit} button="tertiary" type="button">
+      <Button
+        size="large"
+        onClick={handleCreateHabit}
+        button="tertiary"
+        type="button"
+      >
         Nuevo Habito
       </Button>
     </TemplateDashboard>

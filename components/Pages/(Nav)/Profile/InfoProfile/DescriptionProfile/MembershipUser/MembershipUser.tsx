@@ -5,7 +5,7 @@ import { Bell, Bookmark, Settings } from "lucide-react";
 export default function MembershipUser() {
   return (
     <>
-      <BannerMembership type="premium" />
+      <BannerMembership type="trial" />
       <div className="flex gap-8 place-content-between w-full">
         <InfoCard
           title="Incluido en tu plan"
