@@ -20,7 +20,7 @@ export interface HabitModalItem {
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
   const { setIsOpen, item } = useContext(ModalContext) as {
-    item: { type: string; item: any } | null;
+    item: { type: string; item: HabitsType } | null;
     setIsOpen: (type: string) => void;
   };
   const [porcent, setPorcent] = useState<number>(0);
