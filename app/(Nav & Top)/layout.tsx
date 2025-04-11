@@ -33,8 +33,17 @@ export default async function RootLayout({
 
     try {
       await logout();
-    } catch (error: any) {
-      console.error("Error logging out:", error.response.data);
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        "response" in error &&
+        error.response &&
+        typeof error.response === "string"
+      ) {
+        console.error("Error logging out:", error.response);
+      } else {
+        console.error("Error logging out:", error);
+      }
     }
   };
 

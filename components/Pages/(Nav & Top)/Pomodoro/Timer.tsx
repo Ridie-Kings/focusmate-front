@@ -1,7 +1,9 @@
 "use client";
 import { Minus, Plus } from "lucide-react";
-import BarTimer from "../../../Elements/Pomodoro/BarTimer";
+
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+
+import BarTimer from "../../../Elements/Pomodoro/BarTimer";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import TypeTimeButtons from "../../../Elements/Pomodoro/TypeTimeButtons";
 import Commands from "@/components/Elements/Pomodoro/Commands";

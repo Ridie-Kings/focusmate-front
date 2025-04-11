@@ -1,13 +1,17 @@
-import InputModal from "@/components/Reusable/InputModal";
-import { Bell, Calendar, Text, X } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
+
+import { Bell, Calendar, Text, X } from "lucide-react";
+
+import InputModal from "@/components/Reusable/InputModal";
 import ModalDatePicker from "./ModalDatePicker/ModalDatePicker";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
 import Button from "@/components/Reusable/Button";
 import ModalColorPicker from "./ModalColorPicker/ModalColorPicker";
-import { StatusType } from "@/interfaces/Task/TaskType";
+
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+
+import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 
@@ -16,7 +20,7 @@ export default function ModalTask({
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: Dispatch<SetStateAction<any>>;
+  setItem: (item: TaskType) => void;
 }) {
   const [task, setTask] = useState<{
     title: string;
@@ -25,6 +29,7 @@ export default function ModalTask({
     startDate: Date;
     endDate: Date;
     dueDate: Date;
+    priority: "high" | "medium" | "low";
     tags: string[];
   }>({
     title: "",
@@ -33,6 +38,7 @@ export default function ModalTask({
     startDate: new Date(),
     endDate: new Date(),
     dueDate: new Date(),
+    priority: "high",
     tags: [],
   });
 
@@ -104,7 +110,10 @@ export default function ModalTask({
             option={
               <ModalDatePicker
                 onChange={(e) =>
-                  setTask((prev) => ({ ...prev, dueDate: e.target.value }))
+                  setTask((prev) => ({
+                    ...prev,
+                    dueDate: new Date(e.target.value),
+                  }))
                 }
               />
             }
@@ -116,7 +125,7 @@ export default function ModalTask({
             option={
               <ModalPriorityPicker
                 onChange={(e) =>
-                  setTask((prev) => ({ ...prev, priority: e.target.value }))
+                  setTask((prev) => ({ ...prev, priority: e.target.value as "high" | "medium" | "low" }))
                 }
               />
             }
@@ -125,13 +134,19 @@ export default function ModalTask({
         </div>
         <div className="flex py-2 gap-2.5">
           <Button
+            size="large"
             button="secondary"
             type="button"
             onClick={() => setIsOpen("")}
           >
             Cancelar
           </Button>
-          <Button onClick={handleSendTask} button="primary" type="button">
+          <Button
+            size="large"
+            onClick={handleSendTask}
+            button="primary"
+            type="button"
+          >
             Guardar
           </Button>
         </div>

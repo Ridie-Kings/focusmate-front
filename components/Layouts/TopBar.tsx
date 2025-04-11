@@ -12,7 +12,7 @@ export default async function TopBar() {
     <header className="flex place-content-between p-6 w-full border-b border-primary-200 bg-white">
       <div className="flex flex-col flex-1">
         <p className="text-lg text-primary-500">
-          Bienvenido, {profil?.user.fullname}!
+          Bienvenido, {profil?.user?.fullname}!
         </p>
         <PageTitle />
       </div>

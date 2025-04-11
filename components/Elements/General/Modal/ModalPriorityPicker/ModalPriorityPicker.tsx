@@ -1,9 +1,17 @@
+interface PriorityItem {
+  type: string;
+  label: string;
+  color: string;
+}
+
+interface ModalPriorityPickerProps {
+  onChange: (e: { target: { value: string } }) => void;
+}
+
 export default function ModalPriorityPicker({
   onChange,
-}: {
-  onChange: (e: any) => void;
-}) {
-  const item = [
+}: ModalPriorityPickerProps) {
+  const item: PriorityItem[] = [
     { type: "high", label: "Urgente", color: "#ff8d8c" },
     { type: "medium", label: "Importante", color: "#ffbb39" },
     { type: "low", label: "Tranquilo", color: "#aaa3ff" },

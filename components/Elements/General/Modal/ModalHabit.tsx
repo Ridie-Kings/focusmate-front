@@ -1,11 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+// import { Dispatch, SetStateAction } from "react";
 
-export default function ModalHabit({
-  setIsOpen,
-}: {
-  setIsOpen: Dispatch<SetStateAction<string>>;
-}) {
-  return (
-    <div>ModalHabit</div>
-  )
+//   {
+//   setIsOpen,
+//   setItem,
+// }: {
+//   setIsOpen: Dispatch<SetStateAction<string>>;
+//   setItem: () => void;
+// }
+export default function ModalHabit() {
+  return <div>ModalHabit</div>;
 }

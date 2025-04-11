@@ -35,6 +35,8 @@ export const Card = ({
             tags: [],
             category: "",
             subTasks: [],
+            startDate: new Date(),
+            endDate: new Date(),
           });
         }}
         className="cursor-grab rounded border flex bg-white flex-col gap-4 border-gray-100 border-l-6 text-gray-100 p-4 active:cursor-grabbing"

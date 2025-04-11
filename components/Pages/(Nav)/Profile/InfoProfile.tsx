@@ -10,7 +10,7 @@ export default function InfoProfile({
   return (
     <div className="flex gap-6 flex-1">
       <DescriptionProfile profile={profile} />
-      <Acheivements profile={profile} />
+      <Acheivements />
     </div>
   );
 }

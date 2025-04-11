@@ -1,9 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+// import { Dispatch, SetStateAction } from "react";
 
-export default function ModalEvent({
-  setIsOpen,
-}: {
-  setIsOpen: Dispatch<SetStateAction<string>>;
-}) {
+//   {
+//   setIsOpen,
+//   setItem,
+// }: {
+//   setIsOpen: Dispatch<SetStateAction<string>>;
+//   setItem: () => void;
+//}
+export default function ModalEvent() {
   return <div>ModalEvent</div>;
 }

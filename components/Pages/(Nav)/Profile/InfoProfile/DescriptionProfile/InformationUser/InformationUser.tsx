@@ -10,10 +10,10 @@ export default function InformationUser({
     {
       icon: <PersonStanding />,
       title: "Nombre Completo",
-      label: profile?.user.fullname,
+      label: profile?.user?.fullname,
     },
     { icon: <Cake />, title: "Fecha de Nacimiento", label: null },
-    { icon: <Mail />, title: "Correo Electronico", label: profile?.user.email },
+    { icon: <Mail />, title: "Correo Electronico", label: profile?.user?.email },
     { icon: <Phone />, title: "Numero de Telefono", label: null },
     { icon: <Locate />, title: "Ubicación", label: null },
   ];

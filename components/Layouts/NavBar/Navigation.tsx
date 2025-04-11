@@ -68,7 +68,7 @@ export default function Navigation() {
                 href={item.link}
                 className={`
                   group relative flex items-center gap-3 px-4 py-2.5 w-full
-                  transition-all duration-300 hover:bg-white/10 group-hover:translate-x-0 translate-x-4
+                  transition-color duration-300 hover:bg-white/10 group-hover:translate-x-0 translate-x-4
                   ${
                     isActive
                       ? "bg-white/24 text-white border-l-2 border-white"

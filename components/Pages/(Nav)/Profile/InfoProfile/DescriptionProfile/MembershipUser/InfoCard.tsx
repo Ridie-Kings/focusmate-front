@@ -1,4 +1,3 @@
-import { label } from "motion/react-client";
 import Link from "next/link";
 import { ReactNode } from "react";
 
