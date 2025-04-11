@@ -2,6 +2,8 @@ import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+console.log("API KEY de RESEND:", process.env.RESEND_API_KEY);
+
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -11,7 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     const data = await resend.emails.send({
       from: "Sherpapp Contacto <no-reply@sherpapp.com>",
-      to: ["tucorreo@ejemplo.com"],
+      to: ["soporte@thallein.com"],
       subject: "Nuevo mensaje de contacto",
       html: `<strong>Nombre:</strong> ${name}<br/>
              <strong>Email:</strong> ${email}<br/>
