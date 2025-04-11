@@ -3,8 +3,9 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
 import TimerProvider from "@/components/Provider/TimerProvider";
-import { logout } from "@/lib";
+import { getToken, logout } from "@/lib";
 import ModalProvider from "@/components/Provider/ModalProvider";
+import { redirect } from "next/navigation";
 // import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 
 const poppinsSans = Poppins({
@@ -24,7 +25,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const token = await getToken();
+  const token = await getToken();
+  if (!token) redirect("/login");
   const handleLogout = async () => {
     "use server";
     console.log("Logging out...");
