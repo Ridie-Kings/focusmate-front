@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { ChevronDown, EllipsisVertical } from "lucide-react";
+import { ChevronDown, Trash2 } from "lucide-react";
 import { deleteTask } from "@/services/Task/deleteTask";
 import MountainTask from "@/components/Elements/Svg/MountainTask";
 import { useContext, useEffect, useState } from "react";
@@ -105,7 +105,7 @@ export default function ListTask({
                       />
                     )}
                   </button>
-                  <EllipsisVertical
+                  <Trash2
                     onClick={() => handleDeleteTask(task._id)}
                     className="text-primary-500 cursor-pointer"
                   />

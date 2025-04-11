@@ -7,7 +7,7 @@ import {
   ChefHat,
   CircleHelp,
   Clock,
-  EllipsisVertical,
+  Trash2,
 } from "lucide-react";
 
 import { Dispatch, SetStateAction } from "react";
@@ -133,7 +133,7 @@ export default function HabitsList({
                 </div>
               </div>
             </div>
-            <EllipsisVertical
+            <Trash2
               size={24}
               onClick={() => handleRemoveHabit(habit._id)}
               className="text-primary-500 group-hover:text-white cursor-pointer transition-all duration-300"
