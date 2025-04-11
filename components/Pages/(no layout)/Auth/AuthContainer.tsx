@@ -142,6 +142,9 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
 							</>
 						) : (
 							<>
+								<Link href="/login" className="underline">
+									<p>¿Ya tienes cuenta? Inicia Sesión</p>
+								</Link>
 								<Button
 									size="large"
 									type="submit"
@@ -149,19 +152,9 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
 								>
 									Registrarse
 								</Button>
-								<Link href="/login">
-									<Button
-										size="large"
-										button="secondary"
-										type="button"
-									>
-										Ya tengo una cuenta
-									</Button>
-								</Link>
 							</>
 						)}
 					</div>
-
 					{type === "login" && <LinkButtons />}
 				</form>
 			</div>
