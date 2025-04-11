@@ -18,7 +18,10 @@ export default function ListTask({
   tasks: TaskType[];
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
 }) {
-  const { setIsOpen, item } = useContext(ModalContext);
+  const { setIsOpen, item } = useContext(ModalContext) as {
+    setIsOpen: (value: string) => void;
+    item: { type: string; item: any } | null;
+  };
   const { setEvents } = useContext(DashboardContext);
   const [openModal, setOpenModal] = useState<string>("");
 
