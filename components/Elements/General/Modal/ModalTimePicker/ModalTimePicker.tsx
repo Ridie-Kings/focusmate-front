@@ -1,31 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 
 interface ModalTimePickerProps {
-  onChange?: (event: { target: { value: string } }) => void;
-  initialTime?: { hours: number; min: number; seg: number };
-  isPlay?: boolean;
+  onChange: (event: {
+    target: { value: { hours: number; min: number } };
+  }) => void;
 }
 
-export default function ModalTimePicker({
-  onChange,
-  initialTime = { hours: 0, min: 0, seg: 0 },
-  isPlay = false,
-}: ModalTimePickerProps) {
-  const [time, setTime] = useState(initialTime);
+export default function ModalTimePicker({ onChange }: ModalTimePickerProps) {
+  const [time, setTime] = useState({ hours: 0, min: 0, seg: 0 });
   const [editHours, setEditHours] = useState(false);
   const [editMin, setEditMin] = useState(false);
-  const [hoursValue, setHoursValue] = useState(
-    String(initialTime.hours).padStart(2, "0")
-  );
-  const [minValue, setMinValue] = useState(
-    String(initialTime.min).padStart(2, "0")
-  );
+  const [hoursValue, setHoursValue] = useState(String(0).padStart(2, "0"));
+  const [minValue, setMinValue] = useState(String(0).padStart(2, "0"));
   const [choseUpdate, setChoseUpdate] = useState("");
 
   const hoursInputRef = useRef<HTMLInputElement | null>(null);
   const minInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Focus y seleccionar el input cuando se edita
   useEffect(() => {
     if (editMin && minInputRef.current) {
       minInputRef.current.focus();
@@ -40,7 +31,6 @@ export default function ModalTimePicker({
     }
   }, [editHours]);
 
-  // Actualizar valores al cambiar el tiempo
   useEffect(() => {
     setMinValue(String(time.min).padStart(2, "0"));
   }, [time.min]);
@@ -49,7 +39,6 @@ export default function ModalTimePicker({
     setHoursValue(String(time.hours).padStart(2, "0"));
   }, [time.hours]);
 
-  // Función para actualizar el tiempo
   interface Time {
     hours: number;
     min: number;
@@ -77,20 +66,16 @@ export default function ModalTimePicker({
 
     setTime(newTime);
 
-    // Notificar cambio al componente padre
-    if (onChange) {
-      const event: OnChangeEvent = {
-        target: {
-          value: `${String(newTime.hours).padStart(2, "0")}:${String(
-            newTime.min
-          ).padStart(2, "0")}:${String(newTime.seg).padStart(2, "0")}`,
+    onChange({
+      target: {
+        value: {
+          hours: newTime.hours,
+          min: newTime.min,
         },
-      };
-      onChange(event);
-    }
+      },
+    });
   };
 
-  // Manejadores de cambio
   const handleMinChange = (
     e:
       | React.KeyboardEvent<HTMLInputElement>
@@ -132,37 +117,30 @@ export default function ModalTimePicker({
             transition-all duration-200 text-xl font-medium
           `}
       >
-        {(time.hours > 0 || editHours) && (
+        {editHours ? (
           <>
-            {editHours ? (
-              <>
-                <input
-                  ref={hoursInputRef}
-                  type="text"
-                  value={hoursValue}
-                  onChange={(e) => setHoursValue(e.target.value)}
-                  onKeyDown={handleHoursChange}
-                  onBlur={handleHoursChange}
-                  className="w-12 bg-transparent text-center outline-none border-b border-gray-300"
-                  disabled={isPlay}
-                  maxLength={2}
-                />
-                <span>:</span>
-              </>
-            ) : (
-              <span
-                className="cursor-pointer hover:text-secondary-400 transition-colors duration-300"
-                onClick={() => {
-                  if (!isPlay) {
-                    setEditHours(true);
-                    setChoseUpdate("hours");
-                  }
-                }}
-              >
-                {String(time.hours).padStart(2, "0")}:
-              </span>
-            )}
+            <input
+              ref={hoursInputRef}
+              type="text"
+              value={hoursValue}
+              onChange={(e) => setHoursValue(e.target.value)}
+              onKeyDown={handleHoursChange}
+              onBlur={handleHoursChange}
+              className="w-12 bg-transparent text-center outline-none border-b border-gray-300"
+              maxLength={2}
+            />
+            <span>:</span>
           </>
+        ) : (
+          <span
+            className="cursor-pointer hover:text-secondary-400 transition-colors duration-300"
+            onClick={() => {
+              setEditHours(true);
+              setChoseUpdate("hours");
+            }}
+          >
+            {String(time.hours).padStart(2, "0")}:
+          </span>
         )}
         {editMin ? (
           <input
@@ -173,34 +151,20 @@ export default function ModalTimePicker({
             onKeyDown={handleMinChange}
             onBlur={handleMinChange}
             className="w-12 bg-transparent text-center outline-none border-b border-gray-300"
-            disabled={isPlay}
             maxLength={2}
           />
         ) : (
           <span
             className="cursor-pointer hover:text-secondary-400 transition-colors duration-300"
             onClick={() => {
-              if (!isPlay) {
-                setEditMin(true);
-                setChoseUpdate("min");
-              }
+              setEditMin(true);
+              setChoseUpdate("min");
             }}
           >
             {String(time.min).padStart(2, "0")}
           </span>
-        )}
-        :
-        <span
-          className="cursor-pointer hover:text-secondary-400 transition-colors duration-300"
-          onClick={() => {
-            if (!isPlay) {
-              setChoseUpdate((prev) => (prev === "seg" ? "" : "seg"));
-              // Aquí podríamos añadir una función para editar los segundos si se requiere
-            }
-          }}
-        >
-          {String(time.seg).padStart(2, "0")}
-        </span>
+        )}{" "}
+        h
       </p>
     </div>
   );

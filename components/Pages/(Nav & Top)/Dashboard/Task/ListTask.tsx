@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { ChevronDown, EllipsisVertical } from "lucide-react";
+import { ChevronDown, EllipsisVertical, Trash2 } from "lucide-react";
 import { deleteTask } from "@/services/Task/deleteTask";
 import MountainTask from "@/components/Elements/Svg/MountainTask";
 import { useContext, useEffect, useState } from "react";

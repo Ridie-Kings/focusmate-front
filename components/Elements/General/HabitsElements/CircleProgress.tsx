@@ -12,11 +12,17 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
   doneCount,
   habits,
 }) => {
+  const safePercent = useMemo(() => {
+    // Handle NaN and constrain to 0-100 range
+    return isNaN(percent) ? 100 : Math.min(Math.max(percent, 0), 100);
+  }, [percent]);
+
   const progressDetails = useMemo(() => {
     const radius = 100;
     const circumference = 2 * Math.PI * radius;
-    const strokeDashoffset = circumference - (percent / 100) * circumference;
-    const angle = (percent / 100) * 360;
+    const strokeDashoffset =
+      circumference - (safePercent / 100) * circumference;
+    const angle = (safePercent / 100) * 360;
 
     return {
       radius,
@@ -24,9 +30,7 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
       strokeDashoffset,
       angle,
     };
-  }, [percent]);
-
-  const safePercent = Math.min(Math.max(percent, 0), 100);
+  }, [safePercent]);
 
   return (
     <div className="relative flex items-center justify-center text-primary-500">
