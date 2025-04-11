@@ -36,7 +36,6 @@ export default function ModalHabit({
       console.log("habit error", res.res);
     }
   };
-  console.log(habit);
 
   return (
     <>

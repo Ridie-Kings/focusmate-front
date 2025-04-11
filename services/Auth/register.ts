@@ -13,6 +13,7 @@ export async function register(
       fullname: formData.get("fullname") as string,
       password: formData.get("password") as string,
     };
+    console.log(userData);
 
     const testUser = testUserData({
       ...userData,
@@ -59,7 +60,7 @@ function testUserData(userData: {
 
   const password = userData.password!;
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$#.!%*?&]{8,}$/;
 
   if (!passwordRegex.test(password)) {
     return {
