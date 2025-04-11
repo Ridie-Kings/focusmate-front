@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { ChevronDown, EllipsisVertical, Trash2 } from "lucide-react";
+import { ChevronDown, EllipsisVertical } from "lucide-react";
 import { deleteTask } from "@/services/Task/deleteTask";
 import MountainTask from "@/components/Elements/Svg/MountainTask";
 import { useContext, useEffect, useState } from "react";
@@ -44,8 +44,10 @@ export default function ListTask({
 
   useEffect(() => {
     if (item && item.type === "task") {
-      setTasks((prev) => [...prev, item]);
-      setEvents((prev) => [...prev, item]);
+      console.log(item);
+
+      setTasks((prev) => [...prev, item.item]);
+      setEvents((prev) => [...prev, item.item]);
     }
   }, [item]);
 

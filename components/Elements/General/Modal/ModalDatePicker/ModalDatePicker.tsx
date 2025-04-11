@@ -15,7 +15,7 @@ export default function ModalDatePicker({
   }, [date]);
 
   return (
-    <div className="absolute -top-35 left-5 w-[360px] drop-shadow-lg rounded-lg bg-background-primary flex flex-col">
+    <div className="absolute -top-35 left-5 w-[360px] drop-shadow-lg rounded-lg bg-background-primary flex flex-col z-50">
       <Title date={date} />
       <NavigationDate date={date} />
       <CalendarItem setDate={setDate} date={date} />
