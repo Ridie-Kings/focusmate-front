@@ -17,60 +17,60 @@ import { updateHabit } from "@/services/Habits/updateHabit";
 import { removeHabit } from "@/services/Habits/removeHabit";
 
 export default function HabitsList({
-  habits,
-  setHabits,
+	habits,
+	setHabits,
 }: {
-  habits: HabitsType[];
-  setHabits: Dispatch<SetStateAction<HabitsType[]>>;
+	habits: HabitsType[];
+	setHabits: Dispatch<SetStateAction<HabitsType[]>>;
 }) {
-  const renderIcon = (type: string) => {
-    switch (type) {
-      case "study":
-        return (
-          <Book
-            size={48}
-            className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
-          />
-        );
-      case "food":
-        return (
-          <ChefHat
-            size={48}
-            className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
-          />
-        );
-      case "sleep":
-        return (
-          <BedDouble
-            size={48}
-            className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
-          />
-        );
-      case "sport":
-        return (
-          <Bike
-            size={48}
-            className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
-          />
-        );
-      default:
-        return (
-          <CircleHelp
-            size={48}
-            className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
-          />
-        );
-    }
-  };
+	const renderIcon = (type: string) => {
+		switch (type) {
+			case "study":
+				return (
+					<Book
+						size={48}
+						className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
+					/>
+				);
+			case "food":
+				return (
+					<ChefHat
+						size={48}
+						className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
+					/>
+				);
+			case "sleep":
+				return (
+					<BedDouble
+						size={48}
+						className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
+					/>
+				);
+			case "sport":
+				return (
+					<Bike
+						size={48}
+						className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
+					/>
+				);
+			default:
+				return (
+					<CircleHelp
+						size={48}
+						className="bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300"
+					/>
+				);
+		}
+	};
 
-  const handleToggle = async (id: string) => {
-    const updatedHabits = habits.map((habit) =>
-      habit._id === id ? { ...habit, status: !habit.status } : habit
-    );
+	const handleToggle = async (id: string) => {
+		const updatedHabits = habits.map((habit) =>
+			habit._id === id ? { ...habit, status: !habit.status } : habit
+		);
 
-    setHabits(updatedHabits);
+		setHabits(updatedHabits);
 
-    const habitToUpdate = updatedHabits.find((habit) => habit._id === id);
+		const habitToUpdate = updatedHabits.find((habit) => habit._id === id);
 
     if (habitToUpdate) {
       try {
@@ -86,12 +86,12 @@ export default function HabitsList({
     }
   };
 
-  const handleRemoveHabit = async (_id: string) => {
-    const habitToRemove = habits.find((habit) => habit._id === _id);
+	const handleRemoveHabit = async (_id: string) => {
+		const habitToRemove = habits.find((habit) => habit._id === _id);
 
-    if (!habitToRemove) return;
+		if (!habitToRemove) return;
 
-    setHabits((prev) => prev.filter((habit) => habit._id !== _id));
+		setHabits((prev) => prev.filter((habit) => habit._id !== _id));
 
     try {
       const res = await removeHabit({ _id });

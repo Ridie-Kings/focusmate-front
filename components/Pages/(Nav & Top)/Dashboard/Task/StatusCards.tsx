@@ -2,36 +2,36 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import { Dispatch, SetStateAction } from "react";
 
 export default function StatusCards({
-  setFilter,
-  filter,
-  tasks,
+	setFilter,
+	filter,
+	tasks,
 }: {
-  setFilter: Dispatch<SetStateAction<string>>;
-  filter: string;
-  tasks: TaskType[];
+	setFilter: Dispatch<SetStateAction<string>>;
+	filter: string;
+	tasks: TaskType[];
 }) {
-  const items = [
-    {
-      label: "Pendientes",
-      number: tasks.filter((t) => t.status === "pending").length,
-    },
-    {
-      label: "En Progreso",
-      number: tasks.filter((t) => t.status === "progress").length,
-    },
-    {
-      label: "En Revision",
-      number: tasks.filter((t) => t.status === "revision").length,
-    },
-    {
-      label: "Completados",
-      number: tasks.filter((t) => t.status === "completed").length,
-    },
-    {
-      label: "No Completados",
-      number: tasks.filter((t) => t.status === "dropped").length,
-    },
-  ];
+	const items = [
+		{
+			label: "Pendientes",
+			number: tasks.filter((t) => t.status === "pending").length,
+		},
+		{
+			label: "En Progreso",
+			number: tasks.filter((t) => t.status === "progress").length,
+		},
+		{
+			label: "En Revision",
+			number: tasks.filter((t) => t.status === "revision").length,
+		},
+		{
+			label: "Completados",
+			number: tasks.filter((t) => t.status === "completed").length,
+		},
+		{
+			label: "No Completados",
+			number: tasks.filter((t) => t.status === "dropped").length,
+		},
+	];
 
   return (
     <ul className="flex w-full gap-3">

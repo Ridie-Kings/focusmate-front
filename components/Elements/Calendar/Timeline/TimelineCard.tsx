@@ -27,11 +27,11 @@ export default function TimelineCard({ event }: { event: TaskType }) {
           <p className="text-xs text-white font-medium">Empieza</p>
         </span>
         <p className="bg-secondary-600 px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white">
-          {formatDuration(event.startDate, event.dueDate)}
+          {formatDuration(event.startDate, event.endDate)}
         </p>
         <span className="flex flex-col items-center gap-1">
           <p className="text-sm">
-            {new Date(event.dueDate).toLocaleTimeString("es-ES", {
+            {new Date(event.endDate).toLocaleTimeString("es-ES", {
               hour: "2-digit",
               minute: "2-digit",
             })}

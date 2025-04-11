@@ -43,9 +43,11 @@ export default function ListTask({
   const tasksRender = render();
 
   useEffect(() => {
-    if (item) {
-      setTasks((prev) => [...prev, item]);
-      setEvents((prev) => [...prev, item]);
+    if (item && item.type === "task") {
+      console.log(item);
+
+      setTasks((prev) => [...prev, item.item]);
+      setEvents((prev) => [...prev, item.item]);
     }
   }, [item]);
 

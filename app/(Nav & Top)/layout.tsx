@@ -4,7 +4,7 @@ import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
 import TopBar from "@/components/Layouts/TopBar";
 import TimerProvider from "@/components/Provider/TimerProvider";
-import { logout, getToken } from "@/lib";
+import { getToken } from "@/lib";
 import ModalProvider from "@/components/Provider/ModalProvider";
 import { redirect } from "next/navigation";
 // import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";

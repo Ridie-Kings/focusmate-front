@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
 import TimerProvider from "@/components/Provider/TimerProvider";
-import { getToken, logout } from "@/lib";
+import { getToken } from "@/lib";
 import ModalProvider from "@/components/Provider/ModalProvider";
 import { redirect } from "next/navigation";
 // import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
@@ -54,7 +54,7 @@ export default async function RootLayout({
         {/* <SocketIOProvider token={token ?? ""}> */}
         <ModalProvider>
           <TimerProvider>
-            <NavBar handleLogout={handleLogout} />
+            <NavBar />
             <main className="flex flex-col min-h-screen h-full flex-1">
               {children}
             </main>
