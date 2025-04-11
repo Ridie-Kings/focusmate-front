@@ -19,7 +19,13 @@ export default function ModalProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState("");
-  const [item, setItem] = useState<TaskType | HabitsType>();
+  const [item, setItem] = useState<
+    | {
+        type: string;
+        item: HabitsType | TaskType;
+      }
+    | undefined
+  >();
 
   const contextValue = {
     item,

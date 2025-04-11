@@ -10,7 +10,7 @@ export default function ModalHabit({
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: HabitsType) => void;
+  setItem: (data: { type: string; item: HabitsType }) => void;
 }) {
   const [habit, setHabit] = useState<{
     name: string;
@@ -28,7 +28,7 @@ export default function ModalHabit({
     const res = await createHabit({ habit });
 
     if (res.success) {
-      setItem(res.res);
+      setItem({ type: "habit", item: res.res });
       setIsOpen("");
 
       console.log("habit created", res.res);

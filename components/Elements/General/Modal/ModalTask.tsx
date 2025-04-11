@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { Bell, Calendar, Text } from "lucide-react";
+import { Bell, Calendar, Text, Timer } from "lucide-react";
 
 import InputModal from "@/components/Reusable/InputModal";
 import ModalDatePicker from "./ModalDatePicker/ModalDatePicker";
@@ -20,7 +20,7 @@ export default function ModalTask({
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: TaskType) => void;
+  setItem: (data: { type: string; item: TaskType }) => void;
 }) {
   const [task, setTask] = useState<{
     title: string;
@@ -46,7 +46,7 @@ export default function ModalTask({
     const res = await createTask({ task });
 
     if (res.success) {
-      setItem(res.message);
+      setItem({ type: "task", item: res.message });
       console.log("Task created successfully", res.message);
       setIsOpen("");
       const response = await addTaskToCalendar({ _id: res.message._id });
@@ -118,6 +118,42 @@ export default function ModalTask({
             }
             icon={<Calendar />}
           />
+          <div className="flex">
+            <InputModal
+              type="select"
+              placeholder={format(task?.dueDate ?? new Date(), "dd MMMM yyyy", {
+                locale: es,
+              })}
+              option={
+                <ModalDatePicker
+                  onChange={(e) =>
+                    setTask((prev) => ({
+                      ...prev,
+                      dueDate: new Date(e.target.value),
+                    }))
+                  }
+                />
+              }
+              icon={<Timer />}
+            />
+            <InputModal
+              type="select"
+              placeholder={format(task?.dueDate ?? new Date(), "dd MMMM yyyy", {
+                locale: es,
+              })}
+              option={
+                <ModalDatePicker
+                  onChange={(e) =>
+                    setTask((prev) => ({
+                      ...prev,
+                      dueDate: new Date(e.target.value),
+                    }))
+                  }
+                />
+              }
+              icon={<Timer />}
+            />
+          </div>
           <InputModal
             type="select"
             placeholder={task?.priority ? task.priority : "Prioridad"}
