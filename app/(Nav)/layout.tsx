@@ -29,7 +29,7 @@ export default async function RootLayout({
   if (!token) redirect("/login");
   const handleLogout = async () => {
     "use server";
-    console.log("Logging out...");
+    // console.log("Logging out...");
 
     try {
       await logout();

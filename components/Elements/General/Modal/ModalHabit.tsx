@@ -31,9 +31,9 @@ export default function ModalHabit({
       setItem(res.res);
       setIsOpen("");
 
-      console.log("habit created", res.res);
+      // console.log("habit created", res.res);
     } else {
-      console.log("habit error", res.res);
+      // console.log("habit error", res.res);
     }
   };
 

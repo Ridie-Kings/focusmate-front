@@ -99,7 +99,7 @@ const Calendar: React.FC<CalendarProps> = ({
   const handleCreateEvent = async () => {
     // const res = await createEventCalendar();
     // if (res) {
-    //   console.log("Evento creado:", res);
+    //   // console.log("Evento creado:", res);
     // } else {
     //   console.error("Error al crear el evento");
     // }

@@ -78,7 +78,7 @@ export default function HabitsList({
           _id: habitToUpdate._id,
           habit: { status: habitToUpdate.status },
         });
-        console.log("Habit updated:", res);
+        // console.log("Habit updated:", res);
       } catch (error) {
         console.error("Error updating habit:", error);
         setHabits(habits);
@@ -96,7 +96,7 @@ export default function HabitsList({
     try {
       const res = await removeHabit({ _id });
       if (res.success) {
-        console.log("Habit deleted:", res.res);
+        // console.log("Habit deleted:", res.res);
       } else {
         console.error("Failed to delete habit:", res.res);
         setHabits((prev) => [...prev, habitToRemove]);

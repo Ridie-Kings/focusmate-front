@@ -14,7 +14,7 @@ interface TimelineProps {
 }
 
 export default function Timeline({ date, events }: TimelineProps) {
-  console.log(events);
+  // console.log(events);
 
   const filteredEvents = useMemo(() => {
     return events.filter((event) =>

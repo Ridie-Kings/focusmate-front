@@ -55,9 +55,9 @@ export default function ListTask({
     if (res.success) {
       setTasks((prev) => prev.filter((task) => task._id !== id));
       setEvents((prev) => prev.filter((task) => task._id !== id));
-      console.log("Task deleted successfully");
+      // console.log("Task deleted successfully");
     } else {
-      console.log("Failed to delete task", res.message);
+      // console.log("Failed to delete task", res.message);
     }
   };
 

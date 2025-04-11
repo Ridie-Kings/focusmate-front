@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
 import ModalEvent from "./Modal/ModalEvent";
+import ModalContact from "./Modal/ModalContact";
 
 import { X } from "lucide-react";
 
@@ -23,6 +24,8 @@ export default function Modal({
         return <ModalHabit setIsOpen={setIsOpen} setItem={setItem} />;
       case "event":
         return <ModalEvent />;
+      case "contact":
+        return <ModalContact setIsOpen={setIsOpen} setItem={setItem} />;
       default:
         return "";
     }

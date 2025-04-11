@@ -35,7 +35,7 @@ const navigationItems: NavItem[] = [
   },
   {
     id: 4,
-    label: "Tares",
+    label: "Tareas",
     link: "/task",
     icon: <Lightbulb size={24} />,
   },

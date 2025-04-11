@@ -13,7 +13,7 @@ export async function register(
       fullname: formData.get("fullname") as string,
       password: formData.get("password") as string,
     };
-    console.log(userData);
+    // console.log(userData);
 
     const testUser = testUserData({
       ...userData,
