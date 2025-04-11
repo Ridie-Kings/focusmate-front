@@ -4,8 +4,9 @@ import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
 import TopBar from "@/components/Layouts/TopBar";
 import TimerProvider from "@/components/Provider/TimerProvider";
-import { logout } from "@/lib";
+import { logout, getToken } from "@/lib";
 import ModalProvider from "@/components/Provider/ModalProvider";
+import { redirect } from "next/navigation";
 // import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 
 const poppinsSans = Poppins({
@@ -25,27 +26,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const token = await getToken();
+  const token = await getToken();
 
-  const handleLogout = async () => {
-    "use server";
-    console.log("Logging out...");
-
-    try {
-      await logout();
-    } catch (error) {
-      if (
-        error instanceof Error &&
-        "response" in error &&
-        error.response &&
-        typeof error.response === "string"
-      ) {
-        console.error("Error logging out:", error.response);
-      } else {
-        console.error("Error logging out:", error);
-      }
-    }
-  };
+  if (!token) {
+    redirect("/login");
+  }
 
   return (
     <html lang="en">
@@ -54,7 +39,7 @@ export default async function RootLayout({
         {/* <SocketIOProvider token={token ?? ""}> */}
         <ModalProvider>
           <TimerProvider>
-            <NavBar handleLogout={handleLogout} />
+            <NavBar />
             <main className="flex flex-col min-h-screen h-full flex-1">
               <TopBar />
               {children}

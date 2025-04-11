@@ -12,7 +12,6 @@ export default function TimelineCard({ event }: { event: TaskType }) {
     }
     return `${minutes} min`;
   };
-  console.log(event);
 
   return (
     <div className="w-full h-26 bg-secondary-700 text-white p-4 rounded-lg flex flex-col justify-between transition-all duration-300 ease-in-out">

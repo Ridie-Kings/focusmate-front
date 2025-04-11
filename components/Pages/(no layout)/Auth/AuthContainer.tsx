@@ -19,7 +19,21 @@ const REDIRECT_PATHS: Record<"login" | "register", string> = {
 export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
   const config = AUTH_CONFIG[type];
   const [error, setError] = useState<string>("");
+  const [formData, setFormData] = useState<Record<string, string>>({});
   const handleAuth = type === "login" ? login : register;
+
+  // Récupérer les données sauvegardées au chargement du composant
+  useEffect(() => {
+    const savedData = localStorage.getItem(`auth_${type}_data`);
+    if (savedData) {
+      try {
+        setFormData(JSON.parse(savedData));
+      } catch (e) {
+        console.error("Error parsing saved form data:", e);
+        localStorage.removeItem(`auth_${type}_data`);
+      }
+    }
+  }, [type]);
 
   const [state, action] = useActionState(handleAuth, {
     success: false,
@@ -37,11 +51,37 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
 
   useEffect(() => {
     if (state.message === "") return;
-    console.log(state.success);
 
-    if (state.success) redirect(REDIRECT_PATHS[type]);
-    else handleError(state.message);
+    if (state.success) {
+      // Effacer les données stockées en cas de succès
+      localStorage.removeItem(`auth_${type}_data`);
+      redirect(REDIRECT_PATHS[type]);
+    } else {
+      handleError(state.message);
+    }
   }, [state, type, handleError]);
+
+  // Gérer les changements dans les champs de formulaire
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const updatedData = { ...formData, [name]: value };
+    setFormData(updatedData);
+
+    // Sauvegarder dans localStorage après chaque modification
+    localStorage.setItem(`auth_${type}_data`, JSON.stringify(updatedData));
+  };
+
+  // Création d'un FormData pour la soumission
+  const handleSubmit = (formData: FormData) => {
+    // Ajouter les valeurs du state au FormData
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!formData.has(key)) {
+        formData.append(key, value);
+      }
+    });
+
+    return action(formData);
+  };
 
   return (
     <section className="w-[45%] flex-1 flex flex-col items-center justify-center gap-10 px-6 py-8">
@@ -62,7 +102,7 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
           </p>
         </div>
 
-        <form action={action} className="flex flex-col gap-7 w-full">
+        <form action={handleSubmit} className="flex flex-col gap-7 w-full">
           {config.fields.map((field, index) => (
             <Input
               key={index}
@@ -72,23 +112,46 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
               placeholder={field.placeholder}
               state=""
               icon={field.icon}
+              value={formData[field.name] || ""}
+              onChange={handleInputChange}
             />
           ))}
-          <Link href="#" className="underline">
-            ¿Olvidaste tu contraseña?
-          </Link>
+
+          {type === "login" && (
+            <Link href="#" className="underline">
+              ¿Olvidaste tu contraseña?
+            </Link>
+          )}
+
           {error && <div className="text-red-500 text-sm">{error}</div>}
 
           <div className="flex flex-col gap-4">
-            <Button size="large" type="submit" button="primary">
-              Iniciar Sesión
-            </Button>
-            <Button size="large" type="submit" button="secondary">
-              Registrarse
-            </Button>
+            {type === "login" ? (
+              <>
+                <Button size="large" type="submit" button="primary">
+                  Iniciar Sesión
+                </Button>
+                <Link href="/register">
+                  <Button size="large" button="secondary" type="button">
+                    Registrarse
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Button size="large" type="submit" button="primary">
+                  Registrarse
+                </Button>
+                <Link href="/login">
+                  <Button size="large" button="secondary" type="button">
+                    Ya tengo una cuenta
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
-          <LinkButtons />
+          {type === "login" && <LinkButtons />}
         </form>
       </div>
     </section>

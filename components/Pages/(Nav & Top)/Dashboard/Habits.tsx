@@ -7,13 +7,14 @@ import CircleProgressBar from "@/components/Elements/General/HabitsElements/Circ
 import HabitsList from "@/components/Elements/General/HabitsElements/HabitsList";
 import Button from "@/components/Reusable/Button";
 
-import { createHabit } from "@/services/Habits/createHabit";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import MountainHabits from "@/components/Elements/Svg/MountainHabits";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { ModalContext } from "@/components/Provider/ModalProvider";
 
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
+  const { setIsOpen, item } = useContext(ModalContext);
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
 
@@ -22,30 +23,15 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   }, [habitsList]);
 
   useEffect(() => {
+    if (item) setHabits((prev) => [...prev, item]);
+  }, [item]);
+
+  useEffect(() => {
     setDoneCount(habits.filter((habit) => habit.status).length);
     const totalCount = habits.length;
     const percent = Math.round((doneCount / totalCount) * 100);
     setPorcent(percent);
   }, [habits, doneCount]);
-
-  const handleCreateHabit = async () => {
-    const habit = {
-      name: "Habit test",
-      description: "habit test description",
-      frequency: "daily",
-      type: "study",
-    };
-
-    const res = await createHabit({ habit });
-
-    setHabits((prev) => [...prev, res.res]);
-
-    if (res.success) {
-      console.log("habit created", res.res);
-    } else {
-      console.log("habit error", res.res);
-    }
-  };
 
   return (
     <TemplateDashboard
@@ -83,7 +69,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
       )}
       <Button
         size="large"
-        onClick={handleCreateHabit}
+        onClick={() => setIsOpen("habit")}
         button="tertiary"
         type="button"
       >

@@ -11,7 +11,7 @@ import ModalColorPicker from "./ModalColorPicker/ModalColorPicker";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
+import { StatusType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 
@@ -20,7 +20,7 @@ export default function ModalTask({
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: TaskType) => void;
+  setItem: (item: any) => void;
 }) {
   const [task, setTask] = useState<{
     title: string;
@@ -61,8 +61,7 @@ export default function ModalTask({
   };
 
   return (
-    <div className="w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl">
-      <X onClick={() => setIsOpen("")} size={28} className="cursor-pointer" />
+    <>
       <div className="flex flex-col gap-2 w-full">
         <div className="flex w-full place-content-between">
           <input
@@ -125,7 +124,10 @@ export default function ModalTask({
             option={
               <ModalPriorityPicker
                 onChange={(e) =>
-                  setTask((prev) => ({ ...prev, priority: e.target.value as "high" | "medium" | "low" }))
+                  setTask((prev) => ({
+                    ...prev,
+                    priority: e.target.value as "high" | "medium" | "low",
+                  }))
                 }
               />
             }
@@ -151,6 +153,6 @@ export default function ModalTask({
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

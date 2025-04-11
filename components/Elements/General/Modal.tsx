@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
+
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
 import ModalEvent from "./Modal/ModalEvent";
-import { TaskType } from "@/interfaces/Task/TaskType";
+
+import { X } from "lucide-react";
 
 export default function Modal({
   isOpen,
@@ -11,14 +13,14 @@ export default function Modal({
 }: {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: TaskType) => void;
+  setItem: (item: any) => void;
 }) {
   const renderModal = () => {
     switch (isOpen) {
       case "task":
         return <ModalTask setIsOpen={setIsOpen} setItem={setItem} />;
       case "habit":
-        return <ModalHabit />;
+        return <ModalHabit setIsOpen={setIsOpen} setItem={setItem} />;
       case "event":
         return <ModalEvent />;
       default:
@@ -26,8 +28,11 @@ export default function Modal({
     }
   };
   return (
-    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-50">
-      {renderModal()}
+    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25">
+      <div className="w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl">
+        <X onClick={() => setIsOpen("")} size={28} className="cursor-pointer" />
+        {renderModal()}
+      </div>
     </div>
   );
 }

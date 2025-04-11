@@ -51,22 +51,12 @@ export async function refreshSession(refreshToken: RequestCookie | undefined) {
 
 export async function logout() {
   const existedCookies = await cookies();
-  const token = await getToken();
+  // const token = await getToken();
 
-  const res = await apiConnection.post("auth/logout", {
-    Authorization: `Bearer ${token}`,
-  });
+  // const res = await apiConnection.post("auth/logout", {
+  //   Authorization: `Bearer ${token}`,
+  // });
 
-  existedCookies.set("token", "", {
-    expires: new Date(0),
-    path: "/",
-    secure: true,
-    httpOnly: true,
-  });
-  existedCookies.set("session", "", {
-    expires: new Date(0),
-    path: "/",
-    secure: true,
-    httpOnly: true,
-  });
+  existedCookies.delete("token");
+  existedCookies.delete("session");
 }
