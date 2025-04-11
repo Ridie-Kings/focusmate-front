@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { Bell, Calendar, Text } from "lucide-react";
+import { Bell, Calendar, Text, Timer } from "lucide-react";
 
 import InputModal from "@/components/Reusable/InputModal";
 import ModalDatePicker from "./ModalDatePicker/ModalDatePicker";
@@ -14,13 +14,14 @@ import { es } from "date-fns/locale";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
+import ModalTimePicker from "./ModalTimePicker/ModalTimePicker";
 
 export default function ModalTask({
   setIsOpen,
   setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: TaskType) => void;
+  setItem: (data: { type: string; item: TaskType }) => void;
 }) {
   const [task, setTask] = useState<{
     title: string;
@@ -46,7 +47,7 @@ export default function ModalTask({
     const res = await createTask({ task });
 
     if (res.success) {
-      setItem(res.message);
+      setItem({ type: "task", item: res.message });
       console.log("Task created successfully", res.message);
       setIsOpen("");
       const response = await addTaskToCalendar({ _id: res.message._id });
@@ -118,6 +119,52 @@ export default function ModalTask({
             }
             icon={<Calendar />}
           />
+          <div className="flex">
+            <InputModal
+              type="select"
+              placeholder={format(task.startDate, "HH:mm", { locale: es })}
+              option={
+                <ModalTimePicker
+                  onChange={(e) =>
+                    setTask((prev) => ({
+                      ...prev,
+                      startDate: new Date(
+                        task.startDate.setHours(
+                          e.target.value.hours,
+                          e.target.value.min,
+                          0,
+                          0
+                        )
+                      ),
+                    }))
+                  }
+                />
+              }
+              icon={<Timer />}
+            />
+            <InputModal
+              type="select"
+              placeholder={format(task.endDate, "HH:mm", { locale: es })}
+              option={
+                <ModalTimePicker
+                  onChange={(e) =>
+                    setTask((prev) => ({
+                      ...prev,
+                      endDate: new Date(
+                        task.endDate.setHours(
+                          e.target.value.hours,
+                          e.target.value.min,
+                          0,
+                          0
+                        )
+                      ),
+                    }))
+                  }
+                />
+              }
+              icon={<Timer />}
+            />
+          </div>
           <InputModal
             type="select"
             placeholder={task?.priority ? task.priority : "Prioridad"}
