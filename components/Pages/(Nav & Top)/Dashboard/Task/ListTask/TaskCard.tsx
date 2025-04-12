@@ -4,7 +4,7 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import { deleteTask } from "@/services/Task/deleteTask";
 import { updateTask } from "@/services/Task/updateTask";
 import { ChevronDown, EllipsisVertical } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export default function TaskCard({
   task,

@@ -1,5 +1,4 @@
 import Date from "@/components/Elements/General/CurrentDate";
-import Animate from "@/components/Pages/(Nav & Top)/Dashboard/Animate";
 import Pomodoro from "@/components/Pages/(Nav & Top)/Dashboard/Pomodoro";
 import Habits from "@/components/Pages/(Nav & Top)/Dashboard/Habits";
 import Agenda from "@/components/Pages/(Nav & Top)/Dashboard/Agenda";
