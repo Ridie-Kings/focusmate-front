@@ -8,7 +8,7 @@ import HabitsList from "@/components/Elements/General/HabitsElements/HabitsList"
 import Button from "@/components/Reusable/Button";
 
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
-import MountainHabits from "@/components/Elements/Svg/MountainHabits";
+import MountainHabits from "@/components/Elements/Svg/Mountain/MountainHabits";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 

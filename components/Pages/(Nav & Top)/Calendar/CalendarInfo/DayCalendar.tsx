@@ -58,7 +58,7 @@ const DayCalendarItem = ({
                     })}
                     <p>Empieza</p>
                   </span>
-                  <p className="flex items-center py-2 px-4 text-xl bg-black rounded text-white-100">
+                  <p className="flex items-center py-2 px-4 text-xl bg-black rounded text-white">
                     {Math.floor(totalMinutes / 60)}:{totalMinutes % 60} min{" "}
                   </p>
                   <span className="text-lg ml-2">

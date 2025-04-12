@@ -64,18 +64,26 @@ export default function ModalHabit({
             }
             option={
               <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50">
-                {["daily", "weekly", "monthly"]?.map((item) => (
+                {[
+                  { link: "Diario", label: "daily" },
+                  { link: "Semanal", label: "weekly" },
+                  { link: "Cada Mes", label: "monthly" },
+                ]?.map((item) => (
                   <option
                     onClick={() => {
                       setHabit((prev) => ({
                         ...prev,
-                        frequency: item as "" | "daily" | "weekly" | "monthly",
+                        frequency: item.label as
+                          | ""
+                          | "daily"
+                          | "weekly"
+                          | "monthly",
                       }));
                     }}
-                    key={item}
+                    key={item.label}
                     className="p-2"
                   >
-                    {item}
+                    {item.link}
                   </option>
                 ))}
               </div>
@@ -90,18 +98,24 @@ export default function ModalHabit({
             placeholder={habit.type !== "" ? habit.type : "Tipo of habito"}
             option={
               <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 px-5 gap-1">
-                {["study", "sport", "food", "drink", "work"]?.map((item) => (
+                {[
+                  { label: "study", link: "Estudio" },
+                  { label: "sport", link: "Deporte" },
+                  { label: "food", link: "Comida" },
+                  { label: "drink", link: "Beber" },
+                  { label: "work", link: "Trabajo" },
+                ]?.map((item) => (
                   <option
                     onClick={() => {
                       setHabit((prev) => ({
                         ...prev,
-                        type: item,
+                        type: item.label,
                       }));
                     }}
-                    key={item}
+                    key={item.link}
                     className="p-2"
                   >
-                    {item}
+                    {item.link}
                   </option>
                 ))}
               </div>

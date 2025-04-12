@@ -1,6 +1,6 @@
 import TimeLeftBar from "@/components/Elements/Calendar/Timeline/TimeLeftBar";
 import TimelineCard from "@/components/Elements/Calendar/Timeline/TimelineCard";
-import MountainAgenda from "@/components/Elements/Svg/MountainAgenda";
+import MountainAgenda from "@/components/Elements/Svg/Mountain/MountainAgenda";
 
 import { TaskType } from "@/interfaces/Task/TaskType";
 

@@ -39,8 +39,8 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
         ${isCurrentMonth ? "text-black" : "text-gray-400"}
         ${
           isToday
-            ? "bg-primary-500 text-white-100"
-            : "hover:bg-secondary-700 hover:text-white-100"
+            ? "bg-primary-500 text-white"
+            : "hover:bg-secondary-700 hover:text-white"
         }`}
       aria-label={format(day, "EEEE, d MMMM yyyy", { locale: es })}
     >
@@ -50,7 +50,7 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
           <div
             key={`${i}-${day.toISOString()}`}
             className={`p-1 rounded flex flex-col ${
-              isToday ? "text-white-100" : "text-gray-100"
+              isToday ? "text-white" : "text-gray-100"
             }`}
             title={event.title}
           >
