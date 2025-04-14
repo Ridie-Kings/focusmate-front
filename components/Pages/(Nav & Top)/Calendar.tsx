@@ -1,13 +1,11 @@
 "use client";
 
 import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
-import Categories from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/Categories";
 import Calendar from "@/components/Elements/General/Calendar";
 import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { getAllCategories } from "@/services/Calendar/getAllCategories";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<string>("Día");
