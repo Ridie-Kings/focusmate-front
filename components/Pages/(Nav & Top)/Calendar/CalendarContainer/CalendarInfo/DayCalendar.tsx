@@ -47,9 +47,9 @@ const DayCalendarItem = ({
           .map((event, index) => {
             const eventStartPosition = getPosition(event.startDate);
             const eventEndPosition = getPosition(event.endDate);
-            const totalMinutes = Math.abs(
-              differenceInMinutes(event.endDate, event.startDate)
-            );
+            // const totalMinutes = Math.abs(
+            //   differenceInMinutes(event.endDate, event.startDate)
+            // );
 
             return (
               <div
