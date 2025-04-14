@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "i.kym-cdn.com",
       },
+      {
+        protocol: "https",
+        hostname: "img.freepik.com",
+      },
+      {
+        protocol: "https",
+        hostname: "youzign.com",
+      },
     ],
   },
 };

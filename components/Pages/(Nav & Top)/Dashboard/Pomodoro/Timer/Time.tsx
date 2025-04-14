@@ -85,16 +85,7 @@ export default function Time({
   return (
     <div className="flex gap-4 text-8xl text-primary-500 font-light relative">
       {!hiddenTime ? (
-        <p
-          className={`
-            transition-all duration-200
-            ${
-              time.hours === 0 && time.min === 0 && time.seg === 0
-                ? "blur-lg"
-                : ""
-            }
-          `}
-        >
+        <p>
           {time.hours > 0 && (
             <>
               {editHours ? (
