@@ -1,4 +1,3 @@
-import { EventType } from "@/interfaces/Calendar/EventType";
 import {
   addDays,
   addMonths,

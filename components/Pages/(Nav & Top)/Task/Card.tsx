@@ -37,6 +37,7 @@ export const Card = ({
             subTasks: [],
             startDate: new Date(),
             endDate: new Date(),
+            color: "#248277",
           });
         }}
         className="cursor-grab rounded border flex bg-white flex-col gap-4 border-gray-100 border-l-6 text-gray-100 p-4 active:cursor-grabbing"

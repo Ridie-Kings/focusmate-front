@@ -29,6 +29,7 @@ export const AddCard = ({ status, setCards }: AddCardProps) => {
       category: "",
       startDate: new Date(),
       endDate: new Date(),
+      color: "#248277",
     };
 
     setCards((pv) => [...pv, newCard]);

@@ -3,8 +3,7 @@ import NavInfo from "./CalendarInfo/NavInfo";
 import DayCalender from "./CalendarInfo/DayCalendar";
 import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
-import { Dispatch, SetStateAction, useState } from "react";
-import { EventType } from "@/interfaces/Calendar/EventType";
+import { Dispatch, SetStateAction } from "react";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default function CalendarInfo({
