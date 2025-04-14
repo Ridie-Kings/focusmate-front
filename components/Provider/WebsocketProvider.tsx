@@ -127,7 +127,7 @@ export const SocketIOProvider: React.FC<{
         setStatus(data);
       });
 
-      socketInstance.on("pomodoroStarted", (data: any) => {
+      socketInstance.on("pomodoroStarted", (data: unknown) => {
         console.log("Pomodoro started:", data);
       });
 
@@ -140,7 +140,7 @@ export const SocketIOProvider: React.FC<{
         setStatus(null);
       });
 
-      socketInstance.on("error", (error: any) => {
+      socketInstance.on("error", (error: unknown) => {
         console.error("Pomodoro error:", error);
       });
 
