@@ -154,7 +154,7 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
           onChange={(e) => updateHabitField("description", e.target.value)}
           icon={<Text />}
         />
-        
+
         <InputModal
           type="select"
           placeholder={
