@@ -1,6 +1,6 @@
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
-import { EventType } from "@/interfaces/Calendar/EventType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import {
   addDays,
   subDays,
@@ -24,20 +24,31 @@ const DayCalendarItem = ({
   events,
 }: {
   date: Date | undefined;
-  events: EventType[];
+  events: TaskType[];
 }) => {
+
+  const formatDuration = (start: Date, end: Date) => {
+    const totalMinutes = Math.abs(differenceInMinutes(end, start));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, "0")} horas`;
+    }
+    return `${minutes} horas`;
+  };
   return (
     <div className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]">
       <TimeLeftBar length={97} divider={4} calc={2} />
       <TimeBar pos={getPosition(new Date())} />
       <div className="relative w-full h-full">
         {events
-          .filter((event) => date && isSameDay(event.date.start, date))
+          .filter((event) => date && isSameDay(event.startDate, date))
           .map((event, index) => {
-            const eventStartPosition = getPosition(event.date.start);
-            const eventEndPosition = getPosition(event.date.end);
+            const eventStartPosition = getPosition(event.startDate);
+            const eventEndPosition = getPosition(event.endDate);
             const totalMinutes = Math.abs(
-              differenceInMinutes(event.date.end, event.date.start)
+              differenceInMinutes(event.endDate, event.startDate)
             );
 
             return (
@@ -52,17 +63,17 @@ const DayCalendarItem = ({
                 <p className="text-2xl">{event.title}</p>
                 <div className="flex place-content-between w-full">
                   <span className="text-lg flex flex-col">
-                    {event.date.start.toLocaleTimeString("es-ES", {
+                    {new Date(event.startDate).toLocaleTimeString("es-ES", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
                     <p>Empieza</p>
                   </span>
                   <p className="flex items-center py-2 px-4 text-xl bg-black rounded text-white">
-                    {Math.floor(totalMinutes / 60)}:{totalMinutes % 60} min{" "}
+                    {formatDuration(event.startDate, event.endDate)}
                   </p>
                   <span className="text-lg ml-2">
-                    {event.date.end.toLocaleTimeString("es-ES", {
+                    {new Date(event.endDate).toLocaleTimeString("es-ES", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
@@ -82,7 +93,7 @@ export default function DayCalendar({
   date,
   setDate,
 }: {
-  events: EventType[];
+  events: TaskType[];
   date: Date | undefined;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {

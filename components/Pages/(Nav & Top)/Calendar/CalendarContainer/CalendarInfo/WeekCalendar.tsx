@@ -16,6 +16,7 @@ import { Dispatch, SetStateAction } from "react";
 import Divider from "@/components/Elements/General/Divider";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 const WeekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -31,7 +32,7 @@ const WeekCalendarItem = ({
   events,
 }: {
   date: Date | undefined;
-  events: EventType[];
+  events: TaskType[];
 }) => {
   const startDate = startOfDay(
     startOfWeek(date ?? new Date(), { weekStartsOn: 1 })
@@ -76,10 +77,10 @@ const WeekCalendarItem = ({
             className={`text-center p-1 h-full rounded-lg transition-all duration-200 relative`}
           >
             {events
-              .filter((event) => isSameDay(new Date(event.date.start), day))
+              .filter((event) => isSameDay(new Date(event.startDate), day))
               .map((event, i) => {
-                const eventStartPosition = getNowPosition(event.date.start);
-                const eventEndPosition = getNowPosition(event.date.end);
+                const eventStartPosition = getNowPosition(event.startDate);
+                const eventEndPosition = getNowPosition(event.endDate);
                 return (
                   <div
                     key={i}
@@ -92,13 +93,13 @@ const WeekCalendarItem = ({
                     <p className="">{event.title}</p>
                     <div className="flex place-content-between w-full text-gray-100 text-xs p-1">
                       <span>
-                        {event.date.start.toLocaleTimeString("es-ES", {
+                        {new Date(event.startDate).toLocaleTimeString("es-ES", {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </span>
                       <span>
-                        {event.date.end.toLocaleTimeString("es-ES", {
+                        {new Date(event.endDate).toLocaleTimeString("es-ES", {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
@@ -119,7 +120,7 @@ export default function WeekCalendar({
   date,
   setDate,
 }: {
-  events: EventType[];
+  events: TaskType[];
   date: Date | undefined;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {

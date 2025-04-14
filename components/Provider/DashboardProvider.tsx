@@ -22,6 +22,8 @@ export default function DashboardProvider({
   const [events, setEvents] = useState<TaskType[]>([]);
   const [habits, setHabits] = useState<HabitsType[]>([]);
 
+  console.log("tasks", tasks);
+
   return (
     <DashboardContext.Provider
       value={{ events, setEvents, tasks, setTasks, habits, setHabits }}

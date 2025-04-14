@@ -6,8 +6,6 @@ import ModalEvent from "./Modal/ModalEvent";
 import ModalContact from "./Modal/ModalContact";
 
 import { X } from "lucide-react";
-// import { TaskType } from "@/interfaces/Task/TaskType";
-// import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 export default function Modal({
   isOpen,

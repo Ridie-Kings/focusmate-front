@@ -12,12 +12,13 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 import Button from "@/components/Reusable/Button";
 import WeekDays from "./Calendar/WeekDays";
 import CalendarNav from "./Calendar/CalendarNav";
 import DaysCalendar from "../Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
+import { ModalContext } from "@/components/Provider/ModalProvider";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -74,6 +75,8 @@ const Calendar: React.FC<CalendarProps> = ({
   date,
   btn,
 }) => {
+  const { setIsOpen } = useContext(ModalContext);
+
   const handlePreviousMonth = () => {
     setDate(subMonths(date ?? new Date(), 1));
   };
@@ -96,15 +99,6 @@ const Calendar: React.FC<CalendarProps> = ({
     (_, i) => new Date().getFullYear() + i
   );
 
-  const handleCreateEvent = async () => {
-    // const res = await createEventCalendar();
-    // if (res) {
-    //   // console.log("Evento creado:", res);
-    // } else {
-    //   console.error("Error al crear el evento");
-    // }
-  };
-
   return (
     <div
       className={`w-full h-full flex flex-col gap-4 py-2 overflow-hidden ${className} ${
@@ -120,7 +114,12 @@ const Calendar: React.FC<CalendarProps> = ({
       />
       <CalendarItem date={date} setDate={setDate} />
       {btn && (
-        <Button size="large" onClick={handleCreateEvent} button="tertiary" type="button">
+        <Button
+          size="large"
+          onClick={() => setIsOpen("task")}
+          button="tertiary"
+          type="button"
+        >
           Nuevo Evento
         </Button>
       )}

@@ -1,14 +1,17 @@
 "use client";
 
-import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarInfo";
-import Categories from "@/components/Pages/(Nav & Top)/Calendar/Categories";
+import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
+import Categories from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/Categories";
 import Calendar from "@/components/Elements/General/Calendar";
 import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
+import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<string>("Day");
   const { date, setDate } = useContext(CalendarContext);
+  const [events, setEvents] = useState<TaskType[]>([]);
 
   useEffect(() => {
     const storedCalendar = localStorage.getItem("navCalendar") || "Day";
@@ -19,6 +22,20 @@ export default function CalendarPage() {
     setNavType(type);
     localStorage.setItem("navCalendar", type);
   };
+
+  useEffect(() => {
+    const handleGetCalendarByDate = async () => {
+      const event = await getCalendarByDate({ date: date ?? new Date() });
+
+      if (event.success) {
+        setEvents(event.res);
+      } else {
+        console.error("Error al obtener el calendario", event.res);
+        setEvents([]);
+      }
+    };
+    handleGetCalendarByDate();
+  }, [date]);
 
   return (
     <section className="flex flex-1 h-full gap-6 p-6 overflow-hidden transition-all duration-300">
@@ -33,6 +50,7 @@ export default function CalendarPage() {
         <Categories />
       </div>
       <CalendarInfo
+        events={events}
         navType={navType}
         setNavType={(value) => {
           if (typeof value === "function") {
