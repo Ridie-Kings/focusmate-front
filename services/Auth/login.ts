@@ -25,6 +25,8 @@ export default async function login(
 
     const res = await apiConnection.post("auth/login", userData);
 
+    console.log(res);
+
     const { access_token, refresh_token } = res?.data;
 
     const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h

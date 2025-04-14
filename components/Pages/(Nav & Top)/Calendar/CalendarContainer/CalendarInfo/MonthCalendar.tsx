@@ -14,19 +14,19 @@ import { es } from "date-fns/locale";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Dispatch, SetStateAction, memo, useMemo } from "react";
 import Dot from "@/components/Elements/General/Dot";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 interface CalendarDayProps {
   day: Date;
   currentMonth: number;
-  events: EventType[];
+  events: TaskType[];
 }
 
-// Extraction du jour en un composant distinct pour optimiser les rendus
 const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
   const isToday = isSameDay(day, new Date());
   const isCurrentMonth = day.getMonth() === currentMonth;
   const dayEvents = useMemo(
-    () => events.filter((event) => isSameDay(new Date(event.date.start), day)),
+    () => events.filter((event) => isSameDay(new Date(event.startDate), day)),
     [events, day]
   );
 
@@ -72,9 +72,8 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
 
 CalendarDay.displayName = "CalendarDay";
 
-// Composant CalendarGrid séparé pour rendre le code plus modulaire
 const CalendarGrid = memo(
-  ({ date, events }: { date: Date; events: EventType[] }) => {
+  ({ date, events }: { date: Date; events: TaskType[] }) => {
     const currentMonth = date.getMonth();
 
     const days = useMemo(() => {
@@ -114,7 +113,7 @@ export default function MonthCalendar({
   date = new Date(),
   setDate,
 }: {
-  events: EventType[];
+  events: TaskType[];
   date?: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {

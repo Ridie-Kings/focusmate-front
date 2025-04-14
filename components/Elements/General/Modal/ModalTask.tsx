@@ -32,6 +32,7 @@ export default function ModalTask({
     dueDate: Date;
     priority: "high" | "medium" | "low";
     tags: string[];
+    color: string;
   }>({
     title: "",
     description: "",
@@ -41,6 +42,7 @@ export default function ModalTask({
     dueDate: new Date(),
     priority: "high",
     tags: [],
+    color: "#d5ede2",
   });
 
   const trad = () => {
@@ -65,14 +67,15 @@ export default function ModalTask({
       setIsOpen("");
       const response = await addTaskToCalendar({ _id: res.message._id });
       if (response.success) {
-        // console.log("Tarea añadido al calendario:", response.res);
+        console.log("Tarea añadido al calendario:", response.res);
       } else {
         console.error("Error al añadidir la tarea al calendario");
       }
     } else {
-      // console.log("Failed to create task", res.message);
+      console.log("Failed to create task", res.message);
     }
   };
+  console.log(task);
 
   return (
     <>
@@ -125,7 +128,9 @@ export default function ModalTask({
                 onChange={(e) =>
                   setTask((prev) => ({
                     ...prev,
+                    startDate: new Date(e.target.value),
                     dueDate: new Date(e.target.value),
+                    endDate: new Date(e.target.value),
                   }))
                 }
               />

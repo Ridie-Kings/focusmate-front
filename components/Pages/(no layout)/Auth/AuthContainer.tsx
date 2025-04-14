@@ -51,6 +51,7 @@ export const AuthContainer = ({ type }: { type: "login" | "register" }) => {
   useEffect(() => {
     if (state.message === "") return;
 
+
     if (state.success) {
       localStorage.removeItem(`auth_${type}_data`);
       redirect(REDIRECT_PATHS[type]);

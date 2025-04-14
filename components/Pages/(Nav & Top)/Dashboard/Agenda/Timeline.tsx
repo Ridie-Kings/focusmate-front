@@ -14,11 +14,9 @@ interface TimelineProps {
 }
 
 export default function Timeline({ date, events }: TimelineProps) {
-  // console.log(events);
-
   const filteredEvents = useMemo(() => {
     return events.filter((event) =>
-      isSameDay(new Date(event.startDate), date ?? new Date())
+      isSameDay(new Date(event.dueDate), date ?? new Date())
     );
   }, [date, events]);
 

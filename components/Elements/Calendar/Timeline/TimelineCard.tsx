@@ -8,9 +8,9 @@ export default function TimelineCard({ event }: { event: TaskType }) {
     const minutes = totalMinutes % 60;
 
     if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, "0")} min`;
+      return `${hours}:${minutes.toString().padStart(2, "0")} horas`;
     }
-    return `${minutes} min`;
+    return `${minutes} horas`;
   };
 
   return (

@@ -5,42 +5,22 @@ import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
 import { Dispatch, SetStateAction, useState } from "react";
 import { EventType } from "@/interfaces/Calendar/EventType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default function CalendarInfo({
   navType,
   setNavType,
   date,
   setDate,
+  events,
 }: {
   navType: string;
   setNavType: Dispatch<SetStateAction<string>>;
   date: Date | undefined;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
+  events: TaskType[];
 }) {
-  const [events] = useState<EventType[]>([
-    {
-      date: {
-        start: new Date("April 03, 2025 18:37:00"),
-        end: new Date("April 03, 2025 20:00:00"),
-      },
-      title: "calla bobo",
-    },
-    {
-      date: {
-        start: new Date("April 03, 2025 08:37:00"),
-        end: new Date("April 03, 2025 10:00:00"),
-      },
-      title: "31",
-    },
-
-    {
-      date: {
-        start: new Date("April 03, 2025 13:37:00"),
-        end: new Date("April 03, 2025 16:00:00"),
-      },
-      title: "31",
-    },
-  ]);
+  console.log(events);
 
   const renderCalenderType = () => {
     switch (navType) {
