@@ -27,7 +27,7 @@ export default function MembershipUser() {
         />
         <InfoCard
           title="Facturacíon y pago"
-          url={{ label: "Ver historial de Pago", url: "" }}
+          url={{ label: "Mejorar plan", url: "/pricing" }}
           items={[
             {
               icon: <Bell size={24} />,

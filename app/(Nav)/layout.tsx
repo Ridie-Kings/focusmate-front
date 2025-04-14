@@ -6,7 +6,7 @@ import TimerProvider from "@/components/Provider/TimerProvider";
 import { getToken } from "@/lib";
 import ModalProvider from "@/components/Provider/ModalProvider";
 import { redirect } from "next/navigation";
-// import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
+import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -27,31 +27,12 @@ export default async function RootLayout({
 }>) {
   const token = await getToken();
   if (!token) redirect("/login");
-  // const handleLogout = async () => {
-  //   "use server";
-  //   console.log("Logging out...");
-
-  //   try {
-  //     // await handleLogout();
-  //   } catch (error) {
-  //     if (
-  //       error instanceof Error &&
-  //       "response" in error &&
-  //       error.response &&
-  //       typeof error.response === "string"
-  //     ) {
-  //       console.error("Error logging out:", error.response);
-  //     } else {
-  //       console.error("Error logging out:", error);
-  //     }
-  //   }
-  // };
 
   return (
     <html lang="en">
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        {/* <SocketIOProvider token={token ?? ""}> */}
+        <SocketIOProvider token={token ?? ""}>
         <ModalProvider>
           <TimerProvider>
             <NavBar />
@@ -60,7 +41,7 @@ export default async function RootLayout({
             </main>
           </TimerProvider>
         </ModalProvider>
-        {/* </SocketIOProvider> */}
+        </SocketIOProvider>
       </body>
     </html>
   );
