@@ -47,7 +47,7 @@ export default async function login(
       message: "Login successful",
     };
   } catch (error: any) {
-    console.log(error.response);
+    // console.log(error.response);
 
     return {
       success: false,

@@ -27,6 +27,25 @@ export default async function RootLayout({
 }>) {
   const token = await getToken();
   if (!token) redirect("/login");
+  // const handleLogout = async () => {
+  //   "use server";
+  //   console.log("Logging out...");
+
+  //   try {
+  //     // await handleLogout();
+  //   } catch (error) {
+  //     if (
+  //       error instanceof Error &&
+  //       "response" in error &&
+  //       error.response &&
+  //       typeof error.response === "string"
+  //     ) {
+  //       console.error("Error logging out:", error.response);
+  //     } else {
+  //       console.error("Error logging out:", error);
+  //     }
+  //   }
+  // };
 
   return (
     <html lang="en">

@@ -33,31 +33,23 @@ export default function StatusCards({
 		},
 	];
 
-	return (
-		<ul className="flex w-full gap-3 items-center justify-between mb-4">
-			{items.map((item) => (
-				<li key={item.label} className="w-1/6">
-					<div
-						style={{
-							backgroundColor:
-								filter === item.label ? "#248277" : "#D5EDE2",
-							color: filter === item.label ? "white" : "black",
-						}}
-						className="flex flex-col border w-full h-full px-2 py-3 text-sm rounded-lg cursor-pointer transition-all duration-300 ease-in-out"
-						onClick={() =>
-							setFilter(filter === item.label ? "" : item.label)
-						}
-					>
-						<span
-							className="truncate"
-							style={{ wordBreak: "break-word" }}
-						>
-							{item.label}
-						</span>
-						<span>{item.number}</span>
-					</div>
-				</li>
-			))}
-		</ul>
-	);
+  return (
+    <ul className="flex w-full gap-3">
+      {items.map((item) => (
+        <li key={item.label} className="w-1/6">
+          <div
+            style={{
+              backgroundColor: filter === item.label ? "#248277" : "#D5EDE2",
+              color: filter === item.label ? "white" : "black",
+            }}
+            className="flex flex-col border w-full h-full px-2 py-3 text-sm rounded-lg cursor-pointer transition-all duration-300 ease-in-out"
+            onClick={() => setFilter(filter === item.label ? "" : item.label)}
+          >
+            <span className="truncate">{item.label}</span>
+            <span>{item.number}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
 }

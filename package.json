@@ -16,6 +16,7 @@
     "next": "15.2.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "resend": "^4.2.0",
     "sass": "^1.83.1",
     "socket.io-client": "^4.8.1"
   },

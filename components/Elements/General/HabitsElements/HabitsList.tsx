@@ -64,7 +64,7 @@ export default function HabitsList({
         setHabits(habits);
       }
     }
-  };
+  }
 
   const handleRemoveHabit = async (_id: string) => {
     const habitToRemove = habits.find((habit) => habit._id === _id);

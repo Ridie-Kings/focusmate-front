@@ -67,7 +67,7 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
       <div className="absolute flex flex-col items-center gap-1 text-center">
         <p className="flex items-center text-5xl">
           <span key={safePercent} className="animate-opacStart">
-            {safePercent}
+            {isNaN(safePercent) ? 100 : safePercent}
           </span>
           <span className="ml-1">%</span>
         </p>

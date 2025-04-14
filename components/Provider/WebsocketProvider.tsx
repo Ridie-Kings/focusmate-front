@@ -35,7 +35,7 @@
 //       });
 
 //       socketInstance.on("connect", () => {
-//         console.log("Socket.IO connection established");
+//         // console.log("Socket.IO connection established");
 
 //         setSendMessage(() => (data: any) => {
 //           socketInstance.emit("message", data);
@@ -51,7 +51,7 @@
 //       });
 
 //       socketInstance.on("disconnect", (reason: Socket.DisconnectReason) => {
-//         console.log(`Socket.IO disconnected. Reason: ${reason}`);
+//         // console.log(`Socket.IO disconnected. Reason: ${reason}`);
 //         setMessage("");
 //       });
 

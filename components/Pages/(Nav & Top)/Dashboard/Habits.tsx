@@ -12,9 +12,13 @@ import MountainHabits from "@/components/Elements/Svg/Mountain/MountainHabits";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 
+
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
-  const { setIsOpen, item } = useContext(ModalContext);
+  const { setIsOpen, item } = useContext(ModalContext) as {
+    item: { type: string; item: HabitsType } | null;
+    setIsOpen: (type: string) => void;
+  };
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
 
