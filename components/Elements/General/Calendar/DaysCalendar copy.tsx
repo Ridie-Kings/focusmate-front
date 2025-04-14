@@ -26,8 +26,8 @@ export default function DaysCalendar({
     const monthClasses = isCurrentMonth ? "text-black" : "text-gray-400";
     const todayClasses = isTodayDay
       ? "border border-secondary-700 text-secondary-700 hover:bg-secondary-700/25"
-      : "hover:bg-secondary-600 hover:text-white-100";
-    const selectedClasses = isSelected ? "bg-secondary-700 text-white-100" : "";
+      : "hover:bg-secondary-600 hover:text-white";
+    const selectedClasses = isSelected ? "bg-secondary-700 text-white" : "";
 
     return `${todayClasses} ${baseClasses}  ${monthClasses} ${selectedClasses}`;
   };

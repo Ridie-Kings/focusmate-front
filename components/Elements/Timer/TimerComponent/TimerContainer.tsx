@@ -85,7 +85,7 @@ export default function TimerContainer({
           key={index}
           className={`${
             fullScreen ? "w-[220px]" : "w-1/2"
-          } flex items-center justify-center bg-white-100 rounded-lg px-7 py-20`}
+          } flex items-center justify-center bg-white rounded-lg px-7 py-20`}
         >
           <span key={digit} className="animate-opacStart">
             {digit}
@@ -105,7 +105,7 @@ export default function TimerContainer({
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
           onClick={() => !isPlaying && updateTime(-1)}
-          className="text-white-100 absolute -left-18"
+          className="text-white absolute -left-18"
           size={40}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",
@@ -121,7 +121,7 @@ export default function TimerContainer({
         </p>
         <Plus
           onClick={() => !isPlaying && updateTime(1)}
-          className="text-white-100 absolute -right-18"
+          className="text-white absolute -right-18"
           size={40}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",

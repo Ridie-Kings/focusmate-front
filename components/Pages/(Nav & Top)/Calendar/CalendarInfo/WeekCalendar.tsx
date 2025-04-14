@@ -64,7 +64,7 @@ const WeekCalendarItem = ({
           <div
             className={`text-xl flex flex-col items-center drop-shadow-lg text-center py-2 border border-primary-500 rounded-lg sticky top-0 z-10 ${
               isSameDay(new Date(), day)
-                ? "bg-primary-500 text-white-100"
+                ? "bg-primary-500 text-white"
                 : "bg-white text-primary-500"
             }`}
           >
