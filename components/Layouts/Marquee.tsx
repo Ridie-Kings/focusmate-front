@@ -1,17 +1,15 @@
-"use client";
-
-import Image from "next/image";
-
 export default function Carousel() {
   return (
-    <div className="w-[55%] flex-1 flex gap-3 px-1 py-5">
-      <Image
-        src={"/images/svg/login.svg"}
-        width={100}
+    <div className="w-1/2 h-screen flex px-6 py-3.5  overflow-hidden relative">
+      <img
+        src="/images/logoPNJ.png"
+        width={1000}
         height={100}
-        alt="svg"
-        className="w-[100vw] h-[95vh] sticky top-10"
+        alt="Logo PNJ"
+        className="w-full h-full object-cover rounded-3xl"
       />
+      <div className="absolute left-0 top-0 bg-white w-[318px] h-[64px] rounded-2xl" />
+      <div className="absolute right-0 bottom-0 bg-white w-[130px] h-[80px] rounded-2xl" />
     </div>
   );
 }

@@ -95,8 +95,9 @@ export default function HabitsList({
               <p className="text-primary-500 px-2 group-hover:text-white transition-all duration-300">
                 {habit.name}
               </p>
-              {/* <div className="flex gap-2 items-center place-content-between w-full text-secondary-600 group-hover:text-white transition-all duration-300">
-                <div className="flex items-center gap-1 px-2 py-1">
+              <div className="flex gap-2 items-center place-content-between w-full text-secondary-600 group-hover:text-white transition-all duration-300 px-2">
+                {habit.description}
+                {/* <div className="flex items-center gap-1 px-2 py-1">
                   <Clock />
                   <p>21:00hrs</p>
                 </div>
@@ -107,8 +108,8 @@ export default function HabitsList({
                 <div className="flex items-center gap-1 px-2 py-1">
                   <Bell />
                   <p>10&apos; antes</p>
-                </div>
-              </div> */}
+                </div> */}
+              </div>
             </div>
             <Trash2
               size={24}

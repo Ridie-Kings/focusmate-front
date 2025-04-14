@@ -12,31 +12,23 @@ export default function StatusCards({
 }) {
   const items = [
     {
-      label: "Pendientes",
-      number: tasks.filter((t) => t.status === "pending").length,
+      label: "Alto",
+      number: tasks.filter((t) => t.priority === "high").length,
     },
     {
-      label: "En Progreso",
-      number: tasks.filter((t) => t.status === "progress").length,
+      label: "Medio",
+      number: tasks.filter((t) => t.priority === "medium").length,
     },
     {
-      label: "En Revisión",
-      number: tasks.filter((t) => t.status === "revision").length,
-    },
-    {
-      label: "Completados",
-      number: tasks.filter((t) => t.status === "completed").length,
-    },
-    {
-      label: "No Completados",
-      number: tasks.filter((t) => t.status === "dropped").length,
+      label: "Bajo",
+      number: tasks.filter((t) => t.priority === "low").length,
     },
   ];
 
   return (
     <ul className="flex w-full gap-3">
       {items.map((item) => (
-        <li key={item.label} className="w-1/5">
+        <li key={item.label} className="w-1/3">
           <div
             style={{
               backgroundColor: filter === item.label ? "#248277" : "#D5EDE2",

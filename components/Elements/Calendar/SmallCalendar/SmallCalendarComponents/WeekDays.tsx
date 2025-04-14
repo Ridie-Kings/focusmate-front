@@ -4,7 +4,7 @@ export default function WeekDays() {
   return (
     <div className="grid grid-cols-7">
       {WEEK_DAYS.map((day, index) => (
-        <div key={index} className="text-sm text-accent text-center">
+        <div key={index} className="text-sm text-center w-10">
           {day}
         </div>
       ))}

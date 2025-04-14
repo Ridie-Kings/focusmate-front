@@ -28,7 +28,6 @@ export async function createTask({
       endDate: task.endDate.toISOString(),
       dueDate: task.dueDate.toISOString(),
     };
-    console.log(newTask, task);
 
     const res = await apiConnection.post("tasks", newTask, {
       headers: {

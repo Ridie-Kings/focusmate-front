@@ -12,7 +12,6 @@ import MountainHabits from "@/components/Elements/Svg/Mountain/MountainHabits";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 
-
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
   const { setIsOpen, item } = useContext(ModalContext) as {

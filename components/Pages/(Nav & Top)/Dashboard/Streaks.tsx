@@ -52,7 +52,7 @@ export default function Streaks({ number }: { number: number }) {
       } `}
       link=""
     >
-      <div className="w-full">
+      <div className="w-full z-10">
         <p className=" text-xl font-semibold">{text().title}</p>
         <p className="text-xs">{text().desc}</p>
       </div>

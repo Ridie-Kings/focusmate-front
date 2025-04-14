@@ -1,3 +1,4 @@
+"use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 import { TaskType } from "@/interfaces/Task/TaskType";
