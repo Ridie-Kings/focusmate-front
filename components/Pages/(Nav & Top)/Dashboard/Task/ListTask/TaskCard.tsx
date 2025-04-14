@@ -51,7 +51,7 @@ export default function TaskCard({
             onClick={() => setOpenModal(openModal !== "" ? "" : task._id)}
             className="flex items-center text-primary-500 border border-primary-500 divide-x divide-primary-500 rounded-lg hover:bg-secondary-200 cursor-pointer relative"
           >
-            <p className="px-4 py-2">Estado</p>
+            <p className="px-4 py-2">Prioridad</p>
             <ChevronDown
               size={40}
               className={`${

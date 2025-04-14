@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { Cake, Locate, Mail, PersonStanding, Phone } from "lucide-react";
+import { updateProfile } from "@/services/Profile/UpdateProfile";
 
 export default function InformationUser({
   profile,
@@ -24,9 +25,8 @@ export default function InformationUser({
     setFormData({ ...formData, [editingField!]: e.target.value });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setEditingField(null);
-    // You can add logic to save the updated data here
   };
 
   const userFormatted = [
@@ -73,7 +73,7 @@ export default function InformationUser({
         {userFormatted.map((item) => (
           <div key={item.title} className="flex gap-4 px-6 py-2">
             {item.icon}
-            <div className="f">
+            <div>
               <p>{item.title}</p>
               {editingField === item.field ? (
                 <div className="flex items-center gap-2">
@@ -81,7 +81,7 @@ export default function InformationUser({
                     type={item.type}
                     value={formData[item.field as keyof typeof formData] || ""}
                     onChange={handleChange}
-                    className="bg-gray-800 text-white px-2 py-1 rounded"
+                    className="border text-black px-2 py-1 rounded"
                   />
                   <button
                     onClick={handleSave}

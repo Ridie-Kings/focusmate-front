@@ -9,7 +9,7 @@ export default async function TopBar() {
   const profil = await getMyProfile();
 
   return (
-    <header className="flex place-content-between p-6 w-full border-b border-primary-200 bg-white">
+    <header className="flex place-content-between p-6 w-full border-b border-primary-200 bg-white z-60 ">
       <div className="flex flex-col flex-1">
         <p className="text-lg text-primary-500">
           Bienvenido, {profil?.user?.fullname}!

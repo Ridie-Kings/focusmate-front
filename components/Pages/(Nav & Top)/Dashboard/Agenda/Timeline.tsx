@@ -23,10 +23,10 @@ export default function Timeline({ date, events }: TimelineProps) {
   return (
     <div
       className={`flex-1 ${
-        filteredEvents.length === 0 ? "" : "min-h-44 max-h-96"
+        filteredEvents.length === 0 ? "" : "min-h-44 max-h-[500px]"
       }  overflow-auto flex flex-col gap-4 py-2`}
     >
-      <p className="text-xl px-4 text-primary-500 text-center">
+      <p className="text-xl text-primary-500 text-center sticky top-0 bg-white">
         Agenda del día
       </p>
       <div className="flex flex-1 gap-4">

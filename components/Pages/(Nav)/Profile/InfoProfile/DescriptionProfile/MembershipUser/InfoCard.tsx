@@ -1,4 +1,6 @@
+import Button from "@/components/Reusable/Button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
 export default function InfoCard({
@@ -10,8 +12,9 @@ export default function InfoCard({
   items: { label: string; icon: ReactNode; subText?: string }[];
   url: { label: string; url: string };
 }) {
+  const router = useRouter();
   return (
-    <div className="flex-1 flex flex-col items-end gap-4">
+    <div className="flex-1 flex flex-col justify-end items-end gap-4">
       <p className="py-4 border-b border-primary-200 w-full text-center">
         {title}
       </p>
@@ -28,9 +31,14 @@ export default function InfoCard({
           </div>
         ))}
       </div>
-      <Link href={url.url} className="text-sm text-primary-500">
+      <Button
+        onClick={() => router.push(url.url)}
+        button="primary"
+        type="button"
+        size="compact"
+      >
         {url.label}
-      </Link>
+      </Button>
     </div>
   );
 }
