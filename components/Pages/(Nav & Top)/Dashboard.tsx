@@ -18,7 +18,7 @@ export default async function Dashboard() {
       <div className="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-9 gap-4 w-full h-full p-5">
         <Date />
         {/* <Animate /> */}
-        <Streaks number={10} />
+        <Streaks number={35} />
         <Pomodoro />
         <TusTask tasksList={tasks.success ? tasks.res : []} />
         <Habits habitsList={habits.success ? habits.res : []} />

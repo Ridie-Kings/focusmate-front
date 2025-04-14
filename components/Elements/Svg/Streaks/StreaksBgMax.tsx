@@ -1,4 +1,4 @@
-export default function StreaksBg() {
+export default function StreaksBgMax() {
   return (
     <svg
       width="375"
