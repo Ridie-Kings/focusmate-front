@@ -1,5 +1,5 @@
-import { Search } from "lucide-react";
-import Notification from "./TopBar/Notification";
+// import { Search } from "lucide-react";
+// import Notification from "./TopBar/Notification";
 import PageTitle from "./TopBar/PageTitle";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
 import Image from "next/image";
@@ -17,11 +17,11 @@ export default async function TopBar() {
         <PageTitle />
       </div>
       <div className="flex items-end justify-end gap-3 flex-1">
-        <Search
+        {/* <Search
           size={36}
           className="border border-secondary-700 cursor-pointer rounded-full bg-secondary-100 text-secondary-700 p-2"
         />
-        <Notification />
+        <Notification /> */}
         <Link
           href={"/profile"}
           className="overflow-hidden rounded-full cursor-pointer size-9"

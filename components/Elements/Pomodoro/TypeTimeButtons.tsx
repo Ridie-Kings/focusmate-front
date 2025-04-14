@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import { Brain, Coffee, Sofa } from "lucide-react";
+import { Brain, Coffee, Timer } from "lucide-react";
 import React, { Dispatch, SetStateAction, useMemo } from "react";
 
 const items: { id: number; label: string; type: chipsIconType }[] = [
@@ -11,7 +11,7 @@ const items: { id: number; label: string; type: chipsIconType }[] = [
     type: "concentracion",
   },
   { id: 2, label: "Descanso", type: "D/Corto" },
-  { id: 3, label: "Siesta", type: "D/Largo" },
+  { id: 3, label: "Temporizador", type: "D/Largo" },
 ];
 
 export default function TypeTimeButtons({
@@ -61,7 +61,7 @@ export default function TypeTimeButtons({
               ) : item.type === "D/Corto" ? (
                 <Coffee />
               ) : (
-                item.type === "D/Largo" && <Sofa />
+                item.type === "D/Largo" && <Timer />
               )}
               {item.label}
             </button>

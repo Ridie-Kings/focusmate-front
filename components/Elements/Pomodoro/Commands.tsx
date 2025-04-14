@@ -1,5 +1,5 @@
 import {
-  Ellipsis,
+  RefreshCw,
   Pause,
   StepForward,
   Play,
@@ -48,7 +48,7 @@ export default function Commands({
           icon: fullScreen ? (
             <StepForward size={fullScreen ? 40 : 32} />
           ) : (
-            <Ellipsis size={fullScreen ? 40 : 32} />
+            <RefreshCw size={fullScreen ? 40 : 32} />
           ),
         },
       ].map(({ id, icon }, index) => (
