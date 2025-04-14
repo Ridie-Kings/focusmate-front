@@ -90,7 +90,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
       <div className="w-full flex flex-col gap-6">
         <div className="flex flex-col items-center gap-2 w-full text-primary-500">
           <h1 className="text-3xl md:text-5xl leading-9">{config.title}</h1>
-          <p>{config.description}</p>
+          <p className="text-center">{config.description}</p>
         </div>
 
         <form action={handleSubmit} className="flex flex-col gap-7 w-full">
@@ -130,7 +130,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
             )}
           </div>
 
-          {type === "login" && <LinkButtons />}
+          {/* {type === "login" && <LinkButtons />} */}
         </form>
       </div>
     </section>
