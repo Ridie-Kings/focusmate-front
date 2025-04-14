@@ -1,25 +1,9 @@
-import Button from "@/components/Reusable/Button";
-
-export default function Pricing() {
+export default function Prox() {
   return (
-    <main className="w-full h-screen flex flex-col items-center justify-center gap-6 p-9 text-primary-500 bg-background-primary">
-      <p className="text-5xl font-medium z-10">
-        Organizate mejor y alquanza tus metas con sherpapp
+    <main className="w-full flex-1 flex flex-col items-center justify-center gap-6 p-9 text-primary-500 bg-background-primary">
+      <p className="text-5xl font-medium z-10 text-center">
+        Este contenido llegara proximadamente a Sherpapp
       </p>
-      <p className="text-3xl z-10">
-        Hola, nos has pillado antes de estar listos
-      </p>
-      <p className="text-center z-10">
-        Estamos trabajando a tope para poner los últimos toques a SherpApp. Todo
-        va por buen camino y muy pronto estará lista para ayudarte a estudiar
-        mejor, organizarte y alcanzar tus objetivos. <br />
-        Te avisaremos en cuanto esté disponible. Muchas gracias.
-      </p>
-      <div className="z-10">
-        <Button button="primary" type="button" size="compact">
-          Estoy interessado
-        </Button>
-      </div>
       <svg
         width="1440"
         height="1024"

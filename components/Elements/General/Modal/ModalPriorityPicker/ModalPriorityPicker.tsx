@@ -20,12 +20,12 @@ export default function ModalPriorityPicker({
   return (
     <div
       style={{ top }}
-      className="absolute flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-10"
+      className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50"
     >
       {item.map((item) => (
         <p
           key={item.label}
-          className="p-2"
+          className="p-2 cursor-pointer hover:bg-gray-100"
           onClick={() => onChange({ target: { value: item.type } })}
         >
           {item.label}
