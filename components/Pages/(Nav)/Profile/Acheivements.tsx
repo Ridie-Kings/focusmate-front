@@ -10,6 +10,7 @@ export default function Acheivements() {
       <p className="px-6 py-4 border-b border-primary-200 text-center text-xl">
         Insignias
       </p>
+      <p className="text-center">No tienes Inisgnias todavia</p>
     </div>
   );
 }

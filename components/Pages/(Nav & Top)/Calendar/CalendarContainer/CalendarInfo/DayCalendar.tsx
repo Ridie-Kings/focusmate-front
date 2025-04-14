@@ -115,7 +115,7 @@ export default function DayCalendar({
           onClick={handlePreviousDay}
           className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
         >
-          <ArrowLeft className="mr-2" /> Dia anterior
+          <ArrowLeft className="mr-2" /> Día anterior
         </button>
         <span className="font-semibold text-lg">
           {date
@@ -130,7 +130,7 @@ export default function DayCalendar({
           onClick={handleNextDay}
           className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
         >
-          Siguiente dia <ArrowRight className="ml-2" />
+          Siguiente día <ArrowRight className="ml-2" />
         </button>
       </div>
 

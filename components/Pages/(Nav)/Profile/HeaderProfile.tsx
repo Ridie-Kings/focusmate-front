@@ -1,6 +1,4 @@
-import { Camera, Pen } from "lucide-react";
 import Image from "next/image";
-import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 export default function HeaderProfile({
@@ -22,14 +20,14 @@ export default function HeaderProfile({
           <p className="text-5xl">{profile?.user?.fullname}</p>
           <p>{profile?.user?.username}</p>
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <Button size="compact" button="primary" state="enabled" type="button">
             <p>Editar Perfil</p> <Pen size={24} />
           </Button>
           <Button size="compact" button="primary" state="enabled" type="button">
             <p>Cambiar foto</p> <Camera className="flex-1" size={24} />
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
