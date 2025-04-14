@@ -154,17 +154,23 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
           onChange={(e) => updateHabitField("description", e.target.value)}
           icon={<Text />}
         />
-
+        
         <InputModal
           type="select"
-          placeholder={habit.frequency || "Frequencia"}
+          placeholder={
+            FREQUENCY_OPTIONS.find((option) => option.value === habit.frequency)
+              ?.label || "Frecuencia"
+          }
           option={renderSelectOptions(FREQUENCY_OPTIONS, "frequency")}
           icon={<AudioLines />}
         />
 
         <InputModal
           type="select"
-          placeholder={habit.type || "Tipo de hábito"}
+          placeholder={
+            TYPE_OPTIONS.find((prev) => prev.value === habit.type)?.label ||
+            "Tipo de hábito"
+          }
           option={renderSelectOptions(TYPE_OPTIONS, "type")}
           icon={<BookHeart />}
         />

@@ -46,7 +46,7 @@ export default function BodyInputs({
         type="select"
         placeholder="10 min. antes"
         option={
-          <div className="absolute top-5 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50">
+          <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50">
             {["10", "15", "20"]?.map((item) => (
               <option key={item} className="p-2">
                 {item} min. antes

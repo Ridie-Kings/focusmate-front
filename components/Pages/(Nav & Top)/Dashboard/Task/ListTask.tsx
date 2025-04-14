@@ -24,16 +24,12 @@ export default function ListTask({
 
   const render = () => {
     switch (filter) {
-      case "Pendientes":
-        return tasks.filter((e) => e.status === "pending");
-      case "En Progreso":
-        return tasks.filter((e) => e.status === "progress");
-      case "En Revisión":
-        return tasks.filter((e) => e.status === "revision");
-      case "No Completados":
-        return tasks.filter((e) => e.status === "dropped");
-      case "Completados":
-        return tasks.filter((e) => e.status === "completed");
+      case "Alta":
+        return tasks.filter((e) => e.priority === "high");
+      case "Medio":
+        return tasks.filter((e) => e.priority === "medium");
+      case "Bajo":
+        return tasks.filter((e) => e.priority === "low");
       case "":
         return tasks;
       default:
