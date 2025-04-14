@@ -17,6 +17,7 @@ const REDIRECT_PATHS = {
   register: "/login",
 };
 
+
 export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   const config = AUTH_CONFIG[type];
   const [error, setError] = useState("");
@@ -25,10 +26,8 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   const storageKey = `auth_${type}_data`;
   const router = useRouter();
 
-  interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
-
   const handleInputChange = useCallback(
-    (e: InputChangeEvent) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setFormData((prevData: Record<string, string>) => {
         const updatedData = { ...prevData, [name]: value };

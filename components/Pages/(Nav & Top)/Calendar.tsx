@@ -7,7 +7,6 @@ import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { getAllCategories } from "@/services/Calendar/getAllCategories";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<string>("Día");

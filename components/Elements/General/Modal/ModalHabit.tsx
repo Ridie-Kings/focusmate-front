@@ -1,12 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { AudioLines, BookHeart, Text, AlertCircle } from "lucide-react";
-import Button from "@/components/Reusable/Button";
 import InputModal from "@/components/Reusable/InputModal";
 import { createHabit } from "@/services/Habits/createHabit";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import BtnSend from "./Modal/BtnSend";
 
-// Definir tipos para mejor mantenibilidad
 type Frequency = "daily" | "weekly" | "monthly" | "";
 type HabitFormData = {
   name: string;
@@ -20,7 +18,6 @@ type HabitOption = {
   value: string;
 };
 
-// Constantes para las opciones (facilita cambios futuros)
 const FREQUENCY_OPTIONS: HabitOption[] = [
   { label: "Diario", value: "daily" },
   { label: "Semanal", value: "weekly" },
@@ -125,7 +122,7 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
         <option
           key={option.value}
           className="p-2 cursor-pointer hover:bg-gray-100"
-          onClick={() => updateHabitField(field, option.value as any)}
+          onClick={() => updateHabitField(field, option.value)}
         >
           {option.label}
         </option>
