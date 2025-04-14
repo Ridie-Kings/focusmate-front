@@ -138,7 +138,7 @@ export default function WeekCalendar({
           onClick={handlePreviousWeek}
           className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
         >
-          <ArrowLeft className="mr-2" /> Last Week
+          <ArrowLeft className="mr-2" /> Semana anterior
         </button>
         <span className="font-semibold text-lg">
           {(date ?? new Date()).toLocaleDateString("es-ES", {
@@ -150,7 +150,7 @@ export default function WeekCalendar({
           onClick={handleNextWeek}
           className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
         >
-          Next Week <ArrowRight className="ml-2" />
+          Semana siguiente <ArrowRight className="ml-2" />
         </button>
       </div>
 

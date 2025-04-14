@@ -23,7 +23,7 @@ const navigationItems: NavItem[] = [
   },
   {
     id: 2,
-    label: "Calendar",
+    label: "Calendario",
     link: "/calendar",
     icon: <Calendar size={24} />,
   },

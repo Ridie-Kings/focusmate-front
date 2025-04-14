@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import CurrentDate from "@/components/Elements/General/CurrentDate";
 import Chips from "@/components/Reusable/Chips";
 
-const items = ["Day", "Week", "Month"];
+const items = ["Día", "Semana", "Mes"];
 
 export default function NavInfo({
   navType,

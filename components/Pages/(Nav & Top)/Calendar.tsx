@@ -9,12 +9,12 @@ import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default function CalendarPage() {
-  const [navType, setNavType] = useState<string>("Day");
+  const [navType, setNavType] = useState<string>("Día");
   const { date, setDate } = useContext(CalendarContext);
   const [events, setEvents] = useState<TaskType[]>([]);
 
   useEffect(() => {
-    const storedCalendar = localStorage.getItem("navCalendar") || "Day";
+    const storedCalendar = localStorage.getItem("navCalendar") || "Día";
     setNavType(storedCalendar);
   }, []);
 

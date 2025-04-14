@@ -26,7 +26,6 @@ const DayCalendarItem = ({
   date: Date | undefined;
   events: TaskType[];
 }) => {
-
   const formatDuration = (start: Date, end: Date) => {
     const totalMinutes = Math.abs(differenceInMinutes(end, start));
     const hours = Math.floor(totalMinutes / 60);
@@ -114,9 +113,9 @@ export default function DayCalendar({
       <div className="flex justify-between items-center py-2">
         <button
           onClick={handlePreviousDay}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
         >
-          <ArrowLeft className="mr-2" /> Last Day
+          <ArrowLeft className="mr-2" /> Dia anterior
         </button>
         <span className="font-semibold text-lg">
           {date
@@ -129,9 +128,9 @@ export default function DayCalendar({
         </span>
         <button
           onClick={handleNextDay}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
         >
-          Next Day <ArrowRight className="ml-2" />
+          Siguiente dia <ArrowRight className="ml-2" />
         </button>
       </div>
 
