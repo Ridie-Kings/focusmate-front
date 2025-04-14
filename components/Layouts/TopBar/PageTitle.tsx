@@ -10,6 +10,7 @@ export default function PageTitle() {
     if (pathname === "/calendar") return "Calendar";
     if (pathname === "/habitaciones") return "Habitaciones";
     if (pathname === "/habits") return "Mis Hábitos";
+    if (pathname === "/support") return "Feedback";
     return "Dashboard";
   };
   return <h1 className="text-5xl ">{title()}</h1>;

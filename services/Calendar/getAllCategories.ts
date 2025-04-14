@@ -9,7 +9,7 @@ export async function getAllCategories(): Promise<{
   try {
     const token = await getToken();
 
-    const res = await apiConnection.get("calendar/categories", {
+    const res = await apiConnection.get("calendar/all-categories", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

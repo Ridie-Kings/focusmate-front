@@ -67,7 +67,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
           <MountainHabits />
           <div className="flex flex-col items-center text-primary-500 gap-1">
             <p className="text-xl">¡Ups! No hay hábitos por aquí...</p>
-            <p> Creá uno y empezá a sumar pequeños logros</p>
+            <p>Crea uno y empieza a sumar pequeños logros</p>
           </div>
         </div>
       )}

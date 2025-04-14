@@ -47,16 +47,18 @@ export default function ModalColorPicker({
   return (
     <div className="relative flex items-center" ref={modalRef}>
       <button
-        className="flex items-center space-x-2 rounded-md cursor-pointer"
+        className="flex items-center space-x-2 rounded-md cursor-pointer gap-2"
         onClick={() => setOpen(!open)}
         aria-label="Open color picker"
         aria-expanded={open}
       >
         <span
-          className="size-4 rounded-full"
+          className="rounded-lg px-2 text-white"
           onClick={() => setOpen(!open)}
           style={{ backgroundColor: selectedColor }}
-        ></span>
+        >
+          Color
+        </span>
       </button>
 
       {open && (

@@ -4,7 +4,7 @@ export default function FreeMembership() {
   return (
     <>
       <FreeMembershipSvg />
-      <div className="absolute w-3/4 px-8 flex flex-col gap-2 z-50">
+      <div className="absolute w-3/5 px-8 flex flex-col gap-2 z-50">
         <p className="text-xl text-black">Membresía Gratuita</p>
         <p className="text-sm text-gray-400">
           Explorá lo esencial. Accede a funciones básicas para organizar tus

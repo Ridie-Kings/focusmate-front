@@ -7,6 +7,7 @@ import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { getAllCategories } from "@/services/Calendar/getAllCategories";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<string>("Día");
@@ -34,15 +35,6 @@ export default function CalendarPage() {
         setEvents([]);
       }
     };
-    // const handleGetCategories = async () => {
-    //   const categories = await getAllCategories();
-    //   if (categories.success) {
-    //     console.log(categories.res);
-    //   } else {
-    //     console.log(categories.res);
-    //   }
-    // };
-    // handleGetCategories();
     handleGetCalendarByDate();
   }, [date]);
 
@@ -56,7 +48,7 @@ export default function CalendarPage() {
           inView={navType !== "Month"}
           btn
         />
-        <Categories />
+        {/* <Categories /> */}
       </div>
       <CalendarInfo
         events={events}

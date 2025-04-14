@@ -39,7 +39,7 @@ export default function BodyInputs({
           setTask((prev) => ({ ...prev, description: e.target.value }))
         }
         type="text"
-        placeholder="Descripcíon"
+        placeholder="Descripción"
         icon={<Text />}
       />
       <InputModal

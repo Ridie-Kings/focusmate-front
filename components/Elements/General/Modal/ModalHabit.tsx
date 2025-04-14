@@ -147,7 +147,7 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
       <div className="flex flex-col gap-6 w-full">
         <InputModal
           type="text"
-          placeholder="Descripcion"
+          placeholder="Descripción"
           onChange={(e) => updateHabitField("description", e.target.value)}
           icon={<Text />}
         />

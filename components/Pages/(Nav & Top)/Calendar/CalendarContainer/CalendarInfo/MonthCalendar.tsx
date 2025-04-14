@@ -10,8 +10,11 @@ import {
   subMonths,
 } from "date-fns";
 import { es } from "date-fns/locale";
+
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
 import { Dispatch, SetStateAction, memo, useMemo } from "react";
+
 import Dot from "@/components/Elements/General/Dot";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
@@ -34,7 +37,7 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
 
   return (
     <div
-      className={`text-center pt-1 h-full cursor-pointer border text-xl relative
+      className={`text-center pt-1 h-full cursor-pointer border text-xl relative transition-all duration-300
         ${isCurrentMonth ? "text-black" : "text-gray-400"}
         ${
           isToday
@@ -48,13 +51,12 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
         {visibleEvents.map((event, i) => (
           <div
             key={`${i}-${day.toISOString()}`}
-            className={`p-1 rounded flex flex-col ${
-              isToday ? "text-white" : "text-gray-100"
-            }`}
+            style={{ color: event.color }}
+            className="p-1 rounded flex flex-col"
             title={event.title}
           >
             <div className="flex items-center gap-2 truncate">
-              <Dot size={10} />
+              <Dot size={10} backgroundColor={event.color} />
               {event.title}
             </div>
           </div>
@@ -136,7 +138,7 @@ export default function MonthCalendar({
       <div className="flex justify-between items-center py-2">
         <button
           onClick={handlePreviousMonth}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition duration-300 cursor-pointer"
           aria-label="Semana anterior"
         >
           <ArrowLeft className="mr-2" size={18} /> Semana anterior
@@ -144,7 +146,7 @@ export default function MonthCalendar({
         <h2 className="font-semibold text-lg capitalize">{monthYearLabel}</h2>
         <button
           onClick={handleNextMonth}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition duration-300 cursor-pointer"
           aria-label="Mes siguiente"
         >
           Mes siguiente <ArrowRight className="ml-2" size={18} />

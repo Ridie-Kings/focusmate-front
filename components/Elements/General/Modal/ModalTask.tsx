@@ -47,8 +47,9 @@ export default function ModalTask({
       setError("El título es obligatorio");
       return false;
     }
+    console.log(task.endDate, task.startDate);
 
-    if (task.endDate < task.startDate) {
+    if (task.endDate <= task.startDate) {
       setError(
         "La hora de finalización debe ser posterior a la hora de inicio"
       );
