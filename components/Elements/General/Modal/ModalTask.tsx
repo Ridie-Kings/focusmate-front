@@ -67,7 +67,7 @@ export default function ModalTask({
         <div className="flex w-full place-content-between">
           <input
             type="text"
-            placeholder="Titulo"
+            placeholder="Título"
             className="text-2xl text-gray-500 outline-none"
             onChange={(e) =>
               setTask((prev) => ({ ...prev, title: e.target.value }))

@@ -42,7 +42,7 @@ export default function ModalHabit({
       <div className="flex flex-col gap-2 w-full">
         <input
           type="text"
-          placeholder="Titulo"
+          placeholder="Título"
           className="text-2xl text-gray-500 outline-none"
           onChange={(e) =>
             setHabit((prev) => ({ ...prev, name: e.target.value }))

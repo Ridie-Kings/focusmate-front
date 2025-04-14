@@ -13,9 +13,9 @@ export default function NavigationStats({
     label: string;
     link: "info" | "academic" | "member";
   }[] = [
-    { icon: <PersonStanding />, label: "Informacion general", link: "info" },
-    { icon: <GraduationCap />, label: "Academico", link: "academic" },
-    { icon: <Award />, label: "Membresia y pago", link: "member" },
+    { icon: <PersonStanding />, label: "Información general", link: "info" },
+    { icon: <GraduationCap />, label: "Académico", link: "academic" },
+    { icon: <Award />, label: "Membresía y pago", link: "member" },
   ];
 
   return (
