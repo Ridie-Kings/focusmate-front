@@ -35,7 +35,7 @@ export default function Timeline({ date, events }: TimelineProps) {
           <div className="flex flex-col items-center justify-center px-2 bg-quaternary-100 rounded-2xl w-full h-full">
             <MountainAgenda />
             <p className="text-primary-500 2xl:text-xl text-center">
-              ¡Buen día! Todavía no hay eventos
+              Todavía no hay eventos
             </p>
           </div>
         ) : (
