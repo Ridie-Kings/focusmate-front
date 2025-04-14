@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { Cake, Locate, Mail, PersonStanding, Phone } from "lucide-react";
-import { updateProfile } from "@/services/Profile/UpdateProfile";
+// import { updateProfile } from "@/services/Profile/UpdateProfile";
 
 export default function InformationUser({
   profile,
