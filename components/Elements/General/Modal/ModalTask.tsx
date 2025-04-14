@@ -43,6 +43,19 @@ export default function ModalTask({
     tags: [],
   });
 
+  const trad = () => {
+    switch (task.priority) {
+      case "high":
+        return "Alta";
+      case "medium":
+        return "Media";
+      case "low":
+        return "Baja";
+      default:
+        return "";
+    }
+  };
+
   const handleSendTask = async () => {
     const res = await createTask({ task });
 
@@ -167,9 +180,10 @@ export default function ModalTask({
           </div>
           <InputModal
             type="select"
-            placeholder={task?.priority ? task.priority : "Prioridad"}
+            placeholder={task?.priority ? trad() : "Prioridad"}
             option={
               <ModalPriorityPicker
+                top="20px"
                 onChange={(e) =>
                   setTask((prev) => ({
                     ...prev,

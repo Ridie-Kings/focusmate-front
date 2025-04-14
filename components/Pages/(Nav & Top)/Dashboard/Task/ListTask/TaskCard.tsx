@@ -60,6 +60,7 @@ export default function TaskCard({
             />
             {openModal === task._id && (
               <ModalPriorityPicker
+                top="50px"
                 onChange={(e) => {
                   setTasks((prev) =>
                     prev.map((t) =>
