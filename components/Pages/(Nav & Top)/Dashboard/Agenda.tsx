@@ -32,7 +32,7 @@ export default function Agenda() {
     <TemplateDashboard
       grid="col-span-2 row-span-4 row-start-2"
       link="/calendar"
-      title="Calendar"
+      title="Calendario"
     >
       <div className="flex w-full h-full">
         <div className="flex flex-col gap-4">

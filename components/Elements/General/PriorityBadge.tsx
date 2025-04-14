@@ -1,4 +1,17 @@
 export default function PriorityBadge({ priority }: { priority: string }) {
+  const trad = () => {
+    switch (priority) {
+      case "high":
+        return "Alta";
+      case "medium":
+        return "Media";
+      case "low":
+        return "Baja";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div
       className={`${
@@ -22,7 +35,7 @@ export default function PriorityBadge({ priority }: { priority: string }) {
             : "bg-black"
         }`}
       />
-      <p className="text-xs text-gray-600">{priority ?? "Unknown Priority"}</p>
+      <p className="text-xs text-gray-600">{trad() ?? "Unknown Priority"}</p>
     </div>
   );
 }
