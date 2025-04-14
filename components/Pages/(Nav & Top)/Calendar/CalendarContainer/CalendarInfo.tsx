@@ -23,11 +23,11 @@ export default function CalendarInfo({
 
   const renderCalenderType = () => {
     switch (navType) {
-      case "Day":
+      case "Día":
         return <DayCalender events={events} date={date} setDate={setDate} />;
-      case "Week":
+      case "Semana":
         return <WeekCalendar events={events} date={date} setDate={setDate} />;
-      case "Month":
+      case "Mes":
         return <MonthCalendar events={events} date={date} setDate={setDate} />;
       default:
         return <MonthCalendar events={events} date={date} setDate={setDate} />;

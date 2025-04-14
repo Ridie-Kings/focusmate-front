@@ -8,7 +8,7 @@ const DEFAULT_ITEMS = ["Trabajo", "Estudios", "Universidad", "Salud"];
 
 export default function Categories({ items = DEFAULT_ITEMS }: CategoriesProps) {
   return (
-    <TemplateBox grid="h-full gap-4 flex-1" link="" title="Categories">
+    <TemplateBox grid="h-full gap-4 flex-1" link="" title="Categorías">
       <ul className="flex flex-col gap-4 h-full w-full">
         {items.map((item) => (
           <li key={item} className="flex w-full justify-between items-center">
