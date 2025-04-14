@@ -3,7 +3,7 @@ import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { deleteTask } from "@/services/Task/deleteTask";
 import { updateTask } from "@/services/Task/updateTask";
-import { ChevronDown, EllipsisVertical } from "lucide-react";
+import { ChevronDown, Trash2 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 export default function TaskCard({
@@ -79,7 +79,7 @@ export default function TaskCard({
               />
             )}
           </button>
-          <EllipsisVertical
+          <Trash2
             onClick={() => handleDeleteTask(task._id)}
             className="text-primary-500 cursor-pointer"
           />

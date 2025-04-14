@@ -15,10 +15,9 @@ export default function ModalPriorityPicker({
     { type: "high", label: "Urgente", color: "#ff8d8c" },
     { type: "medium", label: "Importante", color: "#ffbb39" },
     { type: "low", label: "Tranquilo", color: "#aaa3ff" },
-    { type: "high", label: "Opcional", color: "#56ab91" },
   ];
   return (
-    <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-10">
+    <div className="absolute top-12 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-10">
       {item.map((item) => (
         <div key={item.label} className="p-2 flex items-center gap-2">
           <div

@@ -28,7 +28,7 @@ export default function ListTask({
         return tasks.filter((e) => e.status === "pending");
       case "En Progreso":
         return tasks.filter((e) => e.status === "progress");
-      case "En Revision":
+      case "En Revisión":
         return tasks.filter((e) => e.status === "revision");
       case "No Completados":
         return tasks.filter((e) => e.status === "dropped");

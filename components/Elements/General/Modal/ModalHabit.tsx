@@ -42,7 +42,7 @@ export default function ModalHabit({
       <div className="flex flex-col gap-2 w-full">
         <input
           type="text"
-          placeholder="Titulo"
+          placeholder="Título"
           className="text-2xl text-gray-500 outline-none"
           onChange={(e) =>
             setHabit((prev) => ({ ...prev, name: e.target.value }))
@@ -95,7 +95,7 @@ export default function ModalHabit({
               setHabit((prev) => ({ ...prev, type: e.target.value }))
             }
             type="select"
-            placeholder={habit.type !== "" ? habit.type : "Tipo of habito"}
+            placeholder={habit.type !== "" ? habit.type : "Tipo de hábito"}
             option={
               <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 px-5 gap-1">
                 {[

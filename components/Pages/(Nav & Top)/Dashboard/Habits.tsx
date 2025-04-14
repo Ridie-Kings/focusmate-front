@@ -78,7 +78,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
         button="tertiary"
         type="button"
       >
-        Nuevo Habito
+        Nuevo Hábito
       </Button>
     </TemplateDashboard>
   );

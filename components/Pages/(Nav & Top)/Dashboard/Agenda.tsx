@@ -9,9 +9,11 @@ import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCal
 import Button from "@/components/Reusable/Button";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { ModalContext } from "@/components/Provider/ModalProvider";
 
 export default function Agenda() {
   const { events, setEvents } = useContext(DashboardContext);
+  const { setIsOpen } = useContext(ModalContext);
   const [date, setDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
@@ -32,12 +34,17 @@ export default function Agenda() {
     <TemplateDashboard
       grid="col-span-2 row-span-4 row-start-2"
       link="/calendar"
-      title="Calendar"
+      title="Calendario"
     >
       <div className="flex w-full h-full">
         <div className="flex flex-col gap-4">
           <SmallCalendar setDate={setDate} date={date} inView />
-          <Button size="large" button="tertiary" type="button">
+          <Button
+            onClick={() => setIsOpen("task")}
+            size="large"
+            button="tertiary"
+            type="button"
+          >
             Nuevo Evento
           </Button>
         </div>
