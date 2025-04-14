@@ -24,7 +24,7 @@ export default function ListTask({
 
   const render = () => {
     switch (filter) {
-      case "Alta":
+      case "Alto":
         return tasks.filter((e) => e.priority === "high");
       case "Medio":
         return tasks.filter((e) => e.priority === "medium");
@@ -63,7 +63,7 @@ export default function ListTask({
           <div className="flex flex-col items-center justify-center h-[265px] bg-quaternary-100 rounded-2xl py-4">
             <MountainTask />
             <p className="text-primary-500 text-xl">
-              El día está en blanco. ¡Agregá tus tareas {filter}!
+              El día está en blanco. ¡Agrega tus tareas {filter}!
             </p>
           </div>
         )}

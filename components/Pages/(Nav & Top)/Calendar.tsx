@@ -1,7 +1,6 @@
 "use client";
 
 import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
-import Categories from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/Categories";
 import Calendar from "@/components/Elements/General/Calendar";
 import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
@@ -34,15 +33,6 @@ export default function CalendarPage() {
         setEvents([]);
       }
     };
-    // const handleGetCategories = async () => {
-    //   const categories = await getAllCategories();
-    //   if (categories.success) {
-    //     console.log(categories.res);
-    //   } else {
-    //     console.log(categories.res);
-    //   }
-    // };
-    // handleGetCategories();
     handleGetCalendarByDate();
   }, [date]);
 
@@ -56,7 +46,7 @@ export default function CalendarPage() {
           inView={navType !== "Month"}
           btn
         />
-        <Categories />
+        {/* <Categories /> */}
       </div>
       <CalendarInfo
         events={events}

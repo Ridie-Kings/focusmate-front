@@ -98,7 +98,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 
   return (
     <div
-      className={`w-full h-full flex flex-col gap-4 py-2 overflow-hidden ${className} ${
+      className={`w-full flex flex-col gap-4 py-2 overflow-hidden ${className} ${
         !inView && "hidden"
       } transition-all duration-300`}
     >
