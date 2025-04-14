@@ -8,6 +8,7 @@ export type StatusType =
   | "dropped";
 
 export type TaskType = {
+  color: string;
   userId: string;
   _id: string;
   title: string;
