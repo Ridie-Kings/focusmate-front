@@ -2,7 +2,8 @@ import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import StreaksBg from "@/components/Elements/Svg/StreaksBg";
 
 export default function Streaks({ number }: { number: number }) {
-  const text = (number: number): { title: string; desc: string } => {
+  
+  const text = (): { title: string; desc: string } => {
     switch (number) {
       case 0:
         return {
@@ -45,10 +46,8 @@ export default function Streaks({ number }: { number: number }) {
       link=""
     >
       <div className="w-full">
-        <p className=" text-xl font-semibold">Fuego sagrado</p>
-        <p className="text-xs">
-          Alcanzaste el equilibrio perfecto. Tu hábito ya es parte de vos.
-        </p>
+        <p className=" text-xl font-semibold">{text().title}</p>
+        <p className="text-xs">{text().desc}</p>
       </div>
       <p className="p-2 text-sm bg-secondary-600 z-10 rounded-sm text-white">
         {number} días seguidos
