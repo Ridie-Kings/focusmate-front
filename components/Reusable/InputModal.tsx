@@ -7,6 +7,7 @@ interface InputModalProps {
   icon: ReactNode;
   option?: ReactNode;
   onChange?: (e: { target: { value: string } }) => void;
+  propagand?: boolean;
 }
 
 export default function InputModal({
@@ -15,6 +16,7 @@ export default function InputModal({
   icon,
   option,
   onChange,
+  propagand = true,
 }: InputModalProps) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -46,7 +48,7 @@ export default function InputModal({
   }, [menuOpen]);
 
   const handleOptionClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+    if (type === "select" && !propagand) e.stopPropagation();
   };
 
   switch (type) {

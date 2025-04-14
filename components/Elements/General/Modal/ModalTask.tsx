@@ -1,20 +1,24 @@
 import { Dispatch, SetStateAction, useState } from "react";
-
-import { Bell, Calendar, Text, Timer } from "lucide-react";
-
-import InputModal from "@/components/Reusable/InputModal";
-import ModalDatePicker from "./ModalDatePicker/ModalDatePicker";
-import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
-import Button from "@/components/Reusable/Button";
-import ModalColorPicker from "./ModalColorPicker/ModalColorPicker";
-
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { AlertCircle } from "lucide-react";
 
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
-import ModalTimePicker from "./ModalTimePicker/ModalTimePicker";
+import TopInputs from "./ModalTask/TopInputs";
+import BodyInputs from "./ModalTask/BodyInputs";
+import BtnSend from "./Modal/BtnSend";
+
+export type tempTaskType = {
+  title: string;
+  description: string;
+  status: StatusType;
+  startDate: Date;
+  endDate: Date;
+  dueDate: Date;
+  priority: "high" | "medium" | "low";
+  tags: string[];
+  color: string;
+};
 
 export default function ModalTask({
   setIsOpen,
@@ -23,17 +27,7 @@ export default function ModalTask({
   setIsOpen: Dispatch<SetStateAction<string>>;
   setItem: (data: { type: string; item: TaskType }) => void;
 }) {
-  const [task, setTask] = useState<{
-    title: string;
-    description: string;
-    status: StatusType;
-    startDate: Date;
-    endDate: Date;
-    dueDate: Date;
-    priority: "high" | "medium" | "low";
-    tags: string[];
-    color: string;
-  }>({
+  const [task, setTask] = useState<tempTaskType>({
     title: "",
     description: "",
     status: "pending",
@@ -45,179 +39,102 @@ export default function ModalTask({
     color: "#d5ede2",
   });
 
-  const trad = () => {
-    switch (task.priority) {
-      case "high":
-        return "Alta";
-      case "medium":
-        return "Media";
-      case "low":
-        return "Baja";
-      default:
-        return "";
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const validateTask = () => {
+    if (!task.title.trim()) {
+      setError("El título es obligatorio");
+      return false;
     }
+
+    if (task.endDate < task.startDate) {
+      setError(
+        "La hora de finalización debe ser posterior a la hora de inicio"
+      );
+      return false;
+    }
+
+    return true;
   };
 
   const handleSendTask = async () => {
-    const res = await createTask({ task });
+    try {
+      setError(null);
 
-    if (res.success) {
-      setItem({ type: "task", item: res.message });
-      console.log("Task created successfully", res.message);
-      setIsOpen("");
-      const response = await addTaskToCalendar({ _id: res.message._id });
-      if (response.success) {
-        console.log("Tarea añadido al calendario:", response.res);
-      } else {
-        console.error("Error al añadidir la tarea al calendario");
+      if (!validateTask()) {
+        return;
       }
-    } else {
-      console.log("Failed to create task", res.message);
+
+      setIsLoading(true);
+      const res = await createTask({ task });
+
+      if (res.success) {
+        setItem({ type: "task", item: res.message });
+        console.log("Task created successfully", res.message);
+
+        try {
+          const response = await addTaskToCalendar({ _id: res.message._id });
+          if (response.success) {
+            console.log("Tarea añadido al calendario:", response.res);
+          } else {
+            console.error(
+              "Error al añadidir la tarea al calendario:",
+              response.res
+            );
+          }
+        } catch (calendarError) {
+          console.error(
+            "Error al comunicarse con el servicio de calendario:",
+            calendarError
+          );
+        }
+
+        setIsOpen("");
+      } else {
+        setError(
+          typeof res.message === "string"
+            ? res.message
+            : "Error al crear la tarea"
+        );
+        console.error("Failed to create task", res.message);
+      }
+    } catch (err) {
+      console.error("Error inesperado:", err);
+      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      setIsLoading(false);
     }
   };
-  console.log(task);
 
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
-        <div className="flex w-full place-content-between">
-          <input
-            type="text"
-            placeholder="Título"
-            className="text-2xl text-gray-500 outline-none"
-            onChange={(e) =>
-              setTask((prev) => ({ ...prev, title: e.target.value }))
-            }
-          />
-          <ModalColorPicker
-            onChange={(e) =>
-              setTask((prev) => ({ ...prev, color: e.target.value }))
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-6 w-full">
-          <InputModal
-            onChange={(e) =>
-              setTask((prev) => ({ ...prev, description: e.target.value }))
-            }
-            type="text"
-            placeholder="Descripcíon"
-            icon={<Text />}
-          />
-          <InputModal
-            type="select"
-            placeholder="10 min. antes"
-            option={
-              <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1">
-                {["10", "15", "20"]?.map((item) => (
-                  <option key={item} className="p-2">
-                    {item} min. antes
-                  </option>
-                ))}
-              </div>
-            }
-            icon={<Bell />}
-          />
-          <InputModal
-            type="select"
-            placeholder={format(task?.dueDate ?? new Date(), "dd MMMM yyyy", {
-              locale: es,
-            })}
-            option={
-              <ModalDatePicker
-                onChange={(e) =>
-                  setTask((prev) => ({
-                    ...prev,
-                    startDate: new Date(e.target.value),
-                    dueDate: new Date(e.target.value),
-                    endDate: new Date(e.target.value),
-                  }))
-                }
-              />
-            }
-            icon={<Calendar />}
-          />
-          <div className="flex">
-            <InputModal
-              type="select"
-              placeholder={format(task.startDate, "HH:mm", { locale: es })}
-              option={
-                <ModalTimePicker
-                  onChange={(e) =>
-                    setTask((prev) => ({
-                      ...prev,
-                      startDate: new Date(
-                        task.startDate.setHours(
-                          e.target.value.hours,
-                          e.target.value.min,
-                          0,
-                          0
-                        )
-                      ),
-                    }))
-                  }
-                />
-              }
-              icon={<Timer />}
-            />
-            <InputModal
-              type="select"
-              placeholder={format(task.endDate, "HH:mm", { locale: es })}
-              option={
-                <ModalTimePicker
-                  onChange={(e) =>
-                    setTask((prev) => ({
-                      ...prev,
-                      endDate: new Date(
-                        task.endDate.setHours(
-                          e.target.value.hours,
-                          e.target.value.min,
-                          0,
-                          0
-                        )
-                      ),
-                    }))
-                  }
-                />
-              }
-              icon={<Timer />}
-            />
+        <TopInputs
+          error={error}
+          setError={setError}
+          task={task}
+          setTask={setTask}
+        />
+        {error && (
+          <div className="flex items-center gap-2 text-red-500 text-sm mt-1">
+            <AlertCircle size={16} />
+            <span>{error}</span>
           </div>
-          <InputModal
-            type="select"
-            placeholder={task?.priority ? trad() : "Prioridad"}
-            option={
-              <ModalPriorityPicker
-                top="20px"
-                onChange={(e) =>
-                  setTask((prev) => ({
-                    ...prev,
-                    priority: e.target.value as "high" | "medium" | "low",
-                  }))
-                }
-              />
-            }
-            icon=""
-          />
-        </div>
-        <div className="flex py-2 gap-2.5">
-          <Button
-            size="large"
-            button="secondary"
-            type="button"
-            onClick={() => setIsOpen("")}
-          >
-            Cancelar
-          </Button>
-          <Button
-            size="large"
-            onClick={handleSendTask}
-            button="primary"
-            type="button"
-          >
-            Guardar
-          </Button>
-        </div>
+        )}
+
+        <BodyInputs
+          error={error}
+          setError={setError}
+          task={task}
+          setTask={setTask}
+        />
+
+        <BtnSend
+          handleClick={handleSendTask}
+          isLoading={isLoading}
+          setIsOpen={setIsOpen}
+        />
       </div>
     </>
   );

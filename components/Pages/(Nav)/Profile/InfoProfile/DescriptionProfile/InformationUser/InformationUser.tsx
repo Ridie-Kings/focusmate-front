@@ -23,7 +23,7 @@ export default function InformationUser({
   ];
 
   return (
-    <>
+    <div className="flex flex-col">
       <div className="grid grid-cols-2">
         {userFormatted.map((item) => (
           <div key={item.title} className="flex gap-4 px-6 py-2">
@@ -46,6 +46,6 @@ export default function InformationUser({
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

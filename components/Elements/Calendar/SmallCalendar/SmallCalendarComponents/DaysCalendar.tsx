@@ -41,7 +41,7 @@ export default function DaysCalendar({
   };
 
   return (
-    <div className="grid grid-cols-7 gap-1.5">
+    <div className="grid grid-cols-7">
       {days.map((day) => (
         <div
           key={`day-${day.toISOString()}`}

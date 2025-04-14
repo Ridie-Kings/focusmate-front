@@ -1,3 +1,4 @@
+"use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 
@@ -16,7 +17,7 @@ export async function getAllCategories(): Promise<{
 
     return { success: true, res: res?.data };
   } catch (error: any) {
-    console.error("Error fetching categories:", error.response?.data);
-    return { success: false, res: error.response?.data };
+    console.error("Error fetching categories:", error.response);
+    return { success: false, res: error.response };
   }
 }

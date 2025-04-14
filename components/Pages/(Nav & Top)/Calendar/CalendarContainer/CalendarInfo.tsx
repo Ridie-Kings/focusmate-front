@@ -19,8 +19,6 @@ export default function CalendarInfo({
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   events: TaskType[];
 }) {
-  console.log(events);
-
   const renderCalenderType = () => {
     switch (navType) {
       case "Día":

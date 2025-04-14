@@ -36,7 +36,6 @@ export default function Input({
     "flex flex-col justify-center w-full relative gap-1 text-[#959595]";
   const labelClass = "flex items-center gap-1 text-black text-sm";
 
-  // Décider la classe de bordure en fonction de l'état
   const getBorderClass = () => {
     switch (state) {
       case "error":
@@ -59,7 +58,13 @@ export default function Input({
         <input
           id={name}
           name={name}
-          type={field === 3 && !showPassword ? "password" : "text"}
+          type={
+            field === 3 && !showPassword
+              ? "password"
+              : field === 2
+              ? "email"
+              : "text"
+          }
           className={`w-full py-2 pr-2 pl-4 placeholder:text-[#959595] text-black border rounded ${getBorderClass()}`}
           placeholder={placeholder}
           value={value}
