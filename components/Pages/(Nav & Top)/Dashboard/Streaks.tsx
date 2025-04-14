@@ -1,7 +1,16 @@
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import StreaksBg from "@/components/Elements/Svg/StreaksBg";
 
-export default function Streaks() {
+export default function Streaks({ number }: { number: number }) {
+
+  // const text: {title: string, desc: string} = (number: number) => {
+  //   switch (number) {
+  //     case:
+  //       return {title: "", desc: ""}
+  //   }
+  // }
+
+
   return (
     <TemplateDashboard
       title=""
@@ -15,7 +24,7 @@ export default function Streaks() {
         </p>
       </div>
       <p className="p-2 text-sm bg-secondary-600 z-10 rounded-sm text-white">
-        30 días seguidos
+        {number} días seguidos
       </p>
       <StreaksBg />
     </TemplateDashboard>
