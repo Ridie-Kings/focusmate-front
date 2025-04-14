@@ -95,7 +95,7 @@ export default function ModalHabit({
               setHabit((prev) => ({ ...prev, type: e.target.value }))
             }
             type="select"
-            placeholder={habit.type !== "" ? habit.type : "Tipo of habito"}
+            placeholder={habit.type !== "" ? habit.type : "Tipo de hábito"}
             option={
               <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 px-5 gap-1">
                 {[

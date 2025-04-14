@@ -41,7 +41,7 @@ const navigationItems: NavItem[] = [
   },
   {
     id: 5,
-    label: "Habitos",
+    label: "Hábitos",
     link: "/habits",
     icon: <Bell size={24} />,
   },
