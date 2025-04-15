@@ -10,7 +10,7 @@ export default function TimelineCard({ event }: { event: TaskType }) {
     if (hours > 0) {
       return `${hours}:${minutes.toString().padStart(2, "0")} horas`;
     }
-    return `${minutes} horas`;
+    return `${minutes} min`;
   };
 
   const isLightColor = (color: string) => {
