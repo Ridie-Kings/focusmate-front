@@ -2,7 +2,7 @@ export default function Prox() {
   return (
     <main className="w-full flex-1 flex flex-col items-center justify-center gap-6 p-9 text-primary-500 bg-background-primary">
       <p className="text-5xl font-medium z-10 text-center">
-        Este contenido llegara proximadamente a Sherpapp
+        Este contenido llegará próximamente a Sherpapp
       </p>
       <svg
         width="1440"

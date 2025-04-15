@@ -16,7 +16,9 @@ export default function CurrentDate({
         background && "bg-primary-500 text-white hover:shadow-lg"
       }`}
     >
-      <p className="text-4xl">{format(today, "eeee", { locale: es })}</p>
+      <p className="text-4xl capitalize">
+        {format(today, "eeee", { locale: es })}
+      </p>
       <p className="text-2xl">
         {format(today, "dd MMMM yyyy", { locale: es })}
       </p>

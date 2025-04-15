@@ -28,8 +28,8 @@ export default function CalendarNav({
         <ChevronLeft className="size-5" />
       </button>
       <div className="text-center">
-        <p className="text-lg">
-          {format(date ?? new Date(), "EEEE dd", { locale: es })}
+        <p className="text-lg capitalize">
+          {format(date ?? new Date(), "EEEE dd, MMMM", { locale: es })}
         </p>
         <SelectDate
           handleDateChange={handleYearChange}

@@ -12,15 +12,15 @@ export default function StatusCards({
 }) {
   const items = [
     {
-      label: "Alto",
+      label: "Alta",
       number: tasks.filter((t) => t.priority === "high").length,
     },
     {
-      label: "Medio",
+      label: "Media",
       number: tasks.filter((t) => t.priority === "medium").length,
     },
     {
-      label: "Bajo",
+      label: "Baja",
       number: tasks.filter((t) => t.priority === "low").length,
     },
   ];

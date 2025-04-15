@@ -24,11 +24,11 @@ export default function ListTask({
 
   const render = () => {
     switch (filter) {
-      case "Alto":
+      case "Alta":
         return tasks.filter((e) => e.priority === "high");
-      case "Medio":
+      case "Media":
         return tasks.filter((e) => e.priority === "medium");
-      case "Bajo":
+      case "Baja":
         return tasks.filter((e) => e.priority === "low");
       case "":
         return tasks;

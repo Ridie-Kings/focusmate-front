@@ -131,7 +131,7 @@ export default function MonthCalendar({
     [date]
   );
 
-  const weekdays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+  const weekdays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sáb", "Dom"];
 
   return (
     <div className="w-full flex-1 flex flex-col gap-4 place-content-between">

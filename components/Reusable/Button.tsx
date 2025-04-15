@@ -20,7 +20,7 @@ export default function Button({
 }) {
   const commonClasses = `cursor-pointer flex items-center justify-center gap-2 w-full ${
     size === "large" ? "rounded-2xl" : "rounded-lg"
-  } leading-6 transition-colors duration-300 ease-in-out text-white`;
+  } leading-6 transition-colors duration-300 ease-in-out`;
 
   switch (button) {
     case "primary":
@@ -28,11 +28,14 @@ export default function Button({
         <button
           onClick={onClick}
           type={type}
-          className={`${commonClasses} ${
-            size === "large" ? "p-4" : "px-6 py-2"
-          } bg-primary-500 ${
-            size === "large" ? "text-xl" : ""
-          } hover:bg-primary-700 active:bg-primary-500`}
+          className={`${commonClasses}
+            ${
+              state === "pressed"
+                ? "text-primary-500"
+                : "text-white bg-primary-500"
+            }
+            ${size === "large" ? "p-4 text-xl" : "px-6 py-2"}
+           border border-primary-500 hover:text-white hover:bg-primary-700`}
         >
           {children}
         </button>
