@@ -58,9 +58,15 @@ export default function BodyInputs({
       />
       <InputModal
         type="select"
-        placeholder={format(task?.dueDate ?? new Date(), "dd MMMM yyyy", {
-          locale: es,
-        })}
+        placeholder={format(
+          task.dueDate instanceof Date && !isNaN(task.dueDate.getTime())
+            ? task.dueDate
+            : new Date(),
+          "dd MMMM yyyy",
+          {
+            locale: es,
+          }
+        )}
         option={
           <ModalDatePicker
             onChange={(e) =>
@@ -79,7 +85,13 @@ export default function BodyInputs({
       <div className="flex">
         <InputModal
           type="select"
-          placeholder={format(task.startDate, "HH:mm", { locale: es })}
+          placeholder={format(
+            task.startDate instanceof Date && !isNaN(task.startDate.getTime())
+              ? task.startDate
+              : new Date(),
+            "HH:mm",
+            { locale: es }
+          )}
           option={
             <ModalTimePicker
               onChange={(e) => {
@@ -103,7 +115,13 @@ export default function BodyInputs({
         />
         <InputModal
           type="select"
-          placeholder={format(task.endDate, "HH:mm", { locale: es })}
+          placeholder={format(
+            task.endDate instanceof Date && !isNaN(task.endDate.getTime())
+              ? task.endDate
+              : new Date(),
+            "HH:mm",
+            { locale: es }
+          )}
           option={
             <ModalTimePicker
               onChange={(e) => {
