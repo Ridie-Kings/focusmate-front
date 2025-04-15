@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { AUTH_CONFIG } from "@/config/AuthConfig";
 import { register } from "@/services/Auth/register";
-import LinkButtons from "./LinkButtons";
 import login from "@/services/Auth/login";
 import Input from "@/components/Reusable/Input";
 
