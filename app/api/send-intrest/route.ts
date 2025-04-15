@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const { _id, email } = body;
 
   try {
-    const data = await resend.emails.send({
+    await resend.emails.send({
       from: "Sherpapp intrest <no-reply@thallein.com>",
       to: ["soporte@thallein.com"],
       subject: "Nuevo mensaje de interesado prime",
