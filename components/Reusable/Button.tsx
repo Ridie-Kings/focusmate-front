@@ -49,7 +49,7 @@ export default function Button({
             size === "large" ? "p-4" : "px-6 py-2"
           } bg-secondary-500 ${
             size === "large" ? "text-xl" : ""
-          } hover:bg-secondary-600 active:bg-secondary-700`}
+          } hover:bg-secondary-600 active:bg-secondary-700 text-white`}
         >
           {children}
         </button>
@@ -59,7 +59,7 @@ export default function Button({
         <button
           onClick={onClick}
           type={type}
-          className={`${commonClasses} px-4 py-2 bg-primary-500 hover:bg-primary-400 active:bg-primary-500 relative group`}
+          className={`${commonClasses} px-4 py-2 bg-primary-500 hover:bg-primary-400 active:bg-primary-500 relative group text-white`}
         >
           {children}
           <Plus className="absolute right-4 group-hover:opacity-100 opacity-0 transition-all duration-300" />
