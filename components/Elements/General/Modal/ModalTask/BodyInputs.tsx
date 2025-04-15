@@ -132,6 +132,7 @@ export default function BodyInputs({
                   0,
                   0
                 );
+
                 setTask((prev) => ({
                   ...prev,
                   endDate: newEndDate,
