@@ -4,8 +4,6 @@ import { createContext, useState } from "react";
 import { ModalContextType } from "@/interfaces/Modal/ModalType";
 
 import Modal from "../Elements/General/Modal";
-// import { TaskType } from "@/interfaces/Task/TaskType";
-// import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 export const ModalContext = createContext<ModalContextType>({
   isOpen: "",

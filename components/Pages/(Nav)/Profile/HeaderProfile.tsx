@@ -17,7 +17,7 @@ export default function HeaderProfile({
       />
       <div className="py-4 px-2 w-full flex items-center place-content-between">
         <div className="text-black flex flex-col gap-2">
-          <p className="text-5xl">{profile?.user?.fullname}</p>
+          <p className="text-5xl capitalize">{profile?.user?.fullname}</p>
           <p>{profile?.user?.username}</p>
         </div>
         {/* <div className="flex items-center gap-2">

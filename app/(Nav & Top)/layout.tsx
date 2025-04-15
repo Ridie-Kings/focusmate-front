@@ -37,15 +37,15 @@ export default async function RootLayout({
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
         <SocketIOProvider token={token ?? ""}>
-        <ModalProvider>
-          <TimerProvider>
-            <NavBar />
-            <main className="flex flex-col min-h-screen h-full flex-1">
-              <TopBar />
-              {children}
-            </main>
-          </TimerProvider>
-        </ModalProvider>
+          <ModalProvider>
+            <TimerProvider>
+              <NavBar />
+              <main className="flex flex-col min-h-screen h-full flex-1">
+                <TopBar />
+                {children}
+              </main>
+            </TimerProvider>
+          </ModalProvider>
         </SocketIOProvider>
       </body>
     </html>

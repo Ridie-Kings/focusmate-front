@@ -17,7 +17,7 @@ export default function MembershipUser() {
             },
             {
               icon: <Settings size={24} />,
-              label: "Revisíon semanal autonática",
+              label: "Revisíon semanal automática",
             },
             {
               icon: <Bookmark size={24} />,
@@ -26,7 +26,7 @@ export default function MembershipUser() {
           ]}
         />
         <InfoCard
-          title="Facturacíon y pago"
+          title="Facturación y pago"
           url={{ label: "Mejorar plan", url: "/pricing" }}
           items={[
             {

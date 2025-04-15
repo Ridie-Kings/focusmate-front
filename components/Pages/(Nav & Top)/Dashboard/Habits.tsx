@@ -56,7 +56,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
           </div>
           <div className="flex items-center gap-2">
             <div className="bg-secondary-200 size-4 rounded-full" />
-            <p>No realizado</p>
+            <p>No realizados</p>
           </div>
         </div>
       </div>

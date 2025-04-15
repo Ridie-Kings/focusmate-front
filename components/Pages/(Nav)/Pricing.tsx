@@ -1,10 +1,14 @@
-import Button from "@/components/Reusable/Button";
+import { getMyProfile } from "@/services/Profile/getMyProfile";
+import ButtonSend from "./Pricing/ButtonSend";
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
-export default function Pricing() {
+export default async function Pricing() {
+  const profile = await getMyProfile();
+
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center gap-6 p-9 text-primary-500 bg-background-primary">
       <p className="text-5xl font-medium z-10">
-        Organizate mejor y alquanza tus metas con sherpapp
+        Organizate mejor y alcanza tus metas con sherpapp
       </p>
       <p className="text-3xl z-10">
         Hola, nos has pillado antes de estar listos
@@ -15,11 +19,7 @@ export default function Pricing() {
         mejor, organizarte y alcanzar tus objetivos. <br />
         Te avisaremos en cuanto esté disponible. Muchas gracias.
       </p>
-      <div className="z-10">
-        <Button button="primary" type="button" size="compact">
-          Estoy interessado
-        </Button>
-      </div>
+      <ButtonSend profile={profile ?? ({} as ProfileType)} />
       <svg
         width="1440"
         height="1024"

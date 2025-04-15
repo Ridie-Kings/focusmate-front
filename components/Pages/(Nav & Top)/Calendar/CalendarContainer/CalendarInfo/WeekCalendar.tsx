@@ -17,7 +17,7 @@ import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
-const WeekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];
 
 const getNowPosition = (date: Date) => {
   const hours = getHours(date);
