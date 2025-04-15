@@ -3,7 +3,7 @@ import { logout } from "@/lib";
 import Image from "next/image";
 import { useEffect } from "react";
 
-export default function globalError() {
+export default function GlobalError() {
   useEffect(() => {
     const handleRemoveTokens = async () => {
       setTimeout(async () => {
