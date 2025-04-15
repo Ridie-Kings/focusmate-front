@@ -30,13 +30,13 @@ export default async function login(
     const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
     const hardExpired = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7j
 
-    cookieStore.set("token", access_token, {
+    cookieStore.set("access_token", access_token, {
       expires: softExpired,
       httpOnly: true,
       path: "/",
     });
 
-    cookieStore.set("session", refresh_token, {
+    cookieStore.set("refresh_token", refresh_token, {
       expires: hardExpired,
       httpOnly: true,
       path: "/",
