@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Mail, User, MessageSquare, AlertCircle } from "lucide-react";
+import { Mail, User, MessageSquare, AlertCircle, CheckCircle2 } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 interface ContactForm {
   name: string;
@@ -12,33 +13,30 @@ interface ContactForm {
 interface ModalContactProps {
   setIsOpen: Dispatch<SetStateAction<string>>;
   setItem: (item: ContactForm) => void;
+  profile: ProfileType | null;
 }
 
 export default function ModalContact({
   setIsOpen,
   setItem,
+  profile,
 }: ModalContactProps) {
   const [form, setForm] = useState<ContactForm>({
     name: "",
-    email: "",
+    email: profile?.user?.email || "",
     message: "",
   });
 
   const [errors, setErrors] = useState<Partial<ContactForm>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<ContactForm> = {};
 
     if (!form.name.trim()) {
       newErrors.name = "El nombre es obligatorio";
-    }
-
-    if (!form.email.trim()) {
-      newErrors.email = "El correo es obligatorio";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      newErrors.email = "Formato de correo inválido";
     }
 
     if (!form.message.trim()) {
@@ -62,6 +60,10 @@ export default function ModalContact({
     if (serverError) {
       setServerError(null);
     }
+
+    if (successMessage) {
+      setSuccessMessage(null);
+    }
   };
 
   const handleSend = async () => {
@@ -72,6 +74,9 @@ export default function ModalContact({
 
       setIsLoading(true);
       setServerError(null);
+      setSuccessMessage(null);
+
+      console.log("Enviando formulario:", form);
 
       const res = await fetch("/api/send-contact", {
         method: "POST",
@@ -80,12 +85,16 @@ export default function ModalContact({
       });
 
       const data = await res.json();
+      console.log("Respuesta del servidor:", data);
 
       if (data.success) {
         setItem(form);
-        setIsOpen("");
+        setSuccessMessage("¡Mensaje enviado con éxito!");
+        setTimeout(() => {
+          setIsOpen("");
+        }, 2000);
       } else {
-        setServerError(data.message || "Error al enviar el mensaje");
+        setServerError(data.error || "Error al enviar el mensaje");
       }
     } catch (err) {
       console.error("Error en la conexión:", err);
@@ -115,19 +124,6 @@ export default function ModalContact({
       )}
 
       <InputModal
-        placeholder="Tu correo"
-        type="text"
-        icon={<Mail />}
-        onChange={(e) => updateFormField("email", e.target.value)}
-      />
-      {errors.email && (
-        <div className="flex items-center gap-1 text-red-500 text-xs -mt-3 ml-1">
-          <AlertCircle size={12} />
-          <span>{errors.email}</span>
-        </div>
-      )}
-
-      <InputModal
         placeholder="Escribe tu mensaje..."
         type="text"
         icon={<MessageSquare />}
@@ -144,6 +140,13 @@ export default function ModalContact({
         <div className="flex items-center gap-2 text-red-500 text-sm px-2">
           <AlertCircle size={16} />
           <span>{serverError}</span>
+        </div>
+      )}
+
+      {successMessage && (
+        <div className="flex items-center gap-2 text-green-500 text-sm px-2">
+          <CheckCircle2 size={16} />
+          <span>{successMessage}</span>
         </div>
       )}
 
