@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import { Brain, CircleGauge, Clock, Coffee, Timer } from "lucide-react";
+import { Brain, CircleGauge, Clock, Coffee } from "lucide-react";
 import React, { Dispatch, SetStateAction, useMemo } from "react";
 
 const items: { id: number; label: string; type: chipsIconType }[] = [
@@ -24,8 +24,8 @@ export default function TypeTimeButtons({
   setInitialTime,
   toggleChronometerMode,
 }: {
-  menu: string;
-  setMenu: Dispatch<SetStateAction<string>>;
+  menu: chipsIconType;
+  setMenu: Dispatch<SetStateAction<chipsIconType>>;
   setTime: Dispatch<SetStateAction<TimeType>>;
   className?: string;
   fullScreen?: boolean;
@@ -41,6 +41,9 @@ export default function TypeTimeButtons({
     }),
     []
   );
+
+  console.log(menu);
+
   return (
     <ul
       className={`flex w-full place-content-evenly gap-2 lg:p-0 p-2 ${className}`}
@@ -57,7 +60,7 @@ export default function TypeTimeButtons({
               } transition-all duration-300`}
               onClick={() => {
                 setTime(menuTimes[item.type]);
-                setMenu(item.label);
+                setMenu(item.label as chipsIconType);
                 toggleChronometerMode(true);
               }}
             >
@@ -82,11 +85,11 @@ export default function TypeTimeButtons({
               size="large"
               type="button"
               button="pomodoro"
-              state={item.label === menu ? "pressed" : "enabled"}
+              state={item.type === menu ? "pressed" : "enabled"}
               icon={item.type as chipsIconType}
               onClick={() => {
                 setTime(menuTimes[item.type]);
-                setMenu(item.label);
+                setMenu(item.label as chipsIconType);
                 setInitialTime(menuTimes[item.type]);
                 if (item.type === "chrono") toggleChronometerMode(true);
                 else toggleChronometerMode(false);

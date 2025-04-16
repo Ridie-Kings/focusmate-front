@@ -52,7 +52,7 @@ export const Card = ({
                 })
               : "No date"}{" "}
           </div>
-          <PriorityBadge priority={priority} />
+          <PriorityBadge priority={priority} status={status} />
         </div>
         <Divider />
         <p className="text-lg">{title}</p>

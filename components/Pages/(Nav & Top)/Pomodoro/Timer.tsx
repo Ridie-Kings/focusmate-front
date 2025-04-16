@@ -7,12 +7,13 @@ import BarTimer from "../../../Elements/Pomodoro/BarTimer";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import TypeTimeButtons from "../../../Elements/Pomodoro/TypeTimeButtons";
 import Commands from "@/components/Elements/Pomodoro/Commands";
+import { chipsIconType } from "@/components/Reusable/Chips";
 
 export default function Timer() {
-  const [menu, setMenu] = useState<string>("concentracion");
+  const [menu, setMenu] = useState<chipsIconType>("concentracion");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-  const { setTime, time, setInitialTime, initialTime } =
+  const { setTime, time, setInitialTime, initialTime, toggleChronometerMode } =
     useContext(TimerContext);
 
   const menuTimes = useMemo(
@@ -104,6 +105,7 @@ export default function Timer() {
         setMenu={setMenu}
         setTime={setTime}
         menu={menu}
+        toggleChronometerMode={toggleChronometerMode}
       />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus

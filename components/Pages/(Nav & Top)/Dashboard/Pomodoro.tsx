@@ -1,13 +1,12 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import MenuButtons from "../../../Elements/Pomodoro/TypeTimeButtons";
 import TemplateDashboard from "../../../Elements/General/TemplateBox";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Timer from "./Pomodoro/Timer";
 
 export default function Pomodoro() {
-  const [menu, setMenu] = useState<string>("concentracion");
-  const { time, setTime, setInitialTime, toggleChronometerMode } =
+  const { setTime, setInitialTime, toggleChronometerMode, setMenu, menu } =
     useContext(TimerContext);
 
   return (
@@ -23,7 +22,7 @@ export default function Pomodoro() {
         setInitialTime={setInitialTime}
         toggleChronometerMode={toggleChronometerMode}
       />
-      <Timer time={time} setTime={setTime} menu={menu} />
+      <Timer />
     </TemplateDashboard>
   );
 }

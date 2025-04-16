@@ -11,6 +11,7 @@ import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
 import { Minus, Plus } from "lucide-react";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import Commands from "@/components/Elements/Pomodoro/Commands";
+import { chipsIconType } from "@/components/Reusable/Chips";
 
 export default function TimerContainer({
   fullScreen = false,
@@ -18,14 +19,16 @@ export default function TimerContainer({
   setTime,
   initialTime,
   setInitialTime,
+  toggleChronometerMode,
 }: {
   time: TimeType;
   setTime: Dispatch<SetStateAction<TimeType>>;
   fullScreen?: boolean;
   initialTime: TimeType;
   setInitialTime: Dispatch<SetStateAction<TimeType>>;
+  toggleChronometerMode: (type: boolean) => void;
 }) {
-  const [menu, setMenu] = useState("concentracion");
+  const [menu, setMenu] = useState<chipsIconType>("concentracion");
   const [isPlaying, setIsPlaying] = useState(false);
 
   const menuTimes = useMemo<Record<string, TimeType>>(
@@ -101,6 +104,7 @@ export default function TimerContainer({
         setMenu={setMenu}
         menu={menu}
         fullScreen={fullScreen}
+        toggleChronometerMode={toggleChronometerMode}
       />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
