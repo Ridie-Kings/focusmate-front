@@ -6,7 +6,7 @@ import { chipsIconType } from "../Reusable/Chips";
 
 const DEFAULT_FOCUS_TIME = { hours: 0, min: 25, seg: 0 };
 const DEFAULT_SHORT_BREAK = { hours: 0, min: 5, seg: 0 };
-const INITIAL_TIMER_STATE = { hours: 0, min: 0, seg: 5 };
+const INITIAL_TIMER_STATE = { hours: 0, min: 25, seg: 0 };
 
 const timeUtils = {
   timeToSeconds: (t: TimeType): number => t.hours * 3600 + t.min * 60 + t.seg,
@@ -120,9 +120,6 @@ export default function TimerProvider({
       if (e) {
         totalSecondsRef.current = 0;
         setTime({ hours: 0, min: 0, seg: 0 });
-      } else {
-        totalSecondsRef.current = timeUtils.timeToSeconds(initialTime);
-        setTime(initialTime);
       }
     },
     [isPlay, initialTime]

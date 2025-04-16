@@ -42,8 +42,6 @@ export default function TypeTimeButtons({
     []
   );
 
-  console.log(menu);
-
   return (
     <ul
       className={`flex w-full place-content-evenly gap-2 lg:p-0 p-2 ${className}`}
