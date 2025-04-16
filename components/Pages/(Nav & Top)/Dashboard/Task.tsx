@@ -17,7 +17,6 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
     setTasks(tasksList);
   }, [tasksList]);
 
-
   return (
     <TemplateDashboard
       grid="col-span-2 row-span-4 row-start-6 gap-0"
@@ -26,7 +25,7 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
     >
       <StatusCards filter={filter} setFilter={setFilter} tasks={tasks} />
       <p className="text-primary-500">
-        {filter === "" ? "Todas las Tareas" : filter}
+        {filter === "" ? "Tareas pendiente" : "Tareas " + filter + " prioridad"}
       </p>
       <ListTask filter={filter} tasks={tasks} setTasks={setTasks} />
     </TemplateDashboard>
