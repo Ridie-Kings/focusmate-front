@@ -14,6 +14,8 @@ export const TimerContext = createContext<TimerContextType>({
   togglePlay: () => {},
   resetTimer: () => {},
   updateTimeManually: () => {},
+  isChronometer: false,
+  toggleChronometerMode: () => {},
 });
 
 export default function TimerProvider({
@@ -22,7 +24,7 @@ export default function TimerProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [time, setTime] = useState<TimeType>({ hours: 0, min: 25, seg: 0 });
+  const [time, setTime] = useState<TimeType>({ hours: 0, min: 0, seg: 10 });
   const [initialTime, setInitialTime] = useState<TimeType>({
     hours: 0,
     min: 25,
@@ -30,9 +32,11 @@ export default function TimerProvider({
   });
   const [isPlay, setIsPlay] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isChronometer, setIsChronometer] = useState(false);
 
   const totalSecondsRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const timeToSeconds = (t: TimeType): number =>
     t.hours * 3600 + t.min * 60 + t.seg;
@@ -47,6 +51,36 @@ export default function TimerProvider({
       totalSecondsRef.current = timeToSeconds(time);
     }
   }, [time, isPlay]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      audioRef.current = new Audio("/audio/ding-ding.mp3");
+    }
+  }, []);
+
+  const playEndSound = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch((err) => {
+        console.error("Erreur lors de la lecture du son:", err);
+      });
+    }
+  };
+
+  const toggleChronometerMode = (e: boolean) => {
+    if (isPlay) return;
+    console.log(e);
+
+    setIsChronometer((prev) => e);
+
+    if (!isChronometer) {
+      totalSecondsRef.current = 0;
+    } else {
+      totalSecondsRef.current = timeToSeconds(initialTime);
+    }
+  };
+
+  console.log(isChronometer);
 
   const updateTimeManually = (delta: number, updateType: string) => {
     if (isPlay) return;
@@ -65,7 +99,9 @@ export default function TimerProvider({
       seconds = Math.max(0, seconds);
       const newTime = secondsToTime(seconds);
 
-      setInitialTime(newTime);
+      if (!isChronometer) {
+        setInitialTime(newTime);
+      }
 
       return newTime;
     });
@@ -73,17 +109,18 @@ export default function TimerProvider({
 
   const togglePlay = async () => {
     setIsPlay((prev) => !prev);
-    // if (isPlay) {
-    //   const res = await startTimer({ task: "test task", title: "test title" });
-    // } else {
-    //   const res = await
-    // }
   };
 
   const resetTimer = () => {
     setIsPlay(false);
-    setTime(initialTime);
-    totalSecondsRef.current = timeToSeconds(initialTime);
+
+    if (isChronometer) {
+      setTime({ hours: 0, min: 0, seg: 0 });
+      totalSecondsRef.current = 0;
+    } else {
+      setTime(initialTime);
+      totalSecondsRef.current = timeToSeconds(initialTime);
+    }
   };
 
   useEffect(() => {
@@ -92,20 +129,27 @@ export default function TimerProvider({
       intervalRef.current = null;
     }
 
-    if (isPlay && totalSecondsRef.current > 0) {
+    if (isPlay) {
       intervalRef.current = setInterval(() => {
-        totalSecondsRef.current -= 1;
+        if (isChronometer) {
+          totalSecondsRef.current += 1;
+          const newTime = secondsToTime(totalSecondsRef.current);
+          setTime(newTime);
+        } else {
+          if (totalSecondsRef.current > 0) {
+            totalSecondsRef.current -= 1;
+            const newTime = secondsToTime(totalSecondsRef.current);
+            setTime(newTime);
 
-        const newTime = secondsToTime(totalSecondsRef.current);
-
-        setTime(newTime);
-
-        if (totalSecondsRef.current <= 0) {
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
+            if (totalSecondsRef.current <= 0) {
+              if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+              }
+              setIsPlay(false);
+              playEndSound();
+            }
           }
-          setIsPlay(false);
         }
       }, 1000);
     }
@@ -116,7 +160,7 @@ export default function TimerProvider({
         intervalRef.current = null;
       }
     };
-  }, [isPlay]);
+  }, [isPlay, isChronometer]);
 
   useEffect(() => {
     setIsClient(true);
@@ -155,6 +199,8 @@ export default function TimerProvider({
     togglePlay,
     resetTimer,
     updateTimeManually,
+    isChronometer,
+    toggleChronometerMode,
   };
 
   return (

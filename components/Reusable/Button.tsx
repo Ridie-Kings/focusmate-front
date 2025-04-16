@@ -1,5 +1,6 @@
-import { Brain, Coffee, Plus, Sofa } from "lucide-react";
+import { Brain, CircleGauge, Coffee, Plus, Timer } from "lucide-react";
 import { ReactNode } from "react";
+import { chipsIconType } from "./Chips";
 
 export default function Button({
   button,
@@ -14,7 +15,7 @@ export default function Button({
   type: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
   onClick?: () => void;
-  icon?: "concentracion" | "D/Largo" | "D/Corto";
+  icon?: chipsIconType;
   state?: "enabled" | "pressed";
   size: "compact" | "large";
 }) {
@@ -79,8 +80,10 @@ export default function Button({
             <Brain />
           ) : icon === "D/Corto" ? (
             <Coffee />
+          ) : icon === "D/Largo" ? (
+            <Timer />
           ) : (
-            icon === "D/Largo" && <Sofa />
+            icon === "chrono" && <CircleGauge />
           )}
         </button>
       );

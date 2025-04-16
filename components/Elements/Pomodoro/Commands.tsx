@@ -18,6 +18,7 @@ export default function Commands({
   fullScreen?: boolean;
 }) {
   const [showMsg, setShowMsg] = useState<boolean>(false);
+
   return (
     <ul className="flex items-center justify-center gap-16">
       {[

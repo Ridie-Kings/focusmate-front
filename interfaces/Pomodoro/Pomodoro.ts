@@ -17,4 +17,6 @@ export type TimerContextType = {
   togglePlay: () => void;
   resetTimer: () => void;
   updateTimeManually: (delta: number, updateType: string) => void;
+  isChronometer: boolean;
+  toggleChronometerMode: (type: boolean) => void;
 };

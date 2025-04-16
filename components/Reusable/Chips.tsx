@@ -5,6 +5,7 @@ export type chipsIconType =
   | "concentracion"
   | "D/Corto"
   | "D/Largo"
+  | "chrono"
   | "undefined";
 
 export default function Chips({

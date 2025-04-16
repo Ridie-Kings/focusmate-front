@@ -7,7 +7,8 @@ import Timer from "./Pomodoro/Timer";
 
 export default function Pomodoro() {
   const [menu, setMenu] = useState<string>("concentracion");
-  const { time, setTime, setInitialTime } = useContext(TimerContext);
+  const { time, setTime, setInitialTime, toggleChronometerMode } =
+    useContext(TimerContext);
 
   return (
     <TemplateDashboard
@@ -20,6 +21,7 @@ export default function Pomodoro() {
         setMenu={setMenu}
         setTime={setTime}
         setInitialTime={setInitialTime}
+        toggleChronometerMode={toggleChronometerMode}
       />
       <Timer time={time} setTime={setTime} menu={menu} />
     </TemplateDashboard>
