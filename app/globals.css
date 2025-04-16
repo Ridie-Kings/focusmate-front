@@ -42,6 +42,10 @@
   --color-quaternary-200: #dce1f3;
   --color-quaternary-100: #f0f2f6;
 
+  --color-error-light: #ff8d8c;
+  --color-error-medium: #ff403f;
+  --color-error-dark: #cd3333;
+
   --color-neutral-600: #1a1a1a;
   --color-neutral-500: #202020;
   --color-neutral-400: #676767;
