@@ -13,6 +13,7 @@ export default function ModalPriorityPicker({
   top,
 }: ModalPriorityPickerProps) {
   const item: PriorityItem[] = [
+    { type: "completed", label: "Completada" },
     { type: "high", label: "Alta" },
     { type: "medium", label: "Media" },
     { type: "low", label: "Baja" },

@@ -1,15 +1,23 @@
-export default function PriorityBadge({ priority }: { priority: string }) {
+export default function PriorityBadge({
+  priority,
+  status,
+}: {
+  priority: string;
+  status: string;
+}) {
   const trad = () => {
-    switch (priority) {
-      case "high":
-        return "Alta";
-      case "medium":
-        return "Media";
-      case "low":
-        return "Baja";
-      default:
-        return "";
-    }
+    if (status === "completed") return "Completada";
+    else
+      switch (priority) {
+        case "high":
+          return "Alta";
+        case "medium":
+          return "Media";
+        case "low":
+          return "Baja";
+        default:
+          return "";
+      }
   };
 
   return (

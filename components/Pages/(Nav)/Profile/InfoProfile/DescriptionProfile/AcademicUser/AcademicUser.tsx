@@ -3,7 +3,7 @@ import { Camera, LaptopMinimal, PersonStanding } from "lucide-react";
 export default function AcademicUser() {
   return (
     <>
-      <p className="text-center text-4xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2">
+      <p className="text-center text-4xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2 z-50">
         Proximamente
       </p>
       <div className="w-full flex gap-6 blur">

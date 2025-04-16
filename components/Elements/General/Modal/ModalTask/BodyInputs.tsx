@@ -147,7 +147,7 @@ export default function BodyInputs({
       </div>
       <InputModal
         type="select"
-        placeholder={task?.priority ? trad() : "Prioridad"}
+        placeholder={task?.priority ? trad() : "Estado"}
         option={
           <ModalPriorityPicker
             top="20px"
