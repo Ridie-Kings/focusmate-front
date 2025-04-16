@@ -9,6 +9,7 @@ export type HabitsType = {
   name: string;
   status: boolean;
   type: string;
+  time?: string;
   streak: number;
   userId: string;
 };

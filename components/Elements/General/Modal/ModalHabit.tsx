@@ -1,9 +1,14 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { AudioLines, BookHeart, Text, AlertCircle } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
-import { createHabit } from "@/services/Habits/createHabit";
+
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import { createHabit } from "@/services/Habits/createHabit";
+// import TopInputs from "./ModalTask/TopInputs";
+// import BodyInputs from "./ModalTask/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
+// import { format } from "date-fns";
+// import { es } from "date-fns/locale";
 
 type Frequency = "daily" | "weekly" | "monthly" | "";
 type HabitFormData = {
@@ -11,6 +16,7 @@ type HabitFormData = {
   description: string;
   frequency: Frequency;
   type: string;
+  time?: Date;
 };
 
 type HabitOption = {
@@ -43,6 +49,7 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
     description: "",
     frequency: "",
     type: "",
+    // time: new Date(),
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -151,6 +158,37 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
           onChange={(e) => updateHabitField("description", e.target.value)}
           icon={<Text />}
         />
+
+        {/* <InputModal
+          type="select"
+          placeholder={format(
+            habit.time instanceof Date && !isNaN(habit.time.getTime())
+              ? habit.time
+              : new Date(),
+            "HH:mm",
+            { locale: es }
+          )}
+          option={
+            <ModalTimePicker
+              onChange={(e) => {
+                const newTime = new Date();
+                newTime.setHours(
+                  e.target.value.hours,
+                  e.target.value.min,
+                  0,
+                  0
+                );
+                setHabit((prev) => ({
+                  ...prev,
+                  time: newTime,
+                }));
+                if (error) setError(null);
+              }}
+            />
+          }
+          icon={<Timer />}
+          propagand={false}
+        /> */}
 
         <InputModal
           type="select"
