@@ -19,18 +19,7 @@ export default function BodyInputs({
   task: tempTaskType;
   setTask: Dispatch<SetStateAction<tempTaskType>>;
 }) {
-  const trad = () => {
-    switch (task.priority) {
-      case "high":
-        return "Alta";
-      case "medium":
-        return "Media";
-      case "low":
-        return "Baja";
-      default:
-        return "";
-    }
-  };
+
 
   return (
     <div className="flex flex-col gap-6 w-full">

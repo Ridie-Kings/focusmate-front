@@ -23,7 +23,7 @@ export default function Modal({
       case "habit":
         return <ModalHabit setIsOpen={setIsOpen} setItem={setItem} />;
       case "event":
-        return <ModalEvent />;
+        return <ModalEvent setIsOpen={setIsOpen} setItem={setItem} />;
       case "contact":
         return <ModalContact setIsOpen={setIsOpen} setItem={setItem} />;
       default:

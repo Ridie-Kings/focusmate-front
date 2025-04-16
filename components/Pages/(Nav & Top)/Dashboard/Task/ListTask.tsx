@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import MountainTask from "@/components/Elements/Svg/Mountain/MountainTask";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import TaskCard from "./ListTask/TaskCard";
@@ -20,7 +20,6 @@ export default function ListTask({
     item: { type: string; item: TaskType } | null;
   };
   const { setEvents } = useContext(DashboardContext);
-  const [openModal, setOpenModal] = useState<string>("");
 
   const render = () => {
     switch (filter) {
@@ -33,7 +32,7 @@ export default function ListTask({
       case "Baja":
         return tasks.filter((e) => e.priority === "low");
       case "":
-        return tasks;
+        return tasks.filter((e) => e.status !== "completed");
       default:
         return tasks;
     }
@@ -49,7 +48,7 @@ export default function ListTask({
 
   return (
     <>
-      <div className="flex flex-col w-full gap-4 h-[266px] overflow-auto">
+      <div className="flex flex-col w-full gap-4 h-[266px] overflow-y-auto overflow-x-visible">
         {tasksRender.length > 0 ? (
           tasksRender.map((task) => (
             <TaskCard
@@ -57,8 +56,6 @@ export default function ListTask({
               task={task}
               setEvents={setEvents}
               setTasks={setTasks}
-              setOpenModal={setOpenModal}
-              openModal={openModal}
             />
           ))
         ) : (

@@ -4,9 +4,10 @@ import { AlertCircle } from "lucide-react";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
-import TopInputs from "./ModalTask/TopInputs";
-import BodyInputs from "./ModalTask/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
+import InputModal from "@/components/Reusable/InputModal";
+import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
+import TopInputs from "./Modal/TopInputs";
 
 export type tempTaskType = {
   title: string;
@@ -108,6 +109,19 @@ export default function ModalTask({
     }
   };
 
+  const trad = () => {
+    switch (task.priority) {
+      case "high":
+        return "Alta";
+      case "medium":
+        return "Media";
+      case "low":
+        return "Baja";
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
@@ -124,11 +138,21 @@ export default function ModalTask({
           </div>
         )}
 
-        <BodyInputs
-          error={error}
-          setError={setError}
-          task={task}
-          setTask={setTask}
+        <InputModal
+          type="select"
+          placeholder={task?.priority ? trad() : "Estado"}
+          option={
+            <ModalPriorityPicker
+              top="20px"
+              onChange={(e) =>
+                setTask((prev) => ({
+                  ...prev,
+                  priority: e.target.value as "high" | "medium" | "low",
+                }))
+              }
+            />
+          }
+          icon=""
         />
 
         <BtnSend
