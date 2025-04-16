@@ -24,6 +24,8 @@ export default function ListTask({
 
   const render = () => {
     switch (filter) {
+      case "Completada":
+        return tasks.filter((e) => e.status === "completed");
       case "Alta":
         return tasks.filter((e) => e.priority === "high");
       case "Media":
@@ -47,7 +49,7 @@ export default function ListTask({
 
   return (
     <>
-      <div className="flex flex-col w-full gap-4 h-[265px] overflow-auto">
+      <div className="flex flex-col w-full gap-4 h-[266px] overflow-auto">
         {tasksRender.length > 0 ? (
           tasksRender.map((task) => (
             <TaskCard

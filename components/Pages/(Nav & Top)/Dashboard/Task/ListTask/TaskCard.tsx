@@ -46,12 +46,12 @@ export default function TaskCard({
       <div className="flex w-full p-4 items-center justify-between border-2 border-secondary-400 rounded-lg">
         <p className="text-primary-500">{task.title}</p>
         <div className="flex gap-2 items-center">
-          <PriorityBadge priority={task.priority} />
+          <PriorityBadge priority={task.priority} status={task.status} />
           <button
             onClick={() => setOpenModal(openModal !== "" ? "" : task._id)}
             className="flex items-center text-primary-500 border border-primary-500 divide-x divide-primary-500 rounded-lg hover:bg-secondary-200 cursor-pointer relative"
           >
-            <p className="px-4 py-2">Prioridad</p>
+            <p className="px-4 py-2">Estado</p>
             <ChevronDown
               size={40}
               className={`${
@@ -67,6 +67,7 @@ export default function TaskCard({
                       t._id === task._id
                         ? {
                             ...t,
+                            status: e.target.value as "completed",
                             priority: e.target.value as
                               | "high"
                               | "medium"

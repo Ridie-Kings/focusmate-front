@@ -21,14 +21,16 @@ export default function Agenda() {
     const handleGetCalendarByDate = async () => {
       const events = await getCalendarByDate({ date: date ?? new Date() });
 
-      const eventsToLocal = events.res.map((event: TaskType) => ({
-        ...event,
-        startDate: new Date(event.startDate),
-        dueDate: new Date(event.dueDate),
-        endDate: new Date(event.endDate),
-      }));
+      console.log(events);
 
       if (events.success) {
+        const eventsToLocal = events.res.map((event: TaskType) => ({
+          ...event,
+          startDate: new Date(event.startDate),
+          dueDate: new Date(event.dueDate),
+          endDate: new Date(event.endDate),
+        }));
+
         setEvents(eventsToLocal);
       } else {
         console.error("Error al obtener el calendario", events.res);

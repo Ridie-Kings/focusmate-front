@@ -10,7 +10,7 @@ import {
   isSameDay,
 } from "date-fns";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch, useRef, useEffect } from "react";
 
 const getPosition = (date: Date) => {
   const hours = getHours(date);
@@ -23,9 +23,11 @@ const DayCalendarItem = ({
   date,
   events,
 }: {
-  date: Date | undefined;
+  date: Date;
   events: TaskType[];
 }) => {
+  const scrollCalendar = useRef<HTMLDivElement>(null);
+
   const formatDuration = (start: Date, end: Date) => {
     const totalMinutes = Math.abs(differenceInMinutes(end, start));
     const hours = Math.floor(totalMinutes / 60);
@@ -34,21 +36,28 @@ const DayCalendarItem = ({
     if (hours > 0) {
       return `${hours}:${minutes.toString().padStart(2, "0")} horas`;
     }
-    return `${minutes} horas`;
+    return `${minutes} min`;
   };
+
+  useEffect(() => {
+    if (scrollCalendar.current) {
+      scrollCalendar.current.scrollTo(0, 1000);
+    }
+  }, []);
+
   return (
-    <div className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]">
+    <div
+      ref={scrollCalendar}
+      className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
+    >
       <TimeLeftBar length={97} divider={4} calc={2} />
       <TimeBar pos={getPosition(new Date())} />
       <div className="relative w-full h-full">
         {events
-          .filter((event) => date && isSameDay(event.startDate, date))
+          .filter((event) => isSameDay(event.dueDate, date))
           .map((event, index) => {
             const eventStartPosition = getPosition(event.startDate);
             const eventEndPosition = getPosition(event.endDate);
-            // const totalMinutes = Math.abs(
-            //   differenceInMinutes(event.endDate, event.startDate)
-            // );
 
             return (
               <div
@@ -93,7 +102,7 @@ export default function DayCalendar({
   setDate,
 }: {
   events: TaskType[];
-  date: Date | undefined;
+  date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
   const handlePreviousDay = () => {
@@ -118,13 +127,11 @@ export default function DayCalendar({
           <ArrowLeft className="mr-2" /> Día anterior
         </button>
         <span className="font-semibold text-lg">
-          {date
-            ? date.toLocaleDateString("es-ES", {
-                year: "numeric",
-                month: "long",
-                day: "2-digit",
-              })
-            : "Invalid Date"}
+          {(date ?? new Date()).toLocaleDateString("es-ES", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+          })}
         </span>
         <button
           onClick={handleNextDay}

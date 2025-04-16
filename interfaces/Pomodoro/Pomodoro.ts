@@ -1,3 +1,4 @@
+import { chipsIconType } from "@/components/Reusable/Chips";
 import { Dispatch, SetStateAction } from "react";
 
 export type TimeType = {
@@ -17,4 +18,8 @@ export type TimerContextType = {
   togglePlay: () => void;
   resetTimer: () => void;
   updateTimeManually: (delta: number, updateType: string) => void;
+  isChronometer: boolean;
+  toggleChronometerMode: (type: boolean) => void;
+  menu: chipsIconType;
+  setMenu: Dispatch<SetStateAction<chipsIconType>>;
 };

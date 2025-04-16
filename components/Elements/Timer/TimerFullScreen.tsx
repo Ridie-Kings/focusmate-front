@@ -4,8 +4,14 @@ import CloseBtn from "./CloseBtn";
 import TimerContainer from "./TimerComponent/TimerContainer";
 
 export default function TimerFullScreen() {
-  const { setIsOpen, setTime, time, initialTime, setInitialTime } =
-    useContext(TimerContext);
+  const {
+    setIsOpen,
+    setTime,
+    time,
+    initialTime,
+    setInitialTime,
+    toggleChronometerMode,
+  } = useContext(TimerContext);
   return (
     <main className="w-full h-screen flex items-center justify-center p-1 fixed left-0 top-0 z-60 bg-white animate-opacStart">
       <div className="bg-primary-500-hover w-full h-full rounded-2xl flex flex-col items-center justify-center overflow-hidden relative">
@@ -67,6 +73,7 @@ export default function TimerFullScreen() {
           time={time}
           initialTime={initialTime}
           setInitialTime={setInitialTime}
+          toggleChronometerMode={toggleChronometerMode}
         />
       </div>
     </main>

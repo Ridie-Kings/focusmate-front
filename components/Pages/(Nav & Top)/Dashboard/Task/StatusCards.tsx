@@ -12,6 +12,10 @@ export default function StatusCards({
 }) {
   const items = [
     {
+      label: "Completada",
+      number: tasks.filter((t) => t.status === "completed").length,
+    },
+    {
       label: "Alta",
       number: tasks.filter((t) => t.priority === "high").length,
     },

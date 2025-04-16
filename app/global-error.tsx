@@ -12,6 +12,7 @@ export default function GlobalError() {
       setTimeout(async () => {
         await logout();
         router.push("/login");
+        router.refresh();
       }, 1000);
     };
     handleRemoveTokens();

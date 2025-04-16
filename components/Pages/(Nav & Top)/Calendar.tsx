@@ -6,6 +6,16 @@ import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
+import {
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+} from "date-fns";
+import { es } from "date-fns/locale";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<string>("Día");
@@ -23,6 +33,30 @@ export default function CalendarPage() {
   };
 
   useEffect(() => {
+    let firstDate: Date;
+    let secondDate: Date;
+
+    if (navType === "Month") {
+      firstDate = startOfWeek(startOfMonth(date ?? new Date()), { locale: es });
+      secondDate = endOfWeek(endOfMonth(date ?? new Date()), { locale: es });
+    } else {
+      firstDate = startOfDay(
+        startOfWeek(date ?? new Date(), { weekStartsOn: 1 })
+      );
+      secondDate = endOfDay(endOfWeek(date ?? new Date(), { weekStartsOn: 1 }));
+    }
+
+    const handleGetCalendarByRange = async () => {
+      const event = await getCalendarByRange({ firstDate, secondDate });
+
+      if (event.success) {
+        setEvents(event.res);
+      } else {
+        console.error("Error al obtener el calendario", event.res);
+        setEvents([]);
+      }
+    };
+
     const handleGetCalendarByDate = async () => {
       const event = await getCalendarByDate({ date: date ?? new Date() });
 
@@ -33,7 +67,9 @@ export default function CalendarPage() {
         setEvents([]);
       }
     };
-    handleGetCalendarByDate();
+
+    if (navType === "Día") handleGetCalendarByDate();
+    else handleGetCalendarByRange();
   }, [date]);
 
   return (
