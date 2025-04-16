@@ -21,9 +21,16 @@ export default function HabitsList({
   habits: HabitsType[];
   setHabits: Dispatch<SetStateAction<HabitsType[]>>;
 }) {
-  const iconClasse =
-    "bg-secondary-100 rounded-lg p-2 group-hover:bg-secondary-500 transition-all duration-300";
-  const renderIcon = (type: string) => {
+  const getIconClass = (status: boolean) => {
+    return `rounded-lg p-2 transition-all duration-300 ${
+      status 
+        ? "bg-gray-100 text-gray-500 group-hover:bg-gray-100" 
+        : "bg-secondary-100 group-hover:bg-secondary-500"
+    }`;
+  };
+
+  const renderIcon = (type: string, status: boolean) => {
+    const iconClasse = getIconClass(status);
     switch (type) {
       case "drink":
         return <GlassWater size={48} className={iconClasse} />;
@@ -58,7 +65,9 @@ export default function HabitsList({
         console.log("Habit updated:", res);
       } catch (error) {
         console.error("Error updating habit:", error);
-        setHabits(habits);
+        setHabits((prev) => prev.map((habit) =>
+          habit._id === id ? { ...habit, status: !habit.status } : habit
+        ));
       }
     }
   };
@@ -88,22 +97,38 @@ export default function HabitsList({
     <ul className="w-full h-full flex flex-col gap-4">
       {habits.map((habit) => (
         <li key={habit._id} className="flex items-center gap-4">
-          <div className="flex-1 flex h-full gap-3 border-2 border-secondary-600 p-2 rounded-lg items-center hover:bg-secondary-600 group transition-all duration-300">
-            {renderIcon(habit.type)}
-            <div className="w-0.5 rounded-full h-3/4 bg-secondary-600 group-hover:bg-white transition-all duration-300" />
+          <div className={`flex-1 flex h-full gap-3 border-2 p-2 rounded-lg items-center group transition-all duration-300 ${
+            habit.status 
+              ? "border-gray-300 hover:bg-gray-300" 
+              : " border-primary-500 bg-primary-100 hover:bg-gray-200"
+          }`}>
+            {renderIcon(habit.type, habit.status)}
+            <div className={`w-0.5 rounded-full h-3/4 transition-all duration-300 ${
+              habit.status 
+                ? "bg-secondary-600 group-hover:bg-white" 
+                : "bg-primary-500"
+            }`} />
             <div className="flex flex-col flex-1 gap-1">
-              <p className="text-primary-500 px-2 group-hover:text-white transition-all duration-300">
+              <p className={`px-2 transition-all duration-300 ${
+                habit.status 
+                  ? "text-gray-400 group-hover:text-white" 
+                  : "text-primary-500"
+              }`}>
                 {habit.name}
               </p>
-              <div className="flex gap-2 items-center place-content-between w-full text-secondary-600 group-hover:text-white transition-all duration-300 px-2">
+              <div className={`flex gap-2 items-center place-content-between w-full transition-all duration-300 px-2 ${
+                habit.status 
+                  ? "text-gray-400 group-hover:text-white" 
+                  : "text-primary-500"
+              }`}>
                 {habit.description}
                 {/* <div className="flex items-center gap-1 px-2 py-1">
                   <Clock />
-                  <p>21:00hrs</p>
-                </div>
-                <div className="flex items-center gap-1 px-2 py-1">
+                  <p>{habit.time}</p>
+                </div> 
+                <div className="flex  gap-1 px-2 py-1">
                   <Calendar />
-                  <p>Lun a Vier</p>
+                  <p>{formatFrequency(habit.frequency)}</p>
                 </div>
                 <div className="flex items-center gap-1 px-2 py-1">
                   <Bell />
@@ -114,7 +139,7 @@ export default function HabitsList({
             <Trash2
               size={24}
               onClick={() => handleRemoveHabit(habit._id)}
-              className="text-primary-500 group-hover:text-white cursor-pointer transition-all duration-300"
+              className={`${habit.status ? "text-gray-400 group-hover:text-white" : "text-primary-500 group-hover:text-primary-700"}  cursor-pointer transition-all duration-300`}
             />
           </div>
           <input
@@ -124,7 +149,7 @@ export default function HabitsList({
             className={`cursor-pointer size-6 border-2 rounded appearance-none ${
               habit.status
                 ? "bg-primary-500 border-primary-500"
-                : "bg-white border-black"
+                : "bg-white border-gray-500"
             }`}
           />
         </li>
