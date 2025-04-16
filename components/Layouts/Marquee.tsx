@@ -1,6 +1,6 @@
 export default function Carousel() {
   return (
-    <div className="w-1/2 h-screen sticky top-0 flex px-16 py-3.5  overflow-hidden">
+    <div className="w-1/2 h-screen hidden lg:flex sticky top-0  px-16 py-3.5  overflow-hidden">
       <img
         src="/images/logoPNJ.webp"
         width={1000}
