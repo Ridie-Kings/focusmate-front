@@ -47,7 +47,6 @@ export default function ModalEvent({
       setError("El título es obligatorio");
       return false;
     }
-    console.log(task.endDate, task.startDate);
 
     if (task.endDate <= task.startDate) {
       setError(

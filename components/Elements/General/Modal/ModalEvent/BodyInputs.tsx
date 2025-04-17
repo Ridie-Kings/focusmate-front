@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { tempTaskType } from "../ModalTask";
 import InputModal from "@/components/Reusable/InputModal";
-import { Bell, Calendar, Text, Timer } from "lucide-react";
+import { Award, Bell, Calendar, Text, Timer } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import ModalDatePicker from "../ModalDatePicker/ModalDatePicker";
@@ -159,7 +159,7 @@ export default function BodyInputs({
             }
           />
         }
-        icon=""
+        icon={<Award />}
       />
     </div>
   );

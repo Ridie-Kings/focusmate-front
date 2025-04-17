@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Award, Text } from "lucide-react";
 
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
@@ -13,9 +13,9 @@ export type tempTaskType = {
   title: string;
   description: string;
   status: StatusType;
-  startDate: Date;
-  endDate: Date;
-  dueDate: Date;
+  startDate?: Date;
+  endDate?: Date;
+  dueDate?: Date;
   priority: "high" | "medium" | "low";
   tags: string[];
   color: string;
@@ -32,9 +32,6 @@ export default function ModalTask({
     title: "",
     description: "",
     status: "pending",
-    startDate: new Date(),
-    endDate: new Date(),
-    dueDate: new Date(),
     priority: "high",
     tags: [],
     color: "#d5ede2",
@@ -48,13 +45,14 @@ export default function ModalTask({
       setError("El título es obligatorio");
       return false;
     }
-    console.log(task.endDate, task.startDate);
 
-    if (task.endDate <= task.startDate) {
-      setError(
-        "La hora de finalización debe ser posterior a la hora de inicio"
-      );
-      return false;
+    if (task.endDate && task.startDate) {
+      if (task.endDate <= task.startDate) {
+        setError(
+          "La hora de finalización debe ser posterior a la hora de inicio"
+        );
+        return false;
+      }
     }
 
     return true;
@@ -74,24 +72,6 @@ export default function ModalTask({
       if (res.success) {
         setItem({ type: "task", item: res.message });
         console.log("Task created successfully", res.message);
-
-        try {
-          const response = await addTaskToCalendar({ _id: res.message._id });
-          if (response.success) {
-            console.log("Tarea añadido al calendario:", response.res);
-          } else {
-            console.error(
-              "Error al añadidir la tarea al calendario:",
-              response.res
-            );
-          }
-        } catch (calendarError) {
-          console.error(
-            "Error al comunicarse con el servicio de calendario:",
-            calendarError
-          );
-        }
-
         setIsOpen("");
       } else {
         setError(
@@ -137,23 +117,32 @@ export default function ModalTask({
             <span>{error}</span>
           </div>
         )}
-
-        <InputModal
-          type="select"
-          placeholder={task?.priority ? trad() : "Estado"}
-          option={
-            <ModalPriorityPicker
-              top="20px"
-              onChange={(e) =>
-                setTask((prev) => ({
-                  ...prev,
-                  priority: e.target.value as "high" | "medium" | "low",
-                }))
-              }
-            />
-          }
-          icon=""
-        />
+        <div className="flex flex-col gap-6 w-full">
+          <InputModal
+            onChange={(e) =>
+              setTask((prev) => ({ ...prev, description: e.target.value }))
+            }
+            type="text"
+            placeholder="Descripción"
+            icon={<Text />}
+          />
+          <InputModal
+            type="select"
+            placeholder={task?.priority ? trad() : "Estado"}
+            option={
+              <ModalPriorityPicker
+                top="20px"
+                onChange={(e) =>
+                  setTask((prev) => ({
+                    ...prev,
+                    priority: e.target.value as "high" | "medium" | "low",
+                  }))
+                }
+              />
+            }
+            icon={<Award />}
+          />
+        </div>
 
         <BtnSend
           handleClick={handleSendTask}
