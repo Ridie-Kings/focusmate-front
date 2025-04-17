@@ -1,16 +1,16 @@
-import { StatusProps, TaskType } from "@/interfaces/Task/TaskType";
-import { DragEvent, useState } from "react";
-import { AddCard } from "./AddCard";
+import { StatusProps } from "@/interfaces/Task/TaskType";
+import { useState } from "react";
+// import { AddCard } from "./AddCard";
 import { DropIndicator } from "@/components/Pages/(Nav & Top)/Task/dropIndicator";
-import { Card } from "./Card";
+// import { Card } from "./Card";
 
 export const Status = ({ title, cards, status, setCards }: StatusProps) => {
   const [active, setActive] = useState(false);
 
-  const handleDragStart = (e: DragEvent<Element>, card: TaskType) => {
-    e.dataTransfer?.setData("cardId", card._id);
-    e.dataTransfer?.setData("originalStatus", card.status);
-  };
+  // const handleDragStart = (e: DragEvent<Element>, card: TaskType) => {
+  //   e.dataTransfer?.setData("cardId", card._id);
+  //   e.dataTransfer?.setData("originalStatus", card.status);
+  // };
 
   const handleDragEnd = (e: React.DragEvent<Element>) => {
     const cardId = e.dataTransfer?.getData("cardId");
@@ -123,11 +123,11 @@ export const Status = ({ title, cards, status, setCards }: StatusProps) => {
           active ? "" : "bg-neutral-800/0"
         }`}
       >
-        {filteredCards.map((c) => (
+        {/* {filteredCards.map((c) => (
           <Card key={c._id} {...c} handleDragStart={handleDragStart} />
-        ))}
+        ))} */}
         <DropIndicator beforeId={null} status={status} />
-        <AddCard status={status} setCards={setCards} />
+        {/* <AddCard status={status} setCards={setCards} /> */}
       </div>
     </div>
   );

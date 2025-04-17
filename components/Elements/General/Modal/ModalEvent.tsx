@@ -1,24 +1,13 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { AlertCircle } from "lucide-react";
 
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 import BodyInputs from "./ModalEvent/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
 import TopInputs from "./Modal/TopInputs";
-
-export type tempTaskType = {
-  title: string;
-  description: string;
-  status: StatusType;
-  startDate: Date;
-  endDate: Date;
-  dueDate: Date;
-  priority: "high" | "medium" | "low";
-  tags: string[];
-  color: string;
-};
+import { tempTaskType } from "@/interfaces/Modal/ModalType";
 
 export default function ModalEvent({
   setIsOpen,
@@ -48,11 +37,13 @@ export default function ModalEvent({
       return false;
     }
 
-    if (task.endDate <= task.startDate) {
-      setError(
-        "La hora de finalización debe ser posterior a la hora de inicio"
-      );
-      return false;
+    if (task.endDate && task.startDate) {
+      if (task.endDate <= task.startDate) {
+        setError(
+          "La hora de finalización debe ser posterior a la hora de inicio"
+        );
+        return false;
+      }
     }
 
     return true;
