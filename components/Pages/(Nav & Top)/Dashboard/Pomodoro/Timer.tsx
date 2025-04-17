@@ -1,7 +1,7 @@
 "use client";
 import { Eye } from "lucide-react";
-import { useState, useContext } from "react";
-import { TimerContext } from "@/components/Provider/TimerProvider";
+import { useState, useContext, useEffect } from "react";
+import { TimerContext, timeUtils } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
 import Commands from "../../../../Elements/Pomodoro/Commands";
 import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
@@ -10,12 +10,14 @@ import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 export default function Timer() {
   const {
     time,
+    setTime,
     isPlay,
     togglePlay,
     resetTimer,
     updateTimeManually,
     setIsOpen,
     initialTime,
+    setInitialTime
   } = useContext(TimerContext);
 
   const { 
@@ -26,10 +28,27 @@ export default function Timer() {
     resumePomodoro,  
   } = useContext(SocketIOContext);
 
+  useEffect(() => {
+    if (!status) {
+      resetTimer();
+      return 
+    };
+    setTime({
+      hours: Math.floor(status.remainingTime / 3600),
+      min: Math.floor((status.remainingTime % 3600) / 60),
+      seg: status.remainingTime % 60
+     })
+     setInitialTime({
+      hours: Math.floor(status.remainingTime / 3600),
+      min: Math.floor((status.remainingTime % 3600) / 60),
+      seg: status.remainingTime % 60
+     })
+    if (status?.isPaused && isPlay) togglePlay();
+    else if (!status?.isPaused && !isPlay) togglePlay();
+  }, [status])
+
   const [hiddenTime, setHiddenTime] = useState(false);
   const [choseUpdate, setChoseUpdate] = useState("");
-
-  console.log("prevtoggle", status)
 
   const handleClick = (action: string) => {
     switch (action) {
@@ -37,8 +56,7 @@ export default function Timer() {
         setIsOpen(true);
         break;
       case "togglePlay":
-        console.log("togglePlay", status);
-        if (!status?.active) startPomodoro();
+        if (!status?.active) startPomodoro(timeUtils.timeToSeconds(time));
         else if (!status.isPaused) pausePomodoro();
         else if (status.isPaused) resumePomodoro();
         setChoseUpdate("");
