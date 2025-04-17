@@ -2,20 +2,9 @@
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { tempTaskType } from "@/interfaces/Modal/ModalType";
 
-export async function createTask({
-  task,
-}: {
-  task: {
-    title: string;
-    description: string;
-    status: string;
-    startDate: Date;
-    endDate: Date;
-    dueDate: Date;
-    tags: string[];
-  };
-}): Promise<{
+export async function createTask({ task }: { task: tempTaskType }): Promise<{
   success: boolean;
   message: TaskType;
 }> {
@@ -24,9 +13,9 @@ export async function createTask({
 
     const newTask = {
       ...task,
-      startDate: task.startDate.toISOString(),
-      endDate: task.endDate.toISOString(),
-      dueDate: task.dueDate.toISOString(),
+      startDate: task.startDate && task.startDate.toISOString(),
+      endDate: task.endDate && task.endDate.toISOString(),
+      dueDate: task.dueDate && task.dueDate.toISOString(),
     };
 
     const res = await apiConnection.post("tasks", newTask, {
