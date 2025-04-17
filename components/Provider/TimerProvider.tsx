@@ -8,7 +8,7 @@ const DEFAULT_FOCUS_TIME = { hours: 0, min: 25, seg: 0 };
 const DEFAULT_SHORT_BREAK = { hours: 0, min: 5, seg: 0 };
 const INITIAL_TIMER_STATE = { hours: 0, min: 25, seg: 0 };
 
-const timeUtils = {
+export const timeUtils = {
   timeToSeconds: (t: TimeType): number => t.hours * 3600 + t.min * 60 + t.seg,
   secondsToTime: (seconds: number): TimeType => ({
     hours: Math.floor(seconds / 3600),
