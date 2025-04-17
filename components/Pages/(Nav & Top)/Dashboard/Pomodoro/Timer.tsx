@@ -18,12 +18,12 @@ export default function Timer() {
     initialTime,
   } = useContext(TimerContext);
 
-  const { 
-    status, 
-    startPomodoro, 
-    stopPomodoro, 
-    pausePomodoro, 
-    resumePomodoro,  
+  const {
+    status,
+    startPomodoro,
+    stopPomodoro,
+    pausePomodoro,
+    resumePomodoro,
   } = useContext(SocketIOContext);
 
   const [hiddenTime, setHiddenTime] = useState(false);
