@@ -5,6 +5,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
 import Commands from "../../../../Elements/Pomodoro/Commands";
 import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
+import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 
 export default function Timer() {
   const {
@@ -17,8 +18,18 @@ export default function Timer() {
     initialTime,
   } = useContext(TimerContext);
 
+  const { 
+    status, 
+    startPomodoro, 
+    stopPomodoro, 
+    pausePomodoro, 
+    resumePomodoro,  
+  } = useContext(SocketIOContext);
+
   const [hiddenTime, setHiddenTime] = useState(false);
   const [choseUpdate, setChoseUpdate] = useState("");
+
+  console.log("prevtoggle", status)
 
   const handleClick = (action: string) => {
     switch (action) {
@@ -26,10 +37,15 @@ export default function Timer() {
         setIsOpen(true);
         break;
       case "togglePlay":
+        console.log("togglePlay", status);
+        if (!status?.active) startPomodoro();
+        else if (!status.isPaused) pausePomodoro();
+        else if (status.isPaused) resumePomodoro();
         setChoseUpdate("");
         togglePlay();
         break;
       case "reset":
+        if (status?.active) stopPomodoro();
         resetTimer();
         break;
       default:
