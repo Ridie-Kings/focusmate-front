@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import ModalColorPicker from "../ModalColorPicker/ModalColorPicker";
-import { tempTaskType } from "../ModalTask";
+import { tempTaskType } from "@/interfaces/Modal/ModalType";
 
 export default function TopInputs({
   error,

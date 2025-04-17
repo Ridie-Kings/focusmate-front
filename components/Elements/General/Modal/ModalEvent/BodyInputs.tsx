@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
-import { tempTaskType } from "../ModalTask";
 import InputModal from "@/components/Reusable/InputModal";
-import { Bell, Calendar, Text, Timer } from "lucide-react";
+import { Award, Bell, Calendar, Text, Timer } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import ModalDatePicker from "../ModalDatePicker/ModalDatePicker";
 import ModalTimePicker from "../ModalTimePicker/ModalTimePicker";
 import ModalPriorityPicker from "../ModalPriorityPicker/ModalPriorityPicker";
+import { tempTaskType } from "@/interfaces/Modal/ModalType";
 
 export default function BodyInputs({
   error,
@@ -95,7 +95,7 @@ export default function BodyInputs({
           option={
             <ModalTimePicker
               onChange={(e) => {
-                const newStartDate = new Date(task.startDate);
+                const newStartDate = new Date(task.startDate ?? new Date());
                 newStartDate.setHours(
                   e.target.value.hours,
                   e.target.value.min,
@@ -125,7 +125,7 @@ export default function BodyInputs({
           option={
             <ModalTimePicker
               onChange={(e) => {
-                const newEndDate = new Date(task.endDate);
+                const newEndDate = new Date(task.endDate ?? new Date());
                 newEndDate.setHours(
                   e.target.value.hours,
                   e.target.value.min,
@@ -159,7 +159,7 @@ export default function BodyInputs({
             }
           />
         }
-        icon=""
+        icon={<Award />}
       />
     </div>
   );
