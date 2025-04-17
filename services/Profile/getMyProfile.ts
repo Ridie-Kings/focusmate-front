@@ -1,3 +1,4 @@
+"use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";

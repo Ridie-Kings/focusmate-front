@@ -9,7 +9,6 @@ export async function getCalendarByDate({ date }: { date: Date }): Promise<{
   try {
     const token = await getToken();
 
-    date.setHours(2, 0, 0, 0);
     const res = await apiConnection.get(
       `calendar/${date.toISOString().split("T")[0]}`,
       {

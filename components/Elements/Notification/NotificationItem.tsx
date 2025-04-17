@@ -5,7 +5,7 @@ export default function NotificationItem() {
     <div className="w-full flex flex-col gap-4 border-b border-accent">
       <div className="flex w-full place-content-between">
         <div className="flex flex-col gap-1">
-          <p>Felicidades! Completaste tus Habitos</p>
+          <p>Felicidades! Completaste tus Hábitos</p>
           <p className="text-sm text-accent">Llevas una semana</p>
         </div>
         <EllipsisVertical size={24} className="cursor-pointer" />

@@ -11,6 +11,7 @@ import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
 import { Minus, Plus } from "lucide-react";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import Commands from "@/components/Elements/Pomodoro/Commands";
+import { chipsIconType } from "@/components/Reusable/Chips";
 
 export default function TimerContainer({
   fullScreen = false,
@@ -18,14 +19,16 @@ export default function TimerContainer({
   setTime,
   initialTime,
   setInitialTime,
+  toggleChronometerMode,
 }: {
   time: TimeType;
   setTime: Dispatch<SetStateAction<TimeType>>;
   fullScreen?: boolean;
   initialTime: TimeType;
   setInitialTime: Dispatch<SetStateAction<TimeType>>;
+  toggleChronometerMode: (type: boolean) => void;
 }) {
-  const [menu, setMenu] = useState("concentracion");
+  const [menu, setMenu] = useState<chipsIconType>("concentracion");
   const [isPlaying, setIsPlaying] = useState(false);
 
   const menuTimes = useMemo<Record<string, TimeType>>(
@@ -85,7 +88,7 @@ export default function TimerContainer({
           key={index}
           className={`${
             fullScreen ? "w-[220px]" : "w-1/2"
-          } flex items-center justify-center bg-white-100 rounded-lg px-7 py-20`}
+          } flex items-center justify-center bg-white rounded-lg px-7 py-20`}
         >
           <span key={digit} className="animate-opacStart">
             {digit}
@@ -101,11 +104,12 @@ export default function TimerContainer({
         setMenu={setMenu}
         menu={menu}
         fullScreen={fullScreen}
+        toggleChronometerMode={toggleChronometerMode}
       />
       <div className="flex place-content-between gap-5 text-6xl relative items-center">
         <Minus
           onClick={() => !isPlaying && updateTime(-1)}
-          className="text-white-100 absolute -left-18"
+          className="text-white absolute -left-18"
           size={40}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",
@@ -121,7 +125,7 @@ export default function TimerContainer({
         </p>
         <Plus
           onClick={() => !isPlaying && updateTime(1)}
-          className="text-white-100 absolute -right-18"
+          className="text-white absolute -right-18"
           size={40}
           style={{
             cursor: isPlaying ? "not-allowed" : "pointer",

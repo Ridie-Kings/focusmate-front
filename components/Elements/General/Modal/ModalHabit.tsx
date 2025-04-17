@@ -1,133 +1,221 @@
-import Button from "@/components/Reusable/Button";
-import InputModal from "@/components/Reusable/InputModal";
-import { createHabit } from "@/services/Habits/createHabit";
 import { Dispatch, SetStateAction, useState } from "react";
-import { AudioLines, BookHeart, Text } from "lucide-react";
-import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import { AudioLines, BookHeart, Text, AlertCircle } from "lucide-react";
+import InputModal from "@/components/Reusable/InputModal";
 
-export default function ModalHabit({
-  setIsOpen,
-  setItem,
-}: {
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import { createHabit } from "@/services/Habits/createHabit";
+// import TopInputs from "./ModalTask/TopInputs";
+// import BodyInputs from "./ModalTask/BodyInputs";
+import BtnSend from "./Modal/BtnSend";
+// import { format } from "date-fns";
+// import { es } from "date-fns/locale";
+
+type Frequency = "daily" | "weekly" | "monthly" | "";
+type HabitFormData = {
+  name: string;
+  description: string;
+  frequency: Frequency;
+  type: string;
+  time?: Date;
+};
+
+type HabitOption = {
+  label: string;
+  value: string;
+};
+
+const FREQUENCY_OPTIONS: HabitOption[] = [
+  { label: "Diario", value: "daily" },
+  { label: "Semanal", value: "weekly" },
+  { label: "Cada Mes", value: "monthly" },
+];
+
+const TYPE_OPTIONS: HabitOption[] = [
+  { label: "Estudio", value: "study" },
+  { label: "Deporte", value: "sport" },
+  { label: "Comida", value: "food" },
+  { label: "Beber", value: "drink" },
+  { label: "Trabajo", value: "work" },
+];
+
+interface ModalHabitProps {
   setIsOpen: Dispatch<SetStateAction<string>>;
   setItem: (data: { type: string; item: HabitsType }) => void;
-}) {
-  const [habit, setHabit] = useState<{
-    name: string;
-    description: string;
-    frequency: "daily" | "weekly" | "monthly" | "";
-    type: string;
-  }>({
+}
+
+export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
+  const [habit, setHabit] = useState<HabitFormData>({
     name: "",
     description: "",
     frequency: "",
     type: "",
+    // time: new Date(),
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const validateHabit = (): boolean => {
+    if (!habit.name.trim()) {
+      setError("El nombre del hábito es obligatorio");
+      return false;
+    }
+
+    if (!habit.frequency) {
+      setError("La frecuencia es obligatoria");
+      return false;
+    }
+
+    if (!habit.type) {
+      setError("El tipo de hábito es obligatorio");
+      return false;
+    }
+
+    return true;
+  };
+
+  const updateHabitField = <K extends keyof HabitFormData>(
+    field: K,
+    value: HabitFormData[K]
+  ) => {
+    setHabit((prev) => ({ ...prev, [field]: value }));
+    if (error) setError(null);
+  };
 
   const handleCreateHabit = async () => {
-    const res = await createHabit({ habit });
+    try {
+      setError(null);
 
-    if (res.success) {
-      setItem({ type: "habit", item: res.res });
-      setIsOpen("");
+      if (!validateHabit()) {
+        return;
+      }
 
-      // console.log("habit created", res.res);
-    } else {
-      // console.log("habit error", res.res);
+      setIsLoading(true);
+      const res = await createHabit({ habit });
+
+      if (res.success) {
+        setItem({ type: "habit", item: res.res });
+        setIsOpen("");
+      } else {
+        setError(
+          typeof res.res === "string" ? res.res : "Error al crear el hábito"
+        );
+        console.error("Error al crear el hábito", res.res);
+      }
+    } catch (err) {
+      console.error("Error inesperado:", err);
+      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return (
-    <>
-      <div className="flex flex-col gap-2 w-full">
-        <input
-          type="text"
-          placeholder="Titulo"
-          className="text-2xl text-gray-500 outline-none"
-          onChange={(e) =>
-            setHabit((prev) => ({ ...prev, name: e.target.value }))
-          }
-        />
-        <div className="flex flex-col gap-6 w-full">
-          <InputModal
-            onChange={(e) =>
-              setHabit((prev) => ({ ...prev, description: e.target.value }))
-            }
-            type="text"
-            placeholder="Descripcion"
-            icon={<Text />}
-          />
-          <InputModal
-            type="select"
-            placeholder={
-              habit.frequency !== "" ? habit.frequency : "Frequencia"
-            }
-            option={
-              <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50">
-                {["daily", "weekly", "monthly"]?.map((item) => (
-                  <option
-                    onClick={() => {
-                      setHabit((prev) => ({
-                        ...prev,
-                        frequency: item as "" | "daily" | "weekly" | "monthly",
-                      }));
-                    }}
-                    key={item}
-                    className="p-2"
-                  >
-                    {item}
-                  </option>
-                ))}
-              </div>
-            }
-            icon={<AudioLines />}
-          />
-          <InputModal
-            onChange={(e) =>
-              setHabit((prev) => ({ ...prev, type: e.target.value }))
-            }
-            type="select"
-            placeholder={habit.type !== "" ? habit.type : "Tipo of habito"}
-            option={
-              <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 px-5 gap-1">
-                {["study", "sport", "food", "drink", "work"]?.map((item) => (
-                  <option
-                    onClick={() => {
-                      setHabit((prev) => ({
-                        ...prev,
-                        type: item,
-                      }));
-                    }}
-                    key={item}
-                    className="p-2"
-                  >
-                    {item}
-                  </option>
-                ))}
-              </div>
-            }
-            icon={<BookHeart />}
-          />
-        </div>
-        <div className="flex py-2 gap-2.5">
-          <Button
-            size="large"
-            button="secondary"
-            type="button"
-            onClick={() => setIsOpen("")}
-          >
-            Cancelar
-          </Button>
-          <Button
-            size="large"
-            onClick={handleCreateHabit}
-            button="primary"
-            type="button"
-          >
-            Guardar
-          </Button>
-        </div>
+  const renderErrorMessage = () => {
+    if (!error) return null;
+
+    return (
+      <div className="flex items-center gap-2 text-red-500 text-sm mt-1">
+        <AlertCircle size={16} />
+        <span>{error}</span>
       </div>
-    </>
+    );
+  };
+
+  const renderSelectOptions = (
+    options: HabitOption[],
+    field: keyof Pick<HabitFormData, "frequency" | "type">
+  ) => (
+    <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50">
+      {options.map((option) => (
+        <option
+          key={option.value}
+          className="p-2 cursor-pointer hover:bg-gray-100"
+          onClick={() => updateHabitField(field, option.value)}
+        >
+          {option.label}
+        </option>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <input
+        type="text"
+        placeholder="Título"
+        value={habit.name}
+        className={`text-2xl outline-none ${
+          error && !habit.name ? "border-red-500 border-b-2" : "text-gray-500"
+        }`}
+        onChange={(e) => updateHabitField("name", e.target.value)}
+      />
+
+      {renderErrorMessage()}
+
+      <div className="flex flex-col gap-6 w-full">
+        <InputModal
+          type="text"
+          placeholder="Descripción"
+          onChange={(e) => updateHabitField("description", e.target.value)}
+          icon={<Text />}
+        />
+
+        {/* <InputModal
+          type="select"
+          placeholder={format(
+            habit.time instanceof Date && !isNaN(habit.time.getTime())
+              ? habit.time
+              : new Date(),
+            "HH:mm",
+            { locale: es }
+          )}
+          option={
+            <ModalTimePicker
+              onChange={(e) => {
+                const newTime = new Date();
+                newTime.setHours(
+                  e.target.value.hours,
+                  e.target.value.min,
+                  0,
+                  0
+                );
+                setHabit((prev) => ({
+                  ...prev,
+                  time: newTime,
+                }));
+                if (error) setError(null);
+              }}
+            />
+          }
+          icon={<Timer />}
+          propagand={false}
+        /> */}
+
+        <InputModal
+          type="select"
+          placeholder={
+            FREQUENCY_OPTIONS.find((option) => option.value === habit.frequency)
+              ?.label || "Frecuencia"
+          }
+          option={renderSelectOptions(FREQUENCY_OPTIONS, "frequency")}
+          icon={<AudioLines />}
+        />
+
+        <InputModal
+          type="select"
+          placeholder={
+            TYPE_OPTIONS.find((prev) => prev.value === habit.type)?.label ||
+            "Tipo de hábito"
+          }
+          option={renderSelectOptions(TYPE_OPTIONS, "type")}
+          icon={<BookHeart />}
+        />
+      </div>
+
+      <BtnSend
+        handleClick={handleCreateHabit}
+        isLoading={isLoading}
+        setIsOpen={setIsOpen}
+      />
+    </div>
   );
 }

@@ -19,7 +19,7 @@ export default function DescriptionProfile({
   >("info");
 
   return (
-    <div className="w-3/4 flex flex-col p-6 gap-6 border border-primary-200 bg-background-primary rounded-2xl">
+    <div className="w-3/4 flex flex-col p-6 gap-6 border border-primary-200 bg-background-primary rounded-2xl relative">
       <NavigationStats
         selectedPage={selectedPage}
         setSelectedPage={setSelectedPage}

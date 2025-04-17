@@ -1,19 +1,12 @@
 "use client";
 import { Eye } from "lucide-react";
-import { useState, useContext, useEffect, Dispatch } from "react";
+import { useState, useContext } from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
 import Commands from "../../../../Elements/Pomodoro/Commands";
-import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
 
-interface TimerProps {
-  time: TimeType;
-  setTime: Dispatch<React.SetStateAction<TimeType>>;
-  menu: string;
-}
-
-export default function Timer({ menu }: TimerProps) {
+export default function Timer() {
   const {
     time,
     isPlay,
@@ -26,12 +19,6 @@ export default function Timer({ menu }: TimerProps) {
 
   const [hiddenTime, setHiddenTime] = useState(false);
   const [choseUpdate, setChoseUpdate] = useState("");
-
-  useEffect(() => {
-    if (isPlay) {
-      togglePlay();
-    }
-  }, [menu]);
 
   const handleClick = (action: string) => {
     switch (action) {

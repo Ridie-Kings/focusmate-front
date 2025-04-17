@@ -10,24 +10,24 @@ import StatusCards from "@/components/Pages/(Nav & Top)/Dashboard/Task/StatusCar
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
 export default function Task({ tasksList }: { tasksList: TaskType[] }) {
-	const { tasks, setTasks } = useContext(DashboardContext);
-	const [filter, setFilter] = useState<string>("");
+  const { tasks, setTasks } = useContext(DashboardContext);
+  const [filter, setFilter] = useState<string>("");
 
-	useEffect(() => {
-		setTasks(tasksList);
-	}, [tasksList]);
+  useEffect(() => {
+    setTasks(tasksList);
+  }, [tasksList]);
 
-	return (
-		<TemplateDashboard
-			grid="col-span-2 row-span-4 row-start-6 gap-0"
-			title="Tus Tareas"
-			link="/task"
-		>
-			<StatusCards filter={filter} setFilter={setFilter} tasks={tasks} />
-			<p className="text-primary-500">
-				{filter === "" ? "All Task" : filter}
-			</p>
-			<ListTask filter={filter} tasks={tasks} setTasks={setTasks} />
-		</TemplateDashboard>
-	);
+  return (
+    <TemplateDashboard
+      grid="col-span-2 row-span-4 row-start-6 gap-0"
+      title="Tus Tareas"
+      link="/task"
+    >
+      <StatusCards filter={filter} setFilter={setFilter} tasks={tasks} />
+      <p className="text-primary-500">
+        {filter === "" ? "Tareas pendiente" : "Tareas " + filter + " prioridad"}
+      </p>
+      <ListTask filter={filter} tasks={tasks} setTasks={setTasks} />
+    </TemplateDashboard>
+  );
 }

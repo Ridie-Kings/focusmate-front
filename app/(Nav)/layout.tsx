@@ -27,39 +27,20 @@ export default async function RootLayout({
 }>) {
   const token = await getToken();
   if (!token) redirect("/login");
-  const handleLogout = async () => {
-    "use server";
-    // console.log("Logging out...");
-
-    try {
-      await logout();
-    } catch (error) {
-      if (
-        error instanceof Error &&
-        "response" in error &&
-        error.response &&
-        typeof error.response === "string"
-      ) {
-        console.error("Error logging out:", error.response);
-      } else {
-        console.error("Error logging out:", error);
-      }
-    }
-  };
 
   return (
     <html lang="en">
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
         {/* <SocketIOProvider token={token ?? ""}> */}
-        <ModalProvider>
-          <TimerProvider>
-            <NavBar />
-            <main className="flex flex-col min-h-screen h-full flex-1">
-              {children}
-            </main>
-          </TimerProvider>
-        </ModalProvider>
+          <ModalProvider>
+            <TimerProvider>
+              <NavBar />
+              <main className="flex flex-col min-h-screen h-full flex-1">
+                {children}
+              </main>
+            </TimerProvider>
+          </ModalProvider>
         {/* </SocketIOProvider> */}
       </body>
     </html>

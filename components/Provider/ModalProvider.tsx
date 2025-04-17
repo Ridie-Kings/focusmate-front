@@ -4,13 +4,12 @@ import { createContext, useState } from "react";
 import { ModalContextType } from "@/interfaces/Modal/ModalType";
 
 import Modal from "../Elements/General/Modal";
-import { TaskType } from "@/interfaces/Task/TaskType";
-import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 export const ModalContext = createContext<ModalContextType>({
   isOpen: "",
   setIsOpen: () => {},
   item: null,
+  setItem: () => {},
 });
 
 export default function ModalProvider({
@@ -19,18 +18,13 @@ export default function ModalProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState("");
-  const [item, setItem] = useState<
-    | {
-        type: string;
-        item: HabitsType | TaskType;
-      }
-    | undefined
-  >();
+  const [item, setItem] = useState<unknown>();
 
   const contextValue = {
     item,
     isOpen,
     setIsOpen,
+    setItem,
   };
 
   return (

@@ -6,8 +6,6 @@ import ModalEvent from "./Modal/ModalEvent";
 import ModalContact from "./Modal/ModalContact";
 
 import { X } from "lucide-react";
-import { TaskType } from "@/interfaces/Task/TaskType";
-import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 export default function Modal({
   isOpen,
@@ -16,7 +14,7 @@ export default function Modal({
 }: {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (data: { type: string; item: TaskType | HabitsType }) => void;
+  setItem: (item: unknown) => void;
 }) {
   const renderModal = () => {
     switch (isOpen) {
@@ -25,7 +23,7 @@ export default function Modal({
       case "habit":
         return <ModalHabit setIsOpen={setIsOpen} setItem={setItem} />;
       case "event":
-        return <ModalEvent />;
+        return <ModalEvent setIsOpen={setIsOpen} setItem={setItem} />;
       case "contact":
         return <ModalContact setIsOpen={setIsOpen} setItem={setItem} />;
       default:

@@ -5,7 +5,7 @@ import { Bell, Bookmark, Settings } from "lucide-react";
 export default function MembershipUser() {
   return (
     <>
-      <BannerMembership type="free" />
+      <BannerMembership type="premium" />
       <div className="flex gap-8 place-content-between w-full">
         <InfoCard
           title="Incluido en tu plan"
@@ -17,7 +17,7 @@ export default function MembershipUser() {
             },
             {
               icon: <Settings size={24} />,
-              label: "Revisíon semanal autonática",
+              label: "Revisíon semanal automática",
             },
             {
               icon: <Bookmark size={24} />,
@@ -26,8 +26,8 @@ export default function MembershipUser() {
           ]}
         />
         <InfoCard
-          title="Factiracíon y pago"
-          url={{ label: "Ver historial de Pago", url: "" }}
+          title="Facturación y pago"
+          url={{ label: "Mejorar plan", url: "/pricing" }}
           items={[
             {
               icon: <Bell size={24} />,

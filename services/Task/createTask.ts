@@ -22,7 +22,14 @@ export async function createTask({
   try {
     const token = await getToken();
 
-    const res = await apiConnection.post("tasks", task, {
+    const newTask = {
+      ...task,
+      startDate: task.startDate.toISOString(),
+      endDate: task.endDate.toISOString(),
+      dueDate: task.dueDate.toISOString(),
+    };
+
+    const res = await apiConnection.post("tasks", newTask, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -22,7 +22,7 @@ export const Board = ({ tasks }: { tasks: TaskType[] }) => {
           setCards={setCards}
         />
         <Status
-          title="En Revisíon"
+          title="En Revisión"
           status="revision"
           cards={cards}
           setCards={setCards}

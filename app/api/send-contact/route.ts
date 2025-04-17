@@ -5,12 +5,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
+
   const { name, email, message } = body;
 
   try {
     const data = await resend.emails.send({
-      from: "Sherpapp Contacto <no-reply@sherpapp.com>",
-      to: ["tucorreo@ejemplo.com"],
+      from: "Sherpapp Contacto <no-reply@thallein.com>",
+      to: ["soporte@thallein.com"],
       subject: "Nuevo mensaje de contacto",
       html: `<strong>Nombre:</strong> ${name}<br/>
              <strong>Email:</strong> ${email}<br/>
@@ -19,6 +20,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
+    console.error("Error en send-contact:", error);
     return NextResponse.json({ success: false, error }, { status: 500 });
   }
 }

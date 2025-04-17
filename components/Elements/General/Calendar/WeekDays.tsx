@@ -1,4 +1,4 @@
-const WEEK_DAYS = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+const WEEK_DAYS = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sáb", "Dom"];
 
 export default function WeekDays() {
   return (

@@ -1,6 +1,6 @@
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
-import { EventType } from "@/interfaces/Calendar/EventType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import {
   addDays,
   subDays,
@@ -10,7 +10,7 @@ import {
   isSameDay,
 } from "date-fns";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch, useRef, useEffect } from "react";
 
 const getPosition = (date: Date) => {
   const hours = getHours(date);
@@ -23,22 +23,41 @@ const DayCalendarItem = ({
   date,
   events,
 }: {
-  date: Date | undefined;
-  events: EventType[];
+  date: Date;
+  events: TaskType[];
 }) => {
+  const scrollCalendar = useRef<HTMLDivElement>(null);
+
+  const formatDuration = (start: Date, end: Date) => {
+    const totalMinutes = Math.abs(differenceInMinutes(end, start));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, "0")} horas`;
+    }
+    return `${minutes} min`;
+  };
+
+  useEffect(() => {
+    if (scrollCalendar.current) {
+      scrollCalendar.current.scrollTo(0, 1000);
+    }
+  }, []);
+
   return (
-    <div className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]">
+    <div
+      ref={scrollCalendar}
+      className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
+    >
       <TimeLeftBar length={97} divider={4} calc={2} />
       <TimeBar pos={getPosition(new Date())} />
       <div className="relative w-full h-full">
         {events
-          .filter((event) => date && isSameDay(event.date.start, date))
+          .filter((event) => isSameDay(event.dueDate, date))
           .map((event, index) => {
-            const eventStartPosition = getPosition(event.date.start);
-            const eventEndPosition = getPosition(event.date.end);
-            const totalMinutes = Math.abs(
-              differenceInMinutes(event.date.end, event.date.start)
-            );
+            const eventStartPosition = getPosition(event.startDate);
+            const eventEndPosition = getPosition(event.endDate);
 
             return (
               <div
@@ -52,17 +71,17 @@ const DayCalendarItem = ({
                 <p className="text-2xl">{event.title}</p>
                 <div className="flex place-content-between w-full">
                   <span className="text-lg flex flex-col">
-                    {event.date.start.toLocaleTimeString("es-ES", {
+                    {new Date(event.startDate).toLocaleTimeString("es-ES", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
                     <p>Empieza</p>
                   </span>
-                  <p className="flex items-center py-2 px-4 text-xl bg-black rounded text-white-100">
-                    {Math.floor(totalMinutes / 60)}:{totalMinutes % 60} min{" "}
+                  <p className="flex items-center py-2 px-4 text-xl bg-black rounded text-white">
+                    {formatDuration(event.startDate, event.endDate)}
                   </p>
                   <span className="text-lg ml-2">
-                    {event.date.end.toLocaleTimeString("es-ES", {
+                    {new Date(event.endDate).toLocaleTimeString("es-ES", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
@@ -82,8 +101,8 @@ export default function DayCalendar({
   date,
   setDate,
 }: {
-  events: EventType[];
-  date: Date | undefined;
+  events: TaskType[];
+  date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
   const handlePreviousDay = () => {
@@ -103,24 +122,22 @@ export default function DayCalendar({
       <div className="flex justify-between items-center py-2">
         <button
           onClick={handlePreviousDay}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
         >
-          <ArrowLeft className="mr-2" /> Last Day
+          <ArrowLeft className="mr-2" /> Día anterior
         </button>
         <span className="font-semibold text-lg">
-          {date
-            ? date.toLocaleDateString("es-ES", {
-                year: "numeric",
-                month: "long",
-                day: "2-digit",
-              })
-            : "Invalid Date"}
+          {(date ?? new Date()).toLocaleDateString("es-ES", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+          })}
         </span>
         <button
           onClick={handleNextDay}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 cursor-pointer"
         >
-          Next Day <ArrowRight className="ml-2" />
+          Siguiente día <ArrowRight className="ml-2" />
         </button>
       </div>
 

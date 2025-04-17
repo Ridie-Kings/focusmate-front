@@ -1,4 +1,3 @@
-import { EventType } from "@/interfaces/Calendar/EventType";
 import {
   addDays,
   addMonths,
@@ -11,22 +10,25 @@ import {
   subMonths,
 } from "date-fns";
 import { es } from "date-fns/locale";
+
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
 import { Dispatch, SetStateAction, memo, useMemo } from "react";
+
 import Dot from "@/components/Elements/General/Dot";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 interface CalendarDayProps {
   day: Date;
   currentMonth: number;
-  events: EventType[];
+  events: TaskType[];
 }
 
-// Extraction du jour en un composant distinct pour optimiser les rendus
 const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
   const isToday = isSameDay(day, new Date());
   const isCurrentMonth = day.getMonth() === currentMonth;
   const dayEvents = useMemo(
-    () => events.filter((event) => isSameDay(new Date(event.date.start), day)),
+    () => events.filter((event) => isSameDay(new Date(event.startDate), day)),
     [events, day]
   );
 
@@ -35,12 +37,12 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
 
   return (
     <div
-      className={`text-center pt-1 h-full cursor-pointer border text-xl relative
+      className={`text-center pt-1 h-full cursor-pointer border text-xl relative transition-all duration-300
         ${isCurrentMonth ? "text-black" : "text-gray-400"}
         ${
           isToday
-            ? "bg-primary-500 text-white-100"
-            : "hover:bg-secondary-700 hover:text-white-100"
+            ? "bg-primary-500 text-white"
+            : "hover:bg-secondary-700 hover:text-white"
         }`}
       aria-label={format(day, "EEEE, d MMMM yyyy", { locale: es })}
     >
@@ -49,13 +51,12 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
         {visibleEvents.map((event, i) => (
           <div
             key={`${i}-${day.toISOString()}`}
-            className={`p-1 rounded flex flex-col ${
-              isToday ? "text-white-100" : "text-gray-100"
-            }`}
+            style={{ color: event.color }}
+            className="p-1 rounded flex flex-col"
             title={event.title}
           >
             <div className="flex items-center gap-2 truncate">
-              <Dot size={10} />
+              <Dot size={10} backgroundColor={event.color} />
               {event.title}
             </div>
           </div>
@@ -72,9 +73,8 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
 
 CalendarDay.displayName = "CalendarDay";
 
-// Composant CalendarGrid séparé pour rendre le code plus modulaire
 const CalendarGrid = memo(
-  ({ date, events }: { date: Date; events: EventType[] }) => {
+  ({ date, events }: { date: Date; events: TaskType[] }) => {
     const currentMonth = date.getMonth();
 
     const days = useMemo(() => {
@@ -114,7 +114,7 @@ export default function MonthCalendar({
   date = new Date(),
   setDate,
 }: {
-  events: EventType[];
+  events: TaskType[];
   date?: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
@@ -131,25 +131,25 @@ export default function MonthCalendar({
     [date]
   );
 
-  const weekdays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+  const weekdays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sáb", "Dom"];
 
   return (
     <div className="w-full flex-1 flex flex-col gap-4 place-content-between">
       <div className="flex justify-between items-center py-2">
         <button
           onClick={handlePreviousMonth}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
-          aria-label="Last Month"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition duration-300 cursor-pointer"
+          aria-label="Semana anterior"
         >
-          <ArrowLeft className="mr-2" size={18} /> Last Month
+          <ArrowLeft className="mr-2" size={18} /> Semana anterior
         </button>
         <h2 className="font-semibold text-lg capitalize">{monthYearLabel}</h2>
         <button
           onClick={handleNextMonth}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
-          aria-label="Next Month"
+          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition duration-300 cursor-pointer"
+          aria-label="Mes siguiente"
         >
-          Next Month <ArrowRight className="ml-2" size={18} />
+          Mes siguiente <ArrowRight className="ml-2" size={18} />
         </button>
       </div>
 

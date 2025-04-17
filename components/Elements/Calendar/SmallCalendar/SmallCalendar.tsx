@@ -49,7 +49,7 @@ export const CalendarItem: React.FC<CalendarItemProps> = ({
   const isToday = (day: Date): boolean => isSameDay(day, new Date());
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-3">
       <WeekDays />
       <DaysCalendar
         isToday={isToday}
@@ -98,7 +98,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 
   return (
     <div
-      className={`w-full h-full flex flex-col gap-4 py-2 overflow-hidden ${className} ${
+      className={`w-full flex flex-col gap-4 py-2 overflow-hidden ${className} ${
         !inView && "hidden"
       } transition-all duration-300`}
     >

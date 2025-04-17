@@ -13,7 +13,6 @@ export async function register(
       fullname: formData.get("fullname") as string,
       password: formData.get("password") as string,
     };
-    // console.log(userData);
 
     const testUser = testUserData({
       ...userData,
@@ -35,8 +34,7 @@ export async function register(
     return {
       success: false,
       message:
-        error.response?.data ||
-        error.message ||
+        error.response?.data.message ||
         "An unexpected error occurred during registration.",
     };
   }

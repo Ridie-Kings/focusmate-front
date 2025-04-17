@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import { Brain, Coffee, Sofa } from "lucide-react";
+import { Brain, CircleGauge, Clock, Coffee } from "lucide-react";
 import React, { Dispatch, SetStateAction, useMemo } from "react";
 
 const items: { id: number; label: string; type: chipsIconType }[] = [
@@ -11,7 +11,8 @@ const items: { id: number; label: string; type: chipsIconType }[] = [
     type: "concentracion",
   },
   { id: 2, label: "Descanso", type: "D/Corto" },
-  { id: 3, label: "Siesta", type: "D/Largo" },
+  { id: 3, label: "Temporizador", type: "D/Largo" },
+  { id: 4, label: "Cronometro", type: "chrono" },
 ];
 
 export default function TypeTimeButtons({
@@ -21,22 +22,26 @@ export default function TypeTimeButtons({
   className,
   fullScreen,
   setInitialTime,
+  toggleChronometerMode,
 }: {
-  menu: string;
-  setMenu: Dispatch<SetStateAction<string>>;
+  menu: chipsIconType;
+  setMenu: Dispatch<SetStateAction<chipsIconType>>;
   setTime: Dispatch<SetStateAction<TimeType>>;
   className?: string;
   fullScreen?: boolean;
   setInitialTime: Dispatch<SetStateAction<TimeType>>;
+  toggleChronometerMode: (type: boolean) => void;
 }) {
   const menuTimes = useMemo<Record<string, TimeType>>(
     () => ({
       concentracion: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
       "D/Largo": { hours: 0, min: 15, seg: 0 },
+      chrono: { hours: 0, min: 0, seg: 0 },
     }),
     []
   );
+
   return (
     <ul
       className={`flex w-full place-content-evenly gap-2 lg:p-0 p-2 ${className}`}
@@ -53,15 +58,18 @@ export default function TypeTimeButtons({
               } transition-all duration-300`}
               onClick={() => {
                 setTime(menuTimes[item.type]);
-                setMenu(item.label);
+                setMenu(item.label as chipsIconType);
+                toggleChronometerMode(true);
               }}
             >
               {item.type === "concentracion" ? (
                 <Brain />
               ) : item.type === "D/Corto" ? (
                 <Coffee />
+              ) : item.type === "D/Largo" ? (
+                <Clock />
               ) : (
-                item.type === "D/Largo" && <Sofa />
+                item.type === "chrono" && <CircleGauge />
               )}
               {item.label}
             </button>
@@ -75,12 +83,14 @@ export default function TypeTimeButtons({
               size="large"
               type="button"
               button="pomodoro"
-              state={item.label === menu ? "pressed" : "enabled"}
-              icon={item.type as "concentracion" | "D/Corto" | "D/Largo"}
+              state={item.type === menu ? "pressed" : "enabled"}
+              icon={item.type as chipsIconType}
               onClick={() => {
                 setTime(menuTimes[item.type]);
-                setMenu(item.label);
+                setMenu(item.label as chipsIconType);
                 setInitialTime(menuTimes[item.type]);
+                if (item.type === "chrono") toggleChronometerMode(true);
+                else toggleChronometerMode(false);
               }}
             >
               {item.label}

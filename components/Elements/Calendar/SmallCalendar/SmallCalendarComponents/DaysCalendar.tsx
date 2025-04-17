@@ -26,14 +26,14 @@ export default function DaysCalendar({
     const monthClasses = isCurrentMonth ? "text-black" : "text-gray-400";
     const todayClasses = isTodayDay
       ? "border border-secondary-700 text-secondary-700 hover:bg-secondary-700/25"
-      : "hover:bg-secondary-600 hover:text-white-100";
-    const selectedClasses = isSelected ? "bg-secondary-700 text-white-100" : "";
+      : "hover:bg-secondary-600 hover:text-white";
+    const selectedClasses = isSelected ? "bg-secondary-700 text-white" : "";
 
     return `${todayClasses} ${baseClasses}  ${monthClasses} ${selectedClasses}`;
   };
 
   const handleDayClick = (day: Date) => {
-    if (isToday(day) && date && isSameDay(day, date)) {
+    if (isToday(day) && date) {
       setDate(undefined);
     } else {
       setDate(day);
@@ -41,7 +41,7 @@ export default function DaysCalendar({
   };
 
   return (
-    <div className="grid grid-cols-7 gap-1.5">
+    <div className="grid grid-cols-7 justify-items-center space-x-1 space-y-1">
       {days.map((day) => (
         <div
           key={`day-${day.toISOString()}`}

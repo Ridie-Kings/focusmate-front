@@ -1,5 +1,8 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export type ModalContextType = {
   isOpen: string;
-  setIsOpen: (value: string) => void;
-  item: any;
+  setIsOpen: Dispatch<SetStateAction<string>>;
+  item: unknown;
+  setItem: (item: unknown) => void;
 };

@@ -3,7 +3,10 @@ import { Camera, LaptopMinimal, PersonStanding } from "lucide-react";
 export default function AcademicUser() {
   return (
     <>
-      <div className="w-full flex gap-6">
+      <p className="text-center text-4xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2 z-50">
+        Proximamente
+      </p>
+      <div className="w-full flex gap-6 blur">
         <div className="flex gap-4 w-full px-4">
           <PersonStanding />
           <div className="flex flex-col">
@@ -21,8 +24,10 @@ export default function AcademicUser() {
           </div>
         </div>
       </div>
-      <p className="w-full border-b border-primary-200 py-4 px-6">Progreso</p>
-      <div>
+      <p className="w-full border-b border-primary-200 py-4 px-6 blur">
+        Progreso
+      </p>
+      <div className="blur">
         <p className="text-gray-400 text-sm">Carrera Universitaria</p>
         <div className="p-2 flex gap-4">
           <LaptopMinimal
@@ -44,7 +49,7 @@ export default function AcademicUser() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="blur">
         <p className="text-gray-400 text-sm">Carrera Universitaria</p>
         <div className="p-2 flex gap-4">
           <Camera size={64} className="bg-secondary-100 p-3 rounded-full" />

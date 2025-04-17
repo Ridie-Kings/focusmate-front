@@ -8,13 +8,16 @@ import HabitsList from "@/components/Elements/General/HabitsElements/HabitsList"
 import Button from "@/components/Reusable/Button";
 
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
-import MountainHabits from "@/components/Elements/Svg/MountainHabits";
+import MountainHabits from "@/components/Elements/Svg/Mountain/MountainHabits";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
-  const { setIsOpen, item } = useContext(ModalContext);
+  const { setIsOpen, item } = useContext(ModalContext) as {
+    item: { type: string; item: HabitsType } | null;
+    setIsOpen: (type: string) => void;
+  };
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
 
@@ -53,7 +56,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
           </div>
           <div className="flex items-center gap-2">
             <div className="bg-secondary-200 size-4 rounded-full" />
-            <p>No realizado</p>
+            <p>No realizados</p>
           </div>
         </div>
       </div>
@@ -64,7 +67,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
           <MountainHabits />
           <div className="flex flex-col items-center text-primary-500 gap-1">
             <p className="text-xl">¡Ups! No hay hábitos por aquí...</p>
-            <p> Creá uno y empezá a sumar pequeños logros</p>
+            <p>Crea uno y empieza a sumar pequeños logros</p>
           </div>
         </div>
       )}
@@ -74,7 +77,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
         button="tertiary"
         type="button"
       >
-        Nuevo Habito
+        Nuevo Hábito
       </Button>
     </TemplateDashboard>
   );
