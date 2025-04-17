@@ -23,7 +23,6 @@ export default function ButtonSend({ profile }: { profile: ProfileType }) {
       const data = await res.json();
 
       if (data.success) {
-        console.log(data.data);
         setShowMessage(true);
         setTimeout(() => {
           setShowMessage(false);

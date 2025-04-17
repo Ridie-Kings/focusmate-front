@@ -48,7 +48,7 @@ export default function ListTask({
 
   return (
     <>
-      <div className="flex flex-col w-full gap-4 h-[266px] overflow-y-auto overflow-x-visible">
+      <div className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto overflow-x-visible">
         {tasksRender.length > 0 ? (
           tasksRender.map((task) => (
             <TaskCard

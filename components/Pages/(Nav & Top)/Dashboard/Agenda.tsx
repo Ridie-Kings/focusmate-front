@@ -21,8 +21,6 @@ export default function Agenda() {
     const handleGetCalendarByDate = async () => {
       const events = await getCalendarByDate({ date: date ?? new Date() });
 
-      console.log(events);
-
       if (events.success) {
         const eventsToLocal = events.res.map((event: TaskType) => ({
           ...event,
@@ -50,7 +48,7 @@ export default function Agenda() {
         <div className="flex flex-col gap-4">
           <SmallCalendar setDate={setDate} date={date} inView />
           <Button
-            onClick={() => setIsOpen("task")}
+            onClick={() => setIsOpen("event")}
             size="large"
             button="tertiary"
             type="button"
