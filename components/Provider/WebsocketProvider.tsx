@@ -1,5 +1,4 @@
 "use client";
-import { startTimer } from "@/services/Timers/startTimer";
 import { createContext, useState, useEffect, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -83,12 +82,26 @@ export const SocketIOProvider: React.FC<{
       console.log("Pomodoro WebSocket connected");
       setIsConnected(true);
       
-      socketInstance.emit("getPomodoroStatus", { userId });
     });
 
     socketInstance.on("pomodoroStatus", (data: PomodoroStatus) => {
       console.log("Received pomodoro status:", data);
       setStatus(data);
+    });
+
+    socketInstance.on("pomodoroStarted", (data: {success: boolean, pomodoro: PomodoroStatus}) => {
+      console.log("Received pomodoro started:", data);
+      if (data.success) {
+        setStatus(data.pomodoro);
+      }
+      
+    });
+
+    socketInstance.on("pomodoroStopped", (data: {success: boolean}) => {
+      console.log("Received pomodoro stopped:", data);
+      if (data.success) {
+        setStatus(null);
+      }
     });
 
     socketInstance.on("connect_error", (error: Error) => {
@@ -133,14 +146,14 @@ export const SocketIOProvider: React.FC<{
           breakDuration,
         }, (response: any) => {
           if (response.success) {
-            console.log(response)
+            console.log("mdlr", response)
             setStatus({
               userId,
               remainingTime: duration,
               isPaused: false,
               isBreak: false,
               active: true,
-              pomodoroId: response.pomodoroId
+              pomodoroId: response.pomodoro.pomodoroId
             })
             resolve();
           } else {
