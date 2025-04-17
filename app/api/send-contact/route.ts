@@ -4,11 +4,24 @@ import { NextRequest, NextResponse } from "next/server";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-
-  const { name, email, message } = body;
-
   try {
+    const body = await req.json();
+    console.log("Datos recibidos:", body);
+
+    const { name, email, message } = body;
+
+    if (!name || !email || !message) {
+      console.error("Faltan campos requeridos:", { name, email, message });
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: "Faltan campos requeridos",
+          receivedData: { name, email, message }
+        }, 
+        { status: 400 }
+      );
+    }
+
     const data = await resend.emails.send({
       from: "Sherpapp Contacto <no-reply@thallein.com>",
       to: ["soporte@thallein.com"],
@@ -18,9 +31,19 @@ export async function POST(req: NextRequest) {
              <strong>Mensaje:</strong><br/>${message}`,
     });
 
-    return NextResponse.json({ success: true, data });
+    console.log("Email enviado con éxito:", data);
+
+    return NextResponse.json({ 
+      success: true, 
+      data,
+      receivedData: { name, email, message }
+    });
   } catch (error) {
     console.error("Error en send-contact:", error);
-    return NextResponse.json({ success: false, error }, { status: 500 });
+    return NextResponse.json({ 
+      success: false, 
+      error: "Error al enviar el email",
+      errorDetails: error instanceof Error ? error.message : "Error desconocido"
+    }, { status: 500 });
   }
 }
