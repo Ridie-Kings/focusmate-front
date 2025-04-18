@@ -36,11 +36,16 @@ export default function ModalProvider({
     fetchProfile();
   }, []);
 
+  const updateItem = (data: { type: string; item: any }) => {
+    const cleanItem = { ...data.item };
+    setItem({ type: data.type, item: cleanItem });
+  };
+
   const contextValue = {
     item,
     isOpen,
     setIsOpen,
-    setItem,
+    setItem: updateItem,
     profile,
   };
 
