@@ -3,8 +3,20 @@ import { createContext, useState, useEffect } from "react";
 import { ModalContextType } from "@/interfaces/Modal/ModalType";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
+import { tempTaskType } from "@/interfaces/Modal/ModalType";
 
 import Modal from "../Elements/General/Modal";
+
+interface ContactForm {
+  name: string;
+  email: string;
+  message: string;
+}
+
+export type ModalItemType = {
+  type: string;
+  item: tempTaskType | ContactForm | Record<string, unknown>;
+};
 
 export const ModalContext = createContext<ModalContextType>({
   isOpen: "",
@@ -20,7 +32,7 @@ export default function ModalProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState("");
-  const [item, setItem] = useState<unknown>();
+  const [item, setItem] = useState<ModalItemType | null>(null);
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
   useEffect(() => {
@@ -36,7 +48,7 @@ export default function ModalProvider({
     fetchProfile();
   }, []);
 
-  const updateItem = (data: { type: string; item: any }) => {
+  const updateItem = (data: ModalItemType) => {
     const cleanItem = { ...data.item };
     setItem({ type: data.type, item: cleanItem });
   };

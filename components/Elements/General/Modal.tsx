@@ -1,6 +1,7 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { ModalItemType } from "@/components/Provider/ModalProvider";
 
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
@@ -12,7 +13,7 @@ import { X } from "lucide-react";
 interface ModalProps {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: unknown) => void;
+  setItem: (item: ModalItemType) => void;
   profile: ProfileType | null;
 }
 
