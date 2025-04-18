@@ -1,21 +1,41 @@
 "use client";
 import { Eye } from "lucide-react";
-import { useState, useContext } from "react";
-import { TimerContext } from "@/components/Provider/TimerProvider";
+import { useState, useContext, useEffect } from "react";
+import { TimerContext, timeUtils } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
 import Commands from "../../../../Elements/Pomodoro/Commands";
 import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
+import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 
 export default function Timer() {
   const {
     time,
+    setTime,
     isPlay,
     togglePlay,
     resetTimer,
     updateTimeManually,
     setIsOpen,
-    initialTime,
+    initialTime
   } = useContext(TimerContext);
+
+  const { 
+    status, 
+    startPomodoro, 
+    stopPomodoro, 
+    pausePomodoro, 
+    resumePomodoro,  
+  } = useContext(SocketIOContext);
+
+  useEffect(() => {
+    if (!status) {
+      resetTimer();
+      return 
+    };
+    setTime(timeUtils.secondsToTime(status.remainingTime))
+    if (status?.isPaused && isPlay) togglePlay();
+    else if (!status?.isPaused && !isPlay) togglePlay();
+  }, [status])
 
   const [hiddenTime, setHiddenTime] = useState(false);
   const [choseUpdate, setChoseUpdate] = useState("");
@@ -26,10 +46,14 @@ export default function Timer() {
         setIsOpen(true);
         break;
       case "togglePlay":
+        if (!status?.active) startPomodoro(timeUtils.timeToSeconds(time));
+        else if (!status.isPaused) pausePomodoro();
+        else if (status.isPaused) resumePomodoro();
         setChoseUpdate("");
         togglePlay();
         break;
       case "reset":
+        if (status?.active) stopPomodoro();
         resetTimer();
         break;
       default:
