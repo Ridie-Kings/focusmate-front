@@ -17,7 +17,6 @@ export default function Timer() {
     updateTimeManually,
     setIsOpen,
     initialTime,
-    setInitialTime,
   } = useContext(TimerContext);
 
   const { status, startPomodoro, stopPomodoro, pausePomodoro, resumePomodoro } =
@@ -29,7 +28,6 @@ export default function Timer() {
       return;
     }
     setTime(timeUtils.secondsToTime(status.remainingTime));
-
     if (status?.isPaused && isPlay) togglePlay();
     else if (!status?.isPaused && !isPlay) togglePlay();
   }, [status]);
@@ -50,7 +48,8 @@ export default function Timer() {
         togglePlay();
         break;
       case "reset":
-        if (status?.active) stopPomodoro();
+        if (status?.active && status?.pomodoroId)
+          stopPomodoro(status.pomodoroId);
         resetTimer();
         break;
       default:

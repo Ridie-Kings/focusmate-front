@@ -6,6 +6,7 @@ import TopBar from "@/components/Layouts/TopBar";
 import TimerProvider from "@/components/Provider/TimerProvider";
 import { getToken } from "@/lib";
 import ModalProvider from "@/components/Provider/ModalProvider";
+import DashboardProvider from "@/components/Provider/DashboardProvider";
 import { redirect } from "next/navigation";
 import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 
@@ -36,15 +37,17 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${poppinsSans.variable} antialiased`}>
         <SocketIOProvider token={token ?? ""}>
-          <ModalProvider>
-            <TimerProvider>
-              <NavBar />
-              <main className="flex flex-col min-h-screen h-full flex-1">
-                <TopBar />
-                {children}
-              </main>
-            </TimerProvider>
-          </ModalProvider>
+          <DashboardProvider>
+            <ModalProvider>
+              <TimerProvider>
+                <NavBar />
+                <main className="flex flex-col min-h-screen h-full flex-1">
+                  <TopBar />
+                  {children}
+                </main>
+              </TimerProvider>
+            </ModalProvider>
+          </DashboardProvider>
         </SocketIOProvider>
       </body>
     </html>

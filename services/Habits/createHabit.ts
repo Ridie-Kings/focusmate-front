@@ -6,8 +6,8 @@ import { HabitsType } from "@/interfaces/Habits/HabitsType";
 export async function createHabit({
   habit,
 }: {
-  habit: { name: string; description: string; frequency: string };
-}): Promise<{ success: boolean; res: HabitsType }> {
+  habit: { name: string; description: string; frequency: string; type: string };
+}): Promise<{ success: boolean; res: HabitsType | string }> {
   try {
     const token = await getToken();
 
@@ -17,9 +17,22 @@ export async function createHabit({
       },
     });
 
-    return { success: true, res: res?.data };
+    if (!res?.data) {
+      return { success: false, res: "Error al crear el hábito: Respuesta vacía" };
+    }
+
+    return { success: true, res: res.data };
   } catch (error: any) {
-    console.error("Error fetching tasks:", error.response?.data.message);
-    return { success: false, res: error.response };
+    console.log("Error creating habit:", error);
+    console.log(error)
+    if (error.response?.data?.message) {
+      return { success: false, res: error.response.data.message };
+    }
+    
+    if (error.message) {
+      return { success: false, res: error.message };
+    }
+    
+    return { success: false, res: "Error inesperado al crear el hábito" };
   }
 }

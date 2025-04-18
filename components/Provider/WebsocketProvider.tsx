@@ -11,10 +11,27 @@ export type PomodoroStatus = {
   isPaused?: boolean;
 };
 
+type SocketResponse<T = void> = {
+  success: boolean;
+  error?: string;
+  pomodoro?: T;
+};
+
+type StartPomodoroResponse = SocketResponse<{
+  pomodoroId: string;
+  duration: number;
+  breakDuration: number;
+}>;
+
+type StopPomodoroResponse = SocketResponse;
+type PausePomodoroResponse = SocketResponse;
+type ResumePomodoroResponse = SocketResponse;
+type JoinSharedPomodoroResponse = SocketResponse;
+
 type SocketIOContextType = {
   status: PomodoroStatus | null;
   startPomodoro: (duration?: number, breakDuration?: number) => Promise<void>;
-  stopPomodoro: () => Promise<void>;
+  stopPomodoro: (pomodoroId: string) => Promise<void>;
   pausePomodoro: () => Promise<void>;
   resumePomodoro: () => Promise<void>;
   joinSharedPomodoro: (shareCode: string) => Promise<void>;
@@ -84,7 +101,6 @@ export const SocketIOProvider: React.FC<{
     socketInstance.on("connect", () => {
       console.log("Pomodoro WebSocket connected");
       setIsConnected(true);
-
       socketInstance.emit("getPomodoroStatus", { userId });
     });
 
@@ -153,16 +169,15 @@ export const SocketIOProvider: React.FC<{
             duration,
             breakDuration,
           },
-          (response: any) => {
+          (response: StartPomodoroResponse) => {
             if (response.success) {
-              console.log("mdlr", response);
               setStatus({
                 userId,
                 remainingTime: duration,
                 isPaused: false,
                 isBreak: false,
                 active: true,
-                pomodoroId: response.pomodoro.pomodoroId,
+                pomodoroId: response.pomodoro?.pomodoroId ?? null,
               });
               resolve();
             } else {
@@ -175,25 +190,28 @@ export const SocketIOProvider: React.FC<{
     [socket, isConnected, token]
   );
 
-  const stopPomodoro = useCallback(async () => {
-    if (!socket || !isConnected) return;
+  const stopPomodoro = useCallback(
+    async (pomodoroId: string) => {
+      if (!socket || !isConnected) return;
 
-    console.log("Stopping pomodoro:", { pomodoroId: status?.pomodoroId });
+      console.log("Stopping pomodoro:", pomodoroId);
 
-    return new Promise<void>((resolve, reject) => {
-      socket.emit(
-        "stopPomodoro",
-        { pomodoroId: status?.pomodoroId },
-        (response: any) => {
-          if (response.success) {
-            resolve();
-          } else {
-            reject(new Error(response.error || "Failed to stop pomodoro"));
+      return new Promise<void>((resolve, reject) => {
+        socket.emit(
+          "stopPomodoro",
+          pomodoroId,
+          (response: StopPomodoroResponse) => {
+            if (response.success) {
+              resolve();
+            } else {
+              reject(new Error(response.error || "Failed to stop pomodoro"));
+            }
           }
-        }
-      );
-    });
-  }, [socket, isConnected, status]);
+        );
+      });
+    },
+    [socket, isConnected]
+  );
 
   const pausePomodoro = useCallback(async () => {
     if (!socket || !isConnected) return;
@@ -202,13 +220,17 @@ export const SocketIOProvider: React.FC<{
     console.log("Pausing pomodoro for user:", userId);
 
     return new Promise<void>((resolve, reject) => {
-      socket.emit("pausePomodoro", { userId }, (response: any) => {
-        if (response.success) {
-          resolve();
-        } else {
-          reject(new Error(response.error || "Failed to pause pomodoro"));
+      socket.emit(
+        "pausePomodoro",
+        { userId },
+        (response: PausePomodoroResponse) => {
+          if (response.success) {
+            resolve();
+          } else {
+            reject(new Error(response.error || "Failed to pause pomodoro"));
+          }
         }
-      });
+      );
     });
   }, [socket, isConnected, token]);
 
@@ -219,13 +241,17 @@ export const SocketIOProvider: React.FC<{
     console.log("Resuming pomodoro for user:", userId);
 
     return new Promise<void>((resolve, reject) => {
-      socket.emit("resumePomodoro", { userId }, (response: any) => {
-        if (response.success) {
-          resolve();
-        } else {
-          reject(new Error(response.error || "Failed to resume pomodoro"));
+      socket.emit(
+        "resumePomodoro",
+        { userId },
+        (response: ResumePomodoroResponse) => {
+          if (response.success) {
+            resolve();
+          } else {
+            reject(new Error(response.error || "Failed to resume pomodoro"));
+          }
         }
-      });
+      );
     });
   }, [socket, isConnected, token]);
 
@@ -240,7 +266,7 @@ export const SocketIOProvider: React.FC<{
         socket.emit(
           "joinSharedPomodoro",
           { shareCode, userId },
-          (response: any) => {
+          (response: JoinSharedPomodoroResponse) => {
             if (response.success) {
               resolve();
             } else {
