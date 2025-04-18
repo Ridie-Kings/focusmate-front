@@ -20,14 +20,14 @@ export default function Timer(/*{ token }: { token: string }*/) {
 
   const { setTime, time, setInitialTime, initialTime, toggleChronometerMode } =
     useContext(TimerContext);
-  
-  const { 
-    status, 
-    startPomodoro, 
-    stopPomodoro, 
-    pausePomodoro, 
-    resumePomodoro, 
-    isConnected 
+
+  const {
+    status,
+    startPomodoro,
+    stopPomodoro,
+    pausePomodoro,
+    resumePomodoro,
+    isConnected,
   } = useContext(SocketIOContext);
 
   const menuTimes = useMemo(
@@ -42,14 +42,14 @@ export default function Timer(/*{ token }: { token: string }*/) {
   useEffect(() => {
     if (status) {
       const { active, remainingTime, pomodoroId: id, isPaused } = status;
-      
+
       if (active) {
         setTime({
           hours: Math.floor(remainingTime / 3600),
           min: Math.floor((remainingTime % 3600) / 60),
           seg: remainingTime % 60,
         });
-        
+
         if (id) setPomodoroId(id);
         setIsPlaying(!isPaused);
       } else {
@@ -63,7 +63,7 @@ export default function Timer(/*{ token }: { token: string }*/) {
 
   useEffect(() => {
     if (!isConnected || !isPlaying) return;
-    
+
     let interval: NodeJS.Timeout | null = null;
     if (isPlaying && !status) {
       interval = setInterval(() => {
@@ -81,36 +81,40 @@ export default function Timer(/*{ token }: { token: string }*/) {
         });
       }, 1000);
     }
-    
+
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [isPlaying, isConnected, status, setTime]);
 
-  const updateTime = useCallback((delta: number) => {
-    setTime((prev) => {
-      let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg + delta;
-      totalSeconds = Math.max(0, totalSeconds);
-      return {
-        hours: Math.floor(totalSeconds / 3600),
-        min: Math.floor((totalSeconds % 3600) / 60),
-        seg: totalSeconds % 60,
-      };
-    });
-  }, [setTime]);
+  const updateTime = useCallback(
+    (delta: number) => {
+      setTime((prev) => {
+        let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg + delta;
+        totalSeconds = Math.max(0, totalSeconds);
+        return {
+          hours: Math.floor(totalSeconds / 3600),
+          min: Math.floor((totalSeconds % 3600) / 60),
+          seg: totalSeconds % 60,
+        };
+      });
+    },
+    [setTime]
+  );
 
   const handleTogglePlay = useCallback(async () => {
     if (!isConnected || !startPomodoro || !pausePomodoro || !resumePomodoro) {
       setIsPlaying((prev) => !prev);
       return;
     }
-    
+
     try {
       if (!isPlaying) {
         if (!pomodoroId) {
-          const durationInSeconds = time.hours * 3600 + time.min * 60 + time.seg;
+          const durationInSeconds =
+            time.hours * 3600 + time.min * 60 + time.seg;
           await startPomodoro(durationInSeconds);
-          
+
           setInitialTime(time);
         } else {
           await resumePomodoro();
@@ -130,7 +134,7 @@ export default function Timer(/*{ token }: { token: string }*/) {
     startPomodoro,
     pausePomodoro,
     resumePomodoro,
-    setInitialTime
+    setInitialTime,
   ]);
 
   const handleReset = useCallback(async () => {
@@ -141,7 +145,7 @@ export default function Timer(/*{ token }: { token: string }*/) {
         console.error("Error stopping pomodoro:", error);
       }
     }
-    
+
     setIsPlaying(false);
     setPomodoroId(null);
     setTime(menuTimes[menu as keyof typeof menuTimes]);
@@ -247,13 +251,13 @@ export default function Timer(/*{ token }: { token: string }*/) {
           />
         </div>
         <BarTimer time={time} initialTime={initialTime} />
-        <Commands 
-          handleClick={handleClick} 
+        <Commands
+          handleClick={handleClick}
           isPlay={isPlaying}
           isConnected={isConnected}
         />
       </div>
-      
+
       {/* Modal de compartir */}
       <ShareModal 
         isOpen={shareModalOpen} 

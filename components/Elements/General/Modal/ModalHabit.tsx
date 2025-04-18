@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useState, useContext, useCallback } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useState,
+  useContext,
+  useCallback,
+} from "react";
 import { AudioLines, BookHeart, Text, AlertCircle } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 
@@ -37,11 +43,11 @@ const TYPE_OPTIONS: HabitOption[] = [
 
 interface ModalHabitProps {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (data: { type: string; item: HabitsType }) => void;
 }
 
 export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
   const { setHabits } = useContext(DashboardContext);
+
   const [habit, setHabit] = useState<HabitFormData>({
     name: "",
     description: "",
@@ -70,13 +76,13 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
     return true;
   }, [habit]);
 
-  const updateHabitField = useCallback(<K extends keyof HabitFormData>(
-    field: K,
-    value: HabitFormData[K]
-  ) => {
-    setHabit((prev) => ({ ...prev, [field]: value }));
-    if (error) setError(null);
-  }, [error]);
+  const updateHabitField = useCallback(
+    <K extends keyof HabitFormData>(field: K, value: HabitFormData[K]) => {
+      setHabit((prev) => ({ ...prev, [field]: value }));
+      if (error) setError(null);
+    },
+    [error]
+  );
 
   const handleCreateHabit = useCallback(async () => {
     if (isLoading) return;
@@ -112,7 +118,8 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
           type: "",
         });
       } else {
-        const errorMessage = typeof res.res === 'string' ? res.res : "Error al crear el hábito";
+        const errorMessage =
+          typeof res.res === "string" ? res.res : "Error al crear el hábito";
         setError(errorMessage);
         console.error("Error al crear el hábito", res.res);
       }
@@ -135,22 +142,25 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
     );
   }, [error]);
 
-  const renderSelectOptions = useCallback((
-    options: HabitOption[],
-    field: keyof Pick<HabitFormData, "frequency" | "type">
-  ) => (
-    <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50">
-      {options.map((option) => (
-        <option
-          key={option.value}
-          className="p-2 cursor-pointer hover:bg-gray-100"
-          onClick={() => updateHabitField(field, option.value)}
-        >
-          {option.label}
-        </option>
-      ))}
-    </div>
-  ), [updateHabitField]);
+  const renderSelectOptions = useCallback(
+    (
+      options: HabitOption[],
+      field: keyof Pick<HabitFormData, "frequency" | "type">
+    ) => (
+      <div className="absolute top-7 flex flex-col bg-background-primary drop-shadow-lg rounded-lg p-2 gap-1 z-50">
+        {options.map((option) => (
+          <option
+            key={option.value}
+            className="p-2 cursor-pointer hover:bg-gray-100"
+            onClick={() => updateHabitField(field, option.value)}
+          >
+            {option.label}
+          </option>
+        ))}
+      </div>
+    ),
+    [updateHabitField]
+  );
 
   return (
     <div className="flex flex-col gap-2 w-full">
