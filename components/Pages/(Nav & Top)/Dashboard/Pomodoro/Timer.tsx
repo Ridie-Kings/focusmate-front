@@ -53,7 +53,7 @@ export default function Timer() {
         togglePlay();
         break;
       case "reset":
-        if (status?.active) stopPomodoro();
+        if (status?.active && status?.pomodoroId) stopPomodoro(status.pomodoroId);
         resetTimer();
         break;
       default:
