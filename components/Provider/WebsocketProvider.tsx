@@ -189,7 +189,7 @@ export const SocketIOProvider: React.FC<{
       console.log("Stopping pomodoro:", pomodoroId);
       
       return new Promise<void>((resolve, reject) => {
-        socket.emit("stopPomodoro", pomodoroId, (response: StopPomodoroResponse) => {
+        socket.emit("stopPomodoro", { pomodoroId }, (response: StopPomodoroResponse) => {
           if (response.success) {
             resolve();
           } else {
