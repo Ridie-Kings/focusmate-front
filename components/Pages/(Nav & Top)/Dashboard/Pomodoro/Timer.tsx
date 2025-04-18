@@ -16,7 +16,7 @@ export default function Timer() {
     resetTimer,
     updateTimeManually,
     setIsOpen,
-    initialTime,
+    initialTime
   } = useContext(TimerContext);
 
   const { status, startPomodoro, stopPomodoro, pausePomodoro, resumePomodoro } =

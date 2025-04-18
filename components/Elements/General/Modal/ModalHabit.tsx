@@ -40,7 +40,7 @@ interface ModalHabitProps {
   setItem: (data: { type: string; item: HabitsType }) => void;
 }
 
-export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
+export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
   const { setHabits } = useContext(DashboardContext);
   const [habit, setHabit] = useState<HabitFormData>({
     name: "",

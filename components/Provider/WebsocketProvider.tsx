@@ -162,27 +162,24 @@ export const SocketIOProvider: React.FC<{
       });
 
       return new Promise<void>((resolve, reject) => {
-        socket.emit(
-          "startPomodoro",
-          {
-            userId,
-            duration,
-            breakDuration,
-          },
-          (response: StartPomodoroResponse) => {
-            if (response.success) {
-              setStatus({
-                userId,
-                remainingTime: duration,
-                isPaused: false,
-                isBreak: false,
-                active: true,
-                pomodoroId: response.pomodoro?.pomodoroId ?? null,
-              });
-              resolve();
-            } else {
-              reject(new Error(response.error || "Failed to start pomodoro"));
-            }
+
+        socket.emit("startPomodoro", {
+          userId,
+          duration,
+          breakDuration,
+        }, (response: any) => {
+          if (response.success) {
+            setStatus({
+              userId,
+              remainingTime: duration,
+              isPaused: false,
+              isBreak: false,
+              active: true,
+              pomodoroId: response.pomodoro.pomodoroId
+            })
+            resolve();
+          } else {
+            reject(new Error(response.error || "Failed to start pomodoro"));
           }
         );
       });
