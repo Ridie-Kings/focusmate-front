@@ -1,7 +1,7 @@
 import Button from "@/components/Reusable/Button";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import MountainTask from "@/components/Elements/Svg/Mountain/MountainTask";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import TaskCard from "./ListTask/TaskCard";
@@ -15,9 +15,8 @@ export default function ListTask({
   tasks: TaskType[];
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
 }) {
-  const { setIsOpen, item } = useContext(ModalContext) as {
+  const { setIsOpen } = useContext(ModalContext) as {
     setIsOpen: (value: string) => void;
-    item: { type: string; item: TaskType } | null;
   };
   const { setEvents } = useContext(DashboardContext);
 
@@ -38,13 +37,6 @@ export default function ListTask({
     }
   };
   const tasksRender = render();
-
-  useEffect(() => {
-    if (item && item.type === "task") {
-      setTasks((prev) => [...prev, item.item]);
-      setEvents((prev) => [...prev, item.item]);
-    }
-  }, [item]);
 
   return (
     <>

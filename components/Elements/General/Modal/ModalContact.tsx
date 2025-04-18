@@ -3,7 +3,6 @@ import { User, MessageSquare, AlertCircle, CheckCircle2 } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
-import { ModalItemType } from "@/components/Provider/ModalProvider";
 
 interface ContactForm {
   name: string;
@@ -13,13 +12,11 @@ interface ContactForm {
 
 interface ModalContactProps {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: ModalItemType) => void;
   profile: ProfileType | null;
 }
 
 export default function ModalContact({
   setIsOpen,
-  setItem,
   profile,
 }: ModalContactProps) {
   const [form, setForm] = useState<ContactForm>({
@@ -70,17 +67,15 @@ export default function ModalContact({
     setSuccessMessage(null);
 
     try {
-      setItem({
-        type: "contact",
-        item: form
-      });
       setSuccessMessage("Mensaje enviado correctamente");
       setTimeout(() => {
         setIsOpen("");
       }, 2000);
     } catch (error) {
       console.error("Error sending message:", error);
-      setServerError("Error al enviar el mensaje. Por favor, inténtalo de nuevo.");
+      setServerError(
+        "Error al enviar el mensaje. Por favor, inténtalo de nuevo."
+      );
     } finally {
       setIsLoading(false);
     }
