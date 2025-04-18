@@ -1,13 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
-import { ProfileType } from '@/interfaces/Profile/ProfileType';
+import { Dispatch, SetStateAction } from "react";
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { StatusType } from "@/interfaces/Task/TaskType";
-
 
 export type ModalContextType = {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
-  item: unknown;
-  setItem: (data: { type: string; item: any }) => void;
   profile: ProfileType | null;
 };
 

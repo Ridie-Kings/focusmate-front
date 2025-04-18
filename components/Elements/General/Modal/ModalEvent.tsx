@@ -1,21 +1,20 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AlertCircle } from "lucide-react";
 
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 import BodyInputs from "./ModalEvent/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
 export default function ModalEvent({
   setIsOpen,
-  setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (data: { type: string; item: TaskType }) => void;
 }) {
+  const { setEvents } = useContext(DashboardContext);
   const [task, setTask] = useState<tempTaskType>({
     title: "",
     description: "",
@@ -61,7 +60,7 @@ export default function ModalEvent({
       const res = await createTask({ task });
 
       if (res.success) {
-        setItem({ type: "task", item: res.message });
+        setEvents((prev) => [...prev, res.message]);
         console.log("Task created successfully", res.message);
 
         try {

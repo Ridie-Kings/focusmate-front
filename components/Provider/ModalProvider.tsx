@@ -21,8 +21,6 @@ export type ModalItemType = {
 export const ModalContext = createContext<ModalContextType>({
   isOpen: "",
   setIsOpen: () => {},
-  item: null,
-  setItem: () => {},
   profile: null,
 });
 
@@ -32,7 +30,6 @@ export default function ModalProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState("");
-  const [item, setItem] = useState<ModalItemType | null>(null);
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
   useEffect(() => {
@@ -48,23 +45,16 @@ export default function ModalProvider({
     fetchProfile();
   }, []);
 
-  const updateItem = (data: ModalItemType) => {
-    const cleanItem = { ...data.item };
-    setItem({ type: data.type, item: cleanItem });
-  };
-
   const contextValue = {
-    item,
     isOpen,
     setIsOpen,
-    setItem: updateItem,
     profile,
   };
 
   return (
     <ModalContext.Provider value={contextValue}>
       {isOpen !== "" && (
-        <Modal isOpen={isOpen} setIsOpen={setIsOpen} setItem={setItem} profile={profile} />
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen} profile={profile} />
       )}
       {children}
     </ModalContext.Provider>
