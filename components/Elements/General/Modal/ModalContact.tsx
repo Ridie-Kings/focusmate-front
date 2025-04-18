@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Mail, User, MessageSquare, AlertCircle, CheckCircle2 } from "lucide-react";
+import { User, MessageSquare, AlertCircle, CheckCircle2 } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { ModalItemType } from "@/components/Provider/ModalProvider";
 
 interface ContactForm {
   name: string;
@@ -12,7 +13,7 @@ interface ContactForm {
 
 interface ModalContactProps {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: ContactForm) => void;
+  setItem: (item: ModalItemType) => void;
   profile: ProfileType | null;
 }
 
@@ -52,53 +53,34 @@ export default function ModalContact({
     value: ContactForm[K]
   ) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-
     if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
-
-    if (serverError) {
-      setServerError(null);
-    }
-
-    if (successMessage) {
-      setSuccessMessage(null);
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
     }
   };
 
   const handleSend = async () => {
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    setServerError(null);
+    setSuccessMessage(null);
+
     try {
-      if (!validateForm()) {
-        return;
-      }
-
-      setIsLoading(true);
-      setServerError(null);
-      setSuccessMessage(null);
-
-      console.log("Enviando formulario:", form);
-
-      const res = await fetch("/api/send-contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+      setItem({
+        type: "contact",
+        item: form
       });
-
-      const data = await res.json();
-      console.log("Respuesta del servidor:", data);
-
-      if (data.success) {
-        setItem(form);
-        setSuccessMessage("¡Mensaje enviado con éxito!");
-        setTimeout(() => {
-          setIsOpen("");
-        }, 2000);
-      } else {
-        setServerError(data.error || "Error al enviar el mensaje");
-      }
-    } catch (err) {
-      console.error("Error en la conexión:", err);
-      setServerError("Error en la conexión. Inténtalo de nuevo más tarde.");
+      setSuccessMessage("Mensaje enviado correctamente");
+      setTimeout(() => {
+        setIsOpen("");
+      }, 2000);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setServerError("Error al enviar el mensaje. Por favor, inténtalo de nuevo.");
     } finally {
       setIsLoading(false);
     }

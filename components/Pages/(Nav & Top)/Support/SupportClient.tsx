@@ -11,7 +11,7 @@ interface SupportClientProps {
 
 export default function SupportClient({ profile }: SupportClientProps) {
   const { setIsOpen } = useContext(ModalContext);
-
+  console.info(profile)
   return (
     <div className="flex flex-col md:flex-row gap-8 p-8 w-full justify-center items-center">
       <div className="w-[320px] h-[340px] bg-white border border-primary-500 rounded-2xl shadow-md p-6 flex flex-col items-center text-center gap-4">
