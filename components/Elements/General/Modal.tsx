@@ -1,7 +1,6 @@
 "use client";
 import { Dispatch, SetStateAction } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
-import { ModalItemType } from "@/components/Provider/ModalProvider";
 
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
@@ -13,26 +12,20 @@ import { X } from "lucide-react";
 interface ModalProps {
   isOpen: string;
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (item: ModalItemType) => void;
   profile: ProfileType | null;
 }
 
-export default function Modal({
-  isOpen,
-  setIsOpen,
-  setItem,
-  profile,
-}: ModalProps) {
+export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   const renderModal = () => {
     switch (isOpen) {
       case "task":
-        return <ModalTask setIsOpen={setIsOpen} setItem={setItem} />;
+        return <ModalTask setIsOpen={setIsOpen} />;
       case "habit":
-        return <ModalHabit setIsOpen={setIsOpen} setItem={setItem} />;
+        return <ModalHabit setIsOpen={setIsOpen} />;
       case "event":
-        return <ModalEvent setIsOpen={setIsOpen} setItem={setItem} />;
+        return <ModalEvent setIsOpen={setIsOpen} />;
       case "contact":
-        return <ModalContact setIsOpen={setIsOpen} setItem={setItem} profile={profile} />;
+        return <ModalContact setIsOpen={setIsOpen} profile={profile} />;
       default:
         return "";
     }

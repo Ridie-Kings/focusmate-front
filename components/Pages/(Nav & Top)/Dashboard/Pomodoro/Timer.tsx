@@ -19,23 +19,18 @@ export default function Timer() {
     initialTime
   } = useContext(TimerContext);
 
-  const { 
-    status, 
-    startPomodoro, 
-    stopPomodoro, 
-    pausePomodoro, 
-    resumePomodoro,  
-  } = useContext(SocketIOContext);
+  const { status, startPomodoro, stopPomodoro, pausePomodoro, resumePomodoro } =
+    useContext(SocketIOContext);
 
   useEffect(() => {
     if (!status) {
       resetTimer();
-      return 
-    };
-    setTime(timeUtils.secondsToTime(status.remainingTime))
+      return;
+    }
+    setTime(timeUtils.secondsToTime(status.remainingTime));
     if (status?.isPaused && isPlay) togglePlay();
     else if (!status?.isPaused && !isPlay) togglePlay();
-  }, [status])
+  }, [status]);
 
   const [hiddenTime, setHiddenTime] = useState(false);
   const [choseUpdate, setChoseUpdate] = useState("");
@@ -53,7 +48,8 @@ export default function Timer() {
         togglePlay();
         break;
       case "reset":
-        if (status?.active && status?.pomodoroId) stopPomodoro(status.pomodoroId);
+        if (status?.active && status?.pomodoroId)
+          stopPomodoro(status.pomodoroId);
         resetTimer();
         break;
       default:

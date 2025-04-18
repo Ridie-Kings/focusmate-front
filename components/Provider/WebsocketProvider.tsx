@@ -17,12 +17,6 @@ type SocketResponse<T = void> = {
   pomodoro?: T;
 };
 
-type StartPomodoroResponse = SocketResponse<{
-  pomodoroId: string;
-  duration: number;
-  breakDuration: number;
-}>;
-
 type StopPomodoroResponse = SocketResponse;
 type PausePomodoroResponse = SocketResponse;
 type ResumePomodoroResponse = SocketResponse;
@@ -30,11 +24,11 @@ type JoinSharedPomodoroResponse = SocketResponse;
 
 type SocketIOContextType = {
   status: PomodoroStatus | null;
-  startPomodoro: ((duration?: number, breakDuration?: number) => Promise<void>);
-  stopPomodoro: ((pomodoroId: string) => Promise<void>);
-  pausePomodoro: (() => Promise<void>);
-  resumePomodoro: (() => Promise<void>);
-  joinSharedPomodoro: ((shareCode: string) => Promise<void>);
+  startPomodoro: (duration?: number, breakDuration?: number) => Promise<void>;
+  stopPomodoro: (pomodoroId: string) => Promise<void>;
+  pausePomodoro: () => Promise<void>;
+  resumePomodoro: () => Promise<void>;
+  joinSharedPomodoro: (shareCode: string) => Promise<void>;
   socket: Socket | null;
   isConnected: boolean;
 };
@@ -44,10 +38,10 @@ export const SocketIOContext = createContext<SocketIOContextType>({
   startPomodoro: async () => Promise.resolve(),
   stopPomodoro: async () => Promise.resolve(),
   pausePomodoro: async () => Promise.resolve(),
-  resumePomodoro: async () => Promise.resolve(), 
+  resumePomodoro: async () => Promise.resolve(),
   joinSharedPomodoro: async () => Promise.resolve(),
   socket: null,
-  isConnected: false
+  isConnected: false,
 });
 
 function getUserIdFromToken(token: string): string {
@@ -72,33 +66,36 @@ export const SocketIOProvider: React.FC<{
 
   useEffect(() => {
     if (!token) return;
-    
+
     const userId = getUserIdFromToken(token);
     if (!userId) {
       console.error("Could not extract userId from token");
       return;
     }
 
-    const socketInstance = io(process.env.NEXT_PUBLIC_WEBSOCKET_URL || "wss://sherp-app.com", {
+    const socketInstance = io(
+      process.env.NEXT_PUBLIC_WEBSOCKET_URL || "wss://sherp-app.com",
+      {
         path: "/api/v0/pomodoro",
         transports: ["websocket"],
         auth: {
           token: `Bearer ${token}`,
         },
         query: {
-            userId: userId,
+          userId: userId,
         },
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
         timeout: 20000,
-    });
+      }
+    );
 
     console.log("Initializing socket connection for user:", userId);
 
     socketInstance.on("connect", () => {
       console.log("Pomodoro WebSocket connected");
       setIsConnected(true);
-      socketInstance.emit("getPomodoroStatus", {userId})
+      socketInstance.emit("getPomodoroStatus", { userId });
     });
 
     socketInstance.on("pomodoroStatus", (data: PomodoroStatus) => {
@@ -106,15 +103,17 @@ export const SocketIOProvider: React.FC<{
       setStatus(data);
     });
 
-    socketInstance.on("pomodoroStarted", (data: {success: boolean, pomodoro: PomodoroStatus}) => {
-      console.log("Received pomodoro started:", data);
-      if (data.success) {
-        setStatus(data.pomodoro);
+    socketInstance.on(
+      "pomodoroStarted",
+      (data: { success: boolean; pomodoro: PomodoroStatus }) => {
+        console.log("Received pomodoro started:", data);
+        if (data.success) {
+          setStatus(data.pomodoro);
+        }
       }
-      
-    });
+    );
 
-    socketInstance.on("pomodoroStopped", (data: {success: boolean}) => {
+    socketInstance.on("pomodoroStopped", (data: { success: boolean }) => {
       console.log("Received pomodoro stopped:", data);
       if (data.success) {
         setStatus(null);
@@ -157,37 +156,44 @@ export const SocketIOProvider: React.FC<{
       });
 
       return new Promise<void>((resolve, reject) => {
-        socket.emit("startPomodoro", {
-          userId,
-          duration,
-          breakDuration,
-        }, (response: StartPomodoroResponse) => {
-          if (response.success) {
-            setStatus({
-              userId,
-              remainingTime: duration,
-              isPaused: false,
-              isBreak: false,
-              active: true,
-              pomodoroId: response.pomodoro?.pomodoroId ?? null
-            })
-            resolve();
-          } else {
-            reject(new Error(response.error || "Failed to start pomodoro"));
+        socket.emit(
+          "startPomodoro",
+          {
+            userId,
+            duration,
+            breakDuration,
+          },
+          (response: {
+            success: boolean;
+            pomodoro: { pomodoroId: string };
+            error: string;
+          }) => {
+            if (response.success) {
+              setStatus({
+                userId,
+                remainingTime: duration,
+                isPaused: false,
+                isBreak: false,
+                active: true,
+                pomodoroId: response.pomodoro.pomodoroId,
+              });
+              resolve();
+            } else {
+              reject(new Error(response.error || "Failed to start pomodoro"));
+            }
           }
-        });
+        );
       });
     },
     [socket, isConnected, token]
   );
 
-  
   const stopPomodoro = useCallback(
     async (pomodoroId: string) => {
       if (!socket || !isConnected) return;
-      
+
       console.log("Stopping pomodoro:", pomodoroId);
-      
+
       return new Promise<void>((resolve, reject) => {
         socket.emit("stopPomodoro", { pomodoroId }, (response: StopPomodoroResponse) => {
           if (response.success) {
@@ -195,67 +201,75 @@ export const SocketIOProvider: React.FC<{
           } else {
             reject(new Error(response.error || "Failed to stop pomodoro"));
           }
-        });
+        );
       });
     },
     [socket, isConnected]
   );
 
-  const pausePomodoro = useCallback(
-    async () => {
-      if (!socket || !isConnected) return;
-      
-      const userId = getUserIdFromToken(token);
-      console.log("Pausing pomodoro for user:", userId);
-      
-      return new Promise<void>((resolve, reject) => {
-        socket.emit("pausePomodoro", { userId }, (response: PausePomodoroResponse) => {
+  const pausePomodoro = useCallback(async () => {
+    if (!socket || !isConnected) return;
+
+    const userId = getUserIdFromToken(token);
+    console.log("Pausing pomodoro for user:", userId);
+
+    return new Promise<void>((resolve, reject) => {
+      socket.emit(
+        "pausePomodoro",
+        { userId },
+        (response: PausePomodoroResponse) => {
           if (response.success) {
             resolve();
           } else {
             reject(new Error(response.error || "Failed to pause pomodoro"));
           }
-        });
-      });
-    },
-    [socket, isConnected, token]
-  );
+        }
+      );
+    });
+  }, [socket, isConnected, token]);
 
-  const resumePomodoro = useCallback(
-    async () => {
-      if (!socket || !isConnected) return;
-      
-      const userId = getUserIdFromToken(token);
-      console.log("Resuming pomodoro for user:", userId);
-      
-      return new Promise<void>((resolve, reject) => {
-        socket.emit("resumePomodoro", { userId }, (response: ResumePomodoroResponse) => {
+  const resumePomodoro = useCallback(async () => {
+    if (!socket || !isConnected) return;
+
+    const userId = getUserIdFromToken(token);
+    console.log("Resuming pomodoro for user:", userId);
+
+    return new Promise<void>((resolve, reject) => {
+      socket.emit(
+        "resumePomodoro",
+        { userId },
+        (response: ResumePomodoroResponse) => {
           if (response.success) {
             resolve();
           } else {
             reject(new Error(response.error || "Failed to resume pomodoro"));
           }
-        });
-      });
-    },
-    [socket, isConnected, token]
-  );
+        }
+      );
+    });
+  }, [socket, isConnected, token]);
 
   const joinSharedPomodoro = useCallback(
     async (shareCode: string) => {
       if (!socket || !isConnected) return;
-      
+
       const userId = getUserIdFromToken(token);
       console.log("Joining shared pomodoro:", { shareCode, userId });
-      
+
       return new Promise<void>((resolve, reject) => {
-        socket.emit("joinSharedPomodoro", { shareCode, userId }, (response: JoinSharedPomodoroResponse) => {
-          if (response.success) {
-            resolve();
-          } else {
-            reject(new Error(response.error || "Failed to join shared pomodoro"));
+        socket.emit(
+          "joinSharedPomodoro",
+          { shareCode, userId },
+          (response: JoinSharedPomodoroResponse) => {
+            if (response.success) {
+              resolve();
+            } else {
+              reject(
+                new Error(response.error || "Failed to join shared pomodoro")
+              );
+            }
           }
-        });
+        );
       });
     },
     [socket, isConnected, token]
@@ -271,7 +285,7 @@ export const SocketIOProvider: React.FC<{
         resumePomodoro,
         joinSharedPomodoro,
         socket,
-        isConnected
+        isConnected,
       }}
     >
       {children}

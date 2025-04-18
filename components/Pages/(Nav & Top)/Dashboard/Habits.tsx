@@ -14,8 +14,7 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
-  const { setIsOpen, item } = useContext(ModalContext) as {
-    item: { type: string; item: HabitsType } | null;
+  const { setIsOpen } = useContext(ModalContext) as {
     setIsOpen: (type: string) => void;
   };
   const [porcent, setPorcent] = useState<number>(0);
@@ -26,20 +25,11 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   }, [habitsList, setHabits]);
 
   useEffect(() => {
-    if (item && item.type === "habit") {
-      setHabits((prev) => {
-        const exists = prev.some(habit => habit._id === item.item._id);
-        if (exists) return prev;
-        return [...prev, item.item];
-      });
-    }
-  }, [item, setHabits]);
-
-  useEffect(() => {
     const completedHabits = habits.filter((habit) => habit.status).length;
     setDoneCount(completedHabits);
     const totalCount = habits.length;
-    const percent = totalCount > 0 ? Math.round((completedHabits / totalCount) * 100) : 0;
+    const percent =
+      totalCount > 0 ? Math.round((completedHabits / totalCount) * 100) : 0;
     setPorcent(percent);
   }, [habits]);
 
