@@ -81,7 +81,7 @@ export const SocketIOProvider: React.FC<{
     socketInstance.on("connect", () => {
       console.log("Pomodoro WebSocket connected");
       setIsConnected(true);
-      
+      socketInstance.emit("getPomodoroStatus", {userId})
     });
 
     socketInstance.on("pomodoroStatus", (data: PomodoroStatus) => {
@@ -146,7 +146,6 @@ export const SocketIOProvider: React.FC<{
           breakDuration,
         }, (response: any) => {
           if (response.success) {
-            console.log("mdlr", response)
             setStatus({
               userId,
               remainingTime: duration,
@@ -170,10 +169,10 @@ export const SocketIOProvider: React.FC<{
     async () => {
       if (!socket || !isConnected) return;
       
-      console.log("Stopping pomodoro:", {pomodoroId: status?.pomodoroId} );
+      console.log("Stopping pomodoro:", status?.pomodoroId );
       
       return new Promise<void>((resolve, reject) => {
-        socket.emit("stopPomodoro", {pomodoroId: status?.pomodoroId}, (response: any) => {
+        socket.emit("stopPomodoro", status?.pomodoroId, (response: any) => {
           if (response.success) {
             resolve();
           } else {

@@ -23,19 +23,25 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
 
   useEffect(() => {
     setHabits(habitsList);
-  }, [habitsList]);
+  }, [habitsList, setHabits]);
 
   useEffect(() => {
-    if (item && item.type === "habit")
-      setHabits((prev) => [...prev, item.item]);
-  }, [item]);
+    if (item && item.type === "habit") {
+      setHabits((prev) => {
+        const exists = prev.some(habit => habit._id === item.item._id);
+        if (exists) return prev;
+        return [...prev, item.item];
+      });
+    }
+  }, [item, setHabits]);
 
   useEffect(() => {
-    setDoneCount(habits.filter((habit) => habit.status).length);
+    const completedHabits = habits.filter((habit) => habit.status).length;
+    setDoneCount(completedHabits);
     const totalCount = habits.length;
-    const percent = Math.round((doneCount / totalCount) * 100);
+    const percent = totalCount > 0 ? Math.round((completedHabits / totalCount) * 100) : 0;
     setPorcent(percent);
-  }, [habits, doneCount]);
+  }, [habits]);
 
   return (
     <TemplateDashboard

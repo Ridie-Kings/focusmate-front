@@ -1,14 +1,11 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useContext, useCallback } from "react";
 import { AudioLines, BookHeart, Text, AlertCircle } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import { createHabit } from "@/services/Habits/createHabit";
-// import TopInputs from "./ModalTask/TopInputs";
-// import BodyInputs from "./ModalTask/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
-// import { format } from "date-fns";
-// import { es } from "date-fns/locale";
+import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
 type Frequency = "daily" | "weekly" | "monthly" | "";
 type HabitFormData = {
@@ -44,17 +41,17 @@ interface ModalHabitProps {
 }
 
 export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
+  const { setHabits } = useContext(DashboardContext);
   const [habit, setHabit] = useState<HabitFormData>({
     name: "",
     description: "",
     frequency: "",
     type: "",
-    // time: new Date(),
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const validateHabit = (): boolean => {
+  const validateHabit = useCallback((): boolean => {
     if (!habit.name.trim()) {
       setError("El nombre del hábito es obligatorio");
       return false;
@@ -71,17 +68,19 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
     }
 
     return true;
-  };
+  }, [habit]);
 
-  const updateHabitField = <K extends keyof HabitFormData>(
+  const updateHabitField = useCallback(<K extends keyof HabitFormData>(
     field: K,
     value: HabitFormData[K]
   ) => {
     setHabit((prev) => ({ ...prev, [field]: value }));
     if (error) setError(null);
-  };
+  }, [error]);
 
-  const handleCreateHabit = async () => {
+  const handleCreateHabit = useCallback(async () => {
+    if (isLoading) return;
+
     try {
       setError(null);
 
@@ -90,15 +89,31 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
       }
 
       setIsLoading(true);
-      const res = await createHabit({ habit });
 
-      if (res.success) {
-        setItem({ type: "habit", item: res.res });
+      const habitData = {
+        name: habit.name,
+        description: habit.description,
+        frequency: habit.frequency,
+        type: habit.type,
+      };
+
+      const res = await createHabit({ habit: habitData });
+
+      if (res.success && res.res) {
+        setHabits((prevHabits) => {
+          if (!prevHabits) return [res.res as HabitsType];
+          return [...prevHabits, res.res as HabitsType];
+        });
         setIsOpen("");
+        setHabit({
+          name: "",
+          description: "",
+          frequency: "",
+          type: "",
+        });
       } else {
-        setError(
-          typeof res.res === "string" ? res.res : "Error al crear el hábito"
-        );
+        const errorMessage = typeof res.res === 'string' ? res.res : "Error al crear el hábito";
+        setError(errorMessage);
         console.error("Error al crear el hábito", res.res);
       }
     } catch (err) {
@@ -107,9 +122,9 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [habit, validateHabit, setHabits, setIsOpen, isLoading]);
 
-  const renderErrorMessage = () => {
+  const renderErrorMessage = useCallback(() => {
     if (!error) return null;
 
     return (
@@ -118,9 +133,9 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
         <span>{error}</span>
       </div>
     );
-  };
+  }, [error]);
 
-  const renderSelectOptions = (
+  const renderSelectOptions = useCallback((
     options: HabitOption[],
     field: keyof Pick<HabitFormData, "frequency" | "type">
   ) => (
@@ -135,7 +150,7 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
         </option>
       ))}
     </div>
-  );
+  ), [updateHabitField]);
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -158,37 +173,6 @@ export default function ModalHabit({ setIsOpen, setItem }: ModalHabitProps) {
           onChange={(e) => updateHabitField("description", e.target.value)}
           icon={<Text />}
         />
-
-        {/* <InputModal
-          type="select"
-          placeholder={format(
-            habit.time instanceof Date && !isNaN(habit.time.getTime())
-              ? habit.time
-              : new Date(),
-            "HH:mm",
-            { locale: es }
-          )}
-          option={
-            <ModalTimePicker
-              onChange={(e) => {
-                const newTime = new Date();
-                newTime.setHours(
-                  e.target.value.hours,
-                  e.target.value.min,
-                  0,
-                  0
-                );
-                setHabit((prev) => ({
-                  ...prev,
-                  time: newTime,
-                }));
-                if (error) setError(null);
-              }}
-            />
-          }
-          icon={<Timer />}
-          propagand={false}
-        /> */}
 
         <InputModal
           type="select"

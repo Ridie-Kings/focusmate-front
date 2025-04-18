@@ -16,8 +16,7 @@ export default function Timer() {
     resetTimer,
     updateTimeManually,
     setIsOpen,
-    initialTime,
-    setInitialTime
+    initialTime
   } = useContext(TimerContext);
 
   const { 
@@ -33,16 +32,7 @@ export default function Timer() {
       resetTimer();
       return 
     };
-    setTime({
-      hours: Math.floor(status.remainingTime / 3600),
-      min: Math.floor((status.remainingTime % 3600) / 60),
-      seg: status.remainingTime % 60
-     })
-     setInitialTime({
-      hours: Math.floor(status.remainingTime / 3600),
-      min: Math.floor((status.remainingTime % 3600) / 60),
-      seg: status.remainingTime % 60
-     })
+    setTime(timeUtils.secondsToTime(status.remainingTime))
     if (status?.isPaused && isPlay) togglePlay();
     else if (!status?.isPaused && !isPlay) togglePlay();
   }, [status])
