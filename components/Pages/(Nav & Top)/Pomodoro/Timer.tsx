@@ -8,15 +8,15 @@ import TypeTimeButtons from "../../../Elements/Pomodoro/TypeTimeButtons";
 import Commands from "@/components/Elements/Pomodoro/Commands";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import ShareModal from '@/components/Elements/General/Modal/ModalShare';
 
-export default function Timer({ token }: { token: string }) {
+export default function Timer(/*{ token }: { token: string }*/) {
   const [menu, setMenu] = useState<chipsIconType>("concentracion");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [pomodoroId, setPomodoroId] = useState<string | null>(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);
-  const [shareCode, setShareCode] = useState('');
+  // const [shareCode, setShareCode] = useState('');
 
   const { setTime, time, setInitialTime, initialTime, toggleChronometerMode } =
     useContext(TimerContext);
@@ -148,36 +148,36 @@ export default function Timer({ token }: { token: string }) {
     setInitialTime(menuTimes[menu as keyof typeof menuTimes]);
   }, [pomodoroId, stopPomodoro, menu, menuTimes, setTime, setInitialTime]);
 
-  const handleShare = useCallback(async () => {
-    if (!pomodoroId) {
-      toast.error("No hay un pomodoro activo para compartir");
-      return;
-    }
+  // const handleShare = useCallback(async () => {
+  //   if (!pomodoroId) {
+  //     toast.error("No hay un pomodoro activo para compartir");
+  //     return;
+  //   }
     
-    try {
-      const response = await fetch(`/api/v0/pomodoro/${pomodoroId}/share`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
+  //   try {
+  //     const response = await fetch(`/api/v0/pomodoro/${pomodoroId}/share`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`
+  //       }
+  //     });
       
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
+  //     if (!response.ok) {
+  //       throw new Error(`Error: ${response.status}`);
+  //     }
       
-      const data = await response.json();
+  //     const data = await response.json();
       
-      if (data.shareCode) {
-        setShareCode(data.shareCode);
-        setShareModalOpen(true);
-      }
-    } catch (error) {
-      console.error("Error al compartir pomodoro:", error);
-      toast.error("No se pudo compartir el pomodoro");
-    }
-  }, [pomodoroId, token]);
+  //     if (data.shareCode) {
+  //       setShareCode(data.shareCode);
+  //       setShareModalOpen(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error al compartir pomodoro:", error);
+  //     toast.error("No se pudo compartir el pomodoro");
+  //   }
+  // }, [pomodoroId, token]);
 
   const handleClick = useCallback(
     (id: string) => {
@@ -188,12 +188,12 @@ export default function Timer({ token }: { token: string }) {
         case "reset":
           handleReset();
           break;
-        case "share":
-          handleShare();
+        // case "share":
+        //   handleShare();
           break;
       }
     },
-    [handleTogglePlay, handleReset, handleShare]
+    [handleTogglePlay, handleReset]
   );
 
   const renderDigits = (num: number) =>
@@ -258,7 +258,7 @@ export default function Timer({ token }: { token: string }) {
       <ShareModal 
         isOpen={shareModalOpen} 
         onClose={() => setShareModalOpen(false)} 
-        shareCode={shareCode} 
+        // shareCode={shareCode} 
       />
     </>
   );

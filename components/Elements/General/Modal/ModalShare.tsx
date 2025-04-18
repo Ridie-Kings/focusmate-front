@@ -5,7 +5,7 @@ import Button from "@/components/Reusable/Button";
 interface ShareModalProps {
   isOpen: boolean;
   onClose: () => void;
-  shareCode: string;
+  shareCode?: string;
 }
 
 export default function ShareModal({ isOpen, onClose, shareCode }: ShareModalProps) {
