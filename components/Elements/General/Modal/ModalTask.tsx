@@ -1,21 +1,21 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AlertCircle, Award, Text } from "lucide-react";
 
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import BtnSend from "./Modal/BtnSend";
 import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
 export default function ModalTask({
   setIsOpen,
-  setItem,
 }: {
   setIsOpen: Dispatch<SetStateAction<string>>;
-  setItem: (data: { type: string; item: TaskType }) => void;
 }) {
+  const { setTasks } = useContext(DashboardContext);
+
   const [task, setTask] = useState<tempTaskType>({
     title: "",
     description: "",
@@ -58,7 +58,7 @@ export default function ModalTask({
       const res = await createTask({ task });
 
       if (res.success) {
-        setItem({ type: "task", item: res.message });
+        setTasks((prev) => [...prev, res.message]);
         console.log("Task created successfully", res.message);
         setIsOpen("");
       } else {
