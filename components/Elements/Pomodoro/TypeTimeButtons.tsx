@@ -32,7 +32,7 @@ export default function TypeTimeButtons({
   setInitialTime: Dispatch<SetStateAction<TimeType>>;
   toggleChronometerMode: (type: boolean) => void;
 }) {
-  const menuTimes = useMemo<Record<string, TimeType>>(
+  const menuTimes = useMemo<Record<chipsIconType, TimeType>>(
     () => ({
       concentracion: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
@@ -87,7 +87,7 @@ export default function TypeTimeButtons({
               icon={item.type as chipsIconType}
               onClick={() => {
                 setTime(menuTimes[item.type]);
-                setMenu(item.label as chipsIconType);
+                setMenu(item.type as chipsIconType);
                 setInitialTime(menuTimes[item.type]);
                 if (item.type === "chrono") toggleChronometerMode(true);
                 else toggleChronometerMode(false);
