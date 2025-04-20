@@ -11,7 +11,7 @@ import Input from "@/components/Reusable/Input";
 import RenderForgotPassword from "./AuthContainer/RenderForgotPassword";
 import RenderActionLinks from "./AuthContainer/RenderActionLinks";
 import RenderActionButton from "./AuthContainer/RenderActionButton";
-import LinkButtons from "./LinkButtons";
+// import LinkButtons from "./LinkButtons";
 
 const REDIRECT_PATHS = {
   login: "/",

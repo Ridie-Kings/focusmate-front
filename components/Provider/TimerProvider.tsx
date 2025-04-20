@@ -47,7 +47,6 @@ export default function TimerProvider({
     togglePlay: timerTogglePlay,
     resetTimer: timerReset,
     updateTimeManually: timerUpdateManually,
-    playEndSound,
   } = useTimer(
     initialTime,
     setInitialTime,
