@@ -11,6 +11,7 @@ import Input from "@/components/Reusable/Input";
 import RenderForgotPassword from "./AuthContainer/RenderForgotPassword";
 import RenderActionLinks from "./AuthContainer/RenderActionLinks";
 import RenderActionButton from "./AuthContainer/RenderActionButton";
+// import LinkButtons from "./LinkButtons";
 
 const REDIRECT_PATHS = {
   login: "/",
@@ -129,7 +130,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
             )}
           </div>
 
-          {/* {type === "login" && <LinkButtons />} */}
+          {/* <LinkButtons /> */}
         </form>
       </div>
     </section>

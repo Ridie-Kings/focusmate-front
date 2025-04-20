@@ -195,11 +195,15 @@ export const SocketIOProvider: React.FC<{
       console.log("Stopping pomodoro:", pomodoroId);
 
       return new Promise<void>((resolve, reject) => {
-        socket.emit("stopPomodoro", { pomodoroId }, (response: StopPomodoroResponse) => {
-          if (response.success) {
-            resolve();
-          } else {
-            reject(new Error(response.error || "Failed to stop pomodoro"));
+        socket.emit(
+          "stopPomodoro",
+          { pomodoroId },
+          (response: StopPomodoroResponse) => {
+            if (response.success) {
+              resolve();
+            } else {
+              reject(new Error(response.error || "Failed to stop pomodoro"));
+            }
           }
         );
       });

@@ -19,10 +19,10 @@ export default async function Dashboard() {
       <Date />
       {/* <Animate /> */}
       <Streaks number={streaks.res} />
+      <Agenda />
       <Pomodoro />
       <TusTask tasksList={tasks.success ? tasks.res : []} />
       <Habits habitsList={habits.success ? habits.res : []} />
-      <Agenda />
     </div>
   );
 }
