@@ -189,23 +189,27 @@ export const SocketIOProvider: React.FC<{
   );
 
   const stopPomodoro = useCallback(
-  async (pomodoroId: string) => {
-    if (!socket || !isConnected) return;
+    async (pomodoroId: string) => {
+      if (!socket || !isConnected) return;
 
-    console.log("Stopping pomodoro:", pomodoroId);
+      console.log("Stopping pomodoro:", pomodoroId);
 
-    return new Promise<void>((resolve, reject) => {
-      socket.emit("stopPomodoro", { pomodoroId }, (response: StopPomodoroResponse) => {
-        if (response.success) {
-          resolve();
-        } else {
-          reject(new Error(response.error || "Failed to stop pomodoro"));
-        }
+      return new Promise<void>((resolve, reject) => {
+        socket.emit(
+          "stopPomodoro",
+          { pomodoroId },
+          (response: StopPomodoroResponse) => {
+            if (response.success) {
+              resolve();
+            } else {
+              reject(new Error(response.error || "Failed to stop pomodoro"));
+            }
+          }
+        );
       });
-    });
-  },
-  [socket, isConnected]
-);
+    },
+    [socket, isConnected]
+  );
 
   const pausePomodoro = useCallback(async () => {
     if (!socket || !isConnected) return;
