@@ -6,25 +6,30 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 
 import { isSameDay } from "date-fns";
 
-import { useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 
 interface TimelineProps {
   date: Date | undefined;
   events: TaskType[];
+  setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }
 
-export default function Timeline({ date, events }: TimelineProps) {
+export default function Timeline({ date, events, setEvents }: TimelineProps) {
   const filteredEvents = useMemo(() => {
-    return events.filter((event) =>
-      isSameDay(new Date(event.dueDate), date ?? new Date())
-    );
+    return events
+      .filter((event) => isSameDay(new Date(event.dueDate), date ?? new Date()))
+      .sort((a, b) => {
+        const startDateA = new Date(a.startDate).getTime();
+        const startDateB = new Date(b.startDate).getTime();
+        return startDateA - startDateB;
+      });
   }, [date, events]);
 
   return (
     <div
       className={`flex-1 ${
         filteredEvents.length === 0 ? "" : "min-h-44 max-h-[500px]"
-      }  overflow-auto flex flex-col gap-4 py-2`}
+      }  overflow-y-auto overflow-x-hidden flex flex-col gap-4 py-2`}
     >
       <p className="text-xl text-primary-500 text-center sticky top-0 bg-white">
         Agenda del día
@@ -44,6 +49,7 @@ export default function Timeline({ date, events }: TimelineProps) {
               <TimelineCard
                 key={`event-${index}-${event.title}`}
                 event={event}
+                setEvents={setEvents}
               />
             ))}
           </div>
