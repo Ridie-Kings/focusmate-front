@@ -2,8 +2,6 @@ import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import Menu from "@/components/Reusable/Menu";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import TaskUtils from "@/lib/TaskUtils";
-import { deleteTask } from "@/services/Task/deleteTask";
-import { updateTask } from "@/services/Task/updateTask";
 import { Trash2 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 

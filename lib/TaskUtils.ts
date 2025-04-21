@@ -14,8 +14,9 @@ export default function TaskUtils({
     const res = await deleteTask({ _id: id });
 
     if (res.success) {
-      setTasks && setTasks((prev) => prev.filter((task) => task._id !== id));
-      setEvents && setEvents((prev) => prev.filter((task) => task._id !== id));
+      if (setTasks) setTasks((prev) => prev.filter((task) => task._id !== id));
+      if (setEvents)
+        setEvents((prev) => prev.filter((task) => task._id !== id));
       console.log("Task deleted successfully");
     } else {
       console.log("Failed to delete task", res.message);
@@ -23,7 +24,7 @@ export default function TaskUtils({
   };
 
   const handleChangeStatus = async (e: StatusType, _id: string) => {
-    setTasks &&
+    if (setTasks)
       setTasks((prev) =>
         prev.map((t) =>
           t._id === _id
@@ -34,7 +35,7 @@ export default function TaskUtils({
             : t
         )
       );
-    setEvents &&
+    if (setEvents)
       setEvents((prev) =>
         prev.map((t) =>
           t._id === _id
@@ -61,7 +62,7 @@ export default function TaskUtils({
     e: "high" | "medium" | "low",
     _id: string
   ) => {
-    setTasks &&
+    if (setTasks)
       setTasks((prev) =>
         prev.map((t) =>
           t._id === _id
@@ -73,7 +74,7 @@ export default function TaskUtils({
         )
       );
 
-    setEvents &&
+    if (setEvents)
       setEvents((prev) =>
         prev.map((t) =>
           t._id === _id

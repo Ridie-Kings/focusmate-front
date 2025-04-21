@@ -10,7 +10,7 @@ import {
   isSameDay,
 } from "date-fns";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { SetStateAction, Dispatch, useRef, useEffect, useState } from "react";
+import { SetStateAction, Dispatch, useRef, useEffect } from "react";
 
 const getPosition = (date: Date) => {
   const hours = getHours(date);
