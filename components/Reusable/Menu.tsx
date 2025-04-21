@@ -66,8 +66,6 @@ const MenuItem = ({
 
         const rightSpace = parentRect.right - itemRect.right;
         const leftSpace = itemRect.left - parentRect.left;
-        const topSpace = itemRect.top - parentRect.top;
-        const bottomSpace = parentRect.bottom - itemRect.bottom;
 
         if (rightSpace < 200 && leftSpace > 200) {
           subMenu.style.left = "auto";
@@ -169,9 +167,6 @@ export default function Menu({
   useEffect(() => {
     if (isOpen && menuRef.current && triggerRef.current) {
       const overflowParent = findOverflowParent(triggerRef.current);
-
-      const menuRect = menuRef.current.getBoundingClientRect();
-      const triggerRect = triggerRef.current.getBoundingClientRect();
 
       let parentRect: DOMRect;
       if (overflowParent) {
