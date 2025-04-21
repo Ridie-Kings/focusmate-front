@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, EllipsisVertical } from "lucide-react";
+import { ChevronLeft, EllipsisVertical } from "lucide-react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface MenuItemProps {
