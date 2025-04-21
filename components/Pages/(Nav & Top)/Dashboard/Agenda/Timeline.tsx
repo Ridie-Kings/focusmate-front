@@ -16,9 +16,13 @@ interface TimelineProps {
 
 export default function Timeline({ date, events, setEvents }: TimelineProps) {
   const filteredEvents = useMemo(() => {
-    return events.filter((event) =>
-      isSameDay(new Date(event.dueDate), date ?? new Date())
-    );
+    return events
+      .filter((event) => isSameDay(new Date(event.dueDate), date ?? new Date()))
+      .sort((a, b) => {
+        const startDateA = new Date(a.startDate).getTime();
+        const startDateB = new Date(b.startDate).getTime();
+        return startDateA - startDateB;
+      });
   }, [date, events]);
 
   return (

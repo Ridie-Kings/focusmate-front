@@ -2,7 +2,7 @@ import Menu from "@/components/Reusable/Menu";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
 import TaskUtils from "@/lib/TaskUtils";
-import { Trash2 } from "lucide-react";
+import { Check, Trash2 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 export default function TimelineCard({
@@ -61,6 +61,7 @@ export default function TimelineCard({
         items={[
           {
             label: "Hecho",
+            icon: <Check />,
             onClick: () =>
               handleChangeStatus(
                 event.status === "completed"

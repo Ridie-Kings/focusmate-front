@@ -36,7 +36,7 @@ export default function CalendarPage() {
     let firstDate: Date;
     let secondDate: Date;
 
-    if (navType === "Month") {
+    if (navType === "Mes") {
       firstDate = startOfWeek(startOfMonth(date ?? new Date()), { locale: es });
       secondDate = endOfWeek(endOfMonth(date ?? new Date()), { locale: es });
     } else {
