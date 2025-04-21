@@ -1,6 +1,9 @@
 "use client";
+
 import { Eye } from "lucide-react";
+
 import { useState, useContext, useEffect, useCallback } from "react";
+
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
 import Commands from "../../../../Elements/Pomodoro/Commands";
@@ -67,9 +70,8 @@ export default function Timer() {
           break;
 
         case "reset":
-          if (status?.active && status?.pomodoroId && !isChronometer) {
+          if (status?.active && status?.pomodoroId && !isChronometer)
             stopPomodoro(status.pomodoroId);
-          }
           resetTimer();
           break;
 

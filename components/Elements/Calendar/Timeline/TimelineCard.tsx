@@ -1,81 +1,31 @@
-import { TaskType } from "@/interfaces/Task/TaskType";
-import { differenceInMinutes } from "date-fns";
+import Menu from "@/components/Reusable/Menu";
+import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
+import AgendaUtils from "@/lib/AgendaUtils";
+import TaskUtils from "@/lib/TaskUtils";
+import { Check, Trash2 } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 
-export default function TimelineCard({ event }: { event: TaskType }) {
-  const formatDuration = (start: Date, end: Date) => {
-    const totalMinutes = Math.abs(differenceInMinutes(end, start));
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, "0")} horas`;
-    }
-    return `${minutes} min`;
-  };
-
-  const isLightColor = (color: string) => {
-    let hex = color;
-    if (hex.startsWith("#")) {
-      hex = hex.slice(1);
-    }
-
-    let r, g, b;
-    if (hex.length === 3) {
-      r = parseInt(hex[0] + hex[0], 16);
-      g = parseInt(hex[1] + hex[1], 16);
-      b = parseInt(hex[2] + hex[2], 16);
-    } else if (hex.length === 6) {
-      r = parseInt(hex.slice(0, 2), 16);
-      g = parseInt(hex.slice(2, 4), 16);
-      b = parseInt(hex.slice(4, 6), 16);
-    } else {
-      return false;
-    }
-
-    const brightness = (299 * r + 587 * g + 114 * b) / 1000;
-
-    return brightness > 128;
-  };
-
-  const getDarkerColor = (color: string) => {
-    let hex = color;
-    if (hex.startsWith("#")) {
-      hex = hex.slice(1);
-    }
-
-    let r, g, b;
-    if (hex.length === 3) {
-      r = parseInt(hex[0] + hex[0], 16);
-      g = parseInt(hex[1] + hex[1], 16);
-      b = parseInt(hex[2] + hex[2], 16);
-    } else if (hex.length === 6) {
-      r = parseInt(hex.slice(0, 2), 16);
-      g = parseInt(hex.slice(2, 4), 16);
-      b = parseInt(hex.slice(4, 6), 16);
-    } else {
-      return "#000000";
-    }
-
-    r = Math.floor(r * 0.8);
-    g = Math.floor(g * 0.8);
-    b = Math.floor(b * 0.8);
-
-    const newHex =
-      "#" +
-      r.toString(16).padStart(2, "0") +
-      g.toString(16).padStart(2, "0") +
-      b.toString(16).padStart(2, "0");
-
-    return newHex;
-  };
+export default function TimelineCard({
+  event,
+  setEvents,
+}: {
+  event: TaskType;
+  setEvents: Dispatch<SetStateAction<TaskType[]>>;
+}) {
+  const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
+  const { handleChangeStatus, handleDeleteTask } = TaskUtils({ setEvents });
 
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
   const darkerColor = getDarkerColor(event.color);
 
   return (
     <div
-      style={{ backgroundColor: event.color }}
-      className={`w-full h-26 p-4 rounded-lg flex flex-col justify-between transition-all duration-300 ease-in-out ${textColor}`}
+      style={{
+        backgroundColor: event.status === "completed" ? "" : event.color,
+      }}
+      className={`w-full h-26 p-4 rounded-lg relative flex flex-col justify-between transition-all duration-300 ease-in-out ${textColor} ${
+        event.status === "completed" ? "border-2 border-gray-500" : ""
+      }`}
     >
       <p>{event.title}</p>
       <div className="flex items-center justify-between w-full">
@@ -92,7 +42,9 @@ export default function TimelineCard({ event }: { event: TaskType }) {
           style={{ backgroundColor: darkerColor }}
           className="px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white"
         >
-          {formatDuration(event.startDate, event.endDate)}
+          {event.status === "completed"
+            ? "Terminado"
+            : formatDuration(event.startDate, event.endDate)}
         </p>
         <span className="flex flex-col items-center gap-1">
           <p className="text-sm">
@@ -104,6 +56,28 @@ export default function TimelineCard({ event }: { event: TaskType }) {
           <p className={`text-xs font-medium ${textColor}`}>Termina</p>
         </span>
       </div>
+      <Menu
+        className="absolute right-1 top-2"
+        items={[
+          {
+            label: "Hecho",
+            icon: <Check />,
+            onClick: () =>
+              handleChangeStatus(
+                event.status === "completed"
+                  ? ("dropped" as StatusType)
+                  : ("completed" as StatusType),
+                event._id
+              ),
+          },
+          {
+            label: "Eliminar",
+            color: "red",
+            icon: <Trash2 />,
+            onClick: () => handleDeleteTask(event._id),
+          },
+        ]}
+      />
     </div>
   );
 }

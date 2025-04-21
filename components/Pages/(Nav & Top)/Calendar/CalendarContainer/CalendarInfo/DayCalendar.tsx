@@ -10,7 +10,7 @@ import {
   isSameDay,
 } from "date-fns";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { SetStateAction, Dispatch, useRef, useEffect } from "react";
+import { SetStateAction, Dispatch, useRef, useEffect, useState } from "react";
 
 const getPosition = (date: Date) => {
   const hours = getHours(date);
@@ -41,9 +41,35 @@ const DayCalendarItem = ({
 
   useEffect(() => {
     if (scrollCalendar.current) {
-      scrollCalendar.current.scrollTo(0, 1000);
+      const todayEvents = events.filter((event) =>
+        isSameDay(event.dueDate, date)
+      );
+
+      if (todayEvents.length > 0) {
+        const earliestEvent = todayEvents.reduce((earliest, current) =>
+          current.startDate < earliest.startDate ? current : earliest
+        );
+
+        const scrollPosition = Math.max(
+          0,
+          getPosition(earliestEvent.startDate) - 100
+        );
+
+        scrollCalendar.current.scrollTo({
+          top: scrollPosition,
+          behavior: "smooth",
+        });
+      } else {
+        const defaultPosition = getPosition(
+          new Date(date.setHours(8, 0, 0, 0))
+        );
+        scrollCalendar.current.scrollTo({
+          top: defaultPosition,
+          behavior: "smooth",
+        });
+      }
     }
-  }, []);
+  }, [date, events]);
 
   return (
     <div
