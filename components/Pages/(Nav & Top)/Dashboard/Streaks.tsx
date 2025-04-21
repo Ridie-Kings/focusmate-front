@@ -52,12 +52,12 @@ export default function Streaks({ number }: { number: number }) {
       } `}
       link=""
     >
-      <div className="w-full z-10">
+      <div className="w-full z-20">
         <p className=" text-xl font-semibold">{text().title}</p>
-        <p className="text-xs">{text().desc}</p>
+        <p className="text-xs text-secondary-700">{text().desc}</p>
       </div>
       <p className="p-2 text-sm bg-secondary-600 z-10 rounded-sm text-white">
-        {number} días seguidos
+        {number} {number <= 1 ? "día seguido" : "días seguidos"}
       </p>
       {number === 0 ? (
         <StreaksNull />

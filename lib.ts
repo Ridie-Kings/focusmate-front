@@ -15,9 +15,6 @@ export async function updateSession(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const publicPaths = new Set(["/login", "/register"]);
 
-  // console.log("accessToken", accessToken);
-  // console.log("refreshToken", refreshToken);
-
   // if (!accessToken && refreshToken) await refreshSession(refreshToken);
 
   if (!pathname.includes(".")) {

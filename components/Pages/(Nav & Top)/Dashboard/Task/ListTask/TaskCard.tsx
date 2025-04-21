@@ -3,6 +3,7 @@ import Menu from "@/components/Reusable/Menu";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { deleteTask } from "@/services/Task/deleteTask";
 import { updateTask } from "@/services/Task/updateTask";
+import { Trash2 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 export default function TaskCard({
@@ -99,6 +100,7 @@ export default function TaskCard({
               {
                 label: "Eliminar",
                 color: "red",
+                icon: <Trash2 />,
                 onClick: () => handleDeleteTask(task._id),
               },
             ]}
