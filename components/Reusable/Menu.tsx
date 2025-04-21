@@ -1,4 +1,4 @@
-import { ChevronRight, EllipsisVertical } from "lucide-react";
+import { ChevronLeft, ChevronRight, EllipsisVertical } from "lucide-react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface MenuItemProps {
@@ -13,6 +13,7 @@ interface MenuProps {
   items: MenuItemProps[];
   trigger?: ReactNode;
   position?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
+  className?: string;
 }
 
 const findOverflowParent = (
@@ -64,13 +65,13 @@ const MenuItem = ({
           parentRect = new DOMRect(0, 0, window.innerWidth, window.innerHeight);
         }
 
-        const rightSpace = parentRect.right - itemRect.right;
-        const leftSpace = itemRect.left - parentRect.left;
+        subMenu.style.left = "auto";
+        subMenu.style.right = "0%";
 
-        if (rightSpace < 200 && leftSpace > 200) {
-          subMenu.style.left = "auto";
-          subMenu.style.right = "100%";
-        } else {
+        const leftSpace = itemRect.left - parentRect.left;
+        const rightSpace = parentRect.right - itemRect.right;
+
+        if (leftSpace < 200 && rightSpace > 200) {
           subMenu.style.left = "100%";
           subMenu.style.right = "auto";
         }
@@ -116,7 +117,7 @@ const MenuItem = ({
           {item.icon && <span className="flex-shrink-0">{item.icon}</span>}
           <span>{item.label}</span>
         </div>
-        {hasSubMenu && <ChevronRight className="h-4 w-4" />}
+        {hasSubMenu && <ChevronLeft className="h-4 w-4 rotate-270" />}
       </button>
 
       {hasSubMenu && showSubMenu && (
@@ -139,6 +140,7 @@ export default function Menu({
   items,
   trigger,
   position = "bottom-right",
+  className,
 }: MenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -239,7 +241,7 @@ export default function Menu({
   };
 
   return (
-    <div className="relative inline-block">
+    <div className={className ?? "relative inline-block"}>
       <div ref={triggerRef} onClick={toggleMenu} className="cursor-pointer">
         {trigger || <EllipsisVertical className="h-5 w-5" />}
       </div>

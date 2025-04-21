@@ -56,7 +56,7 @@ export default function Agenda() {
             Nuevo Evento
           </Button>
         </div>
-        <Timeline date={date} events={events} />
+        <Timeline date={date} events={events} setEvents={setEvents} />
       </div>
     </TemplateDashboard>
   );
