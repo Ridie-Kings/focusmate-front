@@ -1,5 +1,4 @@
 import { TimerContext } from "@/components/Provider/TimerProvider";
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";

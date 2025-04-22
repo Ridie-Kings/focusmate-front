@@ -214,7 +214,6 @@ export default function Timer({ token }: { token: string }) {
         <TypeTimeButtons
           setInitialTime={setInitialTime}
           setMenu={setMenu}
-          setTime={setTime}
           menu={menu}
           toggleChronometerMode={toggleChronometerMode}
         />

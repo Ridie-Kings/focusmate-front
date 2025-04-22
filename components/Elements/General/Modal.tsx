@@ -30,7 +30,7 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
         return "";
     }
   };
-c
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
