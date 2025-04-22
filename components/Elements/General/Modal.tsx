@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 import ModalTask from "./Modal/ModalTask";
@@ -30,6 +30,18 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
         return "";
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
     <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25">

@@ -100,7 +100,6 @@ export default function TimerContainer({
     <div className="w-4/6 flex flex-col gap-3 z-10">
       <TypeTimeButtons
         setInitialTime={setInitialTime}
-        setTime={setTime}
         setMenu={setMenu}
         menu={menu}
         fullScreen={fullScreen}
