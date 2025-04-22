@@ -63,7 +63,7 @@ export default function TimerProvider({
     togglePlay: chronometerTogglePlay,
     resetTimer: chronometerReset,
     updateTimeManually: chronometerUpdateManually,
-  } = useChronometer();
+  } = useChronometer({ menu });
 
   const time = isChronometer ? chronometerTime : timerTime;
   const setTime = isChronometer ? setChronometerTime : setTimerTime;

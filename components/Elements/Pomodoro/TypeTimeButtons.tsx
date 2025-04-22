@@ -78,7 +78,6 @@ export default function TypeTimeButtons({
       stopPomodoro(status.pomodoroId);
     }
 
-    setTime(menuTimes[item.type]);
     setMenu(item.type);
     setInitialTime(menuTimes[item.type]);
 
@@ -101,7 +100,6 @@ export default function TypeTimeButtons({
                 : "text-primary-500 bg-white hover:bg-primary-500-hover hover:text-white"
             }`}
             onClick={() => {
-              setTime(menuTimes[item.type]);
               setMenu(item.type);
               toggleChronometerMode(item.type === "chrono");
             }}

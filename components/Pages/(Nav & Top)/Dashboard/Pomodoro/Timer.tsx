@@ -43,8 +43,6 @@ export default function Timer() {
         setInitialTime(timeUtils.secondsToTime(status.remainingTime));
         setDid(did + 1);
       }
-      if (!isChronometer)
-        setTime(timeUtils.secondsToTime(status.remainingTime));
 
       if (status.isPaused && isPlay) {
         togglePlay();
