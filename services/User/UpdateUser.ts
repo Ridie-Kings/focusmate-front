@@ -2,18 +2,18 @@
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 
-export async function updateProfile({
+export async function UpdateUser({
   id,
-  profile,
+  user,
 }: {
   id: string;
-  profile: any;
+  user: any;
 }): Promise<{ success: boolean; data: any }> {
-  console.log(profile);
+  console.log(user);
 
   try {
     const token = await getToken();
-    const res = await apiConnection.patch(`profile/${id}`, profile, {
+    const res = await apiConnection.patch(`users/${id}`, user, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -21,6 +21,6 @@ export async function updateProfile({
     return { success: true, data: res?.data };
   } catch (error: any) {
     console.error("Error updating user profile:", error.response?.data);
-    return { success: false, data: "Error updating user profile" };
+    return { success: false, data: error.response };
   }
 }
