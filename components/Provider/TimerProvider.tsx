@@ -1,10 +1,11 @@
 "use client";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { TimerContextType, TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import TimerFullScreen from "../Elements/Timer/TimerFullScreen";
 import { chipsIconType } from "../Reusable/Chips";
 import { useTimer } from "./TimerProvider/TimerLogic";
 import { useChronometer } from "./TimerProvider/ChronometerLogic";
+import { SocketIOContext } from "./WebsocketProvider";
 
 const DEFAULT_FOCUS_TIME = { hours: 0, min: 25, seg: 0 };
 const DEFAULT_SHORT_BREAK = { hours: 0, min: 5, seg: 0 };
@@ -25,6 +26,7 @@ const defaultContextValue: TimerContextType = {
   toggleChronometerMode: () => {},
   setMenu: () => {},
   menu: "concentracion",
+  startedElement: false,
 };
 
 export const TimerContext =
@@ -35,10 +37,13 @@ export default function TimerProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const { status } = useContext(SocketIOContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const [initialTime, setInitialTime] = useState<TimeType>(DEFAULT_FOCUS_TIME);
   const [isChronometer, setIsChronometer] = useState(false);
   const [menu, setMenu] = useState<chipsIconType>("concentracion");
+  const [startedElement, setStartedElement] = useState(false);
 
   const {
     time: timerTime,
@@ -73,6 +78,11 @@ export default function TimerProvider({
   const updateTimeManually = isChronometer
     ? chronometerUpdateManually
     : timerUpdateManually;
+
+  useEffect(() => {
+    if (status && status.active && status.pomodoroId) setStartedElement(true);
+    else setStartedElement(false);
+  }, [status]);
 
   useEffect(() => {
     if (isOpen) {
@@ -113,6 +123,7 @@ export default function TimerProvider({
     toggleChronometerMode,
     setMenu,
     menu,
+    startedElement,
   };
 
   return (

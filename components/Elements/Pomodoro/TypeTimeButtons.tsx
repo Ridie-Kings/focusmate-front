@@ -1,3 +1,4 @@
+import { TimerContext } from "@/components/Provider/TimerProvider";
 import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
@@ -15,7 +16,6 @@ type TimerItem = {
 type TypeTimeButtonsProps = {
   menu: chipsIconType;
   setMenu: Dispatch<SetStateAction<chipsIconType>>;
-  setTime: Dispatch<SetStateAction<TimeType>>;
   className?: string;
   fullScreen?: boolean;
   setInitialTime: Dispatch<SetStateAction<TimeType>>;
@@ -25,13 +25,12 @@ type TypeTimeButtonsProps = {
 export default function TypeTimeButtons({
   menu,
   setMenu,
-  setTime,
   className = "",
   fullScreen = false,
   setInitialTime,
   toggleChronometerMode,
 }: TypeTimeButtonsProps) {
-  const { status, stopPomodoro } = useContext(SocketIOContext);
+  const { startedElement } = useContext(TimerContext);
 
   const menuTimes = useMemo<Record<chipsIconType, TimeType>>(
     () => ({
@@ -74,10 +73,6 @@ export default function TypeTimeButtons({
   );
 
   const handleTimerSelection = (item: TimerItem) => {
-    if (status?.active && status.pomodoroId) {
-      stopPomodoro(status.pomodoroId);
-    }
-
     setMenu(item.type);
     setInitialTime(menuTimes[item.type]);
 
@@ -114,7 +109,13 @@ export default function TypeTimeButtons({
             size="large"
             type="button"
             button="pomodoro"
-            state={item.type === menu ? "pressed" : "enabled"}
+            state={
+              startedElement
+                ? "disabled"
+                : item.type === menu
+                ? "pressed"
+                : "enabled"
+            }
             icon={item.type}
             onClick={() => handleTimerSelection(item)}
             aria-label={item.label}

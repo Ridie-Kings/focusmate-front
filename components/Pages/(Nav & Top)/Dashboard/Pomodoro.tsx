@@ -6,7 +6,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 import Timer from "./Pomodoro/Timer";
 
 export default function Pomodoro() {
-  const { setTime, setInitialTime, toggleChronometerMode, setMenu, menu } =
+  const { setInitialTime, toggleChronometerMode, setMenu, menu, isPlay } =
     useContext(TimerContext);
 
   return (
@@ -18,7 +18,6 @@ export default function Pomodoro() {
       <MenuButtons
         menu={menu}
         setMenu={setMenu}
-        setTime={setTime}
         setInitialTime={setInitialTime}
         toggleChronometerMode={toggleChronometerMode}
       />
