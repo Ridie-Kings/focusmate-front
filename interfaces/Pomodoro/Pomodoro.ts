@@ -22,4 +22,5 @@ export type TimerContextType = {
   toggleChronometerMode: (type: boolean) => void;
   menu: chipsIconType;
   setMenu: Dispatch<SetStateAction<chipsIconType>>;
+  startedElement: boolean;
 };

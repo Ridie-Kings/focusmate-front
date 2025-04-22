@@ -30,7 +30,7 @@ export default function TimeDropdown({ onChange }: TimeDropdownProps) {
 
   return (
     <div
-      className="absolute bg-white rounded drop-shadow-lg top-2 h-44 overflow-auto w-40"
+      className="absolute bg-white rounded drop-shadow-lg top-2 h-70 overflow-auto w-40"
       ref={dropdownRef}
     >
       {timeOptions.map((time, index) => (
