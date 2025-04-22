@@ -10,12 +10,6 @@ export function useChronometer() {
   const totalSecondsRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (!isPlay) {
-      totalSecondsRef.current = timeUtils.timeToSeconds(time);
-    }
-  }, [time, isPlay]);
-
   const updateTimeManually = useCallback(
     (delta: number, updateType: string) => {
       if (isPlay) return;

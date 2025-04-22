@@ -77,6 +77,7 @@ export default function TypeTimeButtons({
     if (status?.active && status.pomodoroId) {
       stopPomodoro(status.pomodoroId);
     }
+
     setTime(menuTimes[item.type]);
     setMenu(item.type);
     setInitialTime(menuTimes[item.type]);
