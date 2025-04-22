@@ -1,6 +1,7 @@
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import { TaskType } from "@/interfaces/Task/TaskType";
+
 import {
   addDays,
   subDays,
@@ -9,7 +10,9 @@ import {
   differenceInMinutes,
   isSameDay,
 } from "date-fns";
+
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
 import { SetStateAction, Dispatch, useRef, useEffect } from "react";
 
 const getPosition = (date: Date) => {

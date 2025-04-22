@@ -22,7 +22,7 @@ export default function BarTimer({
   const divider = initialTimeInSeconds / 4;
 
   return (
-    <div className="w-3/4 flex place-content-between items-center rounded-full relative mx-auto">
+    <div className="w-3/4 flex place-content-between items-center rounded-full relative mx-auto overflow-x-hidden">
       {Array.from({ length: 5 }).map((_, index) => (
         <DotTimer
           key={index}

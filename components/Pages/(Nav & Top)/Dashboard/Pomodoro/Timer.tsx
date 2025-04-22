@@ -21,6 +21,7 @@ export default function Timer() {
     updateTimeManually,
     setIsOpen,
     initialTime,
+    setInitialTime,
     isChronometer,
   } = useContext(TimerContext);
 
@@ -29,6 +30,7 @@ export default function Timer() {
 
   const [hiddenTime, setHiddenTime] = useState(false);
   const [choseUpdate, setChoseUpdate] = useState("");
+  const [did, setDid] = useState(0);
 
   useEffect(() => {
     if (!status && !isChronometer) {
@@ -37,6 +39,10 @@ export default function Timer() {
     }
 
     if (status) {
+      if (did < 2) {
+        setInitialTime(timeUtils.secondsToTime(status.remainingTime));
+        setDid(did + 1);
+      }
       setTime(timeUtils.secondsToTime(status.remainingTime));
 
       if (status.isPaused && isPlay) {
