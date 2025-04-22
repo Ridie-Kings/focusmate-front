@@ -17,7 +17,6 @@ export default function InformationUser({
     birthDate: null as Date | null,
     phoneNumber: null as number | null,
   });
-  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{
     text: string;
     type: "success" | "error";
@@ -58,7 +57,6 @@ export default function InformationUser({
 
   const handleSave = async () => {
     if (!profile || !editingField) return;
-    setIsLoading(true);
 
     try {
       let response;
@@ -96,7 +94,6 @@ export default function InformationUser({
       console.error(err);
       setMessage({ text: "Error al actualizar el perfil", type: "error" });
     } finally {
-      setIsLoading(false);
       setEditingField(null);
     }
   };
