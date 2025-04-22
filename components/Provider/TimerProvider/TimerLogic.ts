@@ -3,6 +3,7 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -10,6 +11,7 @@ import {
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
+import { SocketIOContext } from "../WebsocketProvider";
 
 export function useTimer(
   initialTime: TimeType,
@@ -19,6 +21,8 @@ export function useTimer(
   DEFAULT_FOCUS_TIME: TimeType,
   DEFAULT_SHORT_BREAK: TimeType
 ) {
+  const { status, pausePomodoro, resumePomodoro } = useContext(SocketIOContext);
+
   const [time, setTime] = useState<TimeType>(initialTime);
   const [isPlay, setIsPlay] = useState(false);
 
@@ -103,7 +107,6 @@ export function useTimer(
       intervalRef.current = setInterval(() => {
         if (totalSecondsRef.current > 0) {
           totalSecondsRef.current -= 1;
-          setTime(timeUtils.secondsToTime(totalSecondsRef.current));
 
           if (totalSecondsRef.current <= 0) {
             if (intervalRef.current) {
@@ -115,9 +118,12 @@ export function useTimer(
 
             setIsPlay(false);
             if (menu === "concentracion") {
+              if (status?.active && status.pomodoroId) pausePomodoro();
+
               setMenu("D/Corto");
               setTime(DEFAULT_SHORT_BREAK);
             } else if (menu === "D/Corto") {
+              if (status?.active && status.pomodoroId) resumePomodoro();
               setMenu("concentracion");
               setTime(DEFAULT_FOCUS_TIME);
             }

@@ -26,6 +26,9 @@ export default function Time({
   const hoursInputRef = useRef<HTMLInputElement>(null);
   const minInputRef = useRef<HTMLInputElement>(null);
 
+  const MAX_HOURS = 5;
+  const MAX_MINUTES = 300;
+
   useEffect(() => {
     if (editMin && minInputRef.current) {
       minInputRef.current.focus();
@@ -47,7 +50,12 @@ export default function Time({
   ) => {
     if ("key" in e && e.key !== "Enter") return;
 
-    const newMin = parseInt(minValue) || 0;
+    let newMin = parseInt(minValue) || 0;
+
+    if (newMin > MAX_MINUTES) {
+      newMin = MAX_MINUTES;
+    }
+
     if (newMin >= 0) {
       const delta = newMin - time.min;
       updateTime(delta, "min");
@@ -57,6 +65,17 @@ export default function Time({
     setEditMin(false);
   };
 
+  const handleMinInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const numValue = parseInt(value) || 0;
+
+    if (numValue > MAX_MINUTES) {
+      setMinValue(String(MAX_MINUTES).padStart(2, "0"));
+    } else {
+      setMinValue(value);
+    }
+  };
+
   const handleHoursChange = (
     e:
       | React.KeyboardEvent<HTMLInputElement>
@@ -64,7 +83,12 @@ export default function Time({
   ) => {
     if ("key" in e && e.key !== "Enter") return;
 
-    const newHours = parseInt(hoursValue) || 0;
+    let newHours = parseInt(hoursValue) || 0;
+
+    if (newHours > MAX_HOURS) {
+      newHours = MAX_HOURS;
+    }
+
     if (newHours >= 0) {
       const delta = newHours - time.hours;
       updateTime(delta, "hours");
@@ -74,12 +98,25 @@ export default function Time({
     setEditHours(false);
   };
 
+  const handleHoursInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const numValue = parseInt(value) || 0;
+
+    if (numValue > MAX_HOURS) {
+      setHoursValue(String(MAX_HOURS).padStart(2, "0"));
+    } else {
+      setHoursValue(value);
+    }
+  };
+
   useEffect(() => {
-    setMinValue(String(time.min).padStart(2, "0"));
+    const currentMin = time.min > MAX_MINUTES ? MAX_MINUTES : time.min;
+    setMinValue(String(currentMin).padStart(2, "0"));
   }, [time.min]);
 
   useEffect(() => {
-    setHoursValue(String(time.hours).padStart(2, "0"));
+    const currentHours = time.hours > MAX_HOURS ? MAX_HOURS : time.hours;
+    setHoursValue(String(currentHours).padStart(2, "0"));
   }, [time.hours]);
 
   return (
@@ -94,11 +131,12 @@ export default function Time({
                     ref={hoursInputRef}
                     type="text"
                     value={hoursValue}
-                    onChange={(e) => setHoursValue(e.target.value)}
+                    onChange={handleHoursInput}
                     onKeyDown={handleHoursChange}
                     onBlur={handleHoursChange}
                     className="w-28 h-[95px] bg-transparent text-center outline-none"
                     disabled={isPlay}
+                    maxLength={1}
                   />
                   <span>:</span>
                 </>
@@ -122,11 +160,12 @@ export default function Time({
               ref={minInputRef}
               type="text"
               value={minValue}
-              onChange={(e) => setMinValue(e.target.value)}
+              onChange={handleMinInput}
               onKeyDown={handleMinChange}
               onBlur={handleMinChange}
               className="w-28 h-[95px] bg-transparent text-center outline-none"
               disabled={isPlay}
+              maxLength={3}
             />
           ) : (
             <span

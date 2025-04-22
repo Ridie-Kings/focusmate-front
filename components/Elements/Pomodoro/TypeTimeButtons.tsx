@@ -1,29 +1,18 @@
+import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { Brain, CircleGauge, Clock, Coffee } from "lucide-react";
-import React, { Dispatch, SetStateAction, useMemo } from "react";
+import React, { Dispatch, SetStateAction, useContext, useMemo } from "react";
 
-const items: { id: number; label: string; type: chipsIconType }[] = [
-  {
-    id: 1,
-    label: "Enfoque",
-    type: "concentracion",
-  },
-  { id: 2, label: "Descanso", type: "D/Corto" },
-  { id: 3, label: "Temporizador", type: "D/Largo" },
-  { id: 4, label: "Cronometro", type: "chrono" },
-];
+type TimerItem = {
+  id: number;
+  label: string;
+  type: chipsIconType;
+  icon: React.ReactNode;
+};
 
-export default function TypeTimeButtons({
-  menu,
-  setMenu,
-  setTime,
-  className,
-  fullScreen,
-  setInitialTime,
-  toggleChronometerMode,
-}: {
+type TypeTimeButtonsProps = {
   menu: chipsIconType;
   setMenu: Dispatch<SetStateAction<chipsIconType>>;
   setTime: Dispatch<SetStateAction<TimeType>>;
@@ -31,7 +20,19 @@ export default function TypeTimeButtons({
   fullScreen?: boolean;
   setInitialTime: Dispatch<SetStateAction<TimeType>>;
   toggleChronometerMode: (type: boolean) => void;
-}) {
+};
+
+export default function TypeTimeButtons({
+  menu,
+  setMenu,
+  setTime,
+  className = "",
+  fullScreen = false,
+  setInitialTime,
+  toggleChronometerMode,
+}: TypeTimeButtonsProps) {
+  const { status, stopPomodoro } = useContext(SocketIOContext);
+
   const menuTimes = useMemo<Record<chipsIconType, TimeType>>(
     () => ({
       concentracion: { hours: 0, min: 25, seg: 0 },
@@ -42,61 +43,86 @@ export default function TypeTimeButtons({
     []
   );
 
+  const timerItems: TimerItem[] = useMemo(
+    () => [
+      {
+        id: 1,
+        label: "Enfoque",
+        type: "concentracion",
+        icon: <Brain size={18} />,
+      },
+      {
+        id: 2,
+        label: "Descanso",
+        type: "D/Corto",
+        icon: <Coffee size={18} />,
+      },
+      {
+        id: 3,
+        label: "Temporizador",
+        type: "D/Largo",
+        icon: <Clock size={18} />,
+      },
+      {
+        id: 4,
+        label: "Cronometro",
+        type: "chrono",
+        icon: <CircleGauge size={18} />,
+      },
+    ],
+    []
+  );
+
+  const handleTimerSelection = (item: TimerItem) => {
+    if (status?.active && status.pomodoroId) {
+      stopPomodoro(status.pomodoroId);
+    }
+    setTime(menuTimes[item.type]);
+    setMenu(item.type);
+    setInitialTime(menuTimes[item.type]);
+
+    toggleChronometerMode(item.type === "chrono");
+  };
+
   return (
     <ul
-      className={`flex w-full place-content-evenly gap-2 lg:p-0 p-2 ${className}`}
+      className={`flex w-full place-content-evenly gap-2 ${
+        fullScreen ? "" : "lg:p-0 p-2"
+      } ${className}`}
     >
-      {fullScreen ? (
-        <>
-          {items.map((item) => (
-            <button
-              key={item.id}
-              className={`p-2 flex-1 rounded-lg border border-white gap-1 flex items-center justify-center cursor-pointer ${
-                item.label === menu
-                  ? "bg-primary-500 text-white"
-                  : "text-primary-500 bg-white hover:bg-primary-500-hover hover:text-white"
-              } transition-all duration-300`}
-              onClick={() => {
-                setTime(menuTimes[item.type]);
-                setMenu(item.label as chipsIconType);
-                toggleChronometerMode(true);
-              }}
-            >
-              {item.type === "concentracion" ? (
-                <Brain />
-              ) : item.type === "D/Corto" ? (
-                <Coffee />
-              ) : item.type === "D/Largo" ? (
-                <Clock />
-              ) : (
-                item.type === "chrono" && <CircleGauge />
-              )}
-              {item.label}
-            </button>
-          ))}
-        </>
-      ) : (
-        <>
-          {items.map((item) => (
-            <Button
-              key={item.id}
-              size="large"
-              type="button"
-              button="pomodoro"
-              state={item.type === menu ? "pressed" : "enabled"}
-              icon={item.type as chipsIconType}
-              onClick={() => {
-                setTime(menuTimes[item.type]);
-                setMenu(item.type as chipsIconType);
-                setInitialTime(menuTimes[item.type]);
-                if (item.type === "chrono") toggleChronometerMode(true);
-                else toggleChronometerMode(false);
-              }}
-            >
-              {item.label}
-            </Button>
-          ))}
-        </>
+      {timerItems.map((item) =>
+        fullScreen ? (
+          <button
+            key={item.id}
+            className={`p-2 flex-1 rounded-lg border border-white gap-2 flex items-center justify-center cursor-pointer transition-all duration-300 ${
+              item.type === menu
+                ? "bg-primary-500 text-white"
+                : "text-primary-500 bg-white hover:bg-primary-500-hover hover:text-white"
+            }`}
+            onClick={() => {
+              setTime(menuTimes[item.type]);
+              setMenu(item.type);
+              toggleChronometerMode(item.type === "chrono");
+            }}
+            aria-label={item.label}
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </button>
+        ) : (
+          <Button
+            key={item.id}
+            size="large"
+            type="button"
+            button="pomodoro"
+            state={item.type === menu ? "pressed" : "enabled"}
+            icon={item.type}
+            onClick={() => handleTimerSelection(item)}
+            aria-label={item.label}
+          >
+            {item.label}
+          </Button>
+        )
       )}
     </ul>
   );
