@@ -18,7 +18,7 @@ export default function InfoCard({
       <p className="py-4 border-b border-primary-200 w-full text-center">
         {title}
       </p>
-      <div className="h-28 gap-4 flex flex-col w-full justify-center">
+      <div className="flex-1 gap-4 flex flex-col w-full justify-center">
         {items.map((item) => (
           <div key={item.label} className="flex gap-4 px-4">
             {item.icon}

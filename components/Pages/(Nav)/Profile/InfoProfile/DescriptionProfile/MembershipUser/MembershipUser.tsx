@@ -1,27 +1,38 @@
 import BannerMembership from "@/components/Elements/BannerMembership/BannerMembership";
 import InfoCard from "./InfoCard";
-import { Bell, Bookmark, Settings } from "lucide-react";
+import {
+  Calendar,
+  ClipboardCheck,
+  Clock,
+  CreditCard,
+  Gem,
+  Notebook,
+} from "lucide-react";
 
 export default function MembershipUser() {
   return (
     <>
-      <BannerMembership type="premium" />
+      <BannerMembership type="free" />
       <div className="flex gap-8 place-content-between w-full">
         <InfoCard
           title="Incluido en tu plan"
-          url={{ label: "Ver más", url: "" }}
+          url={{ label: "Ver más", url: "/support" }}
           items={[
             {
-              icon: <Bell size={24} />,
-              label: "Recordatorios inteligentes",
+              icon: <ClipboardCheck size={24} />,
+              label: "Tareas",
             },
             {
-              icon: <Settings size={24} />,
-              label: "Revisíon semanal automática",
+              icon: <Notebook size={24} />,
+              label: "Habitos",
             },
             {
-              icon: <Bookmark size={24} />,
-              label: "Temas visuales personalizados",
+              icon: <Calendar size={24} />,
+              label: "Calendario",
+            },
+            {
+              icon: <Clock size={24} />,
+              label: "Pomodoro",
             },
           ]}
         />
@@ -30,13 +41,13 @@ export default function MembershipUser() {
           url={{ label: "Mejorar plan", url: "/pricing" }}
           items={[
             {
-              icon: <Bell size={24} />,
-              label: "Visa terminada en ***6828",
+              icon: <CreditCard size={24} />,
+              label: "No tienes ninguna tarjeta asociada",
             },
             {
-              icon: <Settings size={24} />,
-              label: "10 €/ Mensuales",
-              subText: "Vence el 26 agosto 2025",
+              icon: <Gem size={24} />,
+              label: "No tienes ningun plan",
+              subText: "Mejora para disfrutar de grandes ventajas",
             },
           ]}
         />
