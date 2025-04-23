@@ -7,7 +7,7 @@ import {
   GlassWater,
   Trash2,
 } from "lucide-react";
-import { useMemo, useCallback } from "react";
+import { useCallback } from "react";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import { updateHabit } from "@/services/Habits/updateHabit";
 import { removeHabit } from "@/services/Habits/removeHabit";
