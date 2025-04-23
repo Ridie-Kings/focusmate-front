@@ -3,14 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import {
-  Grid2x2,
-  Calendar,
-  Bookmark,
-  Lightbulb,
-  Bell,
-  MessageCircle,
-} from "lucide-react";
+import { Grid2x2, Calendar, MessageCircle } from "lucide-react";
 
 import { NavItem } from "@/interfaces/Nav/NavTypes";
 
