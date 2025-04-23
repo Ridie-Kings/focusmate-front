@@ -13,7 +13,6 @@ export default function Pomodoro() {
     <TemplateDashboard
       grid="col-span-2 row-span-3"
       title="Pomodoro"
-      link="/pomodoro"
     >
       <MenuButtons
         menu={menu}

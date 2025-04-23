@@ -54,12 +54,12 @@ export default function InputModal({
   switch (type) {
     case "text":
       return (
-        <div className="flex gap-2 border-b border-neutral-200 pb-2">
+        <div className="flex gap-2 border-b border-neutral-200 pb-2 w-full">
           <span className="p-2">{icon}</span>
           <input
             type="text"
             placeholder={placeholder}
-            className="text-primary outline-none"
+            className="text-primary outline-none w-full"
             onChange={onChange}
           />
         </div>

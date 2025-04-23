@@ -11,7 +11,7 @@ import Input from "@/components/Reusable/Input";
 import RenderForgotPassword from "./AuthContainer/RenderForgotPassword";
 import RenderActionLinks from "./AuthContainer/RenderActionLinks";
 import RenderActionButton from "./AuthContainer/RenderActionButton";
-// import LinkButtons from "./LinkButtons";
+import Logo from "@/components/Elements/Svg/Logo";
 
 const REDIRECT_PATHS = {
   login: "/",
@@ -67,6 +67,9 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
       router.push(REDIRECT_PATHS[type]);
     } else {
       setError(state.message);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
     }
   }, [state, type, storageKey]);
 
@@ -84,7 +87,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   return (
     <section className="w-full md:w-[45%] flex-1 flex flex-col items-center justify-center gap-10 px-4 md:px-6 py-8">
       <div className="flex flex-col w-full items-center text-primary-500">
-        <img src={"/images/logoBlack.png"} width={72} height={72} alt="logo" />
+        <Logo size="size-26" />
         <p className="text-4xl font-medium">SherApp</p>
       </div>
       <div className="w-full flex flex-col gap-6">

@@ -1,15 +1,19 @@
-import { Sparkles } from "lucide-react";
+import Logo from "@/components/Elements/Svg/Logo";
+import Link from "next/link";
 
 export default function TopLogo() {
   return (
-    <div className="group relative flex items-center gap-3 mb-8 px-4 py-2 cursor-pointer">
+    <Link
+      href={"/"}
+      className="group relative flex items-center gap-3 mb-8 px-4 py-2 cursor-pointer"
+    >
       <span
         className="
         transition-all duration-300
         opacity-0 group-hover:opacity-100
       "
       >
-        <Sparkles fill="white" size={24} />
+        <Logo fill="white" size="size-8" />
       </span>
 
       <h1
@@ -29,8 +33,8 @@ export default function TopLogo() {
         opacity-100 group-hover:opacity-0
       "
       >
-        <Sparkles fill="white" size={24} />
+        <Logo fill="white" size="size-8" />
       </span>
-    </div>
+    </Link>
   );
 }

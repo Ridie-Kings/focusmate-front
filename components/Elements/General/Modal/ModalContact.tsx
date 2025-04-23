@@ -1,10 +1,16 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { User, MessageSquare, AlertCircle, CheckCircle2 } from "lucide-react";
+import {
+  MessageSquare,
+  AlertCircle,
+  CheckCircle2,
+  Captions,
+} from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 interface ContactForm {
+  title: string;
   name: string;
   email: string;
   message: string;
@@ -20,7 +26,8 @@ export default function ModalContact({
   profile,
 }: ModalContactProps) {
   const [form, setForm] = useState<ContactForm>({
-    name: "",
+    title: "",
+    name: profile?.user.fullname || "",
     email: profile?.user?.email || "",
     message: "",
   });
@@ -32,10 +39,6 @@ export default function ModalContact({
 
   const validateForm = (): boolean => {
     const newErrors: Partial<ContactForm> = {};
-
-    if (!form.name.trim()) {
-      newErrors.name = "El nombre es obligatorio";
-    }
 
     if (!form.message.trim()) {
       newErrors.message = "El mensaje es obligatorio";
@@ -67,10 +70,16 @@ export default function ModalContact({
     setSuccessMessage(null);
 
     try {
+      await fetch("/api/send-contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
       setSuccessMessage("Mensaje enviado correctamente");
       setTimeout(() => {
         setIsOpen("");
-      }, 2000);
+      }, 5000);
     } catch (error) {
       console.error("Error sending message:", error);
       setServerError(
@@ -88,15 +97,15 @@ export default function ModalContact({
       </h2>
 
       <InputModal
-        placeholder="Tu nombre"
+        placeholder="Titulo"
         type="text"
-        icon={<User />}
-        onChange={(e) => updateFormField("name", e.target.value)}
+        icon={<Captions />}
+        onChange={(e) => updateFormField("title", e.target.value)}
       />
-      {errors.name && (
+      {errors.title && (
         <div className="flex items-center gap-1 text-red-500 text-xs -mt-3 ml-1">
           <AlertCircle size={12} />
-          <span>{errors.name}</span>
+          <span>{errors.title}</span>
         </div>
       )}
 
