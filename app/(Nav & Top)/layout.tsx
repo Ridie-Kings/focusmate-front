@@ -9,6 +9,7 @@ import ModalProvider from "@/components/Provider/ModalProvider";
 import DashboardProvider from "@/components/Provider/DashboardProvider";
 import { redirect } from "next/navigation";
 import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
+import PopUp from "@/components/Elements/General/PopUp";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -44,6 +45,7 @@ export default async function RootLayout({
                 <main className="flex flex-col min-h-screen h-full flex-1">
                   <TopBar />
                   {children}
+                  <PopUp />
                 </main>
               </TimerProvider>
             </ModalProvider>

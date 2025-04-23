@@ -10,7 +10,7 @@ export default function TemplateBox({
 }: {
   children: React.ReactNode;
   grid: string;
-  link: string;
+  link?: string;
   title: string;
 }) {
   return (

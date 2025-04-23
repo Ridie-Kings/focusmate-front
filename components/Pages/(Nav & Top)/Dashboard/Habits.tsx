@@ -37,7 +37,6 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
     <TemplateDashboard
       grid="col-span-2 row-span-6 col-start-3 row-start-4"
       title="Hábitos"
-      link="/habits"
     >
       <div className="w-full flex items-center place-content-evenly">
         <CircleProgressBar
