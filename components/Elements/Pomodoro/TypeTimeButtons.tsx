@@ -2,7 +2,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import { Brain, CircleGauge, Clock, Coffee } from "lucide-react";
+import { Brain, CircleGauge, Coffee } from "lucide-react";
 import React, { Dispatch, SetStateAction, useContext, useMemo } from "react";
 
 type TimerItem = {
@@ -35,7 +35,6 @@ export default function TypeTimeButtons({
     () => ({
       concentracion: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
-      "D/Largo": { hours: 0, min: 15, seg: 0 },
       chrono: { hours: 0, min: 0, seg: 0 },
     }),
     []
@@ -57,12 +56,6 @@ export default function TypeTimeButtons({
       },
       {
         id: 3,
-        label: "Temporizador",
-        type: "D/Largo",
-        icon: <Clock size={18} />,
-      },
-      {
-        id: 4,
         label: "Cronometro",
         type: "chrono",
         icon: <CircleGauge size={18} />,

@@ -17,7 +17,6 @@ export type TimerContextType = {
   setInitialTime: Dispatch<SetStateAction<TimeType>>;
   togglePlay: () => void;
   resetTimer: () => void;
-  updateTimeManually: (delta: number, updateType: string) => void;
   isChronometer: boolean;
   toggleChronometerMode: (type: boolean) => void;
   menu: chipsIconType;

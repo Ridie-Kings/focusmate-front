@@ -21,7 +21,6 @@ const defaultContextValue: TimerContextType = {
   isPlay: false,
   togglePlay: () => {},
   resetTimer: () => {},
-  updateTimeManually: () => {},
   isChronometer: false,
   toggleChronometerMode: () => {},
   setMenu: () => {},
@@ -51,10 +50,8 @@ export default function TimerProvider({
     isPlay: timerIsPlay,
     togglePlay: timerTogglePlay,
     resetTimer: timerReset,
-    updateTimeManually: timerUpdateManually,
   } = useTimer(
     initialTime,
-    setInitialTime,
     menu,
     setMenu,
     DEFAULT_FOCUS_TIME,
@@ -67,17 +64,17 @@ export default function TimerProvider({
     isPlay: chronometerIsPlay,
     togglePlay: chronometerTogglePlay,
     resetTimer: chronometerReset,
-    updateTimeManually: chronometerUpdateManually,
   } = useChronometer({ menu });
+
+  useEffect(() => {
+    setMenu(menu);
+  }, [menu]);
 
   const time = isChronometer ? chronometerTime : timerTime;
   const setTime = isChronometer ? setChronometerTime : setTimerTime;
   const isPlay = isChronometer ? chronometerIsPlay : timerIsPlay;
   const togglePlay = isChronometer ? chronometerTogglePlay : timerTogglePlay;
   const resetTimer = isChronometer ? chronometerReset : timerReset;
-  const updateTimeManually = isChronometer
-    ? chronometerUpdateManually
-    : timerUpdateManually;
 
   useEffect(() => {
     if (status && status.active && status.pomodoroId) setStartedElement(true);
@@ -118,7 +115,6 @@ export default function TimerProvider({
     isPlay,
     togglePlay,
     resetTimer,
-    updateTimeManually,
     isChronometer,
     toggleChronometerMode,
     setMenu,
