@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import GreenLogo from "../Svg/Logos/GreenLogo";
 import WhiteLogo from "../Svg/Logos/WhiteLogo";
 import GreenLogo_fill from "../Svg/Logos/GreenLogo_Fill";
 
