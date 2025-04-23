@@ -20,7 +20,6 @@ export default function Timer() {
     resetTimer,
     setIsOpen,
     initialTime,
-    setInitialTime,
     isChronometer,
   } = useContext(TimerContext);
 
@@ -28,7 +27,6 @@ export default function Timer() {
     useContext(SocketIOContext);
 
   const [hiddenTime, setHiddenTime] = useState(false);
-  const [did, setDid] = useState(0);
 
   useEffect(() => {
     if (!status && !isChronometer) {
