@@ -1,4 +1,4 @@
-import Logo from "@/components/Elements/Svg/Logo";
+import WhiteLogo from "@/components/Elements/Svg/Logos/WhiteLogo";
 import Link from "next/link";
 
 export default function TopLogo() {
@@ -13,7 +13,7 @@ export default function TopLogo() {
         opacity-0 group-hover:opacity-100
       "
       >
-        <Logo fill="white" size="size-8" />
+        <WhiteLogo size="size-8" />
       </span>
 
       <h1
@@ -33,7 +33,7 @@ export default function TopLogo() {
         opacity-100 group-hover:opacity-0
       "
       >
-        <Logo fill="white" size="size-8" />
+        <WhiteLogo size="size-8" />
       </span>
     </Link>
   );

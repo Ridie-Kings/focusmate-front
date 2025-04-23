@@ -7,7 +7,7 @@ import { useTimer } from "./TimerProvider/TimerLogic";
 import { useChronometer } from "./TimerProvider/ChronometerLogic";
 import { SocketIOContext } from "./WebsocketProvider";
 
-const DEFAULT_FOCUS_TIME = { hours: 0, min: 0, seg: 5 };
+const DEFAULT_FOCUS_TIME = { hours: 0, min: 25, seg: 0 };
 const DEFAULT_SHORT_BREAK = { hours: 0, min: 5, seg: 0 };
 const INITIAL_TIMER_STATE = { hours: 0, min: 25, seg: 0 };
 
