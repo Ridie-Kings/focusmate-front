@@ -42,7 +42,7 @@ export default function BodyInputs({
         placeholder="Descripción"
         icon={<Text />}
       />
-      <InputModal
+      {/* <InputModal
         type="select"
         placeholder="10 min. antes"
         option={
@@ -55,7 +55,7 @@ export default function BodyInputs({
           </div>
         }
         icon={<Bell />}
-      />
+      /> */}
       <InputModal
         type="select"
         placeholder={format(

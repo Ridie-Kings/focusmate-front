@@ -35,7 +35,7 @@ export default function TimerContainer({
     () => ({
       concentracion: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
-      "D/Largo": { hours: 0, min: 15, seg: 0 },
+      chrono: { hours: 0, min: 0, seg: 0 },
     }),
     []
   );

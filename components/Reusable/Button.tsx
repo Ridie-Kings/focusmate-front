@@ -1,4 +1,4 @@
-import { Brain, CircleGauge, Coffee, Plus, Timer } from "lucide-react";
+import { Brain, CircleGauge, Coffee, Plus } from "lucide-react";
 import { ReactNode } from "react";
 import { chipsIconType } from "./Chips";
 
@@ -106,8 +106,6 @@ export default function Button({
             <Brain />
           ) : icon === "D/Corto" ? (
             <Coffee />
-          ) : icon === "D/Largo" ? (
-            <Timer />
           ) : (
             icon === "chrono" && <CircleGauge />
           )}
