@@ -6,6 +6,7 @@ import TimerProvider from "@/components/Provider/TimerProvider";
 import { getToken } from "@/lib";
 import ModalProvider from "@/components/Provider/ModalProvider";
 import { redirect } from "next/navigation";
+import PopUp from "@/components/Elements/General/PopUp";
 // import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 
 const poppinsSans = Poppins({
@@ -33,14 +34,15 @@ export default async function RootLayout({
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
         {/* <SocketIOProvider token={token ?? ""}> */}
-          <ModalProvider>
-            <TimerProvider>
-              <NavBar />
-              <main className="flex flex-col min-h-screen h-full flex-1">
-                {children}
-              </main>
-            </TimerProvider>
-          </ModalProvider>
+        <ModalProvider>
+          <TimerProvider>
+            <NavBar />
+            <main className="flex flex-col min-h-screen h-full flex-1">
+              {children}
+              <PopUp />
+            </main>
+          </TimerProvider>
+        </ModalProvider>
         {/* </SocketIOProvider> */}
       </body>
     </html>
