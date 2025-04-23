@@ -70,13 +70,15 @@ export default function ModalContact({
     setSuccessMessage(null);
 
     try {
-      await fetch("/api/send-contact", {
+      const res = await fetch("/api/send-contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
-      setSuccessMessage("Mensaje enviado correctamente");
+      if (res.ok) setSuccessMessage("Mensaje enviado correctamente");
+      else setServerError("ERROR");
+
       setTimeout(() => {
         setIsOpen("");
       }, 5000);

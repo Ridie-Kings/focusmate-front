@@ -6,10 +6,12 @@ import { useState } from "react";
 export default function ButtonSend({ profile }: { profile: ProfileType }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSend = async () => {
     try {
       setIsLoading(true);
+      setError(null);
 
       const res = await fetch("/api/send-intrest", {
         method: "POST",
@@ -28,9 +30,11 @@ export default function ButtonSend({ profile }: { profile: ProfileType }) {
           setShowMessage(false);
         }, 3000);
       } else {
+        setError(data.message || "Ocurrió un error al enviar el email");
       }
     } catch (err) {
       console.error("Error en la conexión:", err);
+      setError("Error de conexión. Por favor, inténtalo de nuevo más tarde.");
     } finally {
       setIsLoading(false);
     }
@@ -52,6 +56,8 @@ export default function ButtonSend({ profile }: { profile: ProfileType }) {
           ¡Email enviado con éxito!
         </div>
       )}
+
+      {error && <div className="mt-2 text-red-600 text-sm">{error}</div>}
     </div>
   );
 }
