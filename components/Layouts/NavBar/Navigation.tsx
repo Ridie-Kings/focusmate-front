@@ -29,24 +29,6 @@ const navigationItems: NavItem[] = [
   },
   {
     id: 3,
-    label: "Pomodoro",
-    link: "/pomodoro",
-    icon: <Bookmark size={24} />,
-  },
-  {
-    id: 4,
-    label: "Tareas",
-    link: "/task",
-    icon: <Lightbulb size={24} />,
-  },
-  {
-    id: 5,
-    label: "Hábitos",
-    link: "/habits",
-    icon: <Bell size={24} />,
-  },
-  {
-    id: 6,
     label: "Feedback",
     link: "/support",
     icon: <MessageCircle size={24} />,
