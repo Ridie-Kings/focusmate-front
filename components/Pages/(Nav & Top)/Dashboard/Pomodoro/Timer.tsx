@@ -18,10 +18,8 @@ export default function Timer() {
     isPlay,
     togglePlay,
     resetTimer,
-    updateTimeManually,
     setIsOpen,
     initialTime,
-    setInitialTime,
     isChronometer,
   } = useContext(TimerContext);
 
@@ -29,8 +27,6 @@ export default function Timer() {
     useContext(SocketIOContext);
 
   const [hiddenTime, setHiddenTime] = useState(false);
-  const [choseUpdate, setChoseUpdate] = useState("");
-  const [did, setDid] = useState(0);
 
   useEffect(() => {
     if (!status && !isChronometer) {
@@ -39,10 +35,6 @@ export default function Timer() {
     }
 
     if (status) {
-      if (did < 2) {
-        setInitialTime(timeUtils.secondsToTime(status.remainingTime));
-        setDid(did + 1);
-      }
       if (!isChronometer)
         setTime(timeUtils.secondsToTime(status.remainingTime));
 
@@ -72,7 +64,6 @@ export default function Timer() {
             }
           }
 
-          setChoseUpdate("");
           togglePlay();
           break;
 
@@ -114,14 +105,7 @@ export default function Timer() {
         aria-label={hiddenTime ? "Show time" : "Hide time"}
       />
 
-      <Time
-        hiddenTime={hiddenTime}
-        time={time}
-        updateTime={updateTimeManually}
-        isPlay={isPlay}
-        setChoseUpdate={setChoseUpdate}
-        choseUpdate={choseUpdate}
-      />
+      <Time hiddenTime={hiddenTime} time={time} />
 
       <BarTimer time={time} initialTime={initialTime} />
 

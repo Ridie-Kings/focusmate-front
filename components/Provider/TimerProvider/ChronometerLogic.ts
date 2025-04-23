@@ -46,36 +46,6 @@ export function useChronometer({ menu }: { menu: chipsIconType }) {
     }
   }, [time, isPlay]);
 
-  const updateTimeManually = useCallback(
-    (delta: number, updateType: string) => {
-      if (isPlay) return;
-
-      setTime((prevTime) => {
-        let seconds = timeUtils.timeToSeconds(prevTime);
-
-        if (updateType === "hours") {
-          seconds += delta * 3600;
-        } else if (updateType === "min") {
-          seconds += delta * 60;
-        } else if (updateType === "seg") {
-          seconds += delta;
-        }
-
-        seconds = Math.max(0, seconds);
-        totalSecondsRef.current = seconds;
-
-        try {
-          localStorage.setItem("chronometer_seconds", seconds.toString());
-        } catch (error) {
-          console.error("Error saving to localStorage:", error);
-        }
-
-        return timeUtils.secondsToTime(seconds);
-      });
-    },
-    [isPlay]
-  );
-
   const togglePlay = useCallback(() => {
     setIsPlay((prev) => {
       const newState = !prev;
@@ -139,6 +109,5 @@ export function useChronometer({ menu }: { menu: chipsIconType }) {
     setIsPlay,
     togglePlay,
     resetTimer,
-    updateTimeManually,
   };
 }

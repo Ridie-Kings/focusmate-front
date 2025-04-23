@@ -57,14 +57,13 @@ function testUserData(userData: {
   }
 
   const password = userData.password!;
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$#.!%*?&]{8,}$/;
+  const passwordRegex = /^[A-Za-z\d@$#.!%*?&]{8,}$/;
 
   if (!passwordRegex.test(password)) {
     return {
       success: false,
       message:
-        "The password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.",
+        "The password must be at least 8 characters long and can include uppercase letters, lowercase letters, numbers, and special characters.",
     };
   }
 
