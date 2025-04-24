@@ -14,6 +14,7 @@ export default function TimelineCard({
 }) {
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
   const { handleChangeStatus, handleDeleteTask } = TaskUtils({ setEvents });
+  console.log(event);
 
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
   const darkerColor = getDarkerColor(event.color);
