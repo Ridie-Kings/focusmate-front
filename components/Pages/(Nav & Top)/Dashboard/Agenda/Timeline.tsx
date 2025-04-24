@@ -4,8 +4,6 @@ import MountainAgenda from "@/components/Elements/Svg/Mountain/MountainAgenda";
 
 import { TaskType } from "@/interfaces/Task/TaskType";
 
-import { isSameDay } from "date-fns";
-
 import { Dispatch, SetStateAction, useMemo } from "react";
 
 interface TimelineProps {
