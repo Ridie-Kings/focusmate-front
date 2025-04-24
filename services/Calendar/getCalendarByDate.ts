@@ -9,14 +9,17 @@ export async function getCalendarByDate({ date }: { date: Date }): Promise<{
   try {
     const token = await getToken();
 
-    const res = await apiConnection.get(
-      `calendar/${date.toISOString().split("T")[0]}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    const res = await apiConnection.get(`calendar/${formattedDate}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return { success: true, res: res?.data };
   } catch (error: any) {
