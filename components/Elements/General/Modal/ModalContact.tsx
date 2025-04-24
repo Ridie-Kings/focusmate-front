@@ -104,6 +104,7 @@ export default function ModalContact({
         icon={<Captions />}
         onChange={(e) => updateFormField("title", e.target.value)}
       />
+
       {errors.title && (
         <div className="flex items-center gap-1 text-red-500 text-xs -mt-3 ml-1">
           <AlertCircle size={12} />
@@ -117,6 +118,7 @@ export default function ModalContact({
         icon={<MessageSquare />}
         onChange={(e) => updateFormField("message", e.target.value)}
       />
+
       {errors.message && (
         <div className="flex items-center gap-1 text-red-500 text-xs -mt-3 ml-1">
           <AlertCircle size={12} />

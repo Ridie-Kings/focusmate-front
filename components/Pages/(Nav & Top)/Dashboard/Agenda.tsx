@@ -10,7 +10,6 @@ import Button from "@/components/Reusable/Button";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { ModalContext } from "@/components/Provider/ModalProvider";
-import { TaskType } from "@/interfaces/Task/TaskType";
 
 export default function Agenda() {
   const { events, setEvents } = useContext(DashboardContext);
@@ -20,16 +19,10 @@ export default function Agenda() {
   useEffect(() => {
     const handleGetCalendarByDate = async () => {
       const events = await getCalendarByDate({ date: date ?? new Date() });
+      console.log(date, events);
 
       if (events.success) {
-        const eventsToLocal = events.res.map((event: TaskType) => ({
-          ...event,
-          startDate: new Date(event.startDate),
-          dueDate: new Date(event.dueDate),
-          endDate: new Date(event.endDate),
-        }));
-
-        setEvents(eventsToLocal);
+        setEvents(events.res);
       } else {
         console.error("Error al obtener el calendario", events.res);
         setEvents([]);
