@@ -4,6 +4,8 @@ import MountainAgenda from "@/components/Elements/Svg/Mountain/MountainAgenda";
 
 import { TaskType } from "@/interfaces/Task/TaskType";
 
+import { isSameDay } from "date-fns";
+
 import { Dispatch, SetStateAction, useMemo } from "react";
 
 interface TimelineProps {
@@ -14,11 +16,13 @@ interface TimelineProps {
 
 export default function Timeline({ date, events, setEvents }: TimelineProps) {
   const filteredEvents = useMemo(() => {
-    return events.sort((a, b) => {
-      const startDateA = new Date(a.startDate).getTime();
-      const startDateB = new Date(b.startDate).getTime();
-      return startDateA - startDateB;
-    });
+    return events
+      .filter((event) => isSameDay(new Date(event.dueDate), date ?? new Date()))
+      .sort((a, b) => {
+        const startDateA = new Date(a.startDate).getTime();
+        const startDateB = new Date(b.startDate).getTime();
+        return startDateA - startDateB;
+      });
   }, [date, events]);
 
   return (
