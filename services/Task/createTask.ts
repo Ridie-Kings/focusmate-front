@@ -3,6 +3,7 @@ import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { format } from "date-fns";
 
 export async function createTask({ task }: { task: tempTaskType }): Promise<{
   success: boolean;
@@ -13,9 +14,9 @@ export async function createTask({ task }: { task: tempTaskType }): Promise<{
 
     const newTask = {
       ...task,
-      startDate: task.startDate && task.startDate.toISOString(),
-      endDate: task.endDate && task.endDate.toISOString(),
-      dueDate: task.dueDate && task.dueDate.toISOString(),
+      startDate: task.startDate && task.startDate,
+      endDate: task.endDate && task.endDate,
+      dueDate: task.dueDate && format(task.dueDate, "yyyy-MM-dd"),
     };
 
     const res = await apiConnection.post("tasks", newTask, {
