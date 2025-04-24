@@ -18,7 +18,6 @@ export async function createTask({ task }: { task: tempTaskType }): Promise<{
       endDate: task.endDate && task.endDate,
       dueDate: task.dueDate && format(task.dueDate, "yyyy-MM-dd"),
     };
-    
 
     const res = await apiConnection.post("tasks", newTask, {
       headers: {
