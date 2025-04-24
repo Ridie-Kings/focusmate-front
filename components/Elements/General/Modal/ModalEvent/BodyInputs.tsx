@@ -69,14 +69,31 @@ export default function BodyInputs({
         )}
         option={
           <ModalDatePicker
-            onChange={(e) =>
+            onChange={(e) => {
+              const selectedDate = new Date(e.target.value);
+              const currentStartDate = task.startDate || new Date();
+              const currentEndDate = task.endDate || new Date();
+              
+              // Preserve time from existing dates
+              selectedDate.setHours(
+                currentStartDate.getHours(),
+                currentStartDate.getMinutes(),
+                0,
+                0
+              );
+              
               setTask((prev) => ({
                 ...prev,
-                startDate: new Date(e.target.value),
-                dueDate: new Date(e.target.value),
-                endDate: new Date(e.target.value),
-              }))
-            }
+                startDate: selectedDate,
+                dueDate: selectedDate,
+                endDate: new Date(selectedDate.setHours(
+                  currentEndDate.getHours(),
+                  currentEndDate.getMinutes(),
+                  0,
+                  0
+                )),
+              }));
+            }}
           />
         }
         propagand={false}
