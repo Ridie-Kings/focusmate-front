@@ -12,6 +12,7 @@ import {
   endOfDay,
   endOfMonth,
   endOfWeek,
+  format,
   startOfDay,
   startOfMonth,
   startOfWeek,
@@ -59,7 +60,9 @@ export default function CalendarPage() {
     };
 
     const handleGetCalendarByDate = async () => {
-      const event = await getCalendarByDate({ date: date ?? new Date() });
+      const event = await getCalendarByDate({
+        date: format(date ?? new Date(), "yyyy-MM-dd"),
+      });
 
       if (event.success) {
         setEvents(event.res);
