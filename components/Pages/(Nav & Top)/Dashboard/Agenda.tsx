@@ -10,6 +10,7 @@ import Button from "@/components/Reusable/Button";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { ModalContext } from "@/components/Provider/ModalProvider";
+import { format } from "date-fns";
 
 export default function Agenda() {
   const { events, setEvents } = useContext(DashboardContext);
@@ -18,8 +19,9 @@ export default function Agenda() {
 
   useEffect(() => {
     const handleGetCalendarByDate = async () => {
-      date?.setHours(8);
-      const events = await getCalendarByDate({ date: date ?? new Date() });
+      const events = await getCalendarByDate({
+        date: format(date ?? new Date(), "yyyy-MM-dd"),
+      });
 
       if (events.success) {
         setEvents(events.res);
