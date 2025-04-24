@@ -18,9 +18,8 @@ export default function Agenda() {
 
   useEffect(() => {
     const handleGetCalendarByDate = async () => {
-      console.log(date ?? new Date());
+      date?.setHours(8);
       const events = await getCalendarByDate({ date: date ?? new Date() });
-      console.log(events);
 
       if (events.success) {
         setEvents(events.res);

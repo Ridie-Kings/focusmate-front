@@ -30,9 +30,7 @@ const generateMonthDays = (date: Date | undefined): Date[] => {
   let currentDate = startDate;
 
   while (currentDate <= endDate) {
-    const t = currentDate;
-    t.setHours(0, 0, 0, 0);
-    days.push(t);
+    days.push(currentDate);
     currentDate = addDays(currentDate, 1);
   }
 
