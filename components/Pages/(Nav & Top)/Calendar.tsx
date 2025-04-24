@@ -7,6 +7,7 @@ import { CalendarContext } from "@/components/Provider/CalendarProvider";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
+
 import {
   endOfDay,
   endOfMonth,
@@ -71,6 +72,8 @@ export default function CalendarPage() {
     if (navType === "Día") handleGetCalendarByDate();
     else handleGetCalendarByRange();
   }, [date, navType]);
+
+  console.log(events);
 
   return (
     <section className="flex flex-1 h-full gap-6 p-6 overflow-hidden transition-all duration-300">
