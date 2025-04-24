@@ -70,7 +70,7 @@ export default function CalendarPage() {
 
     if (navType === "Día") handleGetCalendarByDate();
     else handleGetCalendarByRange();
-  }, [date]);
+  }, [date, navType]);
 
   return (
     <section className="flex flex-1 h-full gap-6 p-6 overflow-hidden transition-all duration-300">

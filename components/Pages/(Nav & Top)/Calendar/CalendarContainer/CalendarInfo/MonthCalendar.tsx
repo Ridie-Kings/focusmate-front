@@ -51,12 +51,11 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
         {visibleEvents.map((event, i) => (
           <div
             key={`${i}-${day.toISOString()}`}
-            style={{ color: event.color }}
-            className="p-1 rounded flex flex-col"
+            className="p-1 rounded flex flex-col text-primary-500"
             title={event.title}
           >
             <div className="flex items-center gap-2 truncate">
-              <Dot size={10} backgroundColor={event.color} />
+              <Dot size={10} backgroundColor="#014e44" />
               {event.title}
             </div>
           </div>
