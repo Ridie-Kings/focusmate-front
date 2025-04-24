@@ -19,14 +19,7 @@ export default function Agenda() {
   useEffect(() => {
     const handleGetCalendarByDate = async () => {
       const events = await getCalendarByDate({ date: date ?? new Date() });
-
-      const year = date && date.getFullYear();
-      const month = String(date && date.getMonth() + 1).padStart(2, "0");
-      const day = String(date && date.getDate()).padStart(2, "0");
-
-      const formattedDate = `${year}-${month}-${day}`;
-
-      console.log(formattedDate);
+      console.log(events);
 
       if (events.success) {
         setEvents(events.res);

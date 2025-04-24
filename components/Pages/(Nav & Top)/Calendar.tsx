@@ -60,6 +60,7 @@ export default function CalendarPage() {
 
     const handleGetCalendarByDate = async () => {
       const event = await getCalendarByDate({ date: date ?? new Date() });
+      console.log(event);
 
       if (event.success) {
         setEvents(event.res);
