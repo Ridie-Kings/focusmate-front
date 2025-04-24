@@ -8,7 +8,6 @@ import BtnSend from "./Modal/BtnSend";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
-import { format } from "date-fns";
 
 export default function ModalEvent({
   setIsOpen,
@@ -47,12 +46,6 @@ export default function ModalEvent({
     }
 
     return true;
-  };
-  const newTask = {
-    ...task,
-    startDate: task.startDate ? task.startDate.toISOString() : undefined,
-    endDate: task.endDate ? task.endDate.toISOString() : undefined,
-    dueDate: task.dueDate ? task.dueDate.toISOString() : undefined,
   };
 
   const handleSendTask = async () => {
