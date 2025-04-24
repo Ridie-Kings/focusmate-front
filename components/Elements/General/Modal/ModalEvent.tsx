@@ -48,6 +48,12 @@ export default function ModalEvent({
 
     return true;
   };
+  const newTask = {
+    ...task,
+    startDate: task.startDate ? task.startDate.toISOString() : undefined,
+    endDate: task.endDate ? task.endDate.toISOString() : undefined,
+    dueDate: task.dueDate ? task.dueDate.toISOString() : undefined,
+  };
 
   const handleSendTask = async () => {
     try {
