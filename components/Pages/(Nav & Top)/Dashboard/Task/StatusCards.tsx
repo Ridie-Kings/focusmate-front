@@ -17,15 +17,21 @@ export default function StatusCards({
     },
     {
       label: "Alta",
-      number: tasks.filter((t) => t.priority === "high").length,
+      number: tasks
+        .filter((t) => t.priority === "high")
+        .filter((t) => t.status !== "completed").length,
     },
     {
       label: "Media",
-      number: tasks.filter((t) => t.priority === "medium").length,
+      number: tasks
+        .filter((t) => t.priority === "medium")
+        .filter((t) => t.status !== "completed").length,
     },
     {
       label: "Baja",
-      number: tasks.filter((t) => t.priority === "low").length,
+      number: tasks
+        .filter((t) => t.priority === "low")
+        .filter((t) => t.status !== "completed").length,
     },
   ];
 
