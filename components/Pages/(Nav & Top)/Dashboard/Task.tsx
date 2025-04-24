@@ -24,7 +24,11 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
     >
       <StatusCards filter={filter} setFilter={setFilter} tasks={tasks} />
       <p className="text-primary-500">
-        {filter === "" ? "Tareas pendiente" : "Tareas " + filter + " prioridad"}
+        {filter === ""
+          ? "Tareas pendiente"
+          : filter !== "Completada"
+          ? "Tareas " + filter + " prioridad"
+          : "Tareas " + filter}
       </p>
       <ListTask filter={filter} tasks={tasks} setTasks={setTasks} />
     </TemplateDashboard>

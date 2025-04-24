@@ -9,20 +9,46 @@ import { getMyHabits } from "@/services/Habits/getMyHabits";
 import Streaks from "./Dashboard/Streaks";
 import { getMyStreaks } from "@/services/Logs/getMyStreaks";
 
-export default async function Dashboard() {
-  const tasks = await getMyTask();
-  const habits = await getMyHabits();
-  const streaks = await getMyStreaks();
-
+export default function Dashboard() {
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-9 gap-4 w-full h-full p-5">
       <Date />
       {/* <Animate /> */}
-      <Streaks number={streaks.res} />
+      <StreaksWrapper />
       <Agenda />
       <Pomodoro />
-      <TusTask tasksList={tasks.success ? tasks.res : []} />
-      <Habits habitsList={habits.success ? habits.res : []} />
+      <TasksWrapper />
+      <HabitsWrapper />
     </div>
   );
+}
+
+async function StreaksWrapper() {
+  try {
+    const streaks = await getMyStreaks();
+    return <Streaks number={streaks.res} />;
+  } catch (error) {
+    console.error("Failed to load streaks:", error);
+    return <Streaks number={0} />;
+  }
+}
+
+async function TasksWrapper() {
+  try {
+    const tasks = await getMyTask();
+    return <TusTask tasksList={tasks.success ? tasks.res : []} />;
+  } catch (error) {
+    console.error("Failed to load tasks:", error);
+    return <TusTask tasksList={[]} />;
+  }
+}
+
+async function HabitsWrapper() {
+  try {
+    const habits = await getMyHabits();
+    return <Habits habitsList={habits.success ? habits.res : []} />;
+  } catch (error) {
+    console.error("Failed to load habits:", error);
+    return <Habits habitsList={[]} />;
+  }
 }

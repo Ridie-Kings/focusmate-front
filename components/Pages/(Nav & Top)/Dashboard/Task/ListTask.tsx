@@ -25,11 +25,17 @@ export default function ListTask({
       case "Completada":
         return tasks.filter((e) => e.status === "completed");
       case "Alta":
-        return tasks.filter((e) => e.priority === "high");
+        return tasks
+          .filter((e) => e.priority === "high")
+          .filter((t) => t.status !== "completed");
       case "Media":
-        return tasks.filter((e) => e.priority === "medium");
+        return tasks
+          .filter((e) => e.priority === "medium")
+          .filter((t) => t.status !== "completed");
       case "Baja":
-        return tasks.filter((e) => e.priority === "low");
+        return tasks
+          .filter((e) => e.priority === "low")
+          .filter((t) => t.status !== "completed");
       case "":
         return tasks.filter((e) => e.status !== "completed");
       default:
