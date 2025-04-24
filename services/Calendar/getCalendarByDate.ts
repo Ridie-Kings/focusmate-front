@@ -13,7 +13,7 @@ export async function getCalendarByDate({ date }: { date: Date }): Promise<{
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
 
-    const formattedDate = `${year}-${month}-${day + 1}`;
+    const formattedDate = `${year}-${month}-${day}`;
 
     const res = await apiConnection.get(`calendar/${formattedDate}`, {
       headers: {
