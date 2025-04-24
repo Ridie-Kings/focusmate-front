@@ -50,11 +50,10 @@ export default function ModalEvent({
   };
   const newTask = {
     ...task,
-    startDate: task.startDate && task.startDate,
-    endDate: task.endDate && task.endDate,
-    dueDate: task.dueDate && format(task.dueDate, "yyyy-MM-dd"),
+    startDate: task.startDate ? task.startDate.toISOString() : undefined,
+    endDate: task.endDate ? task.endDate.toISOString() : undefined,
+    dueDate: task.dueDate ? task.dueDate.toISOString() : undefined,
   };
-  console.log("Task Log TEST", newTask);
 
   const handleSendTask = async () => {
     try {
