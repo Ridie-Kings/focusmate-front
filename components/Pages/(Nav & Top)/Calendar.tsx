@@ -73,8 +73,6 @@ export default function CalendarPage() {
     else handleGetCalendarByRange();
   }, [date, navType]);
 
-  console.log(events);
-
   return (
     <section className="flex flex-1 h-full gap-6 p-6 overflow-hidden transition-all duration-300">
       <div className="w-1/3 2xl:w-1/4 h-full flex flex-col gap-2">
