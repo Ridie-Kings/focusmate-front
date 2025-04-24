@@ -15,7 +15,7 @@ export async function getCalendarByDate({ date }: { date: Date }): Promise<{
 
     const formattedDate = date.toISOString().split("T")[0];
 
-    const res = await apiConnection.get(`calendar/${formattedDate}`, {
+    const res = await apiConnection.get(`calendar/${formattedDate}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
