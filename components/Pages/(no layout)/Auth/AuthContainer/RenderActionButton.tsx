@@ -1,5 +1,4 @@
 import Button from "@/components/Reusable/Button";
-import { Dispatch, SetStateAction } from "react";
 
 export default function RenderActionButton({
   type,
