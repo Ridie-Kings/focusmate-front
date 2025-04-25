@@ -13,7 +13,7 @@ export default function ButtonSend({ profile }: { profile: ProfileType }) {
       setIsLoading(true);
       setError(null);
 
-      const res = await fetch("/api/send-intrest", {
+      const res = await fetch("/api/send-interest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
