@@ -9,7 +9,7 @@ export default function LogoutButton({
     <button
       className="
         group relative flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg
-        bg-secondary-500 hover:bg-secondary-400 text-gray-300
+        bg-secondary-500/50 hover:bg-secondary-400/50 text-gray-300
         cursor-pointer transition-all duration-300 group-hover:w-full w-11
       "
       onClick={handleLogout}
