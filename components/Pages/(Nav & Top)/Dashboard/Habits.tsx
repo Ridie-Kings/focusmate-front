@@ -15,7 +15,7 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useContext(DashboardContext);
   const { setIsOpen } = useContext(ModalContext) as {
-    setIsOpen: (type: string) => void;
+    setIsOpen: (params: { text: string; other?: unknown }) => void;
   };
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
@@ -68,7 +68,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
       )}
       <Button
         size="large"
-        onClick={() => setIsOpen("habit")}
+        onClick={() => setIsOpen({ text: "habit" })}
         button="tertiary"
         type="button"
       >

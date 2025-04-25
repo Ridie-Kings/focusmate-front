@@ -51,11 +51,22 @@ const CalendarDay = memo(({ day, currentMonth, events }: CalendarDayProps) => {
         {visibleEvents.map((event, i) => (
           <div
             key={`${i}-${day.toISOString()}`}
-            className="p-1 rounded flex flex-col text-primary-500"
+            className={`p-1 rounded flex flex-col ${
+              isSameDay(new Date(event.dueDate), new Date())
+                ? "text-white"
+                : "text-primary-500"
+            }`}
             title={event.title}
           >
             <div className="flex items-center gap-2 truncate">
-              <Dot size={10} backgroundColor="#014e44" />
+              <Dot
+                size={10}
+                backgroundColor={
+                  isSameDay(new Date(event.dueDate), new Date())
+                    ? "white"
+                    : "#014e44"
+                }
+              />
               {event.title}
             </div>
           </div>
