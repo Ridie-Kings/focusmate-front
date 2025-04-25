@@ -4,9 +4,9 @@ import { Dispatch, SetStateAction } from "react";
 export default function BtnSend({
   setIsOpen,
   handleClick,
-  isLoading
+  isLoading,
 }: {
-  setIsOpen: Dispatch<SetStateAction<string>>;
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
   handleClick: () => void;
   isLoading: boolean;
 }) {
@@ -16,16 +16,11 @@ export default function BtnSend({
         size="large"
         button="secondary"
         type="button"
-        onClick={() => setIsOpen("")}
+        onClick={() => setIsOpen({ text: "" })}
       >
         Cancelar
       </Button>
-      <Button
-        size="large"
-        onClick={handleClick}
-        button="primary"
-        type="button"
-      >
+      <Button size="large" onClick={handleClick} button="primary" type="button">
         {isLoading ? "Guardando..." : "Guardar"}
       </Button>
     </div>

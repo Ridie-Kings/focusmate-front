@@ -12,7 +12,7 @@ import { DashboardContext } from "@/components/Provider/DashboardProvider";
 export default function ModalTask({
   setIsOpen,
 }: {
-  setIsOpen: Dispatch<SetStateAction<string>>;
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
 }) {
   const { setTasks } = useContext(DashboardContext);
 
@@ -46,7 +46,6 @@ export default function ModalTask({
     return true;
   };
 
-
   const handleSendTask = async () => {
     try {
       setError(null);
@@ -61,7 +60,7 @@ export default function ModalTask({
       if (res.success) {
         setTasks((prev) => [...prev, res.message]);
         console.log("Task created successfully", res.message);
-        setIsOpen("");
+        setIsOpen({ text: "" });
       } else {
         setError(
           typeof res.message === "string"

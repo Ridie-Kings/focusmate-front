@@ -116,7 +116,7 @@ const Calendar: React.FC<CalendarProps> = ({
       {btn && (
         <Button
           size="large"
-          onClick={() => setIsOpen("event")}
+          onClick={() => setIsOpen({ text: "event", other: date })}
           button="tertiary"
           type="button"
         >

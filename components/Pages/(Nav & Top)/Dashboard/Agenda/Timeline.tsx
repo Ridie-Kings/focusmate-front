@@ -12,9 +12,15 @@ interface TimelineProps {
   date: Date | undefined;
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
+  setTasks: Dispatch<SetStateAction<TaskType[]>>;
 }
 
-export default function Timeline({ date, events, setEvents }: TimelineProps) {
+export default function Timeline({
+  date,
+  events,
+  setEvents,
+  setTasks,
+}: TimelineProps) {
   const filteredEvents = useMemo(() => {
     return events
       .filter((event) => isSameDay(new Date(event.dueDate), date ?? new Date()))
@@ -47,6 +53,7 @@ export default function Timeline({ date, events, setEvents }: TimelineProps) {
           <div className="flex-1 flex flex-col gap-2 pt-1.5">
             {filteredEvents.map((event, index) => (
               <TimelineCard
+                setTasks={setTasks}
                 key={`event-${index}-${event.title}`}
                 event={event}
                 setEvents={setEvents}

@@ -17,7 +17,7 @@ interface ContactForm {
 }
 
 interface ModalContactProps {
-  setIsOpen: Dispatch<SetStateAction<string>>;
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
   profile: ProfileType | null;
 }
 
@@ -80,7 +80,7 @@ export default function ModalContact({
       else setServerError("ERROR");
 
       setTimeout(() => {
-        setIsOpen("");
+        setIsOpen({ text: "" });
       }, 5000);
     } catch (error) {
       console.error("Error sending message:", error);
@@ -145,7 +145,7 @@ export default function ModalContact({
           type="button"
           button="secondary"
           size="compact"
-          onClick={() => setIsOpen("")}
+          onClick={() => setIsOpen({ text: "" })}
         >
           Cancelar
         </Button>
