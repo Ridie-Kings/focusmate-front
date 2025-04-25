@@ -13,7 +13,7 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 import { format } from "date-fns";
 
 export default function Agenda() {
-  const { events, setEvents } = useContext(DashboardContext);
+  const { events, setEvents, setTasks } = useContext(DashboardContext);
   const { setIsOpen } = useContext(ModalContext);
   const [date, setDate] = useState<Date | undefined>(undefined);
 
@@ -43,7 +43,7 @@ export default function Agenda() {
         <div className="flex flex-col gap-4">
           <SmallCalendar setDate={setDate} date={date} inView />
           <Button
-            onClick={() => setIsOpen("event")}
+            onClick={() => setIsOpen({ text: "event", other: date })}
             size="large"
             button="tertiary"
             type="button"
@@ -51,7 +51,12 @@ export default function Agenda() {
             Nuevo Evento
           </Button>
         </div>
-        <Timeline date={date} events={events} setEvents={setEvents} />
+        <Timeline
+          date={date}
+          events={events}
+          setEvents={setEvents}
+          setTasks={setTasks}
+        />
       </div>
     </TemplateDashboard>
   );

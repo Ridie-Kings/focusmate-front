@@ -8,12 +8,17 @@ import { Dispatch, SetStateAction } from "react";
 export default function TimelineCard({
   event,
   setEvents,
+  setTasks,
 }: {
+  setTasks: Dispatch<SetStateAction<TaskType[]>>;
   event: TaskType;
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
-  const { handleChangeStatus, handleDeleteTask } = TaskUtils({ setEvents });
+  const { handleChangeStatus, handleDeleteTask } = TaskUtils({
+    setEvents,
+    setTasks,
+  });
 
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
   const darkerColor = getDarkerColor(event.color);

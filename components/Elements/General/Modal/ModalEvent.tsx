@@ -11,17 +11,19 @@ import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
 export default function ModalEvent({
   setIsOpen,
+  isOpen,
 }: {
-  setIsOpen: Dispatch<SetStateAction<string>>;
+  isOpen: { text: string; other?: any };
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: any }>>;
 }) {
   const { setEvents } = useContext(DashboardContext);
   const [task, setTask] = useState<tempTaskType>({
     title: "",
     description: "",
     status: "pending",
-    startDate: new Date(),
-    endDate: new Date(),
-    dueDate: new Date(),
+    startDate: isOpen.other,
+    endDate: isOpen.other,
+    dueDate: isOpen.other,
     priority: "high",
     tags: [],
     color: "#d5ede2",
@@ -80,7 +82,7 @@ export default function ModalEvent({
           );
         }
 
-        setIsOpen("");
+        setIsOpen({ text: "" });
       } else {
         setError(
           typeof res.message === "string"
@@ -114,6 +116,7 @@ export default function ModalEvent({
         )}
 
         <BodyInputs
+          date={isOpen.other}
           error={error}
           setError={setError}
           task={task}

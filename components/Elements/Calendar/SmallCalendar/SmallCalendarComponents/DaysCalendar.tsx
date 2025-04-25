@@ -36,7 +36,7 @@ export default function DaysCalendar({
     if (isToday(day) && date) {
       setDate(undefined);
     } else {
-      setDate(day);
+      if (!isSameDay(date ?? new Date(), day)) setDate(day);
     }
   };
 

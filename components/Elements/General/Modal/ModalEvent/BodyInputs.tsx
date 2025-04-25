@@ -13,11 +13,13 @@ export default function BodyInputs({
   task,
   setTask,
   setError,
+  date,
 }: {
   error: string | null;
   setError: Dispatch<SetStateAction<string | null>>;
   task: tempTaskType;
   setTask: Dispatch<SetStateAction<tempTaskType>>;
+  date: Date;
 }) {
   const trad = () => {
     switch (task.priority) {
@@ -69,29 +71,31 @@ export default function BodyInputs({
         )}
         option={
           <ModalDatePicker
+            date={date}
             onChange={(e) => {
               const selectedDate = new Date(e.target.value);
               const currentStartDate = task.startDate || new Date();
               const currentEndDate = task.endDate || new Date();
-              
-              // Preserve time from existing dates
+
               selectedDate.setHours(
                 currentStartDate.getHours(),
                 currentStartDate.getMinutes(),
                 0,
                 0
               );
-              
+
               setTask((prev) => ({
                 ...prev,
                 startDate: selectedDate,
                 dueDate: selectedDate,
-                endDate: new Date(selectedDate.setHours(
-                  currentEndDate.getHours(),
-                  currentEndDate.getMinutes(),
-                  0,
-                  0
-                )),
+                endDate: new Date(
+                  selectedDate.setHours(
+                    currentEndDate.getHours(),
+                    currentEndDate.getMinutes(),
+                    0,
+                    0
+                  )
+                ),
               }));
             }}
           />
