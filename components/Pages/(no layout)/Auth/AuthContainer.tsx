@@ -54,7 +54,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
     loadSavedData();
   }, [storageKey]);
 
-  const [state, action] = useActionState(handleAuth, {
+  const [state, action, isLoading] = useActionState(handleAuth, {
     success: false,
     message: "",
   });
@@ -71,10 +71,11 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
         setError("");
       }, 5000);
     }
-  }, [state, type, storageKey]);
+  }, [state, type, storageKey, router]);
 
   const handleSubmit = useCallback(
     (formData: FormData) => {
+      if (isLoading) return;
       const formDataObject: Record<string, string> = {};
       formData.forEach((value, key) => {
         formDataObject[key] = value.toString();
@@ -112,27 +113,23 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
               onChange={handleInputChange}
             />
           ))}
-
           {type === "login" && (
             <div className="flex flex-col md:flex-row gap-2 md:justify-between items-start w-full">
               {RenderForgotPassword({ type })}
               {RenderActionLinks({ type })}
             </div>
           )}
-
           {error && <div className="text-red-500 text-sm">{error}</div>}
-
           <div className="flex flex-col gap-4">
             {type === "login" ? (
-              RenderActionButton({ type })
+              RenderActionButton({ type, isLoading })
             ) : (
               <>
                 {RenderActionLinks({ type })}
-                {RenderActionButton({ type })}
+                {RenderActionButton({ type, isLoading })}
               </>
             )}
           </div>
-
           {/* <LinkButtons /> */}
         </form>
       </div>
