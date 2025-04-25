@@ -3,8 +3,8 @@ import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { StatusType } from "@/interfaces/Task/TaskType";
 
 export type ModalContextType = {
-  isOpen: { text: string; other?: any };
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: any }>>;
+  isOpen: { text: string; other?: unknown };
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
   profile: ProfileType | null;
 };
 

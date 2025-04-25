@@ -17,7 +17,7 @@ interface ContactForm {
 }
 
 interface ModalContactProps {
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: any }>>;
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
   profile: ProfileType | null;
 }
 

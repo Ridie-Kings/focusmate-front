@@ -6,7 +6,7 @@ export default function BtnSend({
   handleClick,
   isLoading,
 }: {
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: any }>>;
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
   handleClick: () => void;
   isLoading: boolean;
 }) {

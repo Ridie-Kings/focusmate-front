@@ -42,7 +42,7 @@ const TYPE_OPTIONS: HabitOption[] = [
 ];
 
 interface ModalHabitProps {
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: any }>>;
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
 }
 
 export default function ModalHabit({ setIsOpen }: ModalHabitProps) {

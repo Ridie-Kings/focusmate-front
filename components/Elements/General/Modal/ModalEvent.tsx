@@ -13,17 +13,17 @@ export default function ModalEvent({
   setIsOpen,
   isOpen,
 }: {
-  isOpen: { text: string; other?: any };
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: any }>>;
+  isOpen: { text: string; other?: unknown };
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
 }) {
   const { setEvents } = useContext(DashboardContext);
   const [task, setTask] = useState<tempTaskType>({
     title: "",
     description: "",
     status: "pending",
-    startDate: isOpen.other,
-    endDate: isOpen.other,
-    dueDate: isOpen.other,
+    startDate: isOpen.other as Date | undefined,
+    endDate: isOpen.other as Date | undefined,
+    dueDate: isOpen.other as Date | undefined,
     priority: "high",
     tags: [],
     color: "#d5ede2",
@@ -116,7 +116,7 @@ export default function ModalEvent({
         )}
 
         <BodyInputs
-          date={isOpen.other}
+          date={isOpen.other as Date}
           error={error}
           setError={setError}
           task={task}

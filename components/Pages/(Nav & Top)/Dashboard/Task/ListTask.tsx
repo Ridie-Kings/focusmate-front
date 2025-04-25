@@ -16,7 +16,7 @@ export default function ListTask({
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
 }) {
   const { setIsOpen } = useContext(ModalContext) as {
-    setIsOpen: (value: string) => void;
+    setIsOpen: (params: { text: string; other?: unknown }) => void;
   };
   const { setEvents } = useContext(DashboardContext);
 
@@ -67,7 +67,7 @@ export default function ListTask({
       </div>
       <Button
         size="large"
-        onClick={() => setIsOpen("task")}
+        onClick={() => setIsOpen({ text: "task" })}
         button="tertiary"
         type="button"
       >

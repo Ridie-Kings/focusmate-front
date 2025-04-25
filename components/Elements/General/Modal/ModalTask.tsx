@@ -12,7 +12,7 @@ import { DashboardContext } from "@/components/Provider/DashboardProvider";
 export default function ModalTask({
   setIsOpen,
 }: {
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: any }>>;
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
 }) {
   const { setTasks } = useContext(DashboardContext);
 
