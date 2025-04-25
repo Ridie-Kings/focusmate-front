@@ -45,8 +45,8 @@ export function useTimer(
 
   const resetTimer = useCallback(() => {
     setIsPlay(false);
-    setTime(initialTime);
-    totalSecondsRef.current = timeUtils.timeToSeconds(initialTime);
+    setTime(DEFAULT_FOCUS_TIME);
+    totalSecondsRef.current = timeUtils.timeToSeconds(DEFAULT_FOCUS_TIME);
   }, [initialTime]);
 
   useEffect(() => {

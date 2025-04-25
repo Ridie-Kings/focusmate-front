@@ -79,6 +79,9 @@ export default function TimerProvider({
   useEffect(() => {
     if (status && status.active && status.pomodoroId) setStartedElement(true);
     else setStartedElement(false);
+
+    if (status?.isBreak) setInitialTime(DEFAULT_SHORT_BREAK);
+    else if (!status?.isBreak) setInitialTime(DEFAULT_FOCUS_TIME);
   }, [status]);
 
   useEffect(() => {
