@@ -2,6 +2,7 @@ import Navigation from "./NavBar/Navigation";
 import LogoutButtons from "./NavBar/LogoutButtons";
 import TopLogo from "./NavBar/TopLogo";
 import { logout } from "@/lib";
+import PlanButtons from "./NavBar/PlanButtons";
 
 export default function NavBar() {
   const handleLogout = async () => {
@@ -29,7 +30,10 @@ export default function NavBar() {
     >
       <TopLogo />
       <Navigation />
-      <LogoutButtons handleLogout={handleLogout} />
+      <div className="flex flex-col w-full items-center gap-2">
+        <PlanButtons />
+        <LogoutButtons handleLogout={handleLogout} />
+      </div>
     </header>
   );
 }
