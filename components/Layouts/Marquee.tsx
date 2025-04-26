@@ -1,7 +1,9 @@
+import Image from "next/image";
+
 export default function Carousel() {
   return (
     <div className="w-1/2 h-screen hidden lg:flex sticky top-0  px-16 py-3.5  overflow-hidden">
-      <img
+      <Image
         src="/images/logoPNJ.webp"
         width={1000}
         height={100}

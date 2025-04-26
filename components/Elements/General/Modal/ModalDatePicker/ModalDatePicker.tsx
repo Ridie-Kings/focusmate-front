@@ -16,7 +16,7 @@ export default function ModalDatePicker({
     onChange({
       target: { value: selectedDate ? selectedDate.toISOString() : "" },
     });
-  }, [selectedDate]);
+  }, [selectedDate, onChange]);
 
   return (
     <div className="absolute -top-35 left-25 w-[360px] drop-shadow-lg rounded-lg bg-background-primary flex flex-col z-50">

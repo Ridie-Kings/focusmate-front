@@ -44,7 +44,7 @@ export default function Timer() {
         togglePlay();
       }
     }
-  }, [status, resetTimer, setTime, togglePlay, isPlay]);
+  }, [status, resetTimer, setTime, togglePlay, isPlay, isChronometer]);
 
   const handleClick = useCallback(
     (action: string) => {
@@ -88,7 +88,6 @@ export default function Timer() {
       setIsOpen,
       togglePlay,
       resetTimer,
-      timeUtils,
     ]
   );
 

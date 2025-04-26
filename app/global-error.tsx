@@ -16,7 +16,7 @@ export default function GlobalError() {
       }, 1000);
     };
     handleRemoveTokens();
-  }, []);
+  }, [router]);
 
   return (
     <html>

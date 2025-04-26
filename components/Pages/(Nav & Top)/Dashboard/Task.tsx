@@ -15,7 +15,7 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
 
   useEffect(() => {
     setTasks(tasksList);
-  }, [tasksList]);
+  }, [tasksList, setTasks]);
 
   return (
     <TemplateDashboard

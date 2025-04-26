@@ -82,7 +82,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
       });
       return action(formData);
     },
-    [action]
+    [action, isLoading]
   );
 
   return (

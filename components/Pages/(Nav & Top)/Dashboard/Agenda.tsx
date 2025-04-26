@@ -31,7 +31,7 @@ export default function Agenda() {
       }
     };
     handleGetCalendarByDate();
-  }, [date]);
+  }, [date, setEvents]);
 
   return (
     <TemplateDashboard
