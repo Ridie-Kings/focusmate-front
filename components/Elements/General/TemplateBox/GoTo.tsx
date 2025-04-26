@@ -12,7 +12,7 @@ export default function GoTo({ link }: { link?: string }) {
       ) : (
         <>
           <Lightbulb className="cursor-pointer" />
-          <p>Feedback</p>
+          <p className="hidden md:block">Feedback</p>
         </>
       )}
     </Link>

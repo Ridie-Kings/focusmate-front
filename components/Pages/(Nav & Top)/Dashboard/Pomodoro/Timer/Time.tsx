@@ -9,7 +9,7 @@ export default function Time({
   time: TimeType;
 }) {
   return (
-    <div className="flex gap-4 text-8xl text-primary-500 font-light relative">
+    <div className="flex gap-4 text-7xl md:text-8xl text-primary-500 font-light relative">
       {!hiddenTime ? (
         <p>
           {time.hours > 0 && (

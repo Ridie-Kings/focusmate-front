@@ -124,7 +124,7 @@ const WeekCalendarItem = ({
     if (scrollCalendar.current) {
       scrollCalendar.current.scrollTo(0, 750);
     }
-  }, []);
+  }, [scrollCalendar]);
 
   return (
     <div

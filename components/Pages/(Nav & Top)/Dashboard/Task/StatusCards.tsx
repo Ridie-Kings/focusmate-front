@@ -38,7 +38,7 @@ export default function StatusCards({
   return (
     <ul className="flex w-full gap-3">
       {items.map((item) => (
-        <li key={item.label} className="w-1/3">
+        <li key={item.label} className="w-1/4">
           <div
             style={{
               backgroundColor: filter === item.label ? "#248277" : "#D5EDE2",
