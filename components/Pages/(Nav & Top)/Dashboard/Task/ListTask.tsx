@@ -57,9 +57,9 @@ export default function ListTask({
             />
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center h-[265px] bg-quaternary-100 rounded-2xl py-4">
+          <div className="flex flex-col items-center gap-3 justify-center h-full bg-quaternary-100 rounded-2xl py-4">
             <MountainTask />
-            <p className="text-primary-500 text-xl text-center mx-1">
+            <p className="text-primary-500 text-xl text-center mx-1 font-medium">
               El día está en blanco. ¡Agrega tus tareas{filter}!
             </p>
           </div>

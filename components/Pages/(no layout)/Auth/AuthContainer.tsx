@@ -86,14 +86,16 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   );
 
   return (
-    <section className="w-full md:w-[45%] flex-1 flex flex-col items-center justify-center gap-10 px-4 md:px-6 py-8">
+    <section className="w-full md:w-[45%] flex-1 flex flex-col items-center justify-center gap-10 px-4 md:px-10 py-8">
       <div className="flex flex-col w-full items-center text-primary-500">
         <GreenLogo size="size-26" />
         <p className="text-4xl font-medium">SherApp</p>
       </div>
       <div className="w-full flex flex-col gap-6">
-        <div className="flex flex-col items-center gap-2 w-full text-primary-500">
-          <h1 className="text-3xl md:text-5xl leading-9">{config.title}</h1>
+        <div className="flex flex-col items-center gap-2 w-full text-primary-500 text-center">
+          <h1 className="text-3xl md:text-5xl leading-9 font-semibold">
+            {config.title}
+          </h1>
           <p className="text-center">{config.description}</p>
         </div>
 

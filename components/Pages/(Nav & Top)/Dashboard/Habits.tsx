@@ -58,11 +58,15 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
       {habits.length > 0 ? (
         <HabitsList habits={habits} setHabits={setHabits} />
       ) : (
-        <div className="bg-quaternary-100 rounded-2xl py-4">
+        <div className="bg-quaternary-100 rounded-2xl py-4 flex flex-col gap-3">
           <MountainHabits />
           <div className="flex flex-col items-center text-primary-500 gap-1 text-center">
-            <p className="text-xl">¡Ups! No hay hábitos por aquí...</p>
-            <p>Crea uno y empieza a sumar pequeños logros</p>
+            <p className="text-xl font-medium">
+              ¡Ups! No hay hábitos por aquí...
+            </p>
+            <p className="text-sm">
+              Crea uno y empieza a sumar pequeños logros
+            </p>
           </div>
         </div>
       )}
