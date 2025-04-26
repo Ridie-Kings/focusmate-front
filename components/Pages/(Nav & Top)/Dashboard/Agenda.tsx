@@ -35,11 +35,11 @@ export default function Agenda() {
 
   return (
     <TemplateDashboard
-      grid="col-span-2 row-span-4 row-start-2"
+      grid="col-span-2 row-span-4 row-start-2 "
       link="/calendar"
       title="Calendario"
     >
-      <div className="flex w-full h-full">
+      <div className="flex flex-col xl:flex-row  w-full h-full">
         <div className="flex flex-col gap-4">
           <SmallCalendar setDate={setDate} date={date} inView />
           <Button

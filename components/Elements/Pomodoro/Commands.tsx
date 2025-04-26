@@ -39,8 +39,8 @@ export default function Commands({
           )}
         </div>
       )}
-      
-      <ul className="flex items-center justify-center gap-16">
+
+      <ul className="flex items-center justify-center gap-7 md:gap-16">
         {[
           {
             id: "openFullScreen",
@@ -72,12 +72,19 @@ export default function Commands({
               <RefreshCw size={fullScreen ? 40 : 32} />
             ),
           },
-          ...(isConnected ? [
-            {
-              id: "share",
-              icon: <Share2 size={fullScreen ? 40 : 32} className={fullScreen ? "text-white" : "text-primary-500"} />,
-            },
-          ] : []),
+          ...(isConnected
+            ? [
+                {
+                  id: "share",
+                  icon: (
+                    <Share2
+                      size={fullScreen ? 40 : 32}
+                      className={fullScreen ? "text-white" : "text-primary-500"}
+                    />
+                  ),
+                },
+              ]
+            : []),
         ].map(({ id, icon }, index) => (
           <li key={id}>
             <button

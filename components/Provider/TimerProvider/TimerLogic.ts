@@ -24,6 +24,11 @@ export function useTimer(
     }
   }, []);
 
+  useEffect(() => {
+    if (menu === "concentracion") setTime(DEFAULT_FOCUS_TIME);
+    else if (menu === "D/Corto") setTime(DEFAULT_SHORT_BREAK);
+  }, [menu]);
+
   const playEndSound = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;

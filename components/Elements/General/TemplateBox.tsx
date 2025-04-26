@@ -16,7 +16,7 @@ export default function TemplateBox({
   return (
     <>
       <div
-        className={`relative border-1 border-primary-200 rounded-xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} flex flex-col gap-4`}
+        className={`relative border-1 border-primary-200 rounded-xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4`}
       >
         {title !== "" && (
           <div className="w-full flex flex-col gap-4">

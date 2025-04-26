@@ -11,7 +11,7 @@ export default function Pomodoro() {
 
   return (
     <TemplateDashboard
-      grid="col-span-2 row-span-3"
+      grid="col-span-2 row-span-3 "
       title="Pomodoro"
     >
       <MenuButtons
