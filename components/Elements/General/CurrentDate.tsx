@@ -12,7 +12,7 @@ export default function CurrentDate({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl px-4 py-6 transition-all duration-200 ease-out ${
+      className={`relative overflow-hidden rounded-2xl px-4 py-6 mx-3 md:mx-0 transition-all duration-200 ease-out ${
         background && "bg-primary-500 text-white hover:shadow-lg"
       }`}
     >
