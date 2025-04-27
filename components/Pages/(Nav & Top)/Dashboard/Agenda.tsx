@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
+import { debounce } from "lodash";
 
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import Timeline from "./Agenda/Timeline";
@@ -18,9 +19,9 @@ export default function Agenda() {
   const [date, setDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
-    const handleGetCalendarByDate = async () => {
+    const handleGetCalendarByDate = async (dateToFetch: Date) => {
       const events = await getCalendarByDate({
-        date: format(date ?? new Date(), "yyyy-MM-dd"),
+        date: format(dateToFetch ?? new Date(), "yyyy-MM-dd"),
       });
 
       if (events.success) {
@@ -30,16 +31,27 @@ export default function Agenda() {
         setEvents([]);
       }
     };
-    handleGetCalendarByDate();
+
+    const debouncedFetch = debounce((dateToFetch: Date) => {
+      handleGetCalendarByDate(dateToFetch);
+    }, 500);
+
+    if (date) {
+      debouncedFetch(date);
+    }
+
+    return () => {
+      debouncedFetch.cancel();
+    };
   }, [date, setEvents]);
 
   return (
     <TemplateDashboard
-      grid="col-span-2 row-span-4 row-start-2 "
+      grid="col-span-2 row-span-4 row-start-2"
       link="/calendar"
       title="Calendario"
     >
-      <div className="flex flex-col xl:flex-row  w-full h-full">
+      <div className="flex flex-col xl:flex-row w-full h-full">
         <div className="flex flex-col gap-4">
           <SmallCalendar setDate={setDate} date={date} inView />
           <Button

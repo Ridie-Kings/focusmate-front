@@ -5,8 +5,8 @@ import Calendar from "@/components/Elements/General/Calendar";
 import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
 import {
   endOfDay,
@@ -18,6 +18,8 @@ import {
   startOfWeek,
 } from "date-fns";
 import { es } from "date-fns/locale";
+
+import { debounce } from "lodash";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<string>("Día");
@@ -72,8 +74,20 @@ export default function CalendarPage() {
       }
     };
 
-    if (navType === "Día") handleGetCalendarByDate();
-    else handleGetCalendarByRange();
+    // 👇🏻 Creamos una función debounced que decide qué fetch hacer
+    const debouncedFetch = debounce(() => {
+      if (navType === "Día") {
+        handleGetCalendarByDate();
+      } else {
+        handleGetCalendarByRange();
+      }
+    }, 500); // 500ms de espera
+
+    debouncedFetch();
+
+    return () => {
+      debouncedFetch.cancel(); // 👈🏻 Cancelamos si cambia o desmonta
+    };
   }, [date, navType]);
 
   return (
