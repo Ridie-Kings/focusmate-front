@@ -19,7 +19,7 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   const renderModal = () => {
     switch (isOpen.text) {
       case "task":
-        return <ModalTask setIsOpen={setIsOpen} />;
+        return <ModalTask setIsOpen={setIsOpen} isOpen={isOpen} />;
       case "habit":
         return <ModalHabit setIsOpen={setIsOpen} />;
       case "event":

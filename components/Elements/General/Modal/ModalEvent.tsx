@@ -31,7 +31,6 @@ const DEFAULT_TASK: tempTaskType = {
   endDate: new Date(),
   dueDate: new Date(),
   priority: "high",
-  tags: [],
   color: "#d5ede2",
 };
 
@@ -49,7 +48,6 @@ export default function ModalEvent({ setIsOpen, isOpen }: ModalEventProps) {
     endDate: initialDate,
     dueDate: initialDate,
   });
-  console.log("isOPen", isOpen.other);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -68,7 +68,7 @@ export default function TimelineCard({
         className="absolute right-3 top-4"
         items={[
           {
-            label: "Update",
+            label: "Modificar",
             icon: <Pen size={20} />,
             onClick: () => setIsOpen({ text: "event", other: event }),
           },

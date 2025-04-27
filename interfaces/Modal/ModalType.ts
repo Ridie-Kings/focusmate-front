@@ -17,6 +17,5 @@ export type tempTaskType = {
   endDate?: Date;
   dueDate?: Date;
   priority: "high" | "medium" | "low";
-  tags: string[];
   color: string;
 };
