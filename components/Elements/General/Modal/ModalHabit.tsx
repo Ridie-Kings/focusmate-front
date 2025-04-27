@@ -4,6 +4,7 @@ import {
   useState,
   useContext,
   useCallback,
+  useEffect,
 } from "react";
 import { AudioLines, BookHeart, Text, AlertCircle } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
@@ -12,9 +13,11 @@ import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import { createHabit } from "@/services/Habits/createHabit";
 import BtnSend from "./Modal/BtnSend";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { updateHabit } from "@/services/Habits/updateHabit";
 
 type Frequency = "daily" | "weekly" | "monthly" | "";
 type HabitFormData = {
+  _id: string | undefined;
   name: string;
   description: string;
   frequency: Frequency;
@@ -42,13 +45,15 @@ const TYPE_OPTIONS: HabitOption[] = [
 ];
 
 interface ModalHabitProps {
+  isOpen: { text: string; other?: unknown };
   setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
 }
 
-export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
+export default function ModalHabit({ setIsOpen, isOpen }: ModalHabitProps) {
   const { setHabits } = useContext(DashboardContext);
 
   const [habit, setHabit] = useState<HabitFormData>({
+    _id: undefined,
     name: "",
     description: "",
     frequency: "",
@@ -56,6 +61,19 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isEditMode = Boolean(habit._id);
+
+  useEffect(() => {
+    if (
+      isOpen.other &&
+      isOpen.other instanceof Object &&
+      "name" in isOpen.other
+    ) {
+      setHabit(() => ({
+        ...(isOpen.other as HabitFormData),
+      }));
+    }
+  }, [isOpen.other]);
 
   const validateHabit = useCallback((): boolean => {
     if (!habit.name.trim()) {
@@ -83,6 +101,50 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
     },
     [error]
   );
+
+  const handleUpdateHabit = useCallback(async () => {
+    if (isLoading) return;
+
+    try {
+      setError(null);
+
+      if (!validateHabit()) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      const habitData = {
+        name: habit.name,
+        description: habit.description,
+        frequency: habit.frequency,
+        type: habit.type,
+      };
+
+      const res = await updateHabit({ _id: habit._id ?? "", habit: habitData });
+
+      if (res.success && res.res) {
+        setHabits((prev) =>
+          prev.map((prevTask) =>
+            prevTask._id === habit._id ? res.res : prevTask
+          )
+        );
+      } else {
+        const errorMessage =
+          typeof res.res === "string"
+            ? res.res
+            : "Error al modificar el hábito";
+        setError(errorMessage);
+        console.error("Error al crear el hábito", res.res);
+      }
+    } catch (err) {
+      console.error("Error inesperado:", err);
+      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      setIsOpen({ text: "" });
+      setIsLoading(false);
+    }
+  }, [habit, validateHabit, setHabits, setIsOpen, isLoading]);
 
   const handleCreateHabit = useCallback(async () => {
     if (isLoading) return;
@@ -112,6 +174,7 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
         });
         setIsOpen({ text: "" });
         setHabit({
+          _id: undefined,
           name: "",
           description: "",
           frequency: "",
@@ -167,7 +230,7 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
       <input
         type="text"
         placeholder="Título"
-        value={habit.name}
+        defaultValue={habit.name}
         className={`text-2xl outline-none ${
           error && !habit.name ? "border-red-500 border-b-2" : "text-gray-500"
         }`}
@@ -178,6 +241,7 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
 
       <div className="flex flex-col gap-6 w-full">
         <InputModal
+          defaultValue={habit.description}
           type="text"
           placeholder="Descripción"
           onChange={(e) => updateHabitField("description", e.target.value)}
@@ -206,7 +270,9 @@ export default function ModalHabit({ setIsOpen }: ModalHabitProps) {
       </div>
 
       <BtnSend
-        handleClick={handleCreateHabit}
+        text={isEditMode ? "Modificar" : undefined}
+        loadingText={isEditMode ? "Modificando..." : undefined}
+        handleClick={isEditMode ? handleUpdateHabit : handleCreateHabit}
         isLoading={isLoading}
         setIsOpen={setIsOpen}
       />

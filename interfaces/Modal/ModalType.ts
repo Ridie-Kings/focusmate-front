@@ -9,6 +9,7 @@ export type ModalContextType = {
 };
 
 export type tempTaskType = {
+  _id: string | undefined;
   title: string;
   description: string;
   status: StatusType;
@@ -16,6 +17,5 @@ export type tempTaskType = {
   endDate?: Date;
   dueDate?: Date;
   priority: "high" | "medium" | "low";
-  tags: string[];
   color: string;
 };

@@ -1,9 +1,10 @@
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
+import { ModalContext } from "@/components/Provider/ModalProvider";
 import Menu from "@/components/Reusable/Menu";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import TaskUtils from "@/lib/TaskUtils";
-import { Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
+import { Pen, Trash2 } from "lucide-react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 export default function TaskCard({
   task,
@@ -14,6 +15,7 @@ export default function TaskCard({
   setTasks: Dispatch<SetStateAction<TaskType[]>>;
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
+  const { setIsOpen } = useContext(ModalContext);
   const { handleDeleteTask, handleChangeStatus, handleChangePriority } =
     TaskUtils({
       setTasks,
@@ -45,6 +47,11 @@ export default function TaskCard({
                     onClick: () => handleChangePriority("low", task._id),
                   },
                 ],
+              },
+              {
+                label: "Modificar",
+                icon: <Pen size={20} />,
+                onClick: () => setIsOpen({ text: "task", other: task }),
               },
               {
                 label: "Eliminar",
