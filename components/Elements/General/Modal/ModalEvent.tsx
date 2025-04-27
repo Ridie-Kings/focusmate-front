@@ -1,4 +1,11 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 import { AlertCircle } from "lucide-react";
 
 import { createTask } from "@/services/Task/createTask";
@@ -8,89 +15,115 @@ import BtnSend from "./Modal/BtnSend";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { updateTask } from "@/services/Task/updateTask";
 
-export default function ModalEvent({
-  setIsOpen,
-  isOpen,
-}: {
+type ModalEventProps = {
   isOpen: { text: string; other?: unknown };
   setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
-}) {
-  const { setEvents } = useContext(DashboardContext);
+};
+
+const DEFAULT_TASK: tempTaskType = {
+  _id: undefined,
+  title: "",
+  description: "",
+  status: "pending",
+  startDate: new Date(),
+  endDate: new Date(),
+  dueDate: new Date(),
+  priority: "high",
+  color: "#d5ede2",
+};
+
+export default function ModalEvent({ setIsOpen, isOpen }: ModalEventProps) {
+  const { setEvents, setTasks } = useContext(DashboardContext);
+
+  const initialDate = useMemo(
+    () => (isOpen.other instanceof Date ? isOpen.other : new Date()),
+    [isOpen.other]
+  );
+
   const [task, setTask] = useState<tempTaskType>({
-    title: "",
-    description: "",
-    status: "pending",
-    startDate: isOpen.other as Date | undefined,
-    endDate: isOpen.other as Date | undefined,
-    dueDate: isOpen.other as Date | undefined,
-    priority: "high",
-    tags: [],
-    color: "#d5ede2",
+    ...DEFAULT_TASK,
+    startDate: initialDate,
+    endDate: initialDate,
+    dueDate: initialDate,
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const validateTask = () => {
+  useEffect(() => {
+    if (
+      isOpen.other &&
+      isOpen.other instanceof Object &&
+      "title" in isOpen.other
+    ) {
+      setTask(() => ({
+        ...(isOpen.other as tempTaskType),
+      }));
+    }
+  }, [isOpen.other]);
+
+  const validateTask = (): boolean => {
     if (!task.title.trim()) {
       setError("El título es obligatorio");
       return false;
     }
 
-    if (task.endDate && task.startDate) {
-      if (task.endDate <= task.startDate) {
-        setError(
-          "La hora de finalización debe ser posterior a la hora de inicio"
-        );
-        return false;
-      }
+    if (task.endDate && task.startDate && task.endDate <= task.startDate) {
+      setError(
+        "La hora de finalización debe ser posterior a la hora de inicio"
+      );
+      return false;
     }
 
     return true;
   };
 
-  const handleSendTask = async () => {
-    try {
-      setError(null);
+  const handleUpdateTask = async () => {
+    setError(null);
 
-      if (!validateTask()) {
+    if (!validateTask()) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const res = await updateTask({
+        _id: task._id ?? "",
+        task: {
+          color: task.color,
+          description: task.description,
+          title: task.title,
+          dueDate: task.dueDate,
+          startDate: task.startDate,
+          endDate: task.endDate,
+          priority: task.priority,
+          status: task.status,
+        },
+      });
+
+      if (!res.success) {
+        const errorMessage =
+          typeof res.message === "string"
+            ? res.message
+            : "Error al modificar la tarea";
+        setError(errorMessage);
+        console.error("Failed to modify task", res.message);
         return;
       }
 
-      setIsLoading(true);
-      const res = await createTask({ task });
+      setEvents((prev) =>
+        prev.map((event) => (event._id === task._id ? res.message : event))
+      );
 
-      if (res.success) {
-        setEvents((prev) => [...prev, res.message]);
-        console.log("Task created successfully", res.message);
+      setTasks((prev) =>
+        prev.map((prevTask) =>
+          prevTask._id === task._id ? res.message : prevTask
+        )
+      );
 
-        try {
-          const response = await addTaskToCalendar({ _id: res.message._id });
-          if (response.success) {
-            console.log("Tarea añadido al calendario:", response.res);
-          } else {
-            console.error(
-              "Error al añadidir la tarea al calendario:",
-              response.res
-            );
-          }
-        } catch (calendarError) {
-          console.error(
-            "Error al comunicarse con el servicio de calendario:",
-            calendarError
-          );
-        }
-
-        setIsOpen({ text: "" });
-      } else {
-        setError(
-          typeof res.message === "string"
-            ? res.message
-            : "Error al crear la tarea"
-        );
-        console.error("Failed to create task", res.message);
-      }
+      setIsOpen({ text: "" });
     } catch (err) {
       console.error("Error inesperado:", err);
       setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
@@ -99,38 +132,88 @@ export default function ModalEvent({
     }
   };
 
-  console.log(task);
+  const handleSendTask = async () => {
+    setError(null);
+
+    if (!validateTask()) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const res = await createTask({ task });
+
+      if (!res.success) {
+        const errorMessage =
+          typeof res.message === "string"
+            ? res.message
+            : "Error al crear la tarea";
+        setError(errorMessage);
+        console.error("Failed to create task", res.message);
+        return;
+      }
+
+      setEvents((prev) => [...prev, res.message]);
+
+      try {
+        const calendarResponse = await addTaskToCalendar({
+          _id: res.message._id,
+        });
+        if (!calendarResponse.success) {
+          console.error(
+            "Error al añadir la tarea al calendario:",
+            calendarResponse.res
+          );
+        }
+      } catch (calendarError) {
+        console.error(
+          "Error al comunicarse con el servicio de calendario:",
+          calendarError
+        );
+      }
+
+      setIsOpen({ text: "" });
+    } catch (err) {
+      console.error("Error inesperado:", err);
+      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const isEditMode = Boolean(task._id);
 
   return (
-    <>
-      <div className="flex flex-col gap-2 w-full">
-        <TopInputs
-          error={error}
-          setError={setError}
-          task={task}
-          setTask={setTask}
-        />
-        {error && (
-          <div className="flex items-center gap-2 text-red-500 text-sm mt-1">
-            <AlertCircle size={16} />
-            <span>{error}</span>
-          </div>
-        )}
+    <div className="flex flex-col gap-2 w-full">
+      <TopInputs
+        error={error}
+        setError={setError}
+        task={task}
+        setTask={setTask}
+      />
 
-        <BodyInputs
-          date={isOpen.other as Date}
-          error={error}
-          setError={setError}
-          task={task}
-          setTask={setTask}
-        />
+      {error && (
+        <div className="flex items-center gap-2 text-red-500 text-sm mt-1">
+          <AlertCircle size={16} />
+          <span>{error}</span>
+        </div>
+      )}
 
-        <BtnSend
-          handleClick={handleSendTask}
-          isLoading={isLoading}
-          setIsOpen={setIsOpen}
-        />
-      </div>
-    </>
+      <BodyInputs
+        date={initialDate}
+        error={error}
+        setError={setError}
+        task={task}
+        setTask={setTask}
+      />
+
+      <BtnSend
+        text={isEditMode ? "Modificar" : undefined}
+        loadingText={isEditMode ? "Modificando..." : undefined}
+        handleClick={isEditMode ? handleUpdateTask : handleSendTask}
+        isLoading={isLoading}
+        setIsOpen={setIsOpen}
+      />
+    </div>
   );
 }

@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 
 export default function ModalColorPicker({
+  defaultValue,
   onChange,
 }: {
+  defaultValue: string;
   onChange: (e: { target: { value: string } }) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("#78c6a3");
+  const [selectedColor, setSelectedColor] = useState(defaultValue);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const colors = [

@@ -1,7 +1,6 @@
 "use client";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { Gem } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function PlanButtons({
@@ -22,6 +21,7 @@ export default function PlanButtons({
         }),
       });
     } catch (err) {
+      console.log(err);
     } finally {
       router.push("pricing");
     }
