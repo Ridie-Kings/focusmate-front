@@ -10,10 +10,7 @@ export default function Pomodoro() {
     useContext(TimerContext);
 
   return (
-    <TemplateDashboard
-      grid="col-span-2 row-span-3 "
-      title="Pomodoro"
-    >
+    <TemplateDashboard grid="col-span-3 row-span-3" title="Pomodoro">
       <MenuButtons
         menu={menu}
         setMenu={setMenu}

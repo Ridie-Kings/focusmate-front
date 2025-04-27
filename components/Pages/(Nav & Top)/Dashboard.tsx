@@ -11,7 +11,7 @@ import { getMyStreaks } from "@/services/Logs/getMyStreaks";
 
 export default function Dashboard() {
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-9 gap-4 w-full h-full md:px-5 py-5">
+    <div className="flex flex-col lg:grid lg:grid-cols-7 gap-4 w-full h-full md:px-5 py-5">
       <Date />
       {/* <Animate /> */}
       <StreaksWrapper />
