@@ -32,16 +32,27 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen.text) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
 
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen({ text: "" });
+      }
+    };
+
+    if (isOpen.text) {
+      window.addEventListener("keydown", handleEscKey);
+    }
+
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleEscKey);
     };
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   return (
     <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25">
