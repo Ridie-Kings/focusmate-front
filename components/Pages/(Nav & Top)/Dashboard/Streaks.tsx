@@ -45,11 +45,11 @@ export default function Streaks({ number }: { number: number }) {
   return (
     <TemplateDashboard
       title=""
-      grid={`text-base items-start  ${
+      grid={`text-base items-start mx-3 md:mx-0 ${
         number <= 0
           ? "bg-quaternary-700 text-white"
           : "bg-secondary-100 text-primary-700"
-      } `}
+      }`}
       link=""
     >
       <div className="w-full z-20">

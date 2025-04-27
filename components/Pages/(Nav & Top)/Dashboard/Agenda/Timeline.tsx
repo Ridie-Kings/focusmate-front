@@ -43,9 +43,9 @@ export default function Timeline({
       <div className="flex flex-1 gap-4">
         <TimeLeftBar filteredEvents={filteredEvents} />
         {filteredEvents.length === 0 ? (
-          <div className="flex flex-col items-center justify-center px-2 bg-quaternary-100 rounded-2xl w-full h-full">
+          <div className="flex flex-col items-center gap-3 justify-center p-2 bg-quaternary-100 rounded-2xl w-full h-full">
             <MountainAgenda />
-            <p className="text-primary-500 2xl:text-xl text-center">
+            <p className="text-primary-500 2xl:text-xl text-center font-medium">
               Todavía no hay eventos
             </p>
           </div>

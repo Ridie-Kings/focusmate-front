@@ -35,10 +35,10 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
 
   return (
     <TemplateDashboard
-      grid="col-span-2 row-span-6 col-start-3 row-start-4"
+      grid="col-span-2 row-span-6 col-start-3 row-start-4 "
       title="Hábitos"
     >
-      <div className="w-full flex items-center place-content-evenly">
+      <div className="w-full flex flex-col md:flex-row items-center place-content-evenly">
         <CircleProgressBar
           percent={porcent}
           doneCount={doneCount}
@@ -58,11 +58,15 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
       {habits.length > 0 ? (
         <HabitsList habits={habits} setHabits={setHabits} />
       ) : (
-        <div className="bg-quaternary-100 rounded-2xl py-4">
+        <div className="bg-quaternary-100 rounded-2xl py-4 flex flex-col gap-3">
           <MountainHabits />
-          <div className="flex flex-col items-center text-primary-500 gap-1">
-            <p className="text-xl">¡Ups! No hay hábitos por aquí...</p>
-            <p>Crea uno y empieza a sumar pequeños logros</p>
+          <div className="flex flex-col items-center text-primary-500 gap-1 text-center">
+            <p className="text-xl font-medium">
+              ¡Ups! No hay hábitos por aquí...
+            </p>
+            <p className="text-sm">
+              Crea uno y empieza a sumar pequeños logros
+            </p>
           </div>
         </div>
       )}

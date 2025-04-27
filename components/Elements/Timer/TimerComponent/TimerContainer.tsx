@@ -40,36 +40,35 @@ export default function TimerContainer({
     []
   );
 
+  const updateTime = useCallback(
+    (delta: number) => {
+      setTime((prev) => {
+        let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg + delta;
+        totalSeconds = Math.max(0, totalSeconds);
+        return {
+          hours: Math.floor(totalSeconds / 3600),
+          min: Math.floor((totalSeconds % 3600) / 60),
+          seg: totalSeconds % 60,
+        };
+      });
+    },
+    [setTime]
+  );
+
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => updateTime(-1), 1000);
     return () => clearInterval(interval);
-  }, [isPlaying]);
-
-  const updateTime = useCallback((delta: number) => {
-    setTime((prev) => {
-      let totalSeconds = prev.hours * 3600 + prev.min * 60 + prev.seg + delta;
-      totalSeconds = Math.max(0, totalSeconds);
-      return {
-        hours: Math.floor(totalSeconds / 3600),
-        min: Math.floor((totalSeconds % 3600) / 60),
-        seg: totalSeconds % 60,
-      };
-    });
-  }, []);
-
-  // const handleMenuChange = useCallback((label: string) => {
-  //   setMenu(label);
-  // }, []);
+  }, [isPlaying, updateTime]);
 
   const handleTogglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
-  }, []);
+  }, [setIsPlaying]);
 
   const handleReset = useCallback(() => {
     setIsPlaying(false);
     setTime(menuTimes[menu]);
-  }, [menu]);
+  }, [menu, menuTimes, setTime]);
 
   const handleClick = useCallback(
     (id: string) => {

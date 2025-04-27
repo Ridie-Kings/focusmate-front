@@ -24,6 +24,11 @@ export function useTimer(
     }
   }, []);
 
+  useEffect(() => {
+    if (menu === "concentracion") setTime(DEFAULT_FOCUS_TIME);
+    else if (menu === "D/Corto") setTime(DEFAULT_SHORT_BREAK);
+  }, [menu, DEFAULT_FOCUS_TIME, DEFAULT_SHORT_BREAK]);
+
   const playEndSound = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
@@ -47,7 +52,7 @@ export function useTimer(
     setIsPlay(false);
     setTime(DEFAULT_FOCUS_TIME);
     totalSecondsRef.current = timeUtils.timeToSeconds(DEFAULT_FOCUS_TIME);
-  }, [initialTime]);
+  }, [DEFAULT_FOCUS_TIME]);
 
   useEffect(() => {
     if (intervalRef.current) {
@@ -84,7 +89,14 @@ export function useTimer(
         intervalRef.current = null;
       }
     };
-  }, [isPlay, menu, playEndSound, DEFAULT_FOCUS_TIME, DEFAULT_SHORT_BREAK]);
+  }, [
+    isPlay,
+    menu,
+    playEndSound,
+    DEFAULT_FOCUS_TIME,
+    DEFAULT_SHORT_BREAK,
+    setMenu,
+  ]);
 
   return {
     time,
