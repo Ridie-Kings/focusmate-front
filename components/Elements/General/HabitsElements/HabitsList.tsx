@@ -8,10 +8,8 @@ import {
   Pen,
   Trash2,
 } from "lucide-react";
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
-import { updateHabit } from "@/services/Habits/updateHabit";
-import { removeHabit } from "@/services/Habits/removeHabit";
 import HabitsUtils from "@/lib/HabitsUtils";
 import Menu from "@/components/Reusable/Menu";
 import { ModalContext } from "@/components/Provider/ModalProvider";

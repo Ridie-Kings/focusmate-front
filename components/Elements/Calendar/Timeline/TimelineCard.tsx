@@ -4,7 +4,7 @@ import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
 import TaskUtils from "@/lib/TaskUtils";
 import { Check, Pen, Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 export default function TimelineCard({
   event,
