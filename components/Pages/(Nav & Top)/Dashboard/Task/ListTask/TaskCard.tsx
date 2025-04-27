@@ -30,7 +30,6 @@ export default function TaskCard({
           <p>{task.title}</p>
           <p className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-default truncate flex-1">
             {task.description}
-            vxccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
           </p>
         </div>
         <div className="flex gap-2 items-center">
