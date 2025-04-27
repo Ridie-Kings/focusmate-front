@@ -5,10 +5,14 @@ export default function BtnSend({
   setIsOpen,
   handleClick,
   isLoading,
+  text = "Guardar",
+  loadingText = "Guardando...",
 }: {
   setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
   handleClick: () => void;
   isLoading: boolean;
+  text?: string;
+  loadingText?: string;
 }) {
   return (
     <div className="flex py-2 gap-2.5">
@@ -21,7 +25,7 @@ export default function BtnSend({
         Cancelar
       </Button>
       <Button size="large" onClick={handleClick} button="primary" type="button">
-        {isLoading ? "Guardando..." : "Guardar"}
+        {isLoading ? loadingText : text}
       </Button>
     </div>
   );

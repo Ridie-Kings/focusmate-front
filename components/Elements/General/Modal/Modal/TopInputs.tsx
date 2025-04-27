@@ -18,6 +18,7 @@ export default function TopInputs({
       <input
         type="text"
         placeholder="Título"
+        defaultValue={task.title}
         className={`text-2xl outline-none ${
           error && !task.title ? "border-red-500 border-b-2" : "text-gray-500"
         }`}
@@ -27,6 +28,7 @@ export default function TopInputs({
         }}
       />
       <ModalColorPicker
+        defaultValue={task.color}
         onChange={(e) =>
           setTask((prev) => ({ ...prev, color: e.target.value }))
         }

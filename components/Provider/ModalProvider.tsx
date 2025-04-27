@@ -19,7 +19,7 @@ export type ModalItemType = {
 };
 
 export const ModalContext = createContext<ModalContextType>({
-  isOpen: { text: "" },
+  isOpen: { text: "", other: undefined },
   setIsOpen: () => {},
   profile: null,
 });

@@ -8,6 +8,7 @@ interface InputModalProps {
   option?: ReactNode;
   onChange?: (e: { target: { value: string } }) => void;
   propagand?: boolean;
+  defaultValue?: string;
 }
 
 export default function InputModal({
@@ -17,6 +18,7 @@ export default function InputModal({
   option,
   onChange,
   propagand = true,
+  defaultValue,
 }: InputModalProps) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -58,6 +60,7 @@ export default function InputModal({
           <span className="p-2">{icon}</span>
           <input
             type="text"
+            defaultValue={defaultValue}
             placeholder={placeholder}
             className="text-primary outline-none w-full"
             onChange={onChange}

@@ -25,7 +25,7 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
       <StatusCards filter={filter} setFilter={setFilter} tasks={tasks} />
       <p className="text-primary-500">
         {filter === ""
-          ? "Tareas pendiente"
+          ? "Tareas pendientes"
           : filter !== "Completada"
           ? "Tareas " + filter + " prioridad"
           : "Tareas " + filter}

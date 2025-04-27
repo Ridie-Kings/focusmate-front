@@ -9,6 +9,7 @@ export type ModalContextType = {
 };
 
 export type tempTaskType = {
+  _id: string | undefined;
   title: string;
   description: string;
   status: StatusType;

@@ -37,6 +37,7 @@ export default function BodyInputs({
   return (
     <div className="flex flex-col gap-6 w-full">
       <InputModal
+        defaultValue={task.description}
         onChange={(e) =>
           setTask((prev) => ({ ...prev, description: e.target.value }))
         }
@@ -60,15 +61,9 @@ export default function BodyInputs({
       /> */}
       <InputModal
         type="select"
-        placeholder={format(
-          task.dueDate instanceof Date && !isNaN(task.dueDate.getTime())
-            ? task.dueDate
-            : new Date(),
-          "dd MMMM yyyy",
-          {
-            locale: es,
-          }
-        )}
+        placeholder={format(task.dueDate ?? new Date(), "dd MMMM yyyy", {
+          locale: es,
+        })}
         option={
           <ModalDatePicker
             date={date}
@@ -88,13 +83,9 @@ export default function BodyInputs({
       <div className="flex">
         <InputModal
           type="select"
-          placeholder={format(
-            task.startDate instanceof Date && !isNaN(task.startDate.getTime())
-              ? task.startDate
-              : new Date(),
-            "HH:mm",
-            { locale: es }
-          )}
+          placeholder={format(task.startDate ?? new Date(), "HH:mm", {
+            locale: es,
+          })}
           option={
             <ModalTimePicker
               onChange={(e) => {
@@ -118,13 +109,9 @@ export default function BodyInputs({
         />
         <InputModal
           type="select"
-          placeholder={format(
-            task.endDate instanceof Date && !isNaN(task.endDate.getTime())
-              ? task.endDate
-              : new Date(),
-            "HH:mm",
-            { locale: es }
-          )}
+          placeholder={format(task.endDate ?? new Date(), "HH:mm", {
+            locale: es,
+          })}
           option={
             <ModalTimePicker
               onChange={(e) => {
@@ -150,6 +137,7 @@ export default function BodyInputs({
       </div>
       <InputModal
         type="select"
+        defaultValue={task.priority}
         placeholder={task?.priority ? trad() : "Estado"}
         option={
           <ModalPriorityPicker
