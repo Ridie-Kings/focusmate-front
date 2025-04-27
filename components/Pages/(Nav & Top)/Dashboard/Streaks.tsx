@@ -33,7 +33,7 @@ export default function Streaks({ number }: { number: number }) {
         if (number >= 30)
           return {
             title: "Fuego sagrado",
-            desc: "Alcanzaste el equilibrio perfecto. Tu hábito ya es parte de vos.",
+            desc: "Alcanzaste el equilibrio perfecto. Tu hábito ya es parte de ti.",
           };
         return {
           title: "dasdsa",
@@ -45,7 +45,7 @@ export default function Streaks({ number }: { number: number }) {
   return (
     <TemplateDashboard
       title=""
-      grid={`text-base items-start mx-3 md:mx-0 ${
+      grid={`text-base items-start mx-3 md:mx-0 col-span-2 ${
         number <= 0
           ? "bg-quaternary-700 text-white"
           : "bg-secondary-100 text-primary-700"

@@ -15,6 +15,7 @@ export default function StreaksBgMax() {
       <path
         d="M400.5 114H-21.5V35.5105C118.536 26.8448 259.203 26.8149 400.5 35.5105V114Z"
         fill="#D5EDE2"
+        className="scale-110 -translate-x-5 md:scale-155 md:-translate-x-25 md:-translate-y-2 lg:translate-x-0 lg:translate-y-2 lg:scale-100 2xl:scale-150 2xl:-translate-x-20"
       />
       <path
         d="M300.04 78.5899C345.195 78.5899 381.8 73.5129 381.8 67.2499C381.8 60.987 345.195 55.9099 300.04 55.9099C254.885 55.9099 218.28 60.987 218.28 67.2499C218.28 73.5129 254.885 78.5899 300.04 78.5899Z"

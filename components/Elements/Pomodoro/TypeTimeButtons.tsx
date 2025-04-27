@@ -73,7 +73,7 @@ export default function TypeTimeButtons({
 
   return (
     <ul
-      className={`flex flex-col md:flex-row w-full place-content-evenly gap-2 ${
+      className={`flex flex-col xl:flex-row w-full place-content-evenly gap-2 ${
         fullScreen ? "" : "lg:p-0 p-2"
       } ${className}`}
     >

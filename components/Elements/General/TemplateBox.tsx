@@ -20,7 +20,9 @@ export default function TemplateBox({
       >
         {title !== "" && (
           <div className="w-full flex flex-col gap-4">
-            <p className={`text-center text-xl 2xl:text-2xl text-primary-500`}>
+            <p
+              className={`text-center text-xl 2xl:text-2xl font-medium text-primary-500`}
+            >
               {title}
             </p>
             <Divider />
