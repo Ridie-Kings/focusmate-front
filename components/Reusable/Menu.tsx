@@ -95,8 +95,7 @@ const MenuItem = ({
     <div
       ref={itemRef}
       className="relative"
-      onMouseEnter={() => hasSubMenu && setShowSubMenu(true)}
-      onMouseLeave={() => hasSubMenu && setShowSubMenu(false)}
+      onClick={() => hasSubMenu && setShowSubMenu(!showSubMenu)}
     >
       <button
         className={`flex items-center justify-between gap-2 p-2 text-left cursor-pointer bg-white rounded w-full transition-all duration-300 ${
