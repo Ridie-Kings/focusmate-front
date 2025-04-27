@@ -25,8 +25,14 @@ export default function TaskCard({
   return (
     <li className="flex items-center gap-2 group">
       <div className="h-full w-0 rounded-full bg-primary-500/25 group-hover:w-1 transition-all duration-200" />
-      <div className="flex w-full p-4 items-center justify-between border-2 border-secondary-400 rounded-lg">
-        <p className="text-primary-500">{task.title}</p>
+      <div className="flex w-full p-4 items-center justify-between border-2 border-secondary-400 rounded-lg group">
+        <div className="flex items-center gap-3 text-primary-500">
+          <p>{task.title}</p>
+          <p className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-default truncate flex-1">
+            {task.description}
+            vxccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+          </p>
+        </div>
         <div className="flex gap-2 items-center">
           <PriorityBadge priority={task.priority} status={task.status} />
           <Menu
