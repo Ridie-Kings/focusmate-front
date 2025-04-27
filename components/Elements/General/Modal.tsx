@@ -21,7 +21,7 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
       case "task":
         return <ModalTask setIsOpen={setIsOpen} isOpen={isOpen} />;
       case "habit":
-        return <ModalHabit setIsOpen={setIsOpen} />;
+        return <ModalHabit setIsOpen={setIsOpen} isOpen={isOpen} />;
       case "event":
         return <ModalEvent setIsOpen={setIsOpen} isOpen={isOpen} />;
       case "contact":
