@@ -21,8 +21,6 @@ export default function Timeline({
   setEvents,
   setTasks,
 }: TimelineProps) {
-  console.log(events);
-
   const filteredEvents = useMemo(() => {
     return events
       .filter((event) => isSameDay(new Date(event.dueDate), date ?? new Date()))
