@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import Timeline from "./Agenda/Timeline";
