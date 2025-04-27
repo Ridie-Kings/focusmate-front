@@ -1,40 +1,17 @@
-"use client";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { Gem } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
-export default function PlanButtons({
-  profile,
-}: {
-  profile: ProfileType | null;
-}) {
-  const router = useRouter();
-
-  const handleSend = async () => {
-    try {
-      await fetch("/api/send-previnterest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          _id: profile?.user._id,
-          email: profile?.user.email,
-        }),
-      });
-    } catch (err) {
-    } finally {
-      router.push("pricing");
-    }
-  };
+export default function PlanButtons() {
   return (
-    <div
-      onClick={() => handleSend()}
+    <Link
+      href={"/pricing"}
       className="
   group relative flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg
   bg-secondary-500 hover:bg-secondary-400 text-gray-300
   cursor-pointer transition-all duration-300 group-hover:w-full w-11
 "
       aria-label="Mejorar Plan"
+      type="button"
     >
       <span
         className="
@@ -63,6 +40,6 @@ export default function PlanButtons({
       >
         <Gem size={20} />
       </span>
-    </div>
+    </Link>
   );
 }

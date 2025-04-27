@@ -32,7 +32,7 @@ export default function TimelineCard({
         event.status === "completed" ? "border-2 border-gray-500" : ""
       }`}
     >
-      <p className="font-medium">{event.title}</p>
+      <p>{event.title}</p>
       <div className="flex items-center justify-between w-full">
         <span className="flex flex-col items-center gap-1">
           <p className="text-sm">
@@ -62,7 +62,7 @@ export default function TimelineCard({
         </span>
       </div>
       <Menu
-        className="absolute right-3 top-4"
+        className="absolute right-1 top-2"
         items={[
           {
             label: "Hecho",
