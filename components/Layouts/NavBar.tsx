@@ -3,8 +3,11 @@ import LogoutButtons from "./NavBar/LogoutButtons";
 import TopLogo from "./NavBar/TopLogo";
 import { logout } from "@/lib";
 import PlanButtons from "./NavBar/PlanButtons";
+import { getMyProfile } from "@/services/Profile/getMyProfile";
 
-export default function NavBar() {
+export default async function NavBar() {
+  const profile = await getMyProfile();
+
   const handleLogout = async () => {
     "use server";
 
@@ -31,7 +34,7 @@ export default function NavBar() {
       <TopLogo />
       <Navigation />
       <div className="flex flex-col w-full items-center gap-2">
-        <PlanButtons />
+        <PlanButtons profile={profile}/>
         <LogoutButtons handleLogout={handleLogout} />
       </div>
     </header>

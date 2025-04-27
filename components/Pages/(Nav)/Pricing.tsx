@@ -7,7 +7,7 @@ export default async function Pricing() {
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center gap-6 p-9 text-primary-500 bg-background-primary">
-      <p className="text-5xl font-medium z-10">
+      <p className="text-5xl font-medium z-10 text-center">
         Organizate mejor y alcanza tus metas con sherpapp
       </p>
       <p className="text-3xl z-10">
