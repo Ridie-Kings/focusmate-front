@@ -74,19 +74,18 @@ export default function CalendarPage() {
       }
     };
 
-    // 👇🏻 Creamos una función debounced que decide qué fetch hacer
     const debouncedFetch = debounce(() => {
       if (navType === "Día") {
         handleGetCalendarByDate();
       } else {
         handleGetCalendarByRange();
       }
-    }, 500); // 500ms de espera
+    }, 500);
 
     debouncedFetch();
 
     return () => {
-      debouncedFetch.cancel(); // 👈🏻 Cancelamos si cambia o desmonta
+      debouncedFetch.cancel();
     };
   }, [date, navType]);
 

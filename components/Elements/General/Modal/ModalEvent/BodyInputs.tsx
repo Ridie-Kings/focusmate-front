@@ -88,6 +88,7 @@ export default function BodyInputs({
           })}
           option={
             <ModalTimePicker
+              defaultValue={task.startDate}
               onChange={(e) => {
                 const newStartDate = new Date(task.startDate ?? new Date());
                 newStartDate.setHours(
@@ -114,6 +115,7 @@ export default function BodyInputs({
           })}
           option={
             <ModalTimePicker
+              defaultValue={task.endDate}
               onChange={(e) => {
                 const newEndDate = new Date(task.endDate ?? new Date());
                 newEndDate.setHours(

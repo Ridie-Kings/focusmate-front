@@ -80,7 +80,6 @@ export default function ModalEvent({ setIsOpen, isOpen }: ModalEventProps) {
     return true;
   };
 
-
   const handleUpdateTask = async () => {
     setError(null);
 
