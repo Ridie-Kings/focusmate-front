@@ -14,11 +14,6 @@ import RenderActionButton from "./AuthContainer/RenderActionButton";
 import GreenLogo from "@/components/Elements/Svg/Logos/GreenLogo";
 import LinkButtons from "./LinkButtons";
 
-const REDIRECT_PATHS = {
-  login: "/",
-  register: "/login",
-};
-
 export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   const config = AUTH_CONFIG[type];
   const [error, setError] = useState("");
@@ -65,7 +60,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
 
     if (state.success) {
       localStorage.removeItem(storageKey);
-      router.push(REDIRECT_PATHS[type]);
+      router.push("/");
     } else {
       setError(state.message);
       setTimeout(() => {
