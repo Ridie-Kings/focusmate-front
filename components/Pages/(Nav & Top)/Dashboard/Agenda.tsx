@@ -21,8 +21,9 @@ export default function Agenda() {
   useEffect(() => {
     const handleGetCalendarByDate = async (dateToFetch: Date) => {
       const events = await getCalendarByDate({
-        date: format(dateToFetch ?? new Date(), "yyyy-MM-dd"),
+        date: format(dateToFetch, "yyyy-MM-dd"),
       });
+      console.log(dateToFetch);
 
       if (events.success) {
         setEvents(events.res);
@@ -36,9 +37,7 @@ export default function Agenda() {
       handleGetCalendarByDate(dateToFetch);
     }, 500);
 
-    if (date) {
-      debouncedFetch(date);
-    }
+    debouncedFetch(date ?? new Date());
 
     return () => {
       debouncedFetch.cancel();

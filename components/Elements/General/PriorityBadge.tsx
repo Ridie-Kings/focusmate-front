@@ -1,9 +1,13 @@
 export default function PriorityBadge({
   priority,
   status,
+  className,
+  style,
 }: {
   priority: string;
   status: string;
+  className?: string;
+  style?: React.CSSProperties;
 }) {
   const trad = () => {
     if (status === "completed") return "Completada";
@@ -22,7 +26,8 @@ export default function PriorityBadge({
 
   return (
     <div
-      className={`${
+      style={style}
+      className={`${className} ${
         status !== "completed"
           ? priority === "high"
             ? "bg-[#fccbca] border border-[#f3403b]"

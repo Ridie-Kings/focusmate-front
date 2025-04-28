@@ -12,6 +12,7 @@ import RenderForgotPassword from "./AuthContainer/RenderForgotPassword";
 import RenderActionLinks from "./AuthContainer/RenderActionLinks";
 import RenderActionButton from "./AuthContainer/RenderActionButton";
 import GreenLogo from "@/components/Elements/Svg/Logos/GreenLogo";
+import LinkButtons from "./LinkButtons";
 
 const REDIRECT_PATHS = {
   login: "/",
@@ -132,7 +133,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
               </>
             )}
           </div>
-          {/* <LinkButtons /> */}
+          <LinkButtons />
         </form>
       </div>
     </section>

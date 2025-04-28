@@ -1,4 +1,5 @@
 import { LinkIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function LinkButtons() {
   return (
@@ -8,13 +9,14 @@ export default function LinkButtons() {
         <p className="font-light">O puedes</p>
         <div className="flex-1 h-[1px] bg-black" />
       </div>
-      <button
+      <Link
+        href={"http://sherp-app.com/api/v0/auth/google"}
         type="button"
         className="flex-1 w-full active:bg-primary-500 hover:bg-primary-700 hover:text-white active:text-white border border-primary-500 px-2 py-4 rounded-2xl flex items-center justify-center gap-4 transition-colors duration-300 cursor-pointer"
       >
         <p>Iniciar Sesión con Google</p>
         <LinkIcon size={20} />
-      </button>
+      </Link>
     </div>
   );
 }
