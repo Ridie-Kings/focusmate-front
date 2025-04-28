@@ -10,11 +10,11 @@ export default function TaskCard({
   task,
   setTasks,
   setEvents,
-  setIsChangeStatus,
-  isChangeStatus,
+  setIsChange,
+  isChange,
 }: {
-  setIsChangeStatus: (taskId: string) => void;
-  isChangeStatus: boolean;
+  setIsChange: (taskId: string) => void;
+  isChange: boolean;
   task: TaskType;
   setTasks: Dispatch<SetStateAction<TaskType[]>>;
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
@@ -27,7 +27,7 @@ export default function TaskCard({
     });
 
   const handleStatus = () => {
-    setIsChangeStatus(task._id);
+    setIsChange(task._id);
     setTimeout(() => {
       handleChangeStatus(
         task.status === "completed"
@@ -35,43 +35,48 @@ export default function TaskCard({
           : ("completed" as StatusType),
         task._id
       );
-      setIsChangeStatus("");
+      setIsChange("");
+    }, 1000);
+  };
+  const handleDelete = () => {
+    setIsChange(task._id);
+    setTimeout(() => {
+      handleDeleteTask(task._id);
+      setIsChange("");
     }, 1000);
   };
 
   return (
-    <li className="flex items-center gap-2 group">
+    <>
       <div
         style={{
-          transform: isChangeStatus ? "translateX(-100%)" : "translateX(0%)",
+          transform: isChange ? "translateX(-100%)" : "translateX(0%)",
         }}
         className="h-full w-0 rounded-full bg-primary-500/25 group-hover:w-1 transition-all duration-1000"
-      />
+      />{" "}
       <div
         style={{
-          transform: isChangeStatus ? "translateY(-100%)" : "translateY(0%)",
+          transform: isChange ? "translateY(-100%)" : "translateY()",
         }}
         className="flex w-full p-4 items-center justify-between border-2 border-secondary-400 rounded-lg group transition-all duration-800 delay-200"
       >
+        {" "}
         <div className="flex items-center gap-3 text-primary-500">
           <p
             style={{
-              transform: isChangeStatus
-                ? "translateY(-100%)"
-                : "translateY(0%)",
+              transform: isChange ? "translateY(-100%)" : "translateY(0%)",
             }}
             className="transition-all duration-1000"
           >
             {task.title}
-          </p>
+          </p>{" "}
           <p
             style={{
-              transform: isChangeStatus
-                ? "translateY(-100%)"
-                : "translateY(0%)",
+              transform: isChange ? "translateY(-100%)" : "translateY(0%)",
             }}
             className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-900 delay-100 cursor-default truncate flex-1"
           >
+            {" "}
             {task.description}
           </p>
         </div>
@@ -80,9 +85,7 @@ export default function TaskCard({
             priority={task.priority}
             status={task.status}
             style={{
-              transform: isChangeStatus
-                ? "translateY(-100%)"
-                : "translateY(0%)",
+              transform: isChange ? "translateY(-100%)" : "translateY(0%)",
             }}
             className="transition-all duration-850 delay-150"
           />
@@ -114,7 +117,7 @@ export default function TaskCard({
                 label: "Eliminar",
                 color: "red",
                 icon: <Trash2 />,
-                onClick: () => handleDeleteTask(task._id),
+                onClick: () => handleDelete(),
               },
             ]}
           />
@@ -125,14 +128,14 @@ export default function TaskCard({
         checked={task.status === "completed"}
         onChange={handleStatus}
         style={{
-          transform: isChangeStatus ? "translateY(-200%)" : "translateY(0%)",
+          transform: isChange ? "translateY(-200%)" : "translateY(0%)",
         }}
         className={`cursor-pointer size-6 border-2 rounded appearance-none transition-all duration-750 delay-250 ${
           task.status === "completed"
             ? "bg-primary-500 border-primary-500"
             : "bg-white border-gray-500"
         }`}
-      />
-    </li>
+      />{" "}
+    </>
   );
 }

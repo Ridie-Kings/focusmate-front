@@ -69,8 +69,7 @@ export default function ListTask({
   return (
     <div className="flex flex-col w-full gap-4">
       <div
-        ref={taskListRef}
-        className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto overflow-x-visible pr-2 transition-all duration-300"
+        className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto overflow-x-visible transition-all duration-300"
         style={{
           opacity: isInitialRender ? 0 : 1,
         }}
@@ -79,22 +78,20 @@ export default function ListTask({
           filteredTasks.map((task, index) => (
             <div
               key={task._id}
-              className={`transform transition-all duration-300 ${
-                isInitialRender
-                  ? "opacity-0 translate-y-6"
-                  : "opacity-100 translate-y-0"
+              className={`transform transition-all duration-300 flex items-center gap-2 ${
+                isInitialRender ? "opacity-0 translate-y-6" : "opacity-100 "
               }`}
               style={{
                 transitionDelay: `${isInitialRender ? index * 0.08 : 0}s`,
                 transform: changingTaskIds.includes(task._id)
                   ? "translateY(5px)"
-                  : "translateY(0px)",
+                  : "",
               }}
             >
               <TaskCard
                 task={task}
-                setIsChangeStatus={handleStatusChange}
-                isChangeStatus={changingTaskIds.includes(task._id)}
+                setIsChange={handleStatusChange}
+                isChange={changingTaskIds.includes(task._id)}
                 setEvents={setEvents}
                 setTasks={setTasks}
               />
