@@ -154,6 +154,7 @@ export default function ModalEvent({ setIsOpen, isOpen }: ModalEventProps) {
       }
 
       setEvents((prev) => [...prev, res.message]);
+      setTasks((prev) => [...prev, res.message]);
 
       try {
         const calendarResponse = await addTaskToCalendar({

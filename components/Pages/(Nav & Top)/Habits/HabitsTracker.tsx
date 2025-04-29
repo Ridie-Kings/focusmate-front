@@ -1,7 +1,7 @@
 import CircleProgressBar from "@/components/Elements/General/HabitsElements/CircleProgress";
 import { useState } from "react";
-import Calendar from "@/components/Elements/General/Calendar";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
 export default function HabitsTracker({
   porcent,
@@ -21,8 +21,8 @@ export default function HabitsTracker({
         doneCount={doneCount}
         habits={items}
       />
-      <Calendar
-        date={date}
+      <SmallCalendar
+        date={date ?? new Date()}
         setDate={setDate}
         className="border-2 rounded-lg p-2"
       />

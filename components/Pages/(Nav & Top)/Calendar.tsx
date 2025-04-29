@@ -1,12 +1,12 @@
 "use client";
 
 import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
-import Calendar from "@/components/Elements/General/Calendar";
 import { useContext, useState, useEffect } from "react";
 import { CalendarContext } from "@/components/Provider/CalendarProvider";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
 import {
   endOfDay,
@@ -74,36 +74,34 @@ export default function CalendarPage() {
       }
     };
 
-    // 👇🏻 Creamos una función debounced que decide qué fetch hacer
     const debouncedFetch = debounce(() => {
       if (navType === "Día") {
         handleGetCalendarByDate();
       } else {
         handleGetCalendarByRange();
       }
-    }, 500); // 500ms de espera
+    }, 500);
 
     debouncedFetch();
 
     return () => {
-      debouncedFetch.cancel(); // 👈🏻 Cancelamos si cambia o desmonta
+      debouncedFetch.cancel();
     };
   }, [date, navType]);
 
   return (
     <section className="flex flex-1 h-full gap-6 p-6 overflow-hidden transition-all duration-300">
-      <div className="w-1/3 2xl:w-1/4 h-full flex flex-col gap-2">
-        <Calendar
-          date={date}
+      <div className="w-1/3 xl:w-1/4 h-full flex flex-col gap-2">
+        <SmallCalendar
           setDate={setDate}
-          className="border-2 rounded-lg p-2"
+          date={date ?? new Date()}
           inView={navType !== "Month"}
-          btn
         />
         {/* <Categories /> */}
       </div>
       <CalendarInfo
         events={events}
+        setEvents={setEvents}
         navType={navType}
         setNavType={(value) => {
           if (typeof value === "function") {
@@ -116,7 +114,7 @@ export default function CalendarPage() {
             updateNavType(value);
           }
         }}
-        date={date}
+        date={date ?? new Date()}
         setDate={setDate}
       />
     </section>

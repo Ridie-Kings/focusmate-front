@@ -1,12 +1,15 @@
 "use server";
 import { AuthResponse } from "@/interfaces/Auth/AuthType";
 import { apiConnection } from "../axiosConfig";
+import { cookies } from "next/headers";
 
 export async function register(
   prevState: any,
   formData: FormData
 ): Promise<AuthResponse> {
   try {
+    const cookieStore = await cookies();
+
     const userData = {
       email: formData.get("email") as string,
       username: formData.get("username") as string,
@@ -18,6 +21,7 @@ export async function register(
       ...userData,
       repeatPassword: formData.get("repeat password") as string,
     });
+
     if (testUser && !testUser.success) {
       return {
         success: false,
@@ -25,10 +29,26 @@ export async function register(
       };
     }
     const response = await apiConnection.post("auth/register", userData);
+    const { access_token, refresh_token } = response?.data;
+
+    const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
+    const hardExpired = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7j
+
+    cookieStore.set("access_token", access_token, {
+      expires: softExpired,
+      httpOnly: true,
+      path: "/",
+    });
+
+    cookieStore.set("refresh_token", refresh_token, {
+      expires: hardExpired,
+      httpOnly: true,
+      path: "/",
+    });
 
     return {
       success: true,
-      message: response?.data || "Registration successful",
+      message: "Login successful",
     };
   } catch (error: any) {
     return {

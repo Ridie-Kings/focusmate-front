@@ -4,7 +4,7 @@ interface SelectDateProps {
   handleDateChange: (date: string) => void;
   date: Date | undefined;
   dateType: DateType;
-  dates: number[];
+  dates: string[];
 }
 
 export default function SelectDate({
@@ -20,11 +20,11 @@ export default function SelectDate({
       case "day":
         return date.getDate().toString();
       case "year":
-        return date.getFullYear().toString();
+        return date.getMonth().toString() + date.getFullYear().toString();
       case "month":
         return (date.getMonth() + 1).toString();
       default:
-        return date.getFullYear().toString();
+        return date.getMonth().toString() + date.getFullYear().toString();
     }
   };
 
