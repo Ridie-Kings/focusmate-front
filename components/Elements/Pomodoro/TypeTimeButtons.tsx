@@ -102,7 +102,9 @@ export default function TypeTimeButtons({
             type="button"
             button="pomodoro"
             state={
-              startedElement
+              startedElement && item.type === menu
+                ? "disabled-pressed"
+                : startedElement
                 ? "disabled"
                 : item.type === menu
                 ? "pressed"
