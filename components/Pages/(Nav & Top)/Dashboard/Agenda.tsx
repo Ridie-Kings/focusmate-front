@@ -47,7 +47,7 @@ export default function Agenda() {
       link="/calendar"
       title="Calendario"
     >
-      <div className="flex flex-col xl:flex-row w-full h-full">
+      <div className="flex flex-col xl:flex-row w-full h-full gap-4">
         <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
         <Timeline
           date={date}
