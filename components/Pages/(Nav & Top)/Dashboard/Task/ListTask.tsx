@@ -18,7 +18,6 @@ export default function ListTask({
   const [changingTaskIds, setChangingTaskIds] = useState<string[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const taskListRef = useRef<HTMLDivElement>(null);
 
   const { setIsOpen } = useContext(ModalContext) as {
     setIsOpen: (params: { text: string; other?: unknown }) => void;

@@ -10,13 +10,24 @@ import {
   getHours,
   getMinutes,
   isToday,
+  format,
 } from "date-fns";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
+import { Pen, Trash2 } from "lucide-react";
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useContext,
+  useEffect,
+} from "react";
 import Divider from "@/components/Elements/General/Divider";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import Menu from "@/components/Reusable/Menu";
+import AgendaUtils from "@/lib/AgendaUtils";
+import TaskUtils from "@/lib/TaskUtils";
+import { ModalContext } from "@/components/Provider/ModalProvider";
 
 const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];
 
@@ -24,58 +35,94 @@ const getNowPosition = (date: Date) => {
   const hours = getHours(date);
   const minutes = getMinutes(date);
 
-  return hours * 2 * 48 + minutes * (48 / 30);
+  return 24 + hours * 2 * 88 + minutes * (88 / 30);
 };
 
 const EventItem = ({
   event,
+  setEvents,
   eventStartPosition,
   eventEndPosition,
 }: {
   event: TaskType;
+  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   eventStartPosition: number;
   eventEndPosition: number;
 }) => {
+  const { setIsOpen } = useContext(ModalContext);
+  const { isLightColor } = AgendaUtils();
+
+  const { handleDeleteTask } = TaskUtils({
+    setEvents,
+  });
+  const textColor = isLightColor(event.color) ? "text-black" : "text-white";
+
   return (
     <div
-      className="absolute w-[95%] bg-[#e9d2ee] py-4 px-2 rounded flex flex-col items-start place-content-between border-l-2 border-[#baa8be]"
+      className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"
       style={{
+        backgroundColor: event.color,
         top: `${eventStartPosition}px`,
         height: `${eventEndPosition - eventStartPosition}px`,
       }}
     >
-      <p className="">{event.title}</p>
-      <div className="flex place-content-between w-full text-gray-100 text-xs p-1">
-        <span>
-          {new Date(event.startDate).toLocaleTimeString("es-ES", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </span>
-        <span>
-          {new Date(event.endDate).toLocaleTimeString("es-ES", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </span>
+      <div className="w-full flex items-center place-content-between sticky top-15">
+        <p className="text-sm">{event.title}</p>
+        <Menu
+          className={textColor}
+          items={[
+            {
+              label: "Modificar",
+              icon: <Pen size={20} />,
+              onClick: () => setIsOpen({ text: "event", other: event }),
+            },
+            {
+              label: "Eliminar",
+              color: "red",
+              icon: <Trash2 />,
+              onClick: () => handleDeleteTask(event._id),
+            },
+          ]}
+        />
+      </div>
+      <div
+        style={{ backgroundColor: event.color }}
+        className={`${textColor} flex place-content-between w-full text-xs p-1 z-10`}
+      >
+        <span>{format(event.startDate, "HH:mm")} </span>
+        <span>{format(event.endDate, "HH:mm")} </span>
       </div>
     </div>
   );
 };
 
-const DayColumn = ({ day, events }: { day: Date; events: TaskType[] }) => {
+const DayColumn = ({
+  day,
+  events,
+  setEvents,
+}: {
+  day: Date;
+  events: TaskType[];
+  setEvents: Dispatch<SetStateAction<TaskType[]>>;
+}) => {
   return (
     <div className="flex flex-col gap-5">
       <div
-        className={`text-xl flex flex-col items-center drop-shadow-lg text-center py-2 border border-primary-500 rounded-lg sticky top-0 z-10 ${
+        className={`flex items-center place-content-between px-3 drop-shadow-lg text-center py-2   rounded-lg sticky top-0 z-20 ${
           isToday(day)
-            ? "bg-primary-500 text-white"
-            : "bg-white text-primary-500"
+            ? "bg-primary-400 text-white"
+            : "bg-white text-primary-500 border border-primary-500"
         }`}
       >
         {WeekDay[getDay(day)]}
-        <Divider width="90%" />
-        {day.getDate()}
+        <Divider width="1px" height="100%" />
+        <p
+          className={` text-white rounded-lg py-1 px-1.5 ${
+            isToday(day) ? "bg-primary-500" : "bg-primary-400"
+          }`}
+        >
+          {day.getDate().toString().padStart(2, "0")}
+        </p>
       </div>
       <div
         className={`text-center p-1 h-full rounded-lg transition-all duration-200 relative`}
@@ -90,6 +137,7 @@ const DayColumn = ({ day, events }: { day: Date; events: TaskType[] }) => {
               <EventItem
                 key={i}
                 event={event}
+                setEvents={setEvents}
                 eventStartPosition={eventStartPosition}
                 eventEndPosition={eventEndPosition}
               />
@@ -103,10 +151,12 @@ const DayColumn = ({ day, events }: { day: Date; events: TaskType[] }) => {
 const WeekCalendarItem = ({
   date,
   events,
+  setEvents,
   scrollCalendar,
 }: {
   date: Date;
   events: TaskType[];
+  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
 }) => {
   const startDate = startOfDay(startOfWeek(date, { weekStartsOn: 1 }));
@@ -141,9 +191,14 @@ const WeekCalendarItem = ({
         </div>
         <TimeLeftBar length={49} divider={2} calc={1} />
       </div>
-      <TimeBar pos={getNowPosition(new Date())} />
+      <TimeBar pos={getNowPosition(new Date()) + 71} />
       {days.map((day, index) => (
-        <DayColumn key={index} day={day} events={events} />
+        <DayColumn
+          key={index}
+          day={day}
+          events={events}
+          setEvents={setEvents}
+        />
       ))}
     </div>
   );
@@ -151,51 +206,23 @@ const WeekCalendarItem = ({
 
 export default function WeekCalendar({
   events,
+  setEvents,
   date,
   setDate,
   scrollCalendar,
 }: {
   events: TaskType[];
+  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
 }) {
-  const handlePreviousWeek = () => {
-    setDate(subDays(date, 7));
-  };
-
-  const handleNextWeek = () => {
-    setDate(addDays(date, 7));
-  };
-
   return (
-    <div className="w-full flex-1 flex flex-col gap-2 place-content-between">
-      <div className="flex justify-between items-center py-2">
-        <button
-          onClick={handlePreviousWeek}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-        >
-          <ArrowLeft className="mr-2" /> Semana anterior
-        </button>
-        <span className="font-semibold text-lg">
-          {date.toLocaleDateString("es-ES", {
-            year: "numeric",
-            month: "long",
-          })}
-        </span>
-        <button
-          onClick={handleNextWeek}
-          className="flex items-center px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-        >
-          Semana siguiente <ArrowRight className="ml-2" />
-        </button>
-      </div>
-
-      <WeekCalendarItem
-        scrollCalendar={scrollCalendar}
-        date={date}
-        events={events}
-      />
-    </div>
+    <WeekCalendarItem
+      scrollCalendar={scrollCalendar}
+      date={date}
+      events={events}
+      setEvents={setEvents}
+    />
   );
 }
