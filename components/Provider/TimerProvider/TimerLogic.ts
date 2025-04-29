@@ -1,9 +1,8 @@
 "use client";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
-import { SocketIOContext } from "../WebsocketProvider";
 
 export function useTimer(
   initialTime: TimeType,
@@ -12,7 +11,6 @@ export function useTimer(
   DEFAULT_FOCUS_TIME: TimeType,
   DEFAULT_SHORT_BREAK: TimeType
 ) {
-  const { status } = useContext(SocketIOContext);
   const [time, setTime] = useState<TimeType>(initialTime);
   const [isPlay, setIsPlay] = useState(false);
 
@@ -25,7 +23,6 @@ export function useTimer(
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }
   }, []);
-
 
   useEffect(() => {
     if (menu === "concentracion") setTime(DEFAULT_FOCUS_TIME);

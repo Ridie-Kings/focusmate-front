@@ -89,15 +89,6 @@ const SmallCalendar: React.FC<CalendarProps> = ({
     setDate(addMonths(date, 1));
   };
 
-  const handleYearChange = (year: string) => {
-    setDate((currentDate) => {
-      if (!currentDate) return undefined;
-      const newDate = new Date(currentDate);
-      newDate.setFullYear(parseInt(year));
-      return newDate;
-    });
-  };
-
   const handleMonthYearChange = (monthYear: string) => {
     setDate((currentDate) => {
       console.log(monthYear);

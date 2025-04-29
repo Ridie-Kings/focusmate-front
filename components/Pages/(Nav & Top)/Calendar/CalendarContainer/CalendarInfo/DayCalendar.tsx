@@ -145,12 +145,10 @@ const DayCalendarItem = ({
 export default function DayCalendar({
   events,
   date,
-  setDate,
   setEvents,
 }: {
   events: TaskType[];
   date: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
   return <DayCalendarItem date={date} events={events} setEvents={setEvents} />;

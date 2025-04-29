@@ -1,19 +1,15 @@
 import {
   addDays,
-  addMonths,
   endOfMonth,
   endOfWeek,
   format,
   isSameDay,
   startOfMonth,
   startOfWeek,
-  subMonths,
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
-
-import { Dispatch, SetStateAction, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 
 import Dot from "@/components/Elements/General/Dot";
 import { TaskType } from "@/interfaces/Task/TaskType";
@@ -122,25 +118,10 @@ CalendarGrid.displayName = "CalendarGrid";
 export default function MonthCalendar({
   events,
   date = new Date(),
-  setDate,
 }: {
   events: TaskType[];
   date?: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
-  const handlePreviousMonth = () => {
-    setDate((currentDate) => subMonths(currentDate ?? new Date(), 1));
-  };
-
-  const handleNextMonth = () => {
-    setDate((currentDate) => addMonths(currentDate ?? new Date(), 1));
-  };
-
-  const monthYearLabel = useMemo(
-    () => format(date, "MMMM yyyy", { locale: es }),
-    [date]
-  );
-
   const weekdays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sáb", "Dom"];
 
   return (

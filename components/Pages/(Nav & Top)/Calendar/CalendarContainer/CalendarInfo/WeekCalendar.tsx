@@ -1,6 +1,5 @@
 import {
   addDays,
-  subDays,
   startOfDay,
   startOfWeek,
   endOfDay,
@@ -208,13 +207,11 @@ export default function WeekCalendar({
   events,
   setEvents,
   date,
-  setDate,
   scrollCalendar,
 }: {
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
   date: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
 }) {
   return (

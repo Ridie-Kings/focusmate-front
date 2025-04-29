@@ -27,12 +27,7 @@ export default function CalendarInfo({
     switch (navType) {
       case "Día":
         return (
-          <DayCalender
-            events={events}
-            date={date}
-            setDate={setDate}
-            setEvents={setEvents}
-          />
+          <DayCalender events={events} date={date} setEvents={setEvents} />
         );
       case "Semana":
         return (
@@ -40,14 +35,13 @@ export default function CalendarInfo({
             events={events}
             setEvents={setEvents}
             date={date}
-            setDate={setDate}
             scrollCalendar={scrollCalendar}
           />
         );
       case "Mes":
-        return <MonthCalendar events={events} date={date} setDate={setDate} />;
+        return <MonthCalendar events={events} date={date} />;
       default:
-        return <MonthCalendar events={events} date={date} setDate={setDate} />;
+        return <MonthCalendar events={events} date={date} />;
     }
   };
 
