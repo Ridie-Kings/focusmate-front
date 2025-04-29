@@ -45,7 +45,7 @@ export default function ButtonDropDown({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white drop-shadow-lg p-1 text-primary-500">
+        <div className="absolute right-0 mt-2 origin-top-right rounded-md bg-white drop-shadow-lg p-1 text-primary-500">
           {items.map((item, index) => (
             <button
               key={index}

@@ -86,7 +86,7 @@ const EventItem = ({
       </div>
       <div
         style={{ backgroundColor: event.color }}
-        className={`${textColor} flex place-content-between w-full text-xs p-1 z-10`}
+        className={`${textColor} flex place-content-between w-full text-xs p-1 z-8`}
       >
         <span>{format(event.startDate, "HH:mm")} </span>
         <span>{format(event.endDate, "HH:mm")} </span>
@@ -107,7 +107,7 @@ const DayColumn = ({
   return (
     <div className="flex flex-col gap-5">
       <div
-        className={`flex items-center place-content-between px-3 drop-shadow-lg text-center py-2   rounded-lg sticky top-0 z-20 ${
+        className={`flex items-center place-content-between px-3 drop-shadow-lg text-center py-2   rounded-lg sticky top-0 z-10 ${
           isToday(day)
             ? "bg-primary-400 text-white"
             : "bg-white text-primary-500 border border-primary-500"
