@@ -2,7 +2,6 @@
 
 import {
   addMonths,
-  subMonths,
   startOfMonth,
   endOfMonth,
   startOfWeek,
@@ -10,6 +9,7 @@ import {
   addDays,
   isSameDay,
   format,
+  subDays,
 } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -81,12 +81,12 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 }) => {
   const { setIsOpen } = useContext(ModalContext);
 
-  const handlePreviousMonth = () => {
-    setDate(subMonths(date, 1));
+  const handlePreviousDay = () => {
+    setDate(subDays(date, 1));
   };
 
-  const handleNextMonth = () => {
-    setDate(addMonths(date, 1));
+  const handleNextDay = () => {
+    setDate(addDays(date, 1));
   };
 
   const handleMonthYearChange = (monthYear: string) => {
@@ -107,11 +107,6 @@ const SmallCalendar: React.FC<CalendarProps> = ({
     });
   };
 
-  const monthYearOptions = Array.from({ length: 24 }, (_, i) => {
-    const monthDate = addMonths(new Date(), i);
-    return format(monthDate, "MMMM yyyy", { locale: es });
-  });
-
   return (
     <div className="flex flex-col place-content-between">
       <div
@@ -120,11 +115,10 @@ const SmallCalendar: React.FC<CalendarProps> = ({
         } transition-all duration-300`}
       >
         <CalendarNav
-          handleNextMonth={handleNextMonth}
-          handlePreviousMonth={handlePreviousMonth}
+          handleNextDay={handleNextDay}
+          handlePreviousDay={handlePreviousDay}
           handleYearChange={handleMonthYearChange}
           date={date}
-          years={monthYearOptions}
         />
         <CalendarItem date={date} setDate={setDate} />
       </div>
