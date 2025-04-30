@@ -55,8 +55,8 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   }, [isOpen, setIsOpen]);
 
   return (
-    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25">
-      <div className="w-[400px] md:w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl">
+    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25 animate-fadeIn">
+      <div className="w-[400px] md:w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl animate-modalOpen">
         <X
           onClick={() => setIsOpen({ text: "" })}
           size={28}
