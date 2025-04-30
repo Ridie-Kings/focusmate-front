@@ -81,6 +81,7 @@ export default function ListTask({
                 isInitialRender ? "opacity-0 translate-y-6" : "opacity-100 "
               }`}
               style={{
+                zIndex: filteredTasks.length - index,
                 transitionDelay: `${isInitialRender ? index * 0.08 : 0}s`,
                 transform: changingTaskIds.includes(task._id)
                   ? "translateY(5px)"
