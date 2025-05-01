@@ -20,12 +20,10 @@ export default function StatsboardContainer() {
 	};
 
 	return (
-		<div className="min-h-screen bg-background">
+		<div className="min-h-screen bg-background p-6">
 			<header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 				<div className="container flex h-16 items-center justify-between py-4">
-					<h1 className="text-2xl font-bold">
-						Dashboard de Análisis
-					</h1>
+					<h1 className="text-2xl font-bold">Análisis de SherpApp</h1>
 					<div className="flex items-center gap-4">
 						<UserSelector onUserSelect={handleUserSelect} />
 					</div>

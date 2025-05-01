@@ -111,7 +111,7 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
 				<div className="bg-white rounded-lg shadow p-4">
 					<div className="flex flex-row items-center justify-between pb-2">
 						<span className="text-sm font-medium">
-							Usuarios Activos
+							Usuarios Totales
 						</span>
 						<Users className="h-4 w-4 text-muted-foreground" />
 					</div>
