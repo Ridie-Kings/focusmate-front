@@ -1,3 +1,4 @@
+import { useToast } from "@/components/Provider/ToastProvider";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { deleteTask } from "@/services/Task/deleteTask";
 import { updateTask } from "@/services/Task/updateTask";
@@ -8,8 +9,10 @@ export default function TaskUtils({
   setEvents,
 }: {
   setTasks?: Dispatch<SetStateAction<TaskType[]>>;
-  setEvents?: Dispatch<SetStateAction<TaskType[] >>;
+  setEvents?: Dispatch<SetStateAction<TaskType[]>>;
 }) {
+  const { addToast } = useToast();
+
   const handleDeleteTask = async (id: string) => {
     const res = await deleteTask({ _id: id });
 
@@ -17,9 +20,15 @@ export default function TaskUtils({
       if (setTasks) setTasks((prev) => prev.filter((task) => task._id !== id));
       if (setEvents)
         setEvents((prev) => prev.filter((task) => task._id !== id));
-      console.log("Task deleted successfully");
+      addToast({
+        type: "success",
+        message: "Task deleted successfully",
+      });
     } else {
-      console.log("Failed to delete task", res.message);
+      addToast({
+        type: "error",
+        message: "Failed to delete task",
+      });
     }
   };
 
@@ -54,8 +63,9 @@ export default function TaskUtils({
       },
     });
 
-    if (res.success) console.log("Task change to:", _id);
-    else console.log("Error changing task:", _id);
+    if (res.success)
+      addToast({ type: "success", message: "Task updated successfully" });
+    else addToast({ type: "error", message: "Failed to update task" });
   };
 
   const handleChangePriority = async (
@@ -91,8 +101,9 @@ export default function TaskUtils({
       task: { priority: e },
     });
 
-    if (res.success) console.log("Task change to task:", _id);
-    else console.log("Error changing task:", _id);
+    if (res.success)
+      addToast({ type: "success", message: "Task updated successfully" });
+    else addToast({ type: "error", message: "Failed to update task" });
   };
 
   return {

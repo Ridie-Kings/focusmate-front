@@ -15,6 +15,7 @@ import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { updateTask } from "@/services/Task/updateTask";
+import { useToast } from "@/components/Provider/ToastProvider";
 
 export default function ModalTask({
   setIsOpen,
@@ -24,6 +25,7 @@ export default function ModalTask({
   isOpen: { text: string; other?: unknown };
 }) {
   const { setTasks } = useContext(DashboardContext);
+  const { addToast } = useToast();
 
   const [task, setTask] = useState<tempTaskType>({
     _id: undefined,
@@ -126,7 +128,10 @@ export default function ModalTask({
 
       if (res.success) {
         setTasks((prev) => [...prev, res.message]);
-        console.log("Task created successfully", res.message);
+        addToast({
+          type: "success",
+          message: "La tarea se ha creado correctamente",
+        });
         setIsOpen({ text: "" });
       } else {
         setError(

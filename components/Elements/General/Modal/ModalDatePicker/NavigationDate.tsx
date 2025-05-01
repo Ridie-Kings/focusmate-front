@@ -15,7 +15,6 @@ export default function NavigationDate({
 
   const handleMonthYearChange = () => {
     // setDate((currentDate) => {
-    //   console.log(monthYear);
     //   const [month, year] = monthYear.split(" ");
     //   const monthNames = Array.from({ length: 12 }, (_, i) =>
     //     format(new Date(2000, i, 1), "MMMM", { locale: es })

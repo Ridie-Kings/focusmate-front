@@ -2,12 +2,12 @@ import { Dispatch, SetStateAction, useState } from "react";
 import {
   MessageSquare,
   AlertCircle,
-  CheckCircle2,
   Captions,
 } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { useToast } from "@/components/Provider/ToastProvider";
 
 interface ContactForm {
   title: string;
@@ -31,11 +31,10 @@ export default function ModalContact({
     email: profile?.user?.email || "",
     message: "",
   });
+  const { addToast } = useToast();
 
   const [errors, setErrors] = useState<Partial<ContactForm>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<ContactForm> = {};
@@ -66,8 +65,6 @@ export default function ModalContact({
     if (!validateForm()) return;
 
     setIsLoading(true);
-    setServerError(null);
-    setSuccessMessage(null);
 
     try {
       const res = await fetch("/api/send-contact", {
@@ -76,17 +73,19 @@ export default function ModalContact({
         body: JSON.stringify(form),
       });
 
-      if (res.ok) setSuccessMessage("Mensaje enviado correctamente");
-      else setServerError("ERROR");
+      if (res.ok)
+        addToast({ type: "success", message: "Mensaje enviado correctamente" });
+      else addToast({ type: "error", message: "Error al enviar el mensaje" });
 
       setTimeout(() => {
         setIsOpen({ text: "" });
       }, 5000);
     } catch (error) {
       console.error("Error sending message:", error);
-      setServerError(
-        "Error al enviar el mensaje. Por favor, inténtalo de nuevo."
-      );
+      addToast({
+        type: "error",
+        message: "Error al enviar el mensaje. Por favor, inténtalo de nuevo.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -123,20 +122,6 @@ export default function ModalContact({
         <div className="flex items-center gap-1 text-red-500 text-xs -mt-3 ml-1">
           <AlertCircle size={12} />
           <span>{errors.message}</span>
-        </div>
-      )}
-
-      {serverError && (
-        <div className="flex items-center gap-2 text-red-500 text-sm px-2">
-          <AlertCircle size={16} />
-          <span>{serverError}</span>
-        </div>
-      )}
-
-      {successMessage && (
-        <div className="flex items-center gap-2 text-green-500 text-sm px-2">
-          <CheckCircle2 size={16} />
-          <span>{successMessage}</span>
         </div>
       )}
 

@@ -7,7 +7,6 @@ export default async function google() {
     const cookieStore = await cookies();
 
     const res = await apiConnection.post("auth/google");
-    console.log(res);
 
     const { access_token, refresh_token } = res?.data;
 
