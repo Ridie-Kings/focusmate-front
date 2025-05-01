@@ -106,7 +106,7 @@ export default function BodyInputs({
             />
           }
           icon={<Timer />}
-          propagand={false}
+          propagand={true}
         />
         <InputModal
           type="select"
@@ -134,7 +134,7 @@ export default function BodyInputs({
             />
           }
           icon={<Timer />}
-          propagand={false}
+          propagand={true}
         />
       </div>
       <InputModal
