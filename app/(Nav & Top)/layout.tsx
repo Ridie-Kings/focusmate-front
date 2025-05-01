@@ -11,6 +11,8 @@ import { redirect } from "next/navigation";
 import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
+import ToastContainer from "@/components/Provider/ToastProvider/ToastContainer";
+import ToastProvider from "@/components/Provider/ToastProvider";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -55,14 +57,16 @@ export default async function RootLayout({
         <SocketIOProvider token={token ?? ""}>
           <DashboardProvider>
             <ModalProvider>
-              <TimerProvider>
-                <NavBar />
-                <main className="flex flex-col min-h-screen h-full flex-1">
-                  <TopBar />
-                  {children}
-                  <PopUp />
-                </main>
-              </TimerProvider>
+              <ToastProvider>
+                <TimerProvider>
+                  <NavBar />
+                  <main className="flex flex-col min-h-screen h-full flex-1">
+                    <TopBar />
+                    {children}
+                    <PopUp />
+                  </main>
+                </TimerProvider>
+              </ToastProvider>
             </ModalProvider>
           </DashboardProvider>
         </SocketIOProvider>
