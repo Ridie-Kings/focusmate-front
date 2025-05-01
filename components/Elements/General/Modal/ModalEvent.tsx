@@ -8,15 +8,11 @@ import {
 } from "react";
 import { AlertCircle } from "lucide-react";
 
-import { createTask } from "@/services/Task/createTask";
-import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 import BodyInputs from "./ModalEvent/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
-import { updateTask } from "@/services/Task/updateTask";
-import { addHours } from "date-fns";
 import EventUtils from "@/lib/EventUtils";
 
 type ModalEventProps = {

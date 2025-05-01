@@ -70,7 +70,10 @@ export default function useEventUtils({
     setIsOpen({ text: "" });
   };
 
-  const handleApiError = (res: any, defaultMessage: string): boolean => {
+  const handleApiError = (
+    res: { success: boolean; message: unknown },
+    defaultMessage: string
+  ): boolean => {
     if (!res.success) {
       const errorMessage =
         typeof res.message === "string" ? res.message : defaultMessage;

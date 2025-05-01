@@ -2,7 +2,6 @@ import { useToast } from "@/components/Provider/ToastProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import { removeHabit } from "@/services/Habits/removeHabit";
 import { updateHabit } from "@/services/Habits/updateHabit";
-import { add } from "lodash";
 import { useCallback } from "react";
 
 export default function HabitsUtils({

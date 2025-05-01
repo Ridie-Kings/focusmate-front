@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 import {
   MessageSquare,
   AlertCircle,
-  CheckCircle2,
   Captions,
 } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
