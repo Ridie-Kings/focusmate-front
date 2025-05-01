@@ -49,7 +49,7 @@ export default function Streaks({ number }: { number: number }) {
 				number <= 0
 					? "bg-quaternary-700 text-white"
 					: "bg-secondary-100 text-primary-700"
-			} `}
+			}`}
 			link=""
 		>
 			<div className="w-full z-20">

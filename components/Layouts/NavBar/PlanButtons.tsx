@@ -1,7 +1,6 @@
 "use client";
-
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
-import { Gem, Link } from "lucide-react";
+import { Gem } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function PlanButtons({
@@ -28,15 +27,14 @@ export default function PlanButtons({
 		}
 	};
 	return (
-		<Link
-			href={"/pricing"}
+		<div
+			onClick={() => handleSend()}
 			className="
   group relative flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg
   bg-secondary-500 hover:bg-secondary-400 text-gray-300
   cursor-pointer transition-all duration-300 group-hover:w-full w-11
 "
 			aria-label="Mejorar Plan"
-			type="button"
 		>
 			<span
 				className="
@@ -65,6 +63,6 @@ export default function PlanButtons({
 			>
 				<Gem size={20} />
 			</span>
-		</Link>
+		</div>
 	);
 }
