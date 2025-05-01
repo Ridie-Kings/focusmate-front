@@ -5,102 +5,119 @@ import {
   Play,
   Maximize,
   EllipsisVertical,
-  Share2,
 } from "lucide-react";
 import { useState } from "react";
+
+type CommandAction = "togglePlay" | "reset" | "share" | "openFullScreen";
+
+type CommandsProps = {
+  isPlay: boolean;
+  handleClick: (action: CommandAction) => void;
+  fullScreen?: boolean;
+};
+
+type CommandButton = {
+  id: CommandAction;
+  icon: React.ReactNode;
+  disabled?: boolean;
+  className?: string;
+};
 
 export default function Commands({
   isPlay,
   handleClick,
-  fullScreen,
-  isConnected,
-}: {
-  handleClick: (action: string) => void;
-  isPlay: boolean;
-  fullScreen?: boolean;
-  isConnected?: boolean;
-}) {
-  const [showMsg, setShowMsg] = useState<boolean>(false);
+  fullScreen = false,
+}: CommandsProps) {
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+
+  const iconSize = fullScreen ? 40 : 32;
+
+  const baseButtonClass = "relative rounded-2xl";
+  const activeButtonClass = fullScreen
+    ? "text-white"
+    : "text-primary-500 bg-secondary-700/25 cursor-pointer";
+  const disabledButtonClass = "bg-gray-400 cursor-not-allowed";
+  const primaryButtonPadding = "p-7 2xl:p-8";
+  const secondaryButtonPadding = "p-3 2xl:p-4";
+
+  const commandButtons: CommandButton[] = [
+    {
+      id: "openFullScreen",
+      icon: fullScreen ? (
+        <EllipsisVertical
+          size={iconSize}
+          className="group-hover:scale-110 scale-100 transition-all duration-300"
+        />
+      ) : (
+        <Maximize size={iconSize} className="text-gray-100" />
+      ),
+      disabled: true,
+      className: secondaryButtonPadding,
+    },
+    {
+      id: "togglePlay",
+      icon: isPlay ? (
+        <Pause
+          size={iconSize}
+          fill={fullScreen ? "white" : "#014e44"}
+          className="group-hover:scale-110 scale-100 transition-all duration-300"
+        />
+      ) : (
+        <Play
+          size={iconSize}
+          fill={fullScreen ? "white" : "#014e44"}
+          className="group-hover:scale-110 scale-100 transition-all duration-300"
+        />
+      ),
+      className: primaryButtonPadding,
+    },
+    {
+      id: "reset",
+      icon: fullScreen ? (
+        <StepForward
+          size={iconSize}
+          className="group-hover:scale-110 scale-100 transition-all duration-300"
+        />
+      ) : (
+        <RefreshCw
+          size={iconSize}
+          className="group-hover:scale-110 scale-100 transition-all duration-300"
+        />
+      ),
+      className: secondaryButtonPadding,
+    },
+  ];
+
+  const handleButtonClick = (action: CommandAction, disabled?: boolean) => {
+    if (!disabled) {
+      handleClick(action);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center gap-2">
-      {isConnected !== undefined && (
-        <div className="text-xs mb-2">
-          {isConnected ? (
-            <div className="text-green-500 flex items-center gap-1">
-              <span className="h-2 w-2 bg-green-500 rounded-full"></span>
-              Conectado
-            </div>
-          ) : (
-            <div className="text-amber-500 flex items-center gap-1">
-              <span className="h-2 w-2 bg-amber-500 rounded-full"></span>
-              Modo local
-            </div>
-          )}
-        </div>
-      )}
-
       <ul className="flex items-center justify-center gap-7 md:gap-16">
-        {[
-          {
-            id: "openFullScreen",
-            icon: fullScreen ? (
-              <EllipsisVertical size={fullScreen ? 40 : 32} />
-            ) : (
-              <Maximize size={fullScreen ? 40 : 32} className="text-gray-100" />
-            ),
-          },
-          {
-            id: "togglePlay",
-            icon: isPlay ? (
-              <Pause
-                size={fullScreen ? 40 : 32}
-                fill={fullScreen ? "white" : "#014e44"}
-              />
-            ) : (
-              <Play
-                size={fullScreen ? 40 : 32}
-                fill={fullScreen ? "white" : "#014e44"}
-              />
-            ),
-          },
-          {
-            id: "reset",
-            icon: fullScreen ? (
-              <StepForward size={fullScreen ? 40 : 32} />
-            ) : (
-              <RefreshCw size={fullScreen ? 40 : 32} />
-            ),
-          },
-          ...(isConnected
-            ? [
-                {
-                  id: "share",
-                  icon: (
-                    <Share2
-                      size={fullScreen ? 40 : 32}
-                      className={fullScreen ? "text-white" : "text-primary-500"}
-                    />
-                  ),
-                },
-              ]
-            : []),
-        ].map(({ id, icon }, index) => (
-          <li key={id}>
+        {commandButtons.map((button) => (
+          <li key={button.id}>
             <button
-              onClick={() => id !== "openFullScreen" && handleClick(id)}
-              onMouseEnter={() => id === "openFullScreen" && setShowMsg(true)}
-              onMouseLeave={() => id === "openFullScreen" && setShowMsg(false)}
-              className={`relative rounded-2xl ${
-                fullScreen
-                  ? "text-white"
-                  : id === "openFullScreen"
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : " text-primary-500 bg-secondary-700/25 cursor-pointer"
-              } ${[0, 2, 3].includes(index) ? "p-3 2xl:p-4" : "p-7 2xl:p-8"}`}
+              onClick={() => handleButtonClick(button.id, button.disabled)}
+              onMouseEnter={() =>
+                button.id === "openFullScreen" && setShowTooltip(true)
+              }
+              onMouseLeave={() =>
+                button.id === "openFullScreen" && setShowTooltip(false)
+              }
+              className={`
+                ${baseButtonClass}
+                ${button.disabled ? disabledButtonClass : activeButtonClass}
+                ${button.className || ""}
+                group hover:scale-95 scale-100 transition-all duration-300
+              `}
+              aria-label={button.id}
+              disabled={button.disabled}
             >
-              {icon}
-              {showMsg && id === "openFullScreen" && (
+              {button.icon}
+              {showTooltip && button.id === "openFullScreen" && (
                 <div className="absolute left-15 drop-shadow-lg top-0 rounded z-50 bg-background-primary px-2 py-4">
                   Proximamente
                 </div>
