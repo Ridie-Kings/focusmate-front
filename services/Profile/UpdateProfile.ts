@@ -9,8 +9,6 @@ export async function updateProfile({
   id: string;
   profile: any;
 }): Promise<{ success: boolean; data: any }> {
-  console.log(profile);
-
   try {
     const token = await getToken();
     const res = await apiConnection.patch(`profile/${id}`, profile, {

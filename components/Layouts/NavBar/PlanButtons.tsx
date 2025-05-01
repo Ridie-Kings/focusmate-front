@@ -21,7 +21,7 @@ export default function PlanButtons({
         }),
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       router.push("pricing");
     }

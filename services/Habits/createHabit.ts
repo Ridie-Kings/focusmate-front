@@ -18,21 +18,23 @@ export async function createHabit({
     });
 
     if (!res?.data) {
-      return { success: false, res: "Error al crear el hábito: Respuesta vacía" };
+      return {
+        success: false,
+        res: "Error al crear el hábito: Respuesta vacía",
+      };
     }
 
     return { success: true, res: res.data };
   } catch (error: any) {
-    console.log("Error creating habit:", error);
-    console.log(error)
+    console.error("Error creating habit:", error);
     if (error.response?.data?.message) {
       return { success: false, res: error.response.data.message };
     }
-    
+
     if (error.message) {
       return { success: false, res: error.message };
     }
-    
+
     return { success: false, res: "Error inesperado al crear el hábito" };
   }
 }

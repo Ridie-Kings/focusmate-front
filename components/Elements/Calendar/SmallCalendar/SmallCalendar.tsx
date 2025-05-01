@@ -90,7 +90,6 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 
   const handleMonthYearChange = (monthYear: string) => {
     setDate((currentDate) => {
-      console.log(monthYear);
 
       const [month, year] = monthYear.split(" ");
 

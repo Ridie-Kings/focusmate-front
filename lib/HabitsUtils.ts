@@ -1,6 +1,8 @@
+import { useToast } from "@/components/Provider/ToastProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import { removeHabit } from "@/services/Habits/removeHabit";
 import { updateHabit } from "@/services/Habits/updateHabit";
+import { add } from "lodash";
 import { useCallback } from "react";
 
 export default function HabitsUtils({
@@ -10,6 +12,7 @@ export default function HabitsUtils({
   habits: HabitsType[];
   setHabits: React.Dispatch<React.SetStateAction<HabitsType[]>>;
 }) {
+  const { addToast } = useToast();
   const handleToggle = useCallback(
     async (id: string) => {
       setHabits((prevHabits) => {
@@ -23,7 +26,14 @@ export default function HabitsUtils({
             _id: habitToUpdate._id,
             habit: { status: habitToUpdate.status },
           })
-            .then((res) => console.log("Habit updated:", res))
+            .then((res) => {
+              addToast({
+                type: res.success ? "success" : "error",
+                message: res.success
+                  ? "Habit updated successfully"
+                  : "Failed to update habit",
+              });
+            })
             .catch((error) => {
               console.error("Error updating habit:", error);
               setHabits((prev) =>
