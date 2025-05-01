@@ -1,22 +1,24 @@
 "use client";
 
 import {
-  addMonths,
-  subMonths,
   startOfMonth,
   endOfMonth,
   startOfWeek,
   endOfWeek,
   addDays,
   isSameDay,
+  format,
+  subDays,
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 import WeekDays from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/WeekDays";
 import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
 import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/CalendarNav";
+import Button from "@/components/Reusable/Button";
+import { ModalContext } from "@/components/Provider/ModalProvider";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -65,7 +67,8 @@ type CalendarProps = {
   className?: string;
   inView?: boolean;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
-  date: Date | undefined;
+  date: Date;
+  btn?: boolean;
 };
 
 const SmallCalendar: React.FC<CalendarProps> = ({
@@ -73,43 +76,61 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   inView,
   setDate,
   date,
+  btn,
 }) => {
-  const handlePreviousMonth = () => {
-    setDate(subMonths(date ?? new Date(), 1));
+  const { setIsOpen } = useContext(ModalContext);
+
+  const handlePreviousDay = () => {
+    setDate(subDays(date, 1));
   };
 
-  const handleNextMonth = () => {
-    setDate(addMonths(date ?? new Date(), 1));
+  const handleNextDay = () => {
+    setDate(addDays(date, 1));
   };
 
-  const handleYearChange = (year: string) => {
+  const handleMonthYearChange = (monthYear: string) => {
     setDate((currentDate) => {
-      if (!currentDate) return undefined;
-      const newDate = new Date(currentDate);
+      console.log(monthYear);
+
+      const [month, year] = monthYear.split(" ");
+
+      const monthNames = Array.from({ length: 12 }, (_, i) =>
+        format(new Date(2000, i, 1), "MMMM", { locale: es })
+      );
+      const monthIndex = monthNames.findIndex((m) => m === month);
+
+      const newDate = new Date(currentDate ?? new Date());
+      newDate.setMonth(monthIndex);
       newDate.setFullYear(parseInt(year));
       return newDate;
     });
   };
 
-  const years = Array.from(
-    { length: 2 },
-    (_, i) => new Date().getFullYear() + i
-  );
-
   return (
-    <div
-      className={`w-full flex flex-col gap-4 py-2 overflow-hidden ${className} ${
-        !inView && "hidden"
-      } transition-all duration-300`}
-    >
-      <CalendarNav
-        handleNextMonth={handleNextMonth}
-        handlePreviousMonth={handlePreviousMonth}
-        handleYearChange={handleYearChange}
-        date={date}
-        years={years}
-      />
-      <CalendarItem date={date} setDate={setDate} />
+    <div className="flex flex-col place-content-between">
+      <div
+        className={`w-full flex flex-col py-2 overflow-hidden ${className} ${
+          !inView && "hidden"
+        } transition-all duration-300`}
+      >
+        <CalendarNav
+          handleNextDay={handleNextDay}
+          handlePreviousDay={handlePreviousDay}
+          handleYearChange={handleMonthYearChange}
+          date={date}
+        />
+        <CalendarItem date={date} setDate={setDate} />
+      </div>
+      {btn && (
+        <Button
+          size="large"
+          onClick={() => setIsOpen({ text: "event", other: date })}
+          button="tertiary"
+          type="button"
+        >
+          Nuevo Evento
+        </Button>
+      )}
     </div>
   );
 };

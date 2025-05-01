@@ -1,12 +1,24 @@
-import { useRef } from "react";
+import { getHours, getMinutes } from "date-fns";
+import { useEffect, useRef } from "react";
 
 interface TimeDropdownProps {
+  defaultValue: Date | undefined;
   onChange: (event: {
     target: { value: { hours: number; min: number } };
   }) => void;
 }
 
-export default function TimeDropdown({ onChange }: TimeDropdownProps) {
+const getPosition = (date: Date) => {
+  const hours = getHours(date);
+  const minutes = getMinutes(date);
+
+  return hours * 4 * 40 + minutes * (40 / 15);
+};
+
+export default function TimeDropdown({
+  onChange,
+  defaultValue,
+}: TimeDropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const timeOptions = [];
@@ -15,6 +27,14 @@ export default function TimeDropdown({ onChange }: TimeDropdownProps) {
       timeOptions.push({ hours: hour, min: minute });
     }
   }
+
+  useEffect(() => {
+    dropdownRef.current?.scrollTo({
+      top: getPosition(defaultValue ?? new Date()),
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [defaultValue]);
 
   const handleSelectTime = (time: { hours: number; min: number }) => {
     onChange({
@@ -30,7 +50,7 @@ export default function TimeDropdown({ onChange }: TimeDropdownProps) {
 
   return (
     <div
-      className="absolute bg-white rounded drop-shadow-lg top-2 h-70 overflow-auto w-40"
+      className="absolute bg-white rounded drop-shadow-lg top-2 h-70 overflow-auto w-40 z-10"
       ref={dropdownRef}
     >
       {timeOptions.map((time, index) => (

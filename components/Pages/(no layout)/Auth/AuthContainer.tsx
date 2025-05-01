@@ -12,11 +12,7 @@ import RenderForgotPassword from "./AuthContainer/RenderForgotPassword";
 import RenderActionLinks from "./AuthContainer/RenderActionLinks";
 import RenderActionButton from "./AuthContainer/RenderActionButton";
 import GreenLogo from "@/components/Elements/Svg/Logos/GreenLogo";
-
-const REDIRECT_PATHS = {
-  login: "/",
-  register: "/login",
-};
+import LinkButtons from "./LinkButtons";
 
 export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   const config = AUTH_CONFIG[type];
@@ -64,7 +60,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
 
     if (state.success) {
       localStorage.removeItem(storageKey);
-      router.push(REDIRECT_PATHS[type]);
+      router.push("/");
     } else {
       setError(state.message);
       setTimeout(() => {
@@ -132,7 +128,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
               </>
             )}
           </div>
-          {/* <LinkButtons /> */}
+          <LinkButtons />
         </form>
       </div>
     </section>

@@ -19,9 +19,9 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   const renderModal = () => {
     switch (isOpen.text) {
       case "task":
-        return <ModalTask setIsOpen={setIsOpen} />;
+        return <ModalTask setIsOpen={setIsOpen} isOpen={isOpen} />;
       case "habit":
-        return <ModalHabit setIsOpen={setIsOpen} />;
+        return <ModalHabit setIsOpen={setIsOpen} isOpen={isOpen} />;
       case "event":
         return <ModalEvent setIsOpen={setIsOpen} isOpen={isOpen} />;
       case "contact":
@@ -32,20 +32,31 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen.text) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
 
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen({ text: "" });
+      }
+    };
+
+    if (isOpen.text) {
+      window.addEventListener("keydown", handleEscKey);
+    }
+
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleEscKey);
     };
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   return (
-    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25">
-      <div className="w-[400px] md:w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl">
+    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25 animate-fadeIn">
+      <div className="w-[400px] md:w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl animate-modalOpen">
         <X
           onClick={() => setIsOpen({ text: "" })}
           size={28}

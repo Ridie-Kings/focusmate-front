@@ -95,8 +95,7 @@ const MenuItem = ({
     <div
       ref={itemRef}
       className="relative"
-      onMouseEnter={() => hasSubMenu && setShowSubMenu(true)}
-      onMouseLeave={() => hasSubMenu && setShowSubMenu(false)}
+      onClick={() => hasSubMenu && setShowSubMenu(!showSubMenu)}
     >
       <button
         className={`flex items-center justify-between gap-2 p-2 text-left cursor-pointer bg-white rounded w-full transition-all duration-300 ${
@@ -249,7 +248,7 @@ export default function Menu({
       {isOpen && (
         <div
           ref={menuRef}
-          className={`absolute mt-1 flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-50 min-w-40 ${getBasePositionClasses()}`}
+          className={`absolute mt-1 flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-90 min-w-40 ${getBasePositionClasses()}`}
         >
           {items.map((item, index) => (
             <MenuItem key={index} item={item} closeMenu={closeMenu} />

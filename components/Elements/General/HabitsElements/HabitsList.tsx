@@ -5,12 +5,14 @@ import {
   ChefHat,
   CircleHelp,
   GlassWater,
+  Pen,
   Trash2,
 } from "lucide-react";
-import { useCallback } from "react";
+import { useContext } from "react";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
-import { updateHabit } from "@/services/Habits/updateHabit";
-import { removeHabit } from "@/services/Habits/removeHabit";
+import HabitsUtils from "@/lib/HabitsUtils";
+import Menu from "@/components/Reusable/Menu";
+import { ModalContext } from "@/components/Provider/ModalProvider";
 
 const HABIT_TYPES = {
   DRINK: "drink",
@@ -35,6 +37,7 @@ const HabitItem = ({
   onRemove: (id: string) => void;
 }) => {
   const { _id, status, type, name, description } = habit;
+  const { setIsOpen } = useContext(ModalContext);
 
   const getIconClass = (isCompleted: boolean) => {
     return `rounded-lg p-2 transition-all duration-300 ${
@@ -98,18 +101,20 @@ const HabitItem = ({
             {description}
           </div>
         </div>
-        <Trash2
-          size={24}
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove(_id);
-          }}
-          className={`${
-            status
-              ? "text-gray-400 group-hover:text-white"
-              : "text-primary-500 group-hover:text-primary-700"
-          } cursor-pointer transition-all duration-300`}
-          aria-label="Eliminar hábito"
+        <Menu
+          items={[
+            {
+              label: "Modificar",
+              icon: <Pen />,
+              onClick: () => setIsOpen({ text: "habit", other: habit }),
+            },
+            {
+              label: "Eliminar",
+              icon: <Trash2 />,
+              color: "red",
+              onClick: () => onRemove(_id),
+            },
+          ]}
         />
       </div>
       <input
@@ -130,56 +135,10 @@ const HabitItem = ({
 };
 
 export default function HabitsList({ habits, setHabits }: HabitsListProps) {
-  const handleToggle = useCallback(
-    async (id: string) => {
-      setHabits((prevHabits) => {
-        const updatedHabits = prevHabits.map((habit) =>
-          habit._id === id ? { ...habit, status: !habit.status } : habit
-        );
-
-        const habitToUpdate = updatedHabits.find((habit) => habit._id === id);
-        if (habitToUpdate) {
-          updateHabit({
-            _id: habitToUpdate._id,
-            habit: { status: habitToUpdate.status },
-          })
-            .then((res) => console.log("Habit updated:", res))
-            .catch((error) => {
-              console.error("Error updating habit:", error);
-              setHabits((prev) =>
-                prev.map((habit) =>
-                  habit._id === id ? { ...habit, status: !habit.status } : habit
-                )
-              );
-            });
-        }
-
-        return updatedHabits;
-      });
-    },
-    [setHabits]
-  );
-
-  const handleRemoveHabit = useCallback(
-    async (id: string) => {
-      const habitToRemove = habits.find((habit) => habit._id === id);
-      if (!habitToRemove) return;
-
-      setHabits((prev) => prev.filter((habit) => habit._id !== id));
-
-      try {
-        const res = await removeHabit({ _id: id });
-        if (!res.success) {
-          console.error("Failed to delete habit:", res.res);
-          setHabits((prev) => [...prev, habitToRemove]);
-        }
-      } catch (error) {
-        console.error("Error deleting habit:", error);
-        setHabits((prev) => [...prev, habitToRemove]);
-      }
-    },
-    [habits, setHabits]
-  );
+  const { handleToggle, handleRemoveHabit } = HabitsUtils({
+    habits,
+    setHabits,
+  });
 
   if (habits.length === 0) {
     return (

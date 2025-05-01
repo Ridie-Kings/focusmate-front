@@ -15,6 +15,7 @@ export default function StreaksBg1() {
       <path
         d="M400 114.27H-22V35.7808C118.036 27.115 258.703 27.0852 400 35.7808V114.27Z"
         fill="#ECF3F0"
+        className="scale-110 -translate-x-5 md:scale-155 md:-translate-x-25 md:-translate-y-2 lg:translate-x-0 lg:translate-y-2 lg:scale-100 2xl:scale-150 2xl:-translate-x-20"
       />
       <path
         d="M299.54 78.8602C344.695 78.8602 381.3 73.7831 381.3 67.5202C381.3 61.2573 344.695 56.1802 299.54 56.1802C254.385 56.1802 217.78 61.2573 217.78 67.5202C217.78 73.7831 254.385 78.8602 299.54 78.8602Z"

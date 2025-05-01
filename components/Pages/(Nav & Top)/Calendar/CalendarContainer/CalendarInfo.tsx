@@ -12,12 +12,14 @@ export default function CalendarInfo({
   date,
   setDate,
   events,
+  setEvents,
 }: {
   navType: string;
   setNavType: Dispatch<SetStateAction<string>>;
-  date: Date | undefined;
+  date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   events: TaskType[];
+  setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
   const scrollCalendar = useRef<HTMLDivElement>(null);
 
@@ -25,31 +27,32 @@ export default function CalendarInfo({
     switch (navType) {
       case "Día":
         return (
-          <DayCalender
-            events={events}
-            date={date ?? new Date()}
-            setDate={setDate}
-          />
+          <DayCalender events={events} date={date} setEvents={setEvents} />
         );
       case "Semana":
         return (
           <WeekCalendar
             events={events}
-            date={date ?? new Date()}
-            setDate={setDate}
+            setEvents={setEvents}
+            date={date}
             scrollCalendar={scrollCalendar}
           />
         );
       case "Mes":
-        return <MonthCalendar events={events} date={date} setDate={setDate} />;
+        return <MonthCalendar events={events} date={date} />;
       default:
-        return <MonthCalendar events={events} date={date} setDate={setDate} />;
+        return <MonthCalendar events={events} date={date} />;
     }
   };
 
   return (
     <div className="flex flex-col flex-1">
-      <NavInfo navType={navType} setNavType={setNavType} />
+      <NavInfo
+        navType={navType}
+        setNavType={setNavType}
+        setDate={setDate}
+        date={date}
+      />
       {renderCalenderType()}
     </div>
   );

@@ -1,9 +1,10 @@
+import { ModalContext } from "@/components/Provider/ModalProvider";
 import Menu from "@/components/Reusable/Menu";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
 import TaskUtils from "@/lib/TaskUtils";
-import { Check, Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
+import { Check, Pen, Trash2 } from "lucide-react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 export default function TimelineCard({
   event,
@@ -19,6 +20,7 @@ export default function TimelineCard({
     setEvents,
     setTasks,
   });
+  const { setIsOpen } = useContext(ModalContext);
 
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
   const darkerColor = getDarkerColor(event.color);
@@ -61,12 +63,18 @@ export default function TimelineCard({
           <p className={`text-xs font-medium ${textColor}`}>Termina</p>
         </span>
       </div>
+
       <Menu
         className="absolute right-1 top-2"
         items={[
           {
+            label: "Modificar",
+            icon: <Pen size={20} />,
+            onClick: () => setIsOpen({ text: "event", other: event }),
+          },
+          {
             label: "Hecho",
-            icon: <Check />,
+            icon: <Check size={20} />,
             onClick: () =>
               handleChangeStatus(
                 event.status === "completed"
@@ -78,7 +86,7 @@ export default function TimelineCard({
           {
             label: "Eliminar",
             color: "red",
-            icon: <Trash2 />,
+            icon: <Trash2 size={20} />,
             onClick: () => handleDeleteTask(event._id),
           },
         ]}
