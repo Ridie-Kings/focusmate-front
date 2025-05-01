@@ -1,4 +1,7 @@
-import { Gem } from "lucide-react";
+"use client";
+
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { Gem, Link } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function PlanButtons({
