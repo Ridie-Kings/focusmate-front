@@ -1,44 +1,86 @@
-type DateType = "day" | "year" | "month";
+import { useState, useEffect } from "react";
 
 interface SelectDateProps {
-  handleDateChange: (date: string) => void;
+  handleDateChange: (date: Date) => void;
   date: Date | undefined;
-  dateType: DateType;
-  dates: string[];
+  yearRange?: number[];
 }
 
-export default function SelectDate({
+export default function YearMonthSelector({
   handleDateChange,
-  date,
-  dateType,
-  dates,
+  date = new Date(),
+  yearRange = [2020, 2030],
 }: SelectDateProps) {
-  const getFullDate = (date: Date | undefined): string => {
-    if (!date) return dates[0].toString();
+  const [selectedDate, setSelectedDate] = useState<Date>(date || new Date());
 
-    switch (dateType) {
-      case "day":
-        return date.getDate().toString();
-      case "year":
-        return date.getMonth().toString() + date.getFullYear().toString();
-      case "month":
-        return (date.getMonth() + 1).toString();
-      default:
-        return date.getMonth().toString() + date.getFullYear().toString();
-    }
+  const years = Array.from(
+    { length: yearRange[1] - yearRange[0] + 1 },
+    (_, i) => (yearRange[0] + i).toString()
+  );
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const handleYearChange = (yearValue: string) => {
+    const newDate = new Date(selectedDate);
+    newDate.setFullYear(parseInt(yearValue));
+    setSelectedDate(newDate);
+    handleDateChange(newDate);
   };
 
+  const handleMonthChange = (monthIndex: number) => {
+    const newDate = new Date(selectedDate);
+    newDate.setMonth(monthIndex);
+    setSelectedDate(newDate);
+    handleDateChange(newDate);
+  };
+
+  useEffect(() => {
+    if (date) {
+      setSelectedDate(date);
+    }
+  }, [date]);
+
   return (
-    <select
-      onChange={(e) => handleDateChange(e.target.value)}
-      value={getFullDate(date)}
-      className="rounded-sm p-2 py-2.5 text-primary-500 cursor-pointer outline-none"
-    >
-      {dates.map((dateValue) => (
-        <option key={dateValue} value={dateValue}>
-          {dateValue}
-        </option>
-      ))}
-    </select>
+    <div className="flex gap-4 items-center">
+      <div className="flex flex-col">
+        <select
+          onChange={(e) => handleYearChange(e.target.value)}
+          value={selectedDate.getFullYear()}
+          className="text-gray-700 cursor-pointer outline-none"
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-col">
+        <select
+          onChange={(e) => handleMonthChange(parseInt(e.target.value))}
+          value={selectedDate.getMonth()}
+          className="text-gray-700 cursor-pointer outline-none"
+        >
+          {months.map((monthName, index) => (
+            <option key={monthName} value={index}>
+              {monthName}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
   );
 }

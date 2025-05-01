@@ -2,8 +2,6 @@
 // import { Dispatch } from "react";
 import SelectDate from "../../SelectDate";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { addMonths, format } from "date-fns";
-import { es } from "date-fns/locale";
 
 export default function NavigationDate({
   date,
@@ -30,19 +28,9 @@ export default function NavigationDate({
     // });
   };
 
-  const monthYearOptions = Array.from({ length: 24 }, (_, i) => {
-    const monthDate = addMonths(new Date(), i);
-    return format(monthDate, "MMMM yyyy", { locale: es });
-  });
-
   return (
     <div className="flex place-content-between px-4 py-1">
-      <SelectDate
-        handleDateChange={handleMonthYearChange}
-        dateType="year"
-        date={date}
-        dates={monthYearOptions}
-      />
+      <SelectDate handleDateChange={handleMonthYearChange} date={date} />
       <div className="flex">
         <button
           onClick={handlePreviousMonth}
