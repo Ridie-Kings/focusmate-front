@@ -50,7 +50,7 @@ export default function TimeDropdown({
 
   return (
     <div
-      className="absolute bg-white rounded drop-shadow-lg top-2 h-70 overflow-auto w-40"
+      className="absolute bg-white rounded drop-shadow-lg top-2 h-70 overflow-auto w-40 z-10"
       ref={dropdownRef}
     >
       {timeOptions.map((time, index) => (
