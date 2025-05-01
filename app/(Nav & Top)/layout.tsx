@@ -11,7 +11,6 @@ import { redirect } from "next/navigation";
 import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
-import ToastContainer from "@/components/Provider/ToastProvider/ToastContainer";
 import ToastProvider from "@/components/Provider/ToastProvider";
 
 const poppinsSans = Poppins({
