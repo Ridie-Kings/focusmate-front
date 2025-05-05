@@ -12,7 +12,6 @@ export async function register(
 
     const userData = {
       email: formData.get("email") as string,
-      username: formData.get("username") as string,
       fullname: formData.get("fullname") as string,
       password: formData.get("password") as string,
     };
@@ -62,7 +61,6 @@ export async function register(
 
 function testUserData(userData: {
   email: string;
-  username: string;
   password: string;
   fullname: string;
   repeatPassword: string;
@@ -85,13 +83,6 @@ function testUserData(userData: {
       success: false,
       message:
         "La contraseña debe tener al menos 8 caracteres e incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (como `!@#$%^&*()_+-=[]{}|;:',.<>/?)",
-    };
-  }
-
-  if (userData.username.length <= 3) {
-    return {
-      success: false,
-      message: "The username must be at least 4 characters long.",
     };
   }
 

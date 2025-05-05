@@ -1,8 +1,9 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
+import { ToastContext } from "../ToastProvider";
 
 export function useTimer(
   initialTime: TimeType,
@@ -13,6 +14,7 @@ export function useTimer(
 ) {
   const [time, setTime] = useState<TimeType>(initialTime);
   const [isPlay, setIsPlay] = useState(false);
+  const { addToast } = useContext(ToastContext);
 
   const totalSecondsRef = useRef(timeUtils.timeToSeconds(initialTime));
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -77,8 +79,18 @@ export function useTimer(
 
             if (menu === "concentracion") {
               setMenu("D/Corto");
+              addToast({
+                type: "info",
+                message: "¡Tiempo terminado!",
+                duration: 5000,
+              });
             } else if (menu === "D/Corto") {
               setMenu("concentracion");
+              addToast({
+                type: "info",
+                message: "¡Descanso terminado!",
+                duration: 5000,
+              });
             }
           }
         }

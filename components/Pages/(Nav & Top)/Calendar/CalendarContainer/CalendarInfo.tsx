@@ -35,6 +35,7 @@ export default function CalendarInfo({
             events={events}
             setEvents={setEvents}
             date={date}
+            setDate={setDate}
             scrollCalendar={scrollCalendar}
           />
         );
