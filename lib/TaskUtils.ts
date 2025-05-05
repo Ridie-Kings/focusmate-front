@@ -8,7 +8,7 @@ export default function TaskUtils({
   setEvents,
 }: {
   setTasks?: Dispatch<SetStateAction<TaskType[]>>;
-  setEvents?: Dispatch<SetStateAction<TaskType[]>>;
+  setEvents?: Dispatch<SetStateAction<TaskType[] >>;
 }) {
   const handleDeleteTask = async (id: string) => {
     const res = await deleteTask({ _id: id });

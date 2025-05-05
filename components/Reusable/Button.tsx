@@ -16,7 +16,7 @@ export default function Button({
   children: ReactNode;
   onClick?: () => void;
   icon?: chipsIconType;
-  state?: "enabled" | "pressed" | "disabled";
+  state?: "enabled" | "pressed" | "disabled" | "disabled-pressed";
   size: "compact" | "large";
 }) {
   const commonClasses = `flex items-center justify-center gap-2 w-full ${
@@ -92,10 +92,12 @@ export default function Button({
         <button
           onClick={state === "disabled" ? undefined : onClick}
           type="button"
-          disabled={state === "disabled"}
+          disabled={state === "disabled" || state === "disabled-pressed"}
           className={`flex items-center border ${
             state === "disabled"
               ? "border-primary-300 cursor-not-allowed bg-gray-200"
+              : state === "disabled-pressed"
+              ? "border-primary-500 cursor-not-allowed bg-primary-200"
               : state === "pressed"
               ? "bg-primary-500 text-white border-primary-500 cursor-pointer"
               : "border-primary-500 hover:bg-primary-500 hover:text-white active:bg-primary-700 cursor-pointer"

@@ -9,7 +9,7 @@ import Commands from "@/components/Elements/Pomodoro/Commands";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 // import { toast } from "react-hot-toast";
-import ShareModal from '@/components/Elements/General/Modal/ModalShare';
+import ShareModal from "@/components/Elements/General/Modal/ModalShare";
 
 export default function Timer(/*{ token }: { token: string }*/) {
   const [menu, setMenu] = useState<chipsIconType>("concentracion");
@@ -157,7 +157,7 @@ export default function Timer(/*{ token }: { token: string }*/) {
   //     toast.error("No hay un pomodoro activo para compartir");
   //     return;
   //   }
-    
+
   //   try {
   //     const response = await fetch(`/api/v0/pomodoro/${pomodoroId}/share`, {
   //       method: 'POST',
@@ -166,13 +166,13 @@ export default function Timer(/*{ token }: { token: string }*/) {
   //         'Authorization': `Bearer ${token}`
   //       }
   //     });
-      
+
   //     if (!response.ok) {
   //       throw new Error(`Error: ${response.status}`);
   //     }
-      
+
   //     const data = await response.json();
-      
+
   //     if (data.shareCode) {
   //       setShareCode(data.shareCode);
   //       setShareModalOpen(true);
@@ -192,8 +192,8 @@ export default function Timer(/*{ token }: { token: string }*/) {
         case "reset":
           handleReset();
           break;
-        // case "share":
-        //   handleShare();
+          // case "share":
+          //   handleShare();
           break;
       }
     },
@@ -250,18 +250,14 @@ export default function Timer(/*{ token }: { token: string }*/) {
           />
         </div>
         <BarTimer time={time} initialTime={initialTime} />
-        <Commands
-          handleClick={handleClick}
-          isPlay={isPlaying}
-          isConnected={isConnected}
-        />
+        <Commands handleClick={handleClick} isPlay={isPlaying} />
       </div>
 
       {/* Modal de compartir */}
-      <ShareModal 
-        isOpen={shareModalOpen} 
-        onClose={() => setShareModalOpen(false)} 
-        // shareCode={shareCode} 
+      <ShareModal
+        isOpen={shareModalOpen}
+        onClose={() => setShareModalOpen(false)}
+        // shareCode={shareCode}
       />
     </>
   );

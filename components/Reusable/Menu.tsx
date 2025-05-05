@@ -248,7 +248,7 @@ export default function Menu({
       {isOpen && (
         <div
           ref={menuRef}
-          className={`absolute mt-1 flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-50 min-w-40 ${getBasePositionClasses()}`}
+          className={`absolute mt-1 flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-90 min-w-40 ${getBasePositionClasses()}`}
         >
           {items.map((item, index) => (
             <MenuItem key={index} item={item} closeMenu={closeMenu} />

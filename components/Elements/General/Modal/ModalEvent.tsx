@@ -16,6 +16,7 @@ import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { updateTask } from "@/services/Task/updateTask";
+import { addHours } from "date-fns";
 
 type ModalEventProps = {
   isOpen: { text: string; other?: unknown };
@@ -141,7 +142,15 @@ export default function ModalEvent({ setIsOpen, isOpen }: ModalEventProps) {
 
     try {
       setIsLoading(true);
-      const res = await createTask({ task });
+      const res = await createTask({
+        task: {
+          ...task,
+          dueDate: addHours(
+            task.dueDate ?? new Date(),
+            -(task.dueDate?.getTimezoneOffset() ?? 0) / 60
+          ),
+        },
+      });
 
       if (!res.success) {
         const errorMessage =
@@ -154,6 +163,7 @@ export default function ModalEvent({ setIsOpen, isOpen }: ModalEventProps) {
       }
 
       setEvents((prev) => [...prev, res.message]);
+      setTasks((prev) => [...prev, res.message]);
 
       try {
         const calendarResponse = await addTaskToCalendar({
