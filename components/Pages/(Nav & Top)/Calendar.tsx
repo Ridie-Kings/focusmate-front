@@ -73,7 +73,7 @@ export default function CalendarPage() {
         setEvents([]);
       }
     };
-
+ 
     const debouncedFetch = debounce(() => {
       if (navType === "Día") {
         handleGetCalendarByDate();
