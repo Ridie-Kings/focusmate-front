@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import CurrentDate from "@/components/Elements/General/CurrentDate";
 import { ChevronLeft, ChevronRight, ListFilter, Search } from "lucide-react";
-import { addDays, format } from "date-fns";
+import { addDays, addMonths, format } from "date-fns";
 import { es } from "date-fns/locale";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 
@@ -33,15 +33,27 @@ export default function NavInfo({
         <div className="flex items-center gap-2">
           <ChevronLeft
             className="cursor-pointer"
-            onClick={() => setDate(addDays(date, -1))}
+            onClick={() =>
+              setDate(
+                navType === "Mes" ? addMonths(date, -1) : addDays(date, -1)
+              )
+            }
           />
-          <p>{format(date, "dd MMMM", { locale: es })}</p>
+          <p>
+            {format(date, navType === "Mes" ? "MMMM" : "dd MMMM", {
+              locale: es,
+            })}
+          </p>
           <ChevronRight
             className="cursor-pointer"
-            onClick={() => setDate(addDays(date, 1))}
+            onClick={() =>
+              setDate(navType === "Mes" ? addMonths(date, 1) : addDays(date, 1))
+            }
           />
         </div>
-        <ButtonDropDown items={items}>{navType}</ButtonDropDown>
+        <ButtonDropDown items={items} className="border-2 border-primary-500">
+          {navType}
+        </ButtonDropDown>
         <ListFilter className="cursor-pointer" />
         <Search className="cursor-pointer" />
       </div>

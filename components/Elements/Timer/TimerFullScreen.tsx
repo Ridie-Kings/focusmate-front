@@ -6,11 +6,11 @@ import TimerContainer from "./TimerComponent/TimerContainer";
 export default function TimerFullScreen() {
   const {
     setIsOpen,
-    setTime,
-    time,
-    initialTime,
-    setInitialTime,
-    toggleChronometerMode,
+    // setTime,
+    // time,
+    // initialTime,
+    // setInitialTime,
+    // toggleChronometerMode,
   } = useContext(TimerContext);
   return (
     <main className="w-full h-screen flex items-center justify-center p-1 fixed left-0 top-0 z-60 bg-white animate-opacStart">
@@ -67,14 +67,7 @@ export default function TimerFullScreen() {
         <div className="w-full 2xl:h-44 xl:h-15 absolute top-0 group flex xl:items-center xl:justify-center justify-end p-5 z-50">
           <CloseBtn setIsOpen={setIsOpen} />
         </div>
-        <TimerContainer
-          fullScreen
-          setTime={setTime}
-          time={time}
-          initialTime={initialTime}
-          setInitialTime={setInitialTime}
-          toggleChronometerMode={toggleChronometerMode}
-        />
+        <TimerContainer />
       </div>
     </main>
   );

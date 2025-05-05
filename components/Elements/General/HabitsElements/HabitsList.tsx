@@ -150,7 +150,7 @@ export default function HabitsList({ habits, setHabits }: HabitsListProps) {
 
   return (
     <ul
-      className="w-full h-full flex flex-col gap-4"
+      className="w-full h-[320px] flex flex-col overflow-y-auto gap-4"
       aria-label="Lista de hábitos"
     >
       {habits.map((habit) => (
