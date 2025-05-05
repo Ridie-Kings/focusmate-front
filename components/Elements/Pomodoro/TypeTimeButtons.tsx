@@ -1,81 +1,96 @@
+"use client";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import { Brain, CircleGauge, Coffee } from "lucide-react";
-import React, { Dispatch, SetStateAction, useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 
 type TimerItem = {
   id: number;
   label: string;
   type: chipsIconType;
-  icon: React.ReactNode;
 };
 
-type TypeTimeButtonsProps = {
-  menu: chipsIconType;
-  setMenu: Dispatch<SetStateAction<chipsIconType>>;
-  className?: string;
-  fullScreen?: boolean;
-  setInitialTime: Dispatch<SetStateAction<TimeType>>;
-  toggleChronometerMode: (type: boolean) => void;
-};
-
-export default function TypeTimeButtons({
-  menu,
-  setMenu,
-  className = "",
-  fullScreen = false,
-  setInitialTime,
-  toggleChronometerMode,
-}: TypeTimeButtonsProps) {
-  const { startedElement } = useContext(TimerContext);
+export default function TypeTimeButtons() {
+  const {
+    startedElement,
+    setMenu,
+    menu,
+    setInitialTime,
+    toggleChronometerMode,
+    fullScreen,
+    isType,
+  } = useContext(TimerContext);
 
   const menuTimes = useMemo<Record<chipsIconType, TimeType>>(
     () => ({
       concentracion: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
       chrono: { hours: 0, min: 0, seg: 0 },
+      temp: { hours: 0, min: 0, seg: 0 },
     }),
     []
   );
 
-  const timerItems: TimerItem[] = useMemo(
-    () => [
-      {
-        id: 1,
-        label: "Enfoque",
-        type: "concentracion",
-        icon: <Brain size={18} />,
-      },
-      {
-        id: 2,
-        label: "Descanso",
-        type: "D/Corto",
-        icon: <Coffee size={18} />,
-      },
-      {
-        id: 3,
-        label: "Cronometro",
-        type: "chrono",
-        icon: <CircleGauge size={18} />,
-      },
-    ],
-    []
-  );
+  const timerItems = useMemo(() => {
+    if (isType === "pomodoro") {
+      return [
+        {
+          id: 1,
+          label: "Concentración",
+          type: "concentracion" as chipsIconType,
+        },
+        {
+          id: 2,
+          label: "Descanso Corto",
+          type: "D/Corto" as chipsIconType,
+        },
+      ];
+    } else if (isType === "reloj") {
+      return [
+        {
+          id: 1,
+          label: "Cronómetro",
+          type: "chrono" as chipsIconType,
+        },
+        {
+          id: 2,
+          label: "Temporizador",
+          type: "temp" as chipsIconType,
+        },
+      ];
+    }
+    return [];
+  }, [isType]);
+
+  useEffect(() => {
+    if (isType === "reloj") {
+      setMenu("chrono");
+      setInitialTime(menuTimes["chrono"]);
+      toggleChronometerMode(true);
+    } else {
+      setMenu("concentracion");
+      setInitialTime(menuTimes["concentracion"]);
+      toggleChronometerMode(false);
+    }
+  }, [isType]);
 
   const handleTimerSelection = (item: TimerItem) => {
     setMenu(item.type);
-    setInitialTime(menuTimes[item.type]);
 
+    setInitialTime(menuTimes[item.type]);
     toggleChronometerMode(item.type === "chrono");
   };
+
+  if (timerItems.length === 0) {
+    return null;
+  }
 
   return (
     <ul
       className={`flex flex-col xl:flex-row w-full place-content-evenly gap-2 ${
         fullScreen ? "" : "lg:p-0 p-2"
-      } ${className}`}
+      }`}
     >
       {timerItems.map((item) =>
         fullScreen ? (
@@ -86,13 +101,10 @@ export default function TypeTimeButtons({
                 ? "bg-primary-500 text-white"
                 : "text-primary-500 bg-white hover:bg-primary-500-hover hover:text-white"
             }`}
-            onClick={() => {
-              setMenu(item.type);
-              toggleChronometerMode(item.type === "chrono");
-            }}
+            onClick={() => handleTimerSelection(item)}
             aria-label={item.label}
+            disabled={startedElement}
           >
-            {item.icon}
             <span>{item.label}</span>
           </button>
         ) : (

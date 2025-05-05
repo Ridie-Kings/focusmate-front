@@ -27,6 +27,8 @@ export function useTimer(
   useEffect(() => {
     if (menu === "concentracion") setTime(DEFAULT_FOCUS_TIME);
     else if (menu === "D/Corto") setTime(DEFAULT_SHORT_BREAK);
+    else if (menu === "chrono") setTime({ hours: 0, min: 0, seg: 0 });
+    else if (menu === "temp") setTime({ hours: 0, min: 0, seg: 0 });
   }, [menu, DEFAULT_FOCUS_TIME, DEFAULT_SHORT_BREAK]);
 
   const playEndSound = useCallback(() => {

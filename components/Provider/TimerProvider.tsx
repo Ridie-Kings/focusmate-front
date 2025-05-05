@@ -26,6 +26,9 @@ const defaultContextValue: TimerContextType = {
   setMenu: () => {},
   menu: "concentracion",
   startedElement: false,
+  fullScreen: false,
+  setIsType: () => {},
+  isType: "pomodoro",
 };
 
 export const TimerContext =
@@ -43,6 +46,7 @@ export default function TimerProvider({
   const [isChronometer, setIsChronometer] = useState(false);
   const [menu, setMenu] = useState<chipsIconType>("concentracion");
   const [startedElement, setStartedElement] = useState(false);
+  const [isType, setIsType] = useState<"pomodoro" | "reloj">("pomodoro");
 
   const {
     time: timerTime,
@@ -123,6 +127,9 @@ export default function TimerProvider({
     setMenu,
     menu,
     startedElement,
+    fullScreen: false,
+    setIsType,
+    isType,
   };
 
   return (

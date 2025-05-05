@@ -13,6 +13,7 @@ import { timeUtils } from "@/components/Provider/TimerProvider/TimeUtils";
 
 export default function Timer() {
   const {
+    startedElement,
     time,
     setTime,
     isPlay,
@@ -94,6 +95,9 @@ export default function Timer() {
   const toggleTimeVisibility = useCallback(() => {
     setHiddenTime((prev) => !prev);
   }, []);
+  console.log(!startedElement);
+  console.log(!isChronometer);
+  console.log(!startedElement && !isChronometer);
 
   return (
     <div className="flex flex-col items-center gap-2 w-full">
@@ -104,7 +108,11 @@ export default function Timer() {
         aria-label={hiddenTime ? "Show time" : "Hide time"}
       />
 
-      <Time hiddenTime={hiddenTime} time={time} />
+      <Time
+        hiddenTime={hiddenTime}
+        time={time}
+        isEditeble={!startedElement && !isChronometer}
+      />
 
       <BarTimer time={time} initialTime={initialTime} />
 

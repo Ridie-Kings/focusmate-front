@@ -22,4 +22,7 @@ export type TimerContextType = {
   menu: chipsIconType;
   setMenu: Dispatch<SetStateAction<chipsIconType>>;
   startedElement: boolean;
+  fullScreen: boolean;
+  setIsType: Dispatch<SetStateAction<"pomodoro" | "reloj">>;
+  isType: "pomodoro" | "reloj";
 };
