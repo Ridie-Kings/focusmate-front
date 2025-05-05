@@ -67,18 +67,18 @@ export default function ListTask({
 
   return (
     <div className="flex flex-col w-full gap-4">
-      <ul
-        className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto transition-all duration-300"
+      <div
+        className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto overflow-x-hidden transition-all duration-300"
         style={{
           opacity: isInitialRender ? 0 : 1,
         }}
       >
         {filteredTasks.length > 0 ? (
           filteredTasks.map((task, index) => (
-            <li
+            <div
               key={task._id}
               className={`transform transition-all duration-300 flex items-center gap-2 ${
-                isInitialRender ? "opacity-0 translate-y-6" : "opacity-100 "
+                isInitialRender ? "opacity-0 translate-y-1" : "opacity-100 "
               }`}
               style={{
                 transitionDelay: `${isInitialRender ? index * 0.08 : 0}s`,
@@ -94,7 +94,7 @@ export default function ListTask({
                 setEvents={setEvents}
                 setTasks={setTasks}
               />
-            </li>
+            </div>
           ))
         ) : (
           <div
@@ -109,7 +109,7 @@ export default function ListTask({
             </p>
           </div>
         )}
-      </ul>
+      </div>
       <div className="transition-transform duration-200 hover:scale-[1.01] active:scale-[0.99]">
         <Button
           size="large"
