@@ -6,19 +6,19 @@ import BarTimer from "../../../Elements/Pomodoro/BarTimer";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import TypeTimeButtons from "../../../Elements/Pomodoro/TypeTimeButtons";
 import Commands from "@/components/Elements/Pomodoro/Commands";
-import { chipsIconType } from "@/components/Reusable/Chips";
+// import { chipsIconType } from "@/components/Reusable/Chips";
 import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 // import { toast } from "react-hot-toast";
 import ShareModal from "@/components/Elements/General/Modal/ModalShare";
 
 export default function Timer(/*{ token }: { token: string }*/) {
-  const [menu, setMenu] = useState<chipsIconType>("concentracion");
+  // const [menu, setMenu] = useState<chipsIconType>("concentracion");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [pomodoroId, setPomodoroId] = useState<string | null>(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   // const [shareCode, setShareCode] = useState('');
 
-  const { setTime, time, setInitialTime, initialTime, toggleChronometerMode } =
+  const { setTime, time, setInitialTime, initialTime } =
     useContext(TimerContext);
 
   const {
@@ -148,9 +148,9 @@ export default function Timer(/*{ token }: { token: string }*/) {
 
     setIsPlaying(false);
     setPomodoroId(null);
-    setTime(menuTimes[menu as keyof typeof menuTimes]);
-    setInitialTime(menuTimes[menu as keyof typeof menuTimes]);
-  }, [pomodoroId, stopPomodoro, menu, menuTimes, setTime, setInitialTime]);
+    // setTime(menuTimes[menu as keyof typeof menuTimes]);
+    // setInitialTime(menuTimes[menu as keyof typeof menuTimes]);
+  }, [pomodoroId, stopPomodoro, menuTimes, setTime, setInitialTime]); // menu
 
   // const handleShare = useCallback(async () => {
   //   if (!pomodoroId) {
@@ -218,12 +218,7 @@ export default function Timer(/*{ token }: { token: string }*/) {
   return (
     <>
       <div className="w-1/2 max-h-[95vh] overflow-hidden flex-1 flex flex-col place-content-between items-center border border-accent p-4 gap-6 rounded-2xl">
-        <TypeTimeButtons
-          setInitialTime={setInitialTime}
-          setMenu={setMenu}
-          menu={menu}
-          toggleChronometerMode={toggleChronometerMode}
-        />
+        <TypeTimeButtons />
         <div className="flex place-content-between gap-5 text-6xl relative items-center">
           <Minus
             onClick={() => !isPlaying && updateTime(-60)}
