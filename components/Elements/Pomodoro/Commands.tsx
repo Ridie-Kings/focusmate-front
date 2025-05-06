@@ -1,3 +1,5 @@
+import { PomodoroStatus } from "@/components/Provider/WebsocketProvider";
+import { chipsIconType } from "@/components/Reusable/Chips";
 import {
   RefreshCw,
   Pause,
@@ -14,6 +16,8 @@ type CommandsProps = {
   isPlay: boolean;
   handleClick: (action: CommandAction) => void;
   fullScreen?: boolean;
+  menu: chipsIconType;
+  status: PomodoroStatus | null;
 };
 
 type CommandButton = {
@@ -27,6 +31,8 @@ export default function Commands({
   isPlay,
   handleClick,
   fullScreen = false,
+  menu,
+  status,
 }: CommandsProps) {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
@@ -69,6 +75,7 @@ export default function Commands({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
+      disabled: menu === "D/Corto" && !status?.active,
       className: primaryButtonPadding,
     },
     {
@@ -84,6 +91,7 @@ export default function Commands({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
+      disabled: menu === "D/Corto" && !status?.active,
       className: secondaryButtonPadding,
     },
   ];

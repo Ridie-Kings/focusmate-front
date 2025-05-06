@@ -20,7 +20,6 @@ export default function Agenda() {
       const events = await getCalendarByDate({
         date: format(dateToFetch, "yyyy-MM-dd"),
       });
-      console.log(dateToFetch);
 
       if (events.success) {
         setEvents(events.res);

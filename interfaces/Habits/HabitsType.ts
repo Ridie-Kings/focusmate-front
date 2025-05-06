@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type HabitsType = {
   _id: string;
   bestStreak: number;
@@ -12,4 +14,32 @@ export type HabitsType = {
   time?: string;
   streak: number;
   userId: string;
+};
+
+export type Frequency = "daily" | "weekly" | "monthly" | "";
+export type HabitFormData = {
+  _id: string | undefined;
+  name: string;
+  description: string;
+  frequency: Frequency;
+  type: string;
+  time?: Date;
+};
+
+export type HabitOption = {
+  label: string;
+  value: string;
+};
+
+export type ModalHabitProps = {
+  isOpen: { text: string; other?: unknown };
+  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
+};
+
+export const HABIT_TYPES = {
+  DRINK: "drink",
+  STUDY: "study",
+  FOOD: "food",
+  SLEEP: "sleep",
+  SPORT: "sport",
 };
