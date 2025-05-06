@@ -4,9 +4,11 @@ import DotTimer from "./BarTimer/DotTimer";
 export default function BarTimer({
   time,
   initialTime,
+  isChronometer,
 }: {
   time: TimeType;
   initialTime: TimeType;
+  isChronometer: boolean;
 }) {
   const timeToSeconds = (t: TimeType): number =>
     t.hours * 3600 + t.min * 60 + t.seg;
@@ -22,7 +24,10 @@ export default function BarTimer({
   const divider = initialTimeInSeconds / 4;
 
   return (
-    <div className="w-3/4 flex place-content-between items-center rounded-full relative mx-auto overflow-x-hidden">
+    <div
+      style={{ opacity: isChronometer ? 0 : 1 }}
+      className="w-3/4 flex place-content-between items-center rounded-full relative mx-auto overflow-x-hidden transition-all duration-300"
+    >
       {Array.from({ length: 5 }).map((_, index) => (
         <DotTimer
           key={index}

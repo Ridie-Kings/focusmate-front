@@ -112,7 +112,11 @@ export default function Timer() {
         isEditeble={!startedElement && !isChronometer}
       />
 
-      <BarTimer time={time} initialTime={initialTime} />
+      <BarTimer
+        time={time}
+        initialTime={initialTime}
+        isChronometer={isChronometer}
+      />
 
       <Commands
         handleClick={handleClick}
