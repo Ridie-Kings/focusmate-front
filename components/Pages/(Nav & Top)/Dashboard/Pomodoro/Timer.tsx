@@ -22,6 +22,7 @@ export default function Timer() {
     setIsOpen,
     initialTime,
     isChronometer,
+    menu,
   } = useContext(TimerContext);
 
   const { status, startPomodoro, stopPomodoro, pausePomodoro, resumePomodoro } =
@@ -95,9 +96,6 @@ export default function Timer() {
   const toggleTimeVisibility = useCallback(() => {
     setHiddenTime((prev) => !prev);
   }, []);
-  console.log(!startedElement);
-  console.log(!isChronometer);
-  console.log(!startedElement && !isChronometer);
 
   return (
     <div className="flex flex-col items-center gap-2 w-full">
@@ -116,7 +114,12 @@ export default function Timer() {
 
       <BarTimer time={time} initialTime={initialTime} />
 
-      <Commands handleClick={handleClick} isPlay={isPlay} />
+      <Commands
+        handleClick={handleClick}
+        isPlay={isPlay}
+        menu={menu}
+        status={status}
+      />
     </div>
   );
 }
