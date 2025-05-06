@@ -50,21 +50,23 @@ export default function TaskCard({
     <>
       <div
         style={{
-          transform: isChange ? "translateX(-100%)" : "translateX(0%)",
+          transform: isChange ? "translateX(-16px)" : "translateX(0%)",
+          opacity: isChange ? 0 : 1,
         }}
         className="h-full w-0 rounded-full bg-primary-500/25 group-hover:w-1 transition-all duration-1000"
       />{" "}
       <div
         style={{
-          transform: isChange ? "translateY(-100%)" : "translateY()",
+          transform: isChange ? "translateY(-16px)" : "translateY()",
+          opacity: isChange ? 0 : 1,
         }}
-        className="flex w-full p-4 bg-white drop-shadow items-center justify-between border-2 border-secondary-400 rounded-lg group transition-all duration-800 delay-200"
+        className="flex w-full p-4 bg-white items-center justify-between border-2 border-secondary-400 rounded-lg group transition-all duration-800 delay-200"
       >
         {" "}
         <div className="flex items-center gap-3 text-primary-500">
           <p
             style={{
-              transform: isChange ? "translateY(-100%)" : "translateY(0%)",
+              transform: isChange ? "translateY(-16px)" : "translateY(0%)",
             }}
             className="transition-all duration-1000"
           >
@@ -72,7 +74,7 @@ export default function TaskCard({
           </p>{" "}
           <p
             style={{
-              transform: isChange ? "translateY(-100%)" : "translateY(0%)",
+              transform: isChange ? "translateY(-16px)" : "translateY(0%)",
             }}
             className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-900 delay-100 cursor-default truncate flex-1"
           >
@@ -85,7 +87,7 @@ export default function TaskCard({
             priority={task.priority}
             status={task.status}
             style={{
-              transform: isChange ? "translateY(-100%)" : "translateY(0%)",
+              transform: isChange ? "translateY(-16px)" : "translateY(0%)",
             }}
             className="transition-all duration-850 delay-150"
           />
@@ -128,7 +130,8 @@ export default function TaskCard({
         checked={task.status === "completed"}
         onChange={handleStatus}
         style={{
-          transform: isChange ? "translateY(-200%)" : "translateY(0%)",
+          opacity: isChange ? 0 : 1,
+          transform: isChange ? "translateY(-100%)" : "translateY(0%)",
         }}
         className={`cursor-pointer size-6 border-2 rounded appearance-none transition-all duration-750 delay-250 ${
           task.status === "completed"

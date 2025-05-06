@@ -1,7 +1,7 @@
 import { Brain, Coffee } from "lucide-react";
 import { ReactNode } from "react";
 
-export type chipsIconType = "concentracion" | "D/Corto" | "chrono";
+export type chipsIconType = "concentracion" | "D/Corto" | "chrono" | "temp";
 
 export default function Chips({
   status,

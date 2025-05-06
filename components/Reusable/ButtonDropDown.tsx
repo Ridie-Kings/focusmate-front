@@ -1,11 +1,14 @@
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
 export default function ButtonDropDown({
   children,
   items,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
   items: { label: string; onClick: () => void }[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,20 +35,20 @@ export default function ButtonDropDown({
   }, []);
 
   return (
-    <div className="relative inline-block text-left z-20" ref={dropdownRef}>
+    <div className="relative inline-block z-20" ref={dropdownRef}>
       <button
         type="button"
-        className="inline-flex items-center justify-center gap-2 cursor-pointer px-4 py-1 text-primary-500 border-2 border-primary-500 rounded-lg"
+        className={`inline-flex items-center justify-center cursor-pointer px-4 py-1 text-primary-500 rounded-lg ${className}`}
         onClick={toggleDropdown}
       >
-        <p className="px-4">{children}</p>
+        <p className="px-4 capitalize">{children}</p>
         <ChevronDown
           className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 origin-top-right rounded-md bg-white drop-shadow-lg p-1 text-primary-500">
+        <div className="absolute min-w-3/4 right-1/2 translate-x-1/2 text-lg rounded-md bg-white drop-shadow-lg p-1 text-primary-500">
           {items.map((item, index) => (
             <button
               key={index}

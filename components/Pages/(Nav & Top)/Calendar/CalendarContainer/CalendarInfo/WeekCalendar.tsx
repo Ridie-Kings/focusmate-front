@@ -99,17 +99,24 @@ const DayColumn = ({
   day,
   events,
   setEvents,
+  selectedDate,
+  setDate,
 }: {
   day: Date;
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
+  selectedDate: Date;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) => {
   return (
     <div className="flex flex-col gap-5">
       <div
-        className={`flex items-center place-content-between px-3 drop-shadow-lg text-center py-2   rounded-lg sticky top-0 z-10 ${
+        onClick={() => setDate(day)}
+        className={`flex cursor-pointer items-center place-content-between px-3 drop-shadow-lg text-center py-2   rounded-lg sticky top-0 z-10 ${
           isToday(day)
             ? "bg-primary-400 text-white"
+            : isSameDay(day, selectedDate)
+            ? " bg-secondary-700 text-white"
             : "bg-white text-primary-500 border border-primary-500"
         }`}
       >
@@ -149,11 +156,13 @@ const DayColumn = ({
 
 const WeekCalendarItem = ({
   date,
+  setDate,
   events,
   setEvents,
   scrollCalendar,
 }: {
   date: Date;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
@@ -197,6 +206,8 @@ const WeekCalendarItem = ({
           day={day}
           events={events}
           setEvents={setEvents}
+          selectedDate={date}
+          setDate={setDate}
         />
       ))}
     </div>
@@ -207,17 +218,20 @@ export default function WeekCalendar({
   events,
   setEvents,
   date,
+  setDate,
   scrollCalendar,
 }: {
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
   date: Date;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
 }) {
   return (
     <WeekCalendarItem
       scrollCalendar={scrollCalendar}
       date={date}
+      setDate={setDate}
       events={events}
       setEvents={setEvents}
     />
