@@ -18,7 +18,7 @@ export default function Timer(/*{ token }: { token: string }*/) {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   // const [shareCode, setShareCode] = useState('');
 
-  const { setTime, time, setInitialTime, initialTime } =
+  const { setTime, time, setInitialTime, initialTime, isChronometer, menu } =
     useContext(TimerContext);
 
   const {
@@ -244,8 +244,17 @@ export default function Timer(/*{ token }: { token: string }*/) {
             }}
           />
         </div>
-        <BarTimer time={time} initialTime={initialTime} />
-        <Commands handleClick={handleClick} isPlay={isPlaying} />
+        <BarTimer
+          time={time}
+          initialTime={initialTime}
+          isChronometer={isChronometer}
+        />
+        <Commands
+          handleClick={handleClick}
+          isPlay={isPlaying}
+          menu={menu}
+          status={status}
+        />
       </div>
 
       {/* Modal de compartir */}

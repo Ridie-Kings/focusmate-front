@@ -4,7 +4,7 @@ import TemplateDashboard from "../../../Elements/General/TemplateBox";
 import Timer from "./Pomodoro/Timer";
 import { useContext } from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
-import { Hourglass, Timer as TimerIcon } from "lucide-react";
+import { Timer as TimerIcon } from "lucide-react";
 
 export default function Pomodoro() {
   const { setIsType, isType } = useContext(TimerContext);

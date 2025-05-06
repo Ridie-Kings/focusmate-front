@@ -1,15 +1,6 @@
-import {
-  BedDouble,
-  Bike,
-  Book,
-  ChefHat,
-  CircleHelp,
-  GlassWater,
-  Pen,
-  Trash2,
-} from "lucide-react";
+import { Pen, Trash2 } from "lucide-react";
 import { useContext } from "react";
-import { HABIT_TYPES, HabitsType } from "@/interfaces/Habits/HabitsType";
+import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import HabitsUtils from "@/lib/HabitsUtils";
 import Menu from "@/components/Reusable/Menu";
 import { ModalContext } from "@/components/Provider/ModalProvider";

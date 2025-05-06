@@ -25,17 +25,17 @@ export default function HabitsUtils({
 }) {
   const validateHabit = useCallback((): boolean => {
     if (!createdHabit || !createdHabit.name || !createdHabit.name.trim()) {
-      setError && setError("El nombre del hábito es obligatorio");
+      if (setError) setError("El nombre del hábito es obligatorio");
       return false;
     }
 
     if (!createdHabit.frequency) {
-      setError && setError("La frecuencia es obligatoria");
+      if (setError) setError("La frecuencia es obligatoria");
       return false;
     }
 
     if (!createdHabit.type) {
-      setError && setError("El tipo de hábito es obligatorio");
+      if (setError) setError("El tipo de hábito es obligatorio");
       return false;
     }
 
