@@ -32,9 +32,10 @@ export default function TaskCard({
     if (isChange && cardRef.current) {
       const keyframes = [
         { transform: "scale(1)" },
-        { transform: "scale(0.95)", offset: 0.1 },
+        { transform: "scale(0.97)", offset: 0.1 },
+        { transform: "scale(0.97)", offset: 0.5 },
         {
-          transform: `scale(0.95) translateX(${
+          transform: `scale(0.97) translateX(${
             task.status === "completed" ? "" : "-"
           }30px)`,
           offset: 0.9,
