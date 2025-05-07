@@ -3,6 +3,19 @@ import { AuthResponse } from "@/interfaces/Auth/AuthType";
 import { apiConnection } from "../axiosConfig";
 import { cookies } from "next/headers";
 
+function generateUsername(fullname: string): string {
+  const baseUsername = fullname
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, "")
+    .replace(/\s+/g, "");
+
+  const randomDigits = Math.floor(Math.random() * 1000)
+    .toString()
+    .padStart(3, "0");
+
+  return `${baseUsername}.${randomDigits}`;
+}
+
 export async function register(
   prevState: any,
   formData: FormData
@@ -10,10 +23,13 @@ export async function register(
   try {
     const cookieStore = await cookies();
 
+    const fullname = formData.get("fullname") as string;
+
     const userData = {
       email: formData.get("email") as string,
-      fullname: formData.get("fullname") as string,
+      fullname: fullname,
       password: formData.get("password") as string,
+      username: generateUsername(fullname),
     };
 
     const testUser = testUserData({
@@ -63,6 +79,7 @@ function testUserData(userData: {
   email: string;
   password: string;
   fullname: string;
+  username: string;
   repeatPassword: string;
 }) {
   for (const [key, value] of Object.entries(userData)) {
@@ -91,4 +108,6 @@ function testUserData(userData: {
       success: false,
       message: "The passwords do not match.",
     };
+
+  return { success: true };
 }
