@@ -19,9 +19,7 @@ export default function ListTask({
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
-  const { setIsOpen } = useContext(ModalContext) as {
-    setIsOpen: (params: { text: string; other?: unknown }) => void;
-  };
+  const { setIsOpen } = useContext(ModalContext)
   const { setEvents } = useContext(DashboardContext);
 
   useEffect(() => {

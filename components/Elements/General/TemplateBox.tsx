@@ -44,7 +44,7 @@ export default function TemplateBox({
           ))}
         </div>
       )}
-      {link && <GoTo link={link} />}
+      <GoTo link={link} />
     </div>
   );
 }
