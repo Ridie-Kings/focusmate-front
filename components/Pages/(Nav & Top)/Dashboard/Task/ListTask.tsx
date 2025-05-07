@@ -1,10 +1,11 @@
 import Button from "@/components/Reusable/Button";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import MountainTask from "@/components/Elements/Svg/Mountain/MountainTask";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import TaskCard from "./ListTask/TaskCard";
+import AnimationElementsListUtils from "@/lib/AnimationElementsListUtils";
 
 export default function ListTask({
   filter,
@@ -15,14 +16,21 @@ export default function ListTask({
   tasks: TaskType[];
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
 }) {
+  const listRef = useRef<HTMLDivElement>(null);
+
   const [changingTaskIds, setChangingTaskIds] = useState<string[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
-  const { setIsOpen } = useContext(ModalContext) as {
-    setIsOpen: (params: { text: string; other?: unknown }) => void;
-  };
+  const { setIsOpen } = useContext(ModalContext);
   const { setEvents } = useContext(DashboardContext);
+  const { capturePositions, animateFLIP } = AnimationElementsListUtils({
+    listRef,
+  });
+
+  useEffect(() => {
+    capturePositions();
+  }, [tasks]);
 
   useEffect(() => {
     const getFilteredTasks = () => {
@@ -30,17 +38,17 @@ export default function ListTask({
         case "Completada":
           return tasks.filter((e) => e.status === "completed");
         case "Alta":
-          return tasks
-            .filter((e) => e.priority === "high")
-            .filter((t) => t.status !== "completed");
+          return tasks.filter(
+            (e) => e.priority === "high" && e.status !== "completed"
+          );
         case "Media":
-          return tasks
-            .filter((e) => e.priority === "medium")
-            .filter((t) => t.status !== "completed");
+          return tasks.filter(
+            (e) => e.priority === "medium" && e.status !== "completed"
+          );
         case "Baja":
-          return tasks
-            .filter((e) => e.priority === "low")
-            .filter((t) => t.status !== "completed");
+          return tasks.filter(
+            (e) => e.priority === "low" && e.status !== "completed"
+          );
         case "":
           return tasks.filter((e) => e.status !== "completed");
         default:
@@ -48,7 +56,12 @@ export default function ListTask({
       }
     };
 
+    capturePositions();
     setFilteredTasks(getFilteredTasks());
+
+    requestAnimationFrame(() => {
+      animateFLIP();
+    });
 
     if (isInitialRender) {
       setTimeout(() => {
@@ -59,7 +72,6 @@ export default function ListTask({
 
   const handleStatusChange = (taskId: string) => {
     setChangingTaskIds((prev) => [...prev, taskId]);
-
     setTimeout(() => {
       setChangingTaskIds((prev) => prev.filter((id) => id !== taskId));
     }, 800);
@@ -68,25 +80,12 @@ export default function ListTask({
   return (
     <div className="flex flex-col w-full gap-4">
       <div
-        className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto overflow-x-hidden transition-all duration-300"
-        style={{
-          opacity: isInitialRender ? 0 : 1,
-        }}
+        ref={listRef}
+        className="flex flex-col w-full gap-4 h-[296px] pt-1 overflow-y-auto overflow-x-hidden transition-all duration-300"
       >
         {filteredTasks.length > 0 ? (
-          filteredTasks.map((task, index) => (
-            <div
-              key={task._id}
-              className={`transform transition-all duration-300 flex items-center gap-2 ${
-                isInitialRender ? "opacity-0 translate-y-1" : "opacity-100 "
-              }`}
-              style={{
-                transitionDelay: `${isInitialRender ? index * 0.08 : 0}s`,
-                transform: changingTaskIds.includes(task._id)
-                  ? "translateY(5px)"
-                  : "",
-              }}
-            >
+          filteredTasks.map((task) => (
+            <div key={task._id} data-id={task._id}>
               <TaskCard
                 task={task}
                 setIsChange={handleStatusChange}
@@ -97,11 +96,7 @@ export default function ListTask({
             </div>
           ))
         ) : (
-          <div
-            className={`flex flex-col items-center gap-3 justify-center h-full bg-quaternary-100 rounded-2xl py-4 transition-all duration-500 ${
-              isInitialRender ? "opacity-0 scale-95" : "opacity-100 scale-100"
-            }`}
-          >
+          <div className="flex flex-col items-center gap-3 justify-center h-full bg-quaternary-100 rounded-2xl py-4 transition-all duration-500">
             <MountainTask />
             <p className="text-primary-500 text-xl text-center mx-1 font-medium">
               El día está en blanco. ¡Agrega tus tareas

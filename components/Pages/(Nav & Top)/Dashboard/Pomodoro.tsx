@@ -8,7 +8,6 @@ import { Timer as TimerIcon } from "lucide-react";
 
 export default function Pomodoro() {
   const { setIsType, isType } = useContext(TimerContext);
-  console.log(isType);
 
   return (
     <TemplateDashboard

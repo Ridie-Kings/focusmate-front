@@ -9,7 +9,6 @@ export async function UpdateUser({
   id: string;
   user: any;
 }): Promise<{ success: boolean; data: any }> {
-  console.log(user);
 
   try {
     const token = await getToken();

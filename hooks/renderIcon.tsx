@@ -6,6 +6,7 @@ import {
   ChefHat,
   CircleHelp,
   GlassWater,
+  Workflow,
 } from "lucide-react";
 
 export default function renderIconHabit({
@@ -37,6 +38,8 @@ export default function renderIconHabit({
         return <BedDouble size={48} className={iconClass} />;
       case HABIT_TYPES.SPORT:
         return <Bike size={48} className={iconClass} />;
+      case HABIT_TYPES.WORK:
+        return <Workflow size={48} className={iconClass} />;
       default:
         return <CircleHelp size={48} className={iconClass} />;
     }
