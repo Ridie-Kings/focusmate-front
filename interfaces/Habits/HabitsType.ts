@@ -42,4 +42,5 @@ export const HABIT_TYPES = {
   FOOD: "food",
   SLEEP: "sleep",
   SPORT: "sport",
+  WORK: "work",
 };
