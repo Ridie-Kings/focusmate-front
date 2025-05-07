@@ -21,6 +21,7 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
     <TemplateDashboard
       grid="col-span-4 row-span-4 row-start-6 gap-0 "
       title="Tus Tareas"
+      link="/"
     >
       <StatusCards filter={filter} setFilter={setFilter} tasks={tasks} />
       <p className="text-primary-500">
