@@ -17,8 +17,6 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
     : "text-primary-500 bg-secondary-100 cursor-pointer";
   const disabledButtonClass = "bg-gray-400 cursor-not-allowed";
 
-  console.log(isType);
-
   return (
     <div className="flex flex-col items-center gap-2">
       <ul className="flex items-center justify-center gap-7 md:gap-6">
@@ -31,35 +29,35 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
         })
           .filter((button) => button !== undefined)
           .map((button) => (
-          <li key={button.id}>
-            <button
-              onClick={() =>
-                handleClick(button.id as CommandAction, button.disabled)
-              }
-              onMouseEnter={() =>
-                button.id === "openFullScreen" && setShowTooltip(true)
-              }
-              onMouseLeave={() =>
-                button.id === "openFullScreen" && setShowTooltip(false)
-              }
-              className={`
+            <li key={button.id}>
+              <button
+                onClick={() =>
+                  handleClick(button.id as CommandAction, button.disabled)
+                }
+                onMouseEnter={() =>
+                  button.id === "openFullScreen" && setShowTooltip(true)
+                }
+                onMouseLeave={() =>
+                  button.id === "openFullScreen" && setShowTooltip(false)
+                }
+                className={`
                 ${baseButtonClass}
                 ${button.disabled ? disabledButtonClass : activeButtonClass}
                 ${button.className || ""}
                 group hover:scale-95 scale-100 transition-all duration-300
               `}
-              aria-label={button.id}
-              disabled={button.disabled}
-            >
-              {button.icon}
-              {showTooltip && button.id === "openFullScreen" && (
-                <div className="absolute left-15 drop-shadow-lg top-0 rounded z-50 bg-background-primary px-2 py-4">
-                  Proximamente
-                </div>
-              )}
-            </button>
-          </li>
-        ))}
+                aria-label={button.id}
+                disabled={button.disabled}
+              >
+                {button.icon}
+                {showTooltip && button.id === "openFullScreen" && (
+                  <div className="absolute left-15 drop-shadow-lg top-0 rounded z-50 bg-background-primary px-2 py-4">
+                    Proximamente
+                  </div>
+                )}
+              </button>
+            </li>
+          ))}
       </ul>
     </div>
   );

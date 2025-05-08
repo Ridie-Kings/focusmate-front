@@ -58,6 +58,7 @@ export default function TimerProvider({
     resetTimer: timerReset,
   } = useTimer(
     initialTime,
+    setInitialTime,
     menu,
     setMenu,
     DEFAULT_FOCUS_TIME,
@@ -70,7 +71,7 @@ export default function TimerProvider({
     isPlay: chronometerIsPlay,
     togglePlay: chronometerTogglePlay,
     resetTimer: chronometerReset,
-  } = useChronometer({ menu });
+  } = useChronometer({ menu, isType });
 
   useEffect(() => {
     setMenu(menu);

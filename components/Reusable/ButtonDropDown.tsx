@@ -44,7 +44,7 @@ export default function ButtonDropDown({
     >
       <button
         type="button"
-        className={`${className} inline-flex items-center justify-center cursor-pointer px-4 py-1 text-primary-500 rounded-lg`}
+        className={`${className} inline-flex items-center justify-center cursor-pointer text-secondary-700 rounded-lg`}
         onClick={toggleDropdown}
       >
         <p className="px-4 capitalize">{children}</p>
@@ -54,7 +54,7 @@ export default function ButtonDropDown({
       </button>
 
       {isOpen && (
-        <div className="absolute min-w-3/4 max-w-full right-1/2 translate-x-1/2 text-lg rounded-md bg-white drop-shadow-lg p-1 text-primary-500">
+        <div className="absolute min-w-3/4 max-w-full right-1/2 translate-x-1/2 text-lg rounded-md bg-white drop-shadow-lg p-1 text-secondary-700">
           {items.map((item, index) => (
             <button
               key={index}

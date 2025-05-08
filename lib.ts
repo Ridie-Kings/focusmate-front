@@ -20,18 +20,17 @@ export async function updateSession(req: NextRequest) {
   if (!accessToken && refreshToken) await refreshSession(refreshToken);
 
   if (pathname === "/statsboard") {
-    if (user?.user.role !== "admin") {
-      return NextResponse.redirect(new URL("/404", req.nextUrl.origin));
+    // if (user?.user.role !== "admin") {
+    //   return NextResponse.redirect(new URL("/404", req.nextUrl.origin));
+    // }
+  }
+  if (!pathname.includes(".")) {
+    if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
+      return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
     }
 
-    if (!pathname.includes(".")) {
-      if (!accessToken && !refreshToken && !publicPaths.has(pathname)) {
-        return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
-      }
-
-      if (accessToken && refreshToken && publicPaths.has(pathname)) {
-        return NextResponse.redirect(new URL("/", req.nextUrl.origin));
-      }
+    if (accessToken && refreshToken && publicPaths.has(pathname)) {
+      return NextResponse.redirect(new URL("/", req.nextUrl.origin));
     }
   }
 }

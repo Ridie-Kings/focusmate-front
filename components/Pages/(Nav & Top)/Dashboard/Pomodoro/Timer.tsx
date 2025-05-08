@@ -42,26 +42,30 @@ export default function Timer() {
 
   return (
     <div className="flex flex-col items-center gap-2 w-full">
-      <CircleTime
-        percent={
-          (timeUtils.timeToSeconds(time) * 100) /
-          timeUtils.timeToSeconds(initialTime)
-        }
-      >
-        <p className="capitalize bg-secondary-200 rounded-full px-1 text-sm hover:scale-105 cursor-default transition-all duration-300">
-          {menu}
-        </p>
-        <Time time={time} />
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-2">
-            <div className="size-2 rounded-full bg-secondary-700" />{" "}
-            <div className="size-2 rounded-full bg-secondary-700" />{" "}
-            <div className="size-2 rounded-full bg-secondary-700" />{" "}
-            <div className="size-2 rounded-full bg-secondary-700" />
+      {isChronometer ? (
+        <Time time={time} size="text-8xl" />
+      ) : (
+        <CircleTime
+          percent={
+            (timeUtils.timeToSeconds(time) * 100) /
+            timeUtils.timeToSeconds(initialTime)
+          }
+        >
+          <p className="capitalize bg-secondary-200 rounded-full px-1 text-sm hover:scale-105 cursor-default transition-all duration-300">
+            {menu}
+          </p>
+          <Time time={time} />
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-2">
+              <div className="size-2 rounded-full bg-secondary-700" />{" "}
+              <div className="size-2 rounded-full bg-secondary-700" />{" "}
+              <div className="size-2 rounded-full bg-secondary-700" />{" "}
+              <div className="size-2 rounded-full bg-secondary-700" />
+            </div>
+            <p className="text-xs text-gray-300">4 Vueltas</p>
           </div>
-          <p className="text-xs text-gray-300">4 Vueltas</p>
-        </div>
-      </CircleTime>
+        </CircleTime>
+      )}
     </div>
   );
 }

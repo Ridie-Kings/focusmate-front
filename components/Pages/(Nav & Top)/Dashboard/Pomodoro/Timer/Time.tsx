@@ -1,8 +1,10 @@
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 
-export default function Time({ time }: { time: TimeType }) {
+export default function Time({ time, size }: { time: TimeType; size?: string }) {
   return (
-    <div className="flex gap-4 text-7xl md:text-6xl text-secondary-700 relative">
+    <div
+      className={`flex gap-4 ${size ?? "text-6xl"} text-secondary-700 relative`}
+    >
       <p className="relative group">
         {time.hours > 0 && (
           <>

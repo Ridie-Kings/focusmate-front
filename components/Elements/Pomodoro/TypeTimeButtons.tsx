@@ -26,7 +26,7 @@ export default function TypeTimeButtons() {
     () => ({
       enfoque: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
-      chrono: { hours: 0, min: 0, seg: 0 },
+      cronometro: { hours: 0, min: 0, seg: 0 },
       temp: { hours: 0, min: 0, seg: 0 },
     }),
     []
@@ -56,7 +56,7 @@ export default function TypeTimeButtons() {
         {
           id: 1,
           label: "Cronómetro",
-          type: "chrono" as chipsIconType,
+          type: "cronometro" as chipsIconType,
         },
         {
           id: 2,
@@ -70,8 +70,8 @@ export default function TypeTimeButtons() {
 
   useEffect(() => {
     if (isType === "cronometro") {
-      setMenu("chrono");
-      setInitialTime(menuTimes["chrono"]);
+      setMenu("cronometro");
+      setInitialTime(menuTimes["cronometro"]);
       toggleChronometerMode(true);
     } else {
       setMenu("enfoque");
@@ -84,7 +84,7 @@ export default function TypeTimeButtons() {
     setMenu(item.type);
 
     setInitialTime(menuTimes[item.type]);
-    toggleChronometerMode(item.type === "chrono");
+    toggleChronometerMode(item.type === "cronometro");
   };
 
   if (timerItems.length === 0) {

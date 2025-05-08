@@ -107,7 +107,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
               placeholder={field.placeholder}
               state=""
               icon={field.icon}
-              value={formData[field.name] || ""}
+              defaultValue={formData[field.name] || ""}
               onChange={handleInputChange}
             />
           ))}
