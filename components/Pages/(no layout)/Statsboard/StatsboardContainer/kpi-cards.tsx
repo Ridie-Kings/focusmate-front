@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Clock, CheckSquare, Calendar, Activity, Users } from "lucide-react";
+import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
+import { GetStatsBoardInfoUser } from "@/services/Dashboard/GetStatsBoardInfoUser";
 
 interface KpiCardsProps {
   selectedUser?: string | null;
@@ -41,19 +43,14 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
       setError(null);
 
       try {
-        let url = "https://sherp-app.com/api/v0/dashboard/global";
+        const { data, success } =
+          viewMode === "personal" && selectedUser
+            ? await GetStatsBoardInfoUser({ id: selectedUser })
+            : await GetGlobalInfo();
 
-        if (viewMode === "personal" && selectedUser) {
-          url = `https://sherp-app.com/api/v0/dashboard/user/${selectedUser}`;
+        if (!success) {
+          throw new Error(`Error en la API: ${data}`);
         }
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error(`Error en la API: ${response.status}`);
-        }
-
-        const data = await response.json();
 
         if (viewMode === "global") {
           setKpiData({

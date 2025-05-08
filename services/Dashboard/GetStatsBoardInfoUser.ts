@@ -2,23 +2,21 @@
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
 
-export async function UpdateUser({
+export async function GetStatsBoardInfoUser({
   id,
-  user,
 }: {
   id: string;
-  user: any;
 }): Promise<{ success: boolean; data: any }> {
   try {
     const token = await getToken();
-    const res = await apiConnection.patch(`users/${id}`, user, {
+    const res = await apiConnection.get(`dashboard/user/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return { success: true, data: res?.data };
   } catch (error: any) {
-    console.error("Error updating user:", error.response?.data);
+    console.error("Error getting GetStatsBoardInfoUser:", error.response?.data);
     return { success: false, data: error.response };
   }
 }

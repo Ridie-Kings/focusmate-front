@@ -15,13 +15,14 @@ import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { updateTask } from "@/services/Task/updateTask";
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 
 export default function ModalTask({
   setIsOpen,
   isOpen,
 }: {
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
-  isOpen: { text: string; other?: unknown };
+  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
+  isOpen: TypeIsOpen;
 }) {
   const { setTasks } = useContext(DashboardContext);
 

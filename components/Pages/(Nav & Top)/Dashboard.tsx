@@ -16,13 +16,22 @@ export default function Dashboard() {
       {/* <Animate /> */}
       <StreaksWrapper />
       <Agenda />
-      <Pomodoro />
+      <PomodoroWrapper />
       <TasksWrapper />
       <HabitsWrapper />
     </div>
   );
 }
 
+async function PomodoroWrapper() {
+  try {
+    const tasks = await getMyTask();
+    return <Pomodoro tasks={tasks.res} />;
+  } catch (error) {
+    console.error("Failed to load tasks:", error);
+    return <Pomodoro tasks={[]} />;
+  }
+}
 async function StreaksWrapper() {
   try {
     const streaks = await getMyStreaks();

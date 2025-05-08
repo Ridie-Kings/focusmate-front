@@ -6,29 +6,23 @@ import { useState, useContext, useEffect, useCallback } from "react";
 
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
-import Commands from "../../../../Elements/Pomodoro/Commands";
-import BarTimer from "@/components/Elements/Pomodoro/BarTimer";
 import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import { timeUtils } from "@/components/Provider/TimerProvider/TimeUtils";
+import CircleTime from "./Timer/CircleTime";
 
 export default function Timer() {
   const {
-    startedElement,
     time,
     setTime,
     isPlay,
     togglePlay,
     resetTimer,
-    setIsOpen,
     initialTime,
     isChronometer,
     menu,
   } = useContext(TimerContext);
 
-  const { status, startPomodoro, stopPomodoro, pausePomodoro, resumePomodoro } =
-    useContext(SocketIOContext);
-
-  const [hiddenTime, setHiddenTime] = useState(false);
+  const { status } = useContext(SocketIOContext);
 
   useEffect(() => {
     if (!status && !isChronometer) {
@@ -48,82 +42,28 @@ export default function Timer() {
     }
   }, [status, resetTimer, setTime, togglePlay, isPlay, isChronometer]);
 
-  const handleClick = useCallback(
-    (action: string) => {
-      switch (action) {
-        case "openFullScreen":
-          setIsOpen(true);
-          break;
-
-        case "togglePlay":
-          if (!isChronometer) {
-            if (!status?.active) {
-              startPomodoro(timeUtils.timeToSeconds(time));
-            } else if (!status.isPaused) {
-              pausePomodoro();
-            } else if (status.isPaused) {
-              resumePomodoro();
-            }
-          }
-
-          togglePlay();
-          break;
-
-        case "reset":
-          if (status?.active && status?.pomodoroId && !isChronometer)
-            stopPomodoro(status.pomodoroId);
-          resetTimer();
-          break;
-
-        default:
-          break;
-      }
-    },
-    [
-      isChronometer,
-      status,
-      time,
-      startPomodoro,
-      pausePomodoro,
-      resumePomodoro,
-      stopPomodoro,
-      setIsOpen,
-      togglePlay,
-      resetTimer,
-    ]
-  );
-
-  const toggleTimeVisibility = useCallback(() => {
-    setHiddenTime((prev) => !prev);
-  }, []);
-
   return (
     <div className="flex flex-col items-center gap-2 w-full">
-      <Eye
-        size={40}
-        className="cursor-pointer text-primary-500 hover:opacity-80 transition-opacity"
-        onClick={toggleTimeVisibility}
-        aria-label={hiddenTime ? "Show time" : "Hide time"}
-      />
-
-      <Time
-        hiddenTime={hiddenTime}
-        time={time}
-        isEditeble={!startedElement && !isChronometer}
-      />
-
-      <BarTimer
-        time={time}
-        initialTime={initialTime}
-        isChronometer={isChronometer}
-      />
-
-      <Commands
-        handleClick={handleClick}
-        isPlay={isPlay}
-        menu={menu}
-        status={status}
-      />
+      <CircleTime
+        percent={
+          (timeUtils.timeToSeconds(time) * 100) /
+          timeUtils.timeToSeconds(initialTime)
+        }
+      >
+        <p className="capitalize bg-secondary-200 rounded-full px-1 text-sm hover:scale-105 cursor-default transition-all duration-300">
+          {menu}
+        </p>
+        <Time time={time} />
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-2">
+            <div className="size-2 rounded-full bg-secondary-700" />{" "}
+            <div className="size-2 rounded-full bg-secondary-700" />{" "}
+            <div className="size-2 rounded-full bg-secondary-700" />{" "}
+            <div className="size-2 rounded-full bg-secondary-700" />
+          </div>
+          <p className="text-xs text-gray-300">4 Vueltas</p>
+        </div>
+      </CircleTime>
     </div>
   );
 }

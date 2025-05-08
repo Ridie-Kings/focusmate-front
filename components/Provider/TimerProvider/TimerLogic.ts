@@ -27,7 +27,7 @@ export function useTimer(
   }, []);
 
   useEffect(() => {
-    if (menu === "concentracion") setTime(DEFAULT_FOCUS_TIME);
+    if (menu === "enfoque") setTime(DEFAULT_FOCUS_TIME);
     else if (menu === "D/Corto") setTime(DEFAULT_SHORT_BREAK);
     else if (menu === "chrono") setTime({ hours: 0, min: 0, seg: 0 });
     else if (menu === "temp") setTime({ hours: 0, min: 0, seg: 0 });
@@ -77,7 +77,7 @@ export function useTimer(
 
             playEndSound();
 
-            if (menu === "concentracion") {
+            if (menu === "enfoque") {
               setMenu("D/Corto");
               addToast({
                 type: "info",
@@ -85,7 +85,7 @@ export function useTimer(
                 duration: 5000,
               });
             } else if (menu === "D/Corto") {
-              setMenu("concentracion");
+              setMenu("enfoque");
               addToast({
                 type: "info",
                 message: "¡Descanso terminado!",

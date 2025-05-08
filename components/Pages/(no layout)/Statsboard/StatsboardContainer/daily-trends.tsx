@@ -1,5 +1,7 @@
 "use client";
 
+import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
+import { GetStatsWeekByUserId } from "@/services/Dashboard/GetStatsWeekByUserId";
 import { useState, useEffect } from "react";
 import {
   BarChart,
@@ -34,23 +36,15 @@ export function DailyTrends({ selectedUser, viewMode }: DailyTrendsProps) {
       setIsLoading(true);
       setError(null);
       try {
-        // The API endpoint for daily stats
-        let url = "https://sherp-app.com/api/v0/dashboard/global";
+        const { data, success } =
+          viewMode === "personal" && selectedUser
+            ? await GetStatsWeekByUserId({ id: selectedUser })
+            : await GetGlobalInfo();
 
-        if (viewMode === "personal" && selectedUser) {
-          // For personal view, we'll need to implement this endpoint
-          url = `https://sherp-app.com/api/v0/dashboard/stats/week?userId=${selectedUser}`;
+        if (!success) {
+          throw new Error(`Error en la API: ${data}`);
         }
 
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error(`Error en la API: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Extract the daily stats from the response
         const stats =
           viewMode === "global"
             ? data.trends.dailyStats

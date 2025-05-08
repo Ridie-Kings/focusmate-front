@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Trophy } from "lucide-react";
+import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
 
 interface TopUsersProps {
   selectedUser?: string | null;
@@ -31,15 +32,12 @@ export function TopUsers({ viewMode }: TopUsersProps) {
       setError(null);
 
       try {
-        const response = await fetch(
-          "https://sherp-app.com/api/v0/dashboard/global"
-        );
+        const { data, success } = await GetGlobalInfo();
 
-        if (!response.ok) {
-          throw new Error(`Error en la API: ${response.status}`);
+        if (!success) {
+          throw new Error(`Error en la API: ${data}`);
         }
 
-        const data = await response.json();
         setTopUsers(data.topUsers || []);
       } catch (error) {
         console.error("Error loading top users:", error);

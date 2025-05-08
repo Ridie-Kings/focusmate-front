@@ -1,3 +1,4 @@
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import { HabitFormData, HabitsType } from "@/interfaces/Habits/HabitsType";
 import { createHabit } from "@/services/Habits/createHabit";
 import { removeHabit } from "@/services/Habits/removeHabit";
@@ -13,9 +14,7 @@ export default function HabitsUtils({
   setIsOpen,
   isLoading,
 }: {
-  setIsOpen?: React.Dispatch<
-    React.SetStateAction<{ text: string; other?: unknown }>
-  >;
+  setIsOpen?: React.Dispatch<React.SetStateAction<TypeIsOpen>>;
   setError?: React.Dispatch<React.SetStateAction<string | null>>;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading?: boolean;
