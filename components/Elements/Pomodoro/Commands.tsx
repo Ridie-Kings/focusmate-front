@@ -18,7 +18,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
   const disabledButtonClass = "bg-gray-400 cursor-not-allowed";
 
   console.log(isType);
-  
+
   return (
     <div className="flex flex-col items-center gap-2">
       <ul className="flex items-center justify-center gap-7 md:gap-6">
@@ -28,7 +28,9 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
           menu,
           isType,
           status,
-        }).map((button) => (
+        })
+          .filter((button) => button !== undefined)
+          .map((button) => (
           <li key={button.id}>
             <button
               onClick={() =>

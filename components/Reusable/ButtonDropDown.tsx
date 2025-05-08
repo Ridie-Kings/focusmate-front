@@ -11,7 +11,7 @@ export default function ButtonDropDown({
   children: React.ReactNode;
   className?: string;
   items: { label: string; onClick: () => void }[];
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);

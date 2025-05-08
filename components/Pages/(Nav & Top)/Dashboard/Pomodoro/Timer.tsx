@@ -1,8 +1,6 @@
 "use client";
 
-import { Eye } from "lucide-react";
-
-import { useState, useContext, useEffect, useCallback } from "react";
+import { useContext, useEffect } from "react";
 
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Time from "./Timer/Time";
