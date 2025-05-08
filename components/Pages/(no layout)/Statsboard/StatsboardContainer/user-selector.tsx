@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Check, ChevronDown, User, AlertCircle } from "lucide-react";
-import { apiConnection } from "@/services/axiosConfig";
 import { GetAllUsers } from "@/services/User/GetAllUsers";
 
 interface User {
@@ -12,7 +11,7 @@ interface User {
 
 interface UserSelectorProps {
   onUserSelect: (userId: string | null) => void;
-  apiUrl?: string; 
+  apiUrl?: string;
   defaultLabel?: string;
 }
 

@@ -127,7 +127,6 @@ export default function TypeTimeButtons() {
                 ? "pressed"
                 : "enabled"
             }
-            icon={item.type}
             onClick={() => handleTimerSelection(item)}
             aria-label={item.label}
           >

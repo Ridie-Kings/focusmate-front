@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 import Link from "next/link";
 import { MapPin, ArrowLeft, Compass, Mountain } from "lucide-react";
 import Button from "@/components/Reusable/Button";

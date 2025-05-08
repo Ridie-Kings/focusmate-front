@@ -6,7 +6,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 export default function CommandsUtils() {
   const { status, startPomodoro, stopPomodoro, pausePomodoro, resumePomodoro } =
     useContext(SocketIOContext);
-  const { time, isPlay, togglePlay, resetTimer, setIsOpen, isChronometer } =
+  const { time, togglePlay, resetTimer, setIsOpen, isChronometer } =
     useContext(TimerContext);
 
   const handleClick = useCallback(

@@ -1,13 +1,11 @@
-import { Brain, CircleGauge, Coffee, Plus, TimerIcon } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ReactNode } from "react";
-import { chipsIconType } from "./Chips";
 
 export default function Button({
   button,
   type,
   children,
   onClick,
-  icon,
   size,
   state = "enabled",
 }: {
@@ -15,7 +13,6 @@ export default function Button({
   type: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
   onClick?: () => void;
-  icon?: chipsIconType;
   state?: "enabled" | "pressed" | "disabled" | "disabled-pressed";
   size: "compact" | "large";
 }) {
