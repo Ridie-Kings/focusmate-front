@@ -12,7 +12,7 @@ export default function PopUp() {
       href={"/support"}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`fixed right-6 bottom-5 flex items-center rounded-lg overflow-hidden transition-all duration-500 ${
+      className={`fixed right-6 bottom-5 z-50 flex items-center rounded-lg overflow-hidden transition-all duration-500 ${
         isHovered ? "bg-primary-500 px-4 py-3 w-70" : "bg-transparent w-20 h-20"
       }`}
     >

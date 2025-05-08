@@ -4,12 +4,12 @@ import {
   FireExtinguisher,
   Hourglass,
   NotepadText,
-  Pen,
 } from "lucide-react";
 import StatsCard from "./mystats/StatsCard";
 import StatsTask from "./mystats/StatsTask";
 import StatsPomodoro from "./mystats/StatsPomodoro";
 import { GetMyStats } from "@/services/Dashboard/GetMyStats";
+import StatsHabits from "./mystats/StatsHabits";
 
 export default async function MyStats() {
   const info = await GetMyStats();
@@ -17,27 +17,27 @@ export default async function MyStats() {
   const items = [
     {
       label: "Tareas Completadas",
-      number: info.data.tasks.completedTasks,
+      number: info.data.tasks.completedTasks.toString(),
       icon: <BookText />,
     },
     {
       label: "Ciclos Pomodoro",
-      number: info.data.pomodoro.completedPomodoros,
+      number: info.data.pomodoro.completedPomodoros.toString(),
       icon: <AlarmClockCheck />,
     },
     {
       label: "Habitos Completados",
-      number: info.data.habits.completedToday,
+      number: info.data.habits.completedToday.toString(),
       icon: <NotepadText />,
     },
     {
       label: "Tiempo estudiado",
-      number: info.data.pomodoro.totalTimeFormatted,
+      number: info.data.pomodoro.totalTimeFormatted.toString(),
       icon: <Hourglass />,
     },
     {
       label: "Streaks",
-      number: info.data.userActivity.streak,
+      number: info.data.userActivity.streak.toString(),
       icon: <FireExtinguisher />,
     },
   ];
@@ -54,6 +54,7 @@ export default async function MyStats() {
         <StatsTask stats={info.data.tasks} />
         <StatsPomodoro stats={info.data.pomodoro} />
       </div>
+      <StatsHabits stats={info.data.habits} />
     </main>
   );
 }
