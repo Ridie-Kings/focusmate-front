@@ -13,25 +13,31 @@ export default function TemplateBox({
   grid: string;
   link?: string;
   title: string;
-  items?: { label: string; icon: ReactNode; onClick: () => void }[];
+  items?: {
+    label: string;
+    icon: ReactNode;
+    onClick: () => void;
+    disabled?: boolean;
+  }[];
 }) {
   return (
     <div
-      className={`relative border border-primary-200 rounded-xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4`}
+      className={`relative border border-primary-200 rounded-3xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4`}
     >
       {items ? (
         <div className="flex flex-col items-center gap-4">
           <div className="w-full flex flex-col gap-2">
             <div className="flex items-center w-full gap-2 px-2">
               {items.map((item) => (
-                <div
+                <button
                   key={item.label}
-                  className="flex flex-col items-center flex-1 gap-1 text-primary-500 cursor-pointer"
+                  className="flex flex-col items-center flex-1 gap-1 text-primary-500 cursor-pointer disabled:cursor-not-allowed"
                   onClick={item.onClick}
+                  disabled={item.disabled}
                 >
                   {item.icon}
                   {item.label}
-                </div>
+                </button>
               ))}
             </div>
             <div
