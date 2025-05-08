@@ -18,6 +18,11 @@ export type ModalItemType = {
   item: tempTaskType | ContactForm | Record<string, unknown>;
 };
 
+export type TypeIsOpen = {
+  text: "task" | "habit" | "event" | "contact" | "";
+  other?: unknown;
+};
+
 export const ModalContext = createContext<ModalContextType>({
   isOpen: { text: "", other: undefined },
   setIsOpen: () => {},
@@ -29,7 +34,9 @@ export default function ModalProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [isOpen, setIsOpen] = useState({ text: "" });
+  const [isOpen, setIsOpen] = useState<TypeIsOpen>({
+    text: "",
+  });
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
   useEffect(() => {

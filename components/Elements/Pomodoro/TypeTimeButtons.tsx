@@ -24,7 +24,7 @@ export default function TypeTimeButtons() {
 
   const menuTimes = useMemo<Record<chipsIconType, TimeType>>(
     () => ({
-      concentracion: { hours: 0, min: 25, seg: 0 },
+      enfoque: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
       chrono: { hours: 0, min: 0, seg: 0 },
       temp: { hours: 0, min: 0, seg: 0 },
@@ -38,15 +38,20 @@ export default function TypeTimeButtons() {
         {
           id: 1,
           label: "Concentración",
-          type: "concentracion" as chipsIconType,
+          type: "enfoque" as chipsIconType,
         },
         {
           id: 2,
           label: "Descanso Corto",
           type: "D/Corto" as chipsIconType,
         },
+        {
+          id: 3,
+          label: "Descanso largo",
+          type: "D/Largo" as chipsIconType,
+        },
       ];
-    } else if (isType === "reloj") {
+    } else if (isType === "cronometro") {
       return [
         {
           id: 1,
@@ -64,13 +69,13 @@ export default function TypeTimeButtons() {
   }, [isType]);
 
   useEffect(() => {
-    if (isType === "reloj") {
+    if (isType === "cronometro") {
       setMenu("chrono");
       setInitialTime(menuTimes["chrono"]);
       toggleChronometerMode(true);
     } else {
-      setMenu("concentracion");
-      setInitialTime(menuTimes["concentracion"]);
+      setMenu("enfoque");
+      setInitialTime(menuTimes["enfoque"]);
       toggleChronometerMode(false);
     }
   }, [isType]);
@@ -88,7 +93,7 @@ export default function TypeTimeButtons() {
 
   return (
     <ul
-      className={`flex flex-col xl:flex-row w-full place-content-evenly gap-2 ${
+      className={`flex flex-col xl:flex-row mx-auto gap-2 ${
         fullScreen ? "" : "lg:p-0 p-2"
       }`}
     >

@@ -1,3 +1,4 @@
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import { Dispatch, SetStateAction } from "react";
 
 export type HabitsType = {
@@ -32,8 +33,8 @@ export type HabitOption = {
 };
 
 export type ModalHabitProps = {
-  isOpen: { text: string; other?: unknown };
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
+  isOpen: TypeIsOpen;
+  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 };
 
 export const HABIT_TYPES = {

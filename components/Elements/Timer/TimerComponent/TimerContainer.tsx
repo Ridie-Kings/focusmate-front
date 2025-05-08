@@ -7,12 +7,12 @@ import TypeTimeButtons from "@/components/Elements/Pomodoro/TypeTimeButtons";
 // import { chipsIconType } from "@/components/Reusable/Chips";
 
 export default function TimerContainer() {
-  // const [menu, setMenu] = useState<chipsIconType>("concentracion");
+  // const [menu, setMenu] = useState<chipsIconType>("enfoque");
   // const [isPlaying, setIsPlaying] = useState(false);
 
   // const menuTimes = useMemo<Record<string, TimeType>>(
   //   () => ({
-  //     concentracion: { hours: 0, min: 25, seg: 0 },
+  //     enfoque: { hours: 0, min: 25, seg: 0 },
   //     "D/Corto": { hours: 0, min: 5, seg: 0 },
   //     chrono: { hours: 0, min: 0, seg: 0 },
   //   }),

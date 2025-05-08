@@ -12,7 +12,7 @@ import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import ShareModal from "@/components/Elements/General/Modal/ModalShare";
 
 export default function Timer(/*{ token }: { token: string }*/) {
-  // const [menu, setMenu] = useState<chipsIconType>("concentracion");
+  // const [menu, setMenu] = useState<chipsIconType>("enfoque");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [pomodoroId, setPomodoroId] = useState<string | null>(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);
@@ -32,7 +32,7 @@ export default function Timer(/*{ token }: { token: string }*/) {
 
   const menuTimes = useMemo(
     () => ({
-      concentracion: { hours: 0, min: 25, seg: 0 },
+      enfoque: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
       chrono: { hours: 0, min: 0, seg: 0 },
     }),

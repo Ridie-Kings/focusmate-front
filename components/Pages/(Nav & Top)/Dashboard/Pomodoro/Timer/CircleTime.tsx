@@ -1,23 +1,20 @@
-import { HabitsType } from "@/interfaces/Habits/HabitsType";
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 
 type CircleProgressBarProps = {
   percent: number;
-  doneCount: number;
-  habits: HabitsType[];
+  children: ReactNode;
 };
 
-const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
+const CircleTime: React.FC<CircleProgressBarProps> = ({
   percent,
-  doneCount,
-  habits,
+  children,
 }) => {
   const safePercent = useMemo(() => {
     return isNaN(percent) ? 100 : Math.min(Math.max(percent, 0), 100);
   }, [percent]);
 
   const progressDetails = useMemo(() => {
-    const radius = 100;
+    const radius = 110;
     const circumference = 2 * Math.PI * radius;
     const strokeDashoffset =
       circumference - (safePercent / 100) * circumference;
@@ -34,13 +31,13 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
   return (
     <div className="relative flex items-center justify-center text-primary-500">
       <svg
-        className="transform -rotate-90 w-72 h-72"
+        className="transform -rotate-90 size-62"
         aria-label={`Progress: ${safePercent}%`}
         role="img"
       >
         <circle
-          cx="145"
-          cy="145"
+          cx="125"
+          cy="125"
           r={progressDetails.radius}
           stroke="currentColor"
           strokeWidth="10"
@@ -50,8 +47,8 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
         />
 
         <circle
-          cx="145"
-          cy="145"
+          cx="125"
+          cy="125"
           r={progressDetails.radius}
           stroke="currentColor"
           strokeWidth="10"
@@ -63,22 +60,9 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
         />
       </svg>
 
-      <div className="absolute flex flex-col items-center gap-1 text-center">
-        <p className="flex items-center text-5xl">
-          <span key={safePercent} className="animate-opacStart">
-            {isNaN(safePercent) ? 100 : safePercent}
-          </span>
-          <span className="ml-1">%</span>
-        </p>
-        <p className="flex items-center">
-          <span key={doneCount} className="animate-opacStart">
-            {doneCount}
-          </span>
-          <span className="ml-1">/ {habits.length}</span>
-        </p>
-      </div>
+      <div className="absolute flex flex-col items-center gap-4">{children}</div>
     </div>
   );
 };
 
-export default React.memo(CircleProgressBar);
+export default React.memo(CircleTime);

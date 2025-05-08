@@ -19,31 +19,46 @@ export default function TemplateBox({
     <div
       className={`relative border border-primary-200 rounded-xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4`}
     >
-      {title && (
-        <div className="w-full flex flex-col items-center font-medium text-2xl text-primary-500 gap-4">
-          <p className="capitalize">{title}</p>
-          <Divider />
-        </div>
-      )}
-      {children}
-      {items && (
-        <div className="absolute flex items-center gap-2 h-9 w-18 place-content-between px-2 rounded-full border border-primary-300 top-2.5 right-15 2xl:top-5.5 2xl:right-18 cursor-pointer">
-          <div
-            className={`absolute size-7.5 rounded-full bg-[#d5ede2] ${
-              title.toLowerCase() === "pomodoro" ? "left-1" : "left-9.25"
-            } transition-all duration-200`}
-          />
-          {items.map((item) => (
-            <div
-              key={item.label}
-              className="z-10 text-primary-500"
-              onClick={item.onClick}
-            >
-              {item.icon}
+      {items ? (
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-full flex flex-col gap-2">
+            <div className="flex items-center w-full gap-2 px-2">
+              {items.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex flex-col items-center flex-1 gap-1 text-primary-500 cursor-pointer"
+                  onClick={item.onClick}
+                >
+                  {item.icon}
+                  {item.label}
+                </div>
+              ))}
             </div>
-          ))}
+            <div
+              style={{
+                transform: `translateX(${
+                  title === "pomodoro"
+                    ? "0"
+                    : title === "cronometro"
+                    ? "100%"
+                    : "200%"
+                })`,
+              }}
+              className="w-1/3 h-0.5 bg-primary-500 transition-all duration-300"
+            />
+          </div>
         </div>
+      ) : (
+        title && (
+          <div className="w-full flex flex-col items-center font-medium text-2xl text-primary-500 gap-4">
+            <p className="capitalize">{title}</p>
+            <Divider />
+          </div>
+        )
       )}
+
+      {children}
+
       {link && <GoTo link={link} />}
     </div>
   );

@@ -8,6 +8,7 @@ import {
 import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 
 interface ContactForm {
   title: string;
@@ -17,7 +18,7 @@ interface ContactForm {
 }
 
 interface ModalContactProps {
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
+  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
   profile: ProfileType | null;
 }
 

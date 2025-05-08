@@ -1,3 +1,4 @@
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import Button from "@/components/Reusable/Button";
 import { Dispatch, SetStateAction } from "react";
 
@@ -8,7 +9,7 @@ export default function BtnSend({
   text = "Guardar",
   loadingText = "Guardando...",
 }: {
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
+  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
   handleClick: () => void;
   isLoading: boolean;
   text?: string;
