@@ -1,5 +1,4 @@
 import { BarChart } from "lucide-react";
-import { useState } from "react";
 import {
   Bar,
   Legend,
@@ -9,22 +8,22 @@ import {
   YAxis,
 } from "recharts";
 
-interface MonthlyStatsData {
-  date: string;
-  tasksCreated: number;
-  tasksCompleted: number;
-  habitsCreated: number;
-  pomodorosStarted: number;
-}
+// interface MonthlyStatsData {
+//   date: string;
+//   tasksCreated: number;
+//   tasksCompleted: number;
+//   habitsCreated: number;
+//   pomodorosStarted: number;
+// }
 
 export default function StatsChard() {
-  const [dailyStats, setDailyStats] = useState<MonthlyStatsData[]>([]);
+  // const [dailyStats, setDailyStats] = useState<MonthlyStatsData[]>([]);
 
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart
-        data={chartData}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+      // data={chartData}
+      // margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
       >
         <XAxis dataKey="date" />
         <YAxis />

@@ -11,6 +11,7 @@ export default function StatsHabits({
 }) {
   const [selectedMonth, setSelectedMonth] = useState("enero-febrero");
   const [selectedYear, setSelectedYear] = useState("2025");
+  console.log(stats);
 
   return (
     <TemplateBox grid="" title="Habits" link="/">
@@ -25,8 +26,8 @@ export default function StatsHabits({
         <div className="w-3/5 grid grid-cols-30 grid-rows-6 gap-2">
           {Array(180)
             .fill(null)
-            .map(() => (
-              <div className="size-5 bg-primary-500 rounded" />
+            .map((index) => (
+              <div key={index} className="size-5 bg-primary-500 rounded" />
             ))}
         </div>
         <div className="w-2/5 text-sm text-primary-500 flex flex-col justify-center gap-2">

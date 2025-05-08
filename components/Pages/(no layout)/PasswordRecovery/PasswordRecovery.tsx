@@ -25,6 +25,8 @@ export default function PasswordRecovery() {
         setEmailSent(true);
       } else addToast({ message: "El no email se a enviado", type: "error" });
     } catch (e) {
+      console.log(e);
+
       addToast({ message: "El no email se a enviado", type: "error" });
     }
   };
@@ -46,6 +48,8 @@ export default function PasswordRecovery() {
       } else
         addToast({ message: "El no password se a cambiado", type: "error" });
     } catch (e) {
+      console.log(e);
+
       addToast({ message: "El no password se a cambiado", type: "error" });
     }
   };
