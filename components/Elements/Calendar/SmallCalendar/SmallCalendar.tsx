@@ -25,7 +25,6 @@ import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCale
 import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/CalendarNav";
 import Button from "@/components/Reusable/Button";
 import { ModalContext } from "@/components/Provider/ModalProvider";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 

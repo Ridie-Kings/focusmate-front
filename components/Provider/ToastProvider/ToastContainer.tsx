@@ -34,12 +34,6 @@ const Toast = ({
     warning: "#fffbeb",
     info: "#e9f9ff",
   };
-  const textColor = {
-    success: "#014E44",
-    error: "#BC1C21",
-    warning: "#202020",
-    info: "#0B76B7",
-  };
   const secondTextColor = {
     success: "#637381",
     error: "#F56060",
