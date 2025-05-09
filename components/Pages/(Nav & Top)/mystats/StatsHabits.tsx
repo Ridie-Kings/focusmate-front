@@ -24,11 +24,9 @@ export default function StatsHabits({
 
       <div className="flex gap-4">
         <div className="w-3/5 grid grid-cols-30 grid-rows-6 gap-2">
-          {Array(180)
-            .fill(null)
-            .map((index) => (
-              <div key={index} className="size-5 bg-primary-500 rounded" />
-            ))}
+          {Array.from({ length: 180 }).map((_, index) => (
+            <div key={index} className="size-5 bg-primary-500 rounded" />
+          ))}
         </div>
         <div className="w-2/5 text-sm text-primary-500 flex flex-col justify-center gap-2">
           <div className="flex w-full place-content-between">

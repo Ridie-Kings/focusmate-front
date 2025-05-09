@@ -73,7 +73,7 @@ export default function CalendarPage() {
         setEvents([]);
       }
     };
- 
+
     const debouncedFetch = debounce(() => {
       if (navType === "Día") {
         handleGetCalendarByDate();
@@ -93,6 +93,7 @@ export default function CalendarPage() {
     <section className="flex flex-1 h-full gap-6 p-6 overflow-hidden transition-all duration-300">
       <div className="w-1/3 xl:w-1/4 h-full flex flex-col gap-2">
         <SmallCalendar
+          eventos
           setDate={setDate}
           date={date ?? new Date()}
           inView={navType !== "Month"}

@@ -62,7 +62,6 @@ export function DailyTrends({ selectedUser, viewMode }: DailyTrendsProps) {
     loadDailyStats();
   }, [selectedUser, viewMode]);
 
-  // Format date for display
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString("es-ES", {
@@ -71,7 +70,6 @@ export function DailyTrends({ selectedUser, viewMode }: DailyTrendsProps) {
     });
   };
 
-  // Process data for chart
   const chartData = dailyStats.map((stat) => ({
     ...stat,
     date: formatDate(stat.date),
