@@ -12,13 +12,22 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { Dispatch, SetStateAction, useContext } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import WeekDays from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/WeekDays";
 import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
 import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/CalendarNav";
 import Button from "@/components/Reusable/Button";
 import { ModalContext } from "@/components/Provider/ModalProvider";
+import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { TaskType } from "@/interfaces/Task/TaskType";
+import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -40,11 +49,13 @@ const generateMonthDays = (date: Date | undefined): Date[] => {
 type CalendarItemProps = {
   date: Date | undefined;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
+  events?: TaskType[];
 };
 
 export const CalendarItem: React.FC<CalendarItemProps> = ({
   date,
   setDate,
+  events,
 }) => {
   const days = generateMonthDays(date);
 
@@ -58,6 +69,7 @@ export const CalendarItem: React.FC<CalendarItemProps> = ({
         date={date}
         days={days}
         setDate={setDate}
+        events={events}
       />
     </div>
   );
@@ -69,6 +81,7 @@ type CalendarProps = {
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   date: Date;
   btn?: boolean;
+  eventos?: boolean;
 };
 
 const SmallCalendar: React.FC<CalendarProps> = ({
@@ -77,12 +90,33 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   setDate,
   date,
   btn,
+  eventos,
 }) => {
+  const [events, setEvents] = useState<TaskType[]>();
   const { setIsOpen } = useContext(ModalContext);
-
   const handlePreviousDay = () => {
     setDate(subDays(date, 1));
   };
+
+  useEffect(() => {
+    if (!eventos) return;
+
+    const firstDate = startOfWeek(startOfMonth(date ?? new Date()));
+    const secondDate = endOfWeek(endOfMonth(date ?? new Date()));
+
+    const handleGetCalendarByRange = async () => {
+      const event = await getCalendarByRange({ firstDate, secondDate });
+
+      if (event.success) {
+        setEvents(event.res);
+      } else {
+        console.error("Error al obtener el calendario", event.res);
+        setEvents([]);
+      }
+    };
+
+    handleGetCalendarByRange();
+  }, []);
 
   const handleNextDay = () => {
     setDate(addDays(date, 1));
@@ -90,16 +124,15 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 
   const handleMonthYearChange = (monthYear: string) => {
     setDate((currentDate) => {
-
       const [month, year] = monthYear.split(" ");
 
       const monthNames = Array.from({ length: 12 }, (_, i) =>
-        format(new Date(2000, i, 1), "MMMM", { locale: es })
+        format(new Date(2000, i, 1), "MMMM")
       );
-      const monthIndex = monthNames.findIndex((m) => m === month);
+      const monthIndex = monthNames.at(parseInt(month));
 
       const newDate = new Date(currentDate ?? new Date());
-      newDate.setMonth(monthIndex);
+      newDate.setMonth(monthNames.findIndex((e) => e === monthIndex));
       newDate.setFullYear(parseInt(year));
       return newDate;
     });
@@ -118,7 +151,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
           handleYearChange={handleMonthYearChange}
           date={date}
         />
-        <CalendarItem date={date} setDate={setDate} />
+        <CalendarItem date={date} setDate={setDate} events={events} />
       </div>
       {btn && (
         <Button

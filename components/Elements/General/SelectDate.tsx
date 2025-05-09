@@ -42,6 +42,7 @@ export default function YearMonthSelector({
 
   const handleMonthChange = (monthIndex: number) => {
     const newDate = new Date(selectedDate);
+
     newDate.setMonth(monthIndex);
     setSelectedDate(newDate);
     handleDateChange(newDate);

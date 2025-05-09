@@ -26,7 +26,9 @@ export default function CalendarNav({
       <div className="flex w-full items-center place-content-between py-2 px-4">
         <SelectDate
           handleDateChange={(date) =>
-            handleYearChange(date.getFullYear().toString())
+            handleYearChange(
+              date.getMonth().toString() + " " + date.getFullYear().toString()
+            )
           }
           date={date}
         />
