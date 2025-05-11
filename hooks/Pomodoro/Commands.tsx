@@ -37,7 +37,7 @@ export default function CommandsHook({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ) : (
-        <Maximize size={iconSize} className="text-gray-100" />
+        <Maximize size={iconSize} />
       ),
       disabled: true,
       className: secondaryButtonPadding,
@@ -86,11 +86,11 @@ export default function CommandsHook({
       ) : (
         <SkipForward
           size={iconSize}
-          fill="#014e44"
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
-      disabled: menu === "D/Corto" && !status?.active,
+      disabled: true,
+      // disabled: menu === "D/Corto" && !status?.active,
       className: secondaryButtonPadding,
     },
     {
@@ -106,7 +106,8 @@ export default function CommandsHook({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
-      disabled: menu === "D/Corto" && !status?.active,
+      disabled: true,
+      // disabled: menu === "D/Corto" && !status?.active,
       className: secondaryButtonPadding,
     },
   ];
