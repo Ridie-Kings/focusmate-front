@@ -41,11 +41,11 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
                   button.id === "openFullScreen" && setShowTooltip(false)
                 }
                 className={`
-                ${baseButtonClass}
-                ${button.disabled ? disabledButtonClass : activeButtonClass}
-                ${button.className || ""}
-                group hover:scale-95 scale-100 transition-all duration-300
-              `}
+                  ${baseButtonClass}
+                  ${button.disabled ? disabledButtonClass : activeButtonClass}
+                  ${button.className || ""}
+                  group hover:scale-95 scale-100 transition-all duration-300
+                `}
                 aria-label={button.id}
                 disabled={button.disabled}
               >
