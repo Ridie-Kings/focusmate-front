@@ -112,21 +112,21 @@ export async function refreshSession(
 export async function logout(): Promise<boolean> {
   try {
     const cookieStore = await cookies();
-    const token = await getToken();
+    // const token = await getToken();
 
-    if (token) {
-      try {
-        // Descomentar cuando el endpoint de logout esté listo
-        await apiConnection.post("auth/logout", null, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      } catch (logoutError) {
-        console.warn("Error en el endpoint de logout:", logoutError);
-        // Continuar con el proceso de logout local aunque falle el endpoint
-      }
-    }
+    // if (token) {
+    //   try {
+    //     // Descomentar cuando el endpoint de logout esté listo
+    //     await apiConnection.post("auth/logout", null, {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     });
+    //   } catch (logoutError) {
+    //     console.warn("Error en el endpoint de logout:", logoutError);
+    //     // Continuar con el proceso de logout local aunque falle el endpoint
+    //   }
+    // }
 
     // Eliminar cookies de sesión
     cookieStore.delete("access_token");
