@@ -51,7 +51,7 @@ export default function Pomodoro() {
       ]}
     >
       <Timer />
-      {!isChronometer && <AddTask />}
+      {/* {!isChronometer && <AddTask />} */}
       <Commands fullScreen={false} />
     </TemplateDashboard>
   );
