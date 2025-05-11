@@ -22,7 +22,7 @@ export default function TemplateBox({
 }) {
   return (
     <div
-      className={`relative border border-primary-200 rounded-3xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4`}
+      className={`relative border border-primary-200 rounded-3xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4 overflow-hidden`}
     >
       {items ? (
         <div className="flex flex-col items-center gap-4">
