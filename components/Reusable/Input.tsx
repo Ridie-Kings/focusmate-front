@@ -12,7 +12,7 @@ interface InputProps {
   label: string;
   supportMessage?: string;
   name: string;
-  value?: string;
+  defaultValue?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   autoComplete?: string;
@@ -26,7 +26,7 @@ export default function Input({
   icon,
   label,
   supportMessage,
-  value,
+  defaultValue,
   onChange,
   required = false,
   autoComplete,
@@ -67,7 +67,7 @@ export default function Input({
           }
           className={`w-full py-2 pr-2 pl-4 placeholder:text-[#959595] text-black border rounded ${getBorderClass()}`}
           placeholder={placeholder}
-          value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           required={required}
           autoComplete={autoComplete}

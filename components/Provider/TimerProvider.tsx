@@ -24,7 +24,7 @@ const defaultContextValue: TimerContextType = {
   isChronometer: false,
   toggleChronometerMode: () => {},
   setMenu: () => {},
-  menu: "concentracion",
+  menu: "enfoque",
   startedElement: false,
   fullScreen: false,
   setIsType: () => {},
@@ -44,9 +44,11 @@ export default function TimerProvider({
   const [isOpen, setIsOpen] = useState(false);
   const [initialTime, setInitialTime] = useState<TimeType>(DEFAULT_FOCUS_TIME);
   const [isChronometer, setIsChronometer] = useState(false);
-  const [menu, setMenu] = useState<chipsIconType>("concentracion");
+  const [menu, setMenu] = useState<chipsIconType>("enfoque");
   const [startedElement, setStartedElement] = useState(false);
-  const [isType, setIsType] = useState<"pomodoro" | "reloj">("pomodoro");
+  const [isType, setIsType] = useState<
+    "pomodoro" | "cronometro" | "temporizador"
+  >("pomodoro");
 
   const {
     time: timerTime,
@@ -56,6 +58,7 @@ export default function TimerProvider({
     resetTimer: timerReset,
   } = useTimer(
     initialTime,
+    setInitialTime,
     menu,
     setMenu,
     DEFAULT_FOCUS_TIME,
@@ -68,7 +71,7 @@ export default function TimerProvider({
     isPlay: chronometerIsPlay,
     togglePlay: chronometerTogglePlay,
     resetTimer: chronometerReset,
-  } = useChronometer({ menu });
+  } = useChronometer({ menu, isType });
 
   useEffect(() => {
     setMenu(menu);

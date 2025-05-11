@@ -1,5 +1,13 @@
 "use client";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
@@ -7,6 +15,7 @@ import { ToastContext } from "../ToastProvider";
 
 export function useTimer(
   initialTime: TimeType,
+  setInitialTime: Dispatch<SetStateAction<TimeType>>,
   menu: chipsIconType,
   setMenu: (menu: chipsIconType) => void,
   DEFAULT_FOCUS_TIME: TimeType,
@@ -25,13 +34,6 @@ export function useTimer(
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }
   }, []);
-
-  useEffect(() => {
-    if (menu === "concentracion") setTime(DEFAULT_FOCUS_TIME);
-    else if (menu === "D/Corto") setTime(DEFAULT_SHORT_BREAK);
-    else if (menu === "chrono") setTime({ hours: 0, min: 0, seg: 0 });
-    else if (menu === "temp") setTime({ hours: 0, min: 0, seg: 0 });
-  }, [menu, DEFAULT_FOCUS_TIME, DEFAULT_SHORT_BREAK]);
 
   const playEndSound = useCallback(() => {
     if (audioRef.current) {
@@ -77,15 +79,17 @@ export function useTimer(
 
             playEndSound();
 
-            if (menu === "concentracion") {
+            if (menu === "enfoque") {
               setMenu("D/Corto");
+              setInitialTime(DEFAULT_SHORT_BREAK);
               addToast({
                 type: "info",
                 message: "¡Tiempo terminado!",
                 duration: 5000,
               });
             } else if (menu === "D/Corto") {
-              setMenu("concentracion");
+              setMenu("enfoque");
+              setInitialTime(DEFAULT_FOCUS_TIME);
               addToast({
                 type: "info",
                 message: "¡Descanso terminado!",

@@ -20,7 +20,6 @@ export default function Agenda() {
       const events = await getCalendarByDate({
         date: format(dateToFetch, "yyyy-MM-dd"),
       });
-      console.log(dateToFetch);
 
       if (events.success) {
         setEvents(events.res);
@@ -48,7 +47,13 @@ export default function Agenda() {
       title="Calendario"
     >
       <div className="flex flex-col xl:flex-row w-full h-full gap-4">
-        <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
+        <SmallCalendar
+          eventos
+          setDate={setDate}
+          date={date ?? new Date()}
+          inView
+          btn
+        />
         <Timeline
           date={date}
           events={events}

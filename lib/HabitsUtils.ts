@@ -1,15 +1,46 @@
-import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { HabitFormData, HabitsType } from "@/interfaces/Habits/HabitsType";
+import { createHabit } from "@/services/Habits/createHabit";
 import { removeHabit } from "@/services/Habits/removeHabit";
 import { updateHabit } from "@/services/Habits/updateHabit";
 import { useCallback } from "react";
 
 export default function HabitsUtils({
+  createdHabit,
   habits,
   setHabits,
+  setIsLoading,
+  setError,
+  setIsOpen,
+  isLoading,
 }: {
+  setIsOpen?: React.Dispatch<React.SetStateAction<TypeIsOpen>>;
+  setError?: React.Dispatch<React.SetStateAction<string | null>>;
+  setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading?: boolean;
+  createdHabit?: HabitFormData;
   habits: HabitsType[];
   setHabits: React.Dispatch<React.SetStateAction<HabitsType[]>>;
 }) {
+  const validateHabit = useCallback((): boolean => {
+    if (!createdHabit || !createdHabit.name || !createdHabit.name.trim()) {
+      if (setError) setError("El nombre del hábito es obligatorio");
+      return false;
+    }
+
+    if (!createdHabit.frequency) {
+      if (setError) setError("La frecuencia es obligatoria");
+      return false;
+    }
+
+    if (!createdHabit.type) {
+      if (setError) setError("El tipo de hábito es obligatorio");
+      return false;
+    }
+
+    return true;
+  }, [createdHabit, setError]);
+
   const handleToggle = useCallback(
     async (id: string) => {
       setHabits((prevHabits) => {
@@ -61,5 +92,116 @@ export default function HabitsUtils({
     [habits, setHabits]
   );
 
-  return { handleToggle, handleRemoveHabit };
+  const handleUpdateHabit = useCallback(async () => {
+    if (isLoading || !setIsLoading || !setError || !setIsOpen || !createdHabit)
+      return;
+
+    try {
+      setError(null);
+
+      if (!validateHabit()) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      const habitData = {
+        name: createdHabit.name,
+        description: createdHabit.description,
+        frequency: createdHabit.frequency,
+        type: createdHabit.type,
+      };
+
+      const res = await updateHabit({
+        _id: createdHabit._id ?? "",
+        habit: habitData,
+      });
+
+      if (res.success && res.res) {
+        setHabits((prev) =>
+          prev.map((prevTask) =>
+            prevTask._id === createdHabit._id ? res.res : prevTask
+          )
+        );
+      } else {
+        const errorMessage =
+          typeof res.res === "string"
+            ? res.res
+            : "Error al modificar el hábito";
+        setError(errorMessage);
+        console.error("Error al modificar el hábito", res.res);
+      }
+    } catch (err) {
+      console.error("Error inesperado:", err);
+      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      setIsOpen({ text: "" });
+      setIsLoading(false);
+    }
+  }, [
+    createdHabit,
+    validateHabit,
+    setHabits,
+    setIsOpen,
+    setIsLoading,
+    setError,
+    isLoading,
+  ]);
+
+  const handleCreateHabit = useCallback(async () => {
+    if (isLoading || !setIsLoading || !setError || !setIsOpen || !createdHabit)
+      return;
+
+    try {
+      setError(null);
+
+      if (!validateHabit()) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      const habitData = {
+        name: createdHabit.name,
+        description: createdHabit.description,
+        frequency: createdHabit.frequency,
+        type: createdHabit.type,
+      };
+
+      const res = await createHabit({ habit: habitData });
+
+      if (res.success && res.res) {
+        setHabits((prevHabits) => {
+          if (!prevHabits) return [res.res as HabitsType];
+          return [...prevHabits, res.res as HabitsType];
+        });
+        setIsOpen({ text: "" });
+      } else {
+        const errorMessage =
+          typeof res.res === "string" ? res.res : "Error al crear el hábito";
+        setError(errorMessage);
+        console.error("Error al crear el hábito", res.res);
+      }
+    } catch (err) {
+      console.error("Error inesperado:", err);
+      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [
+    createdHabit,
+    validateHabit,
+    setHabits,
+    setIsOpen,
+    setIsLoading,
+    setError,
+    isLoading,
+  ]);
+
+  return {
+    handleToggle,
+    handleRemoveHabit,
+    handleCreateHabit,
+    handleUpdateHabit,
+  };
 }

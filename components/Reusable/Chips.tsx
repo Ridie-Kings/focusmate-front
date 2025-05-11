@@ -1,7 +1,7 @@
 import { Brain, Coffee } from "lucide-react";
 import { ReactNode } from "react";
 
-export type chipsIconType = "concentracion" | "D/Corto" | "chrono" | "temp";
+export type chipsIconType = "enfoque" | "D/Corto" | "cronometro" | "temp";
 
 export default function Chips({
   status,
@@ -31,7 +31,7 @@ export default function Chips({
       }`}
     >
       {children}
-      {icon === "concentracion" ? <Brain /> : icon === "D/Corto" && <Coffee />}
+      {icon === "enfoque" ? <Brain /> : icon === "D/Corto" && <Coffee />}
     </button>
   );
 }

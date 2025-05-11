@@ -13,7 +13,6 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
   habits,
 }) => {
   const safePercent = useMemo(() => {
-    // Handle NaN and constrain to 0-100 range
     return isNaN(percent) ? 100 : Math.min(Math.max(percent, 0), 100);
   }, [percent]);
 

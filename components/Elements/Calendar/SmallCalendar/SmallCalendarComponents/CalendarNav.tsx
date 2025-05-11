@@ -6,17 +6,17 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import SelectDate from "@/components/Elements/General/SelectDate";
 
 interface CalendarNavProps {
-  handlePreviousDay: () => void;
+  handlePreviousMonth: () => void;
   date: Date | undefined;
   handleYearChange: (year: string) => void;
-  handleNextDay: () => void;
+  handleNextMonth: () => void;
 }
 
 export default function CalendarNav({
-  handlePreviousDay,
+  handlePreviousMonth,
   date,
   handleYearChange,
-  handleNextDay,
+  handleNextMonth,
 }: CalendarNavProps) {
   return (
     <div className="flex flex-col justify-center items-center divide-y divide-primary-200">
@@ -26,20 +26,22 @@ export default function CalendarNav({
       <div className="flex w-full items-center place-content-between py-2 px-4">
         <SelectDate
           handleDateChange={(date) =>
-            handleYearChange(date.getFullYear().toString())
+            handleYearChange(
+              date.getMonth().toString() + " " + date.getFullYear().toString()
+            )
           }
           date={date}
         />
         <div className="flex">
           <button
-            onClick={handlePreviousDay}
+            onClick={handlePreviousMonth}
             aria-label="Mes précédent"
             className="p-2 rounded-sm cursor-pointer"
           >
             <ChevronLeft className="size-5" />
           </button>
           <button
-            onClick={handleNextDay}
+            onClick={handleNextMonth}
             aria-label="Mois suivant"
             className="p-2 rounded-sm cursor-pointer"
           >

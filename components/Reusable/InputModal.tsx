@@ -51,7 +51,6 @@ export default function InputModal({
 
   const handleOptionClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (type === "select" && !propagand) e.stopPropagation();
-    console.log(type === "select" && !propagand);
   };
 
   switch (type) {

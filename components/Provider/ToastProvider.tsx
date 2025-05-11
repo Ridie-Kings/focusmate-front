@@ -1,6 +1,11 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+} from "react";
 import ToastContainer from "./ToastProvider/ToastContainer";
 
 export type ToastType = "success" | "error" | "info" | "warning";
@@ -38,13 +43,13 @@ export default function ToastProvider({
     const duration = toast.duration || 5000;
     setToasts((prevToasts) => [...prevToasts, { ...toast, id }]);
 
-    setTimeout(() => {
-    }, duration);
+    setTimeout(() => {}, duration);
 
     setTimeout(() => {
       removeToast(id);
     }, duration * 1.5);
   }, []);
+
 
   const removeToast = useCallback((id: string) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));

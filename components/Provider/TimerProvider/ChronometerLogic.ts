@@ -4,7 +4,13 @@ import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { timeUtils } from "./TimeUtils";
 import { chipsIconType } from "@/components/Reusable/Chips";
 
-export function useChronometer({ menu }: { menu: chipsIconType }) {
+export function useChronometer({
+  menu,
+  isType,
+}: {
+  menu: chipsIconType;
+  isType: "pomodoro" | "cronometro" | "temporizador";
+}) {
   const [time, setTime] = useState<TimeType>({ hours: 0, min: 0, seg: 0 });
   const [isPlay, setIsPlay] = useState(false);
 
@@ -32,7 +38,7 @@ export function useChronometer({ menu }: { menu: chipsIconType }) {
         error
       );
     }
-  }, [menu]);
+  }, [menu, isType]);
 
   useEffect(() => {
     try {

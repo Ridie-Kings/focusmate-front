@@ -1,7 +1,6 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Divider from "./Divider";
 import GoTo from "@/components/Elements/General/TemplateBox/GoTo";
-import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 
 export default function TemplateBox({
   children,
@@ -14,26 +13,59 @@ export default function TemplateBox({
   grid: string;
   link?: string;
   title: string;
-  items?: { label: string; onClick: () => void }[];
+  items?: {
+    label: string;
+    icon: ReactNode;
+    onClick: () => void;
+    disabled?: boolean;
+  }[];
 }) {
   return (
-    <>
-      <div
-        className={`relative border-1 border-primary-200 rounded-xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4`}
-      >
-        {title !== "" && (
+    <div
+      className={`relative border border-primary-200 rounded-3xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4 overflow-hidden`}
+    >
+      {items ? (
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-full flex flex-col gap-2">
+            <div className="flex items-center w-full gap-2 px-2">
+              {items.map((item) => (
+                <button
+                  key={item.label}
+                  className="flex flex-col items-center flex-1 gap-1 text-primary-500 cursor-pointer disabled:cursor-not-allowed"
+                  onClick={item.onClick}
+                  disabled={item.disabled}
+                >
+                  {item.icon}
+                  {item.label}
+                </button>
+              ))}
+            </div>
+            <div
+              style={{
+                transform: `translateX(${
+                  title === "pomodoro"
+                    ? "0"
+                    : title === "cronometro"
+                    ? "100%"
+                    : "200%"
+                })`,
+              }}
+              className="w-1/3 h-0.5 bg-primary-500 transition-all duration-300"
+            />
+          </div>
+        </div>
+      ) : (
+        title && (
           <div className="w-full flex flex-col items-center font-medium text-2xl text-primary-500 gap-4">
-            {items ? (
-              <ButtonDropDown items={items}>{title}</ButtonDropDown>
-            ) : (
-              <p className="capitalize">{title}</p>
-            )}
+            <p className="capitalize">{title}</p>
             <Divider />
           </div>
-        )}
-        {children}
-        {link !== "" && <GoTo link={link} />}
-      </div>
-    </>
+        )
+      )}
+
+      {children}
+
+      {link && <GoTo link={link} />}
+    </div>
   );
 }

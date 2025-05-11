@@ -17,10 +17,11 @@ import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { updateTask } from "@/services/Task/updateTask";
 import { addHours } from "date-fns";
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 
 type ModalEventProps = {
-  isOpen: { text: string; other?: unknown };
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
+  isOpen: TypeIsOpen;
+  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 };
 
 const DEFAULT_TASK: tempTaskType = {

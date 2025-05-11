@@ -8,10 +8,11 @@ import ModalEvent from "./Modal/ModalEvent";
 import ModalContact from "./Modal/ModalContact";
 
 import { X } from "lucide-react";
+import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 
 interface ModalProps {
-  isOpen: { text: string; other?: unknown };
-  setIsOpen: Dispatch<SetStateAction<{ text: string; other?: unknown }>>;
+  isOpen: TypeIsOpen;
+  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
   profile: ProfileType | null;
 }
 

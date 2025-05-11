@@ -1,6 +1,6 @@
 "use client";
 import { Minus, Plus } from "lucide-react";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import BarTimer from "../../../Elements/Pomodoro/BarTimer";
 import { TimerContext } from "@/components/Provider/TimerProvider";
@@ -12,32 +12,17 @@ import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import ShareModal from "@/components/Elements/General/Modal/ModalShare";
 
 export default function Timer(/*{ token }: { token: string }*/) {
-  // const [menu, setMenu] = useState<chipsIconType>("concentracion");
+  // const [menu, setMenu] = useState<chipsIconType>("enfoque");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [pomodoroId, setPomodoroId] = useState<string | null>(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   // const [shareCode, setShareCode] = useState('');
 
-  const { setTime, time, setInitialTime, initialTime } =
+  const { setTime, time, initialTime, isChronometer } =
     useContext(TimerContext);
 
-  const {
-    status,
-    startPomodoro,
-    stopPomodoro,
-    pausePomodoro,
-    resumePomodoro,
-    isConnected,
-  } = useContext(SocketIOContext);
+  const { status, isConnected } = useContext(SocketIOContext);
 
-  const menuTimes = useMemo(
-    () => ({
-      concentracion: { hours: 0, min: 25, seg: 0 },
-      "D/Corto": { hours: 0, min: 5, seg: 0 },
-      chrono: { hours: 0, min: 0, seg: 0 },
-    }),
-    []
-  );
 
   useEffect(() => {
     if (status) {
@@ -102,56 +87,6 @@ export default function Timer(/*{ token }: { token: string }*/) {
     [setTime]
   );
 
-  const handleTogglePlay = useCallback(async () => {
-    if (!isConnected || !startPomodoro || !pausePomodoro || !resumePomodoro) {
-      setIsPlaying((prev) => !prev);
-      return;
-    }
-
-    try {
-      if (!isPlaying) {
-        if (!pomodoroId) {
-          const durationInSeconds =
-            time.hours * 3600 + time.min * 60 + time.seg;
-          await startPomodoro(durationInSeconds);
-
-          setInitialTime(time);
-        } else {
-          await resumePomodoro();
-        }
-      } else if (pomodoroId) {
-        await pausePomodoro();
-      }
-    } catch (error) {
-      console.error("Error toggling pomodoro:", error);
-      setIsPlaying((prev) => !prev);
-    }
-  }, [
-    isPlaying,
-    pomodoroId,
-    time,
-    isConnected,
-    startPomodoro,
-    pausePomodoro,
-    resumePomodoro,
-    setInitialTime,
-  ]);
-
-  const handleReset = useCallback(async () => {
-    if (pomodoroId && stopPomodoro) {
-      try {
-        await stopPomodoro(pomodoroId);
-      } catch (error) {
-        console.error("Error stopping pomodoro:", error);
-      }
-    }
-
-    setIsPlaying(false);
-    setPomodoroId(null);
-    // setTime(menuTimes[menu as keyof typeof menuTimes]);
-    // setInitialTime(menuTimes[menu as keyof typeof menuTimes]);
-  }, [pomodoroId, stopPomodoro, menuTimes, setTime, setInitialTime]); // menu
-
   // const handleShare = useCallback(async () => {
   //   if (!pomodoroId) {
   //     toast.error("No hay un pomodoro activo para compartir");
@@ -182,23 +117,6 @@ export default function Timer(/*{ token }: { token: string }*/) {
   //     toast.error("No se pudo compartir el pomodoro");
   //   }
   // }, [pomodoroId, token]);
-
-  const handleClick = useCallback(
-    (id: string) => {
-      switch (id) {
-        case "togglePlay":
-          handleTogglePlay();
-          break;
-        case "reset":
-          handleReset();
-          break;
-          // case "share":
-          //   handleShare();
-          break;
-      }
-    },
-    [handleTogglePlay, handleReset]
-  );
 
   const renderDigits = (num: number) =>
     String(num)
@@ -244,8 +162,12 @@ export default function Timer(/*{ token }: { token: string }*/) {
             }}
           />
         </div>
-        <BarTimer time={time} initialTime={initialTime} />
-        <Commands handleClick={handleClick} isPlay={isPlaying} />
+        <BarTimer
+          time={time}
+          initialTime={initialTime}
+          isChronometer={isChronometer}
+        />
+        <Commands />
       </div>
 
       {/* Modal de compartir */}

@@ -8,5 +8,6 @@ export type UserType = {
   refreshtoken: string;
   updatedAt: Date;
   username: string;
+  role: "user" | "admin";
   _id: string;
 };

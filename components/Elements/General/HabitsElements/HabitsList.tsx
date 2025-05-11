@@ -1,26 +1,10 @@
-import {
-  BedDouble,
-  Bike,
-  Book,
-  ChefHat,
-  CircleHelp,
-  GlassWater,
-  Pen,
-  Trash2,
-} from "lucide-react";
+import { Pen, Trash2 } from "lucide-react";
 import { useContext } from "react";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import HabitsUtils from "@/lib/HabitsUtils";
 import Menu from "@/components/Reusable/Menu";
 import { ModalContext } from "@/components/Provider/ModalProvider";
-
-const HABIT_TYPES = {
-  DRINK: "drink",
-  STUDY: "study",
-  FOOD: "food",
-  SLEEP: "sleep",
-  SPORT: "sport",
-};
+import renderIconHabit from "@/hooks/renderIcon";
 
 interface HabitsListProps {
   habits: HabitsType[];
@@ -39,33 +23,6 @@ const HabitItem = ({
   const { _id, status, type, name, description } = habit;
   const { setIsOpen } = useContext(ModalContext);
 
-  const getIconClass = (isCompleted: boolean) => {
-    return `rounded-lg p-2 transition-all duration-300 ${
-      isCompleted
-        ? "bg-gray-100 text-gray-500 group-hover:bg-gray-100"
-        : "bg-secondary-100 group-hover:bg-secondary-500"
-    }`;
-  };
-
-  const renderIcon = (habitType: string, isCompleted: boolean) => {
-    const iconClass = getIconClass(isCompleted);
-
-    switch (habitType) {
-      case HABIT_TYPES.DRINK:
-        return <GlassWater size={48} className={iconClass} />;
-      case HABIT_TYPES.STUDY:
-        return <Book size={48} className={iconClass} />;
-      case HABIT_TYPES.FOOD:
-        return <ChefHat size={48} className={iconClass} />;
-      case HABIT_TYPES.SLEEP:
-        return <BedDouble size={48} className={iconClass} />;
-      case HABIT_TYPES.SPORT:
-        return <Bike size={48} className={iconClass} />;
-      default:
-        return <CircleHelp size={48} className={iconClass} />;
-    }
-  };
-
   return (
     <li className="flex items-center gap-4">
       <div
@@ -75,7 +32,7 @@ const HabitItem = ({
             : "border-primary-500 bg-primary-100 hover:bg-gray-200"
         }`}
       >
-        {renderIcon(type, status)}
+        {renderIconHabit({ habitType: type, isCompleted: status })()}
         <div
           className={`w-0.5 rounded-full h-3/4 transition-all duration-300 ${
             status ? "bg-secondary-600 group-hover:bg-white" : "bg-primary-500"
