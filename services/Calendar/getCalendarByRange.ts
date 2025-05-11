@@ -1,6 +1,7 @@
 "use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
+import { PromiseCalendar } from "@/interfaces/Calendar/CalendarType";
 
 export async function getCalendarByRange({
   firstDate,
@@ -10,7 +11,7 @@ export async function getCalendarByRange({
   secondDate: Date;
 }): Promise<{
   success: boolean;
-  res: any;
+  res: PromiseCalendar;
 }> {
   try {
     const token = await getToken();

@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { useState, useEffect } from "react";
 
 interface SelectDateProps {
@@ -18,32 +20,9 @@ export default function YearMonthSelector({
     (_, i) => (yearRange[0] + i).toString()
   );
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const handleYearChange = (yearValue: string) => {
     const newDate = new Date(selectedDate);
     newDate.setFullYear(parseInt(yearValue));
-    setSelectedDate(newDate);
-    handleDateChange(newDate);
-  };
-
-  const handleMonthChange = (monthIndex: number) => {
-    const newDate = new Date(selectedDate);
-
-    newDate.setMonth(monthIndex);
     setSelectedDate(newDate);
     handleDateChange(newDate);
   };
@@ -55,7 +34,7 @@ export default function YearMonthSelector({
   }, [date]);
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-center w-full">
       <div className="flex flex-col">
         <select
           onChange={(e) => handleYearChange(e.target.value)}
@@ -69,19 +48,9 @@ export default function YearMonthSelector({
           ))}
         </select>
       </div>
-      <div className="flex flex-col">
-        <select
-          onChange={(e) => handleMonthChange(parseInt(e.target.value))}
-          value={selectedDate.getMonth()}
-          className="text-gray-700 cursor-pointer outline-none"
-        >
-          {months.map((monthName, index) => (
-            <option key={monthName} value={index}>
-              {monthName}
-            </option>
-          ))}
-        </select>
-      </div>
+      <p className="flex-1 text-center capitalize">
+        {format(selectedDate, "MMMM", { locale: es })}
+      </p>
     </div>
   );
 }
