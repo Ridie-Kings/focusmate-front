@@ -1,10 +1,11 @@
 "use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
+import { PromiseCalendar } from "@/interfaces/Calendar/CalendarType";
 
 export async function getCalendarByDate({ date }: { date: string }): Promise<{
   success: boolean;
-  res: any;
+  res: PromiseCalendar;
 }> {
   try {
     const token = await getToken();
@@ -14,6 +15,7 @@ export async function getCalendarByDate({ date }: { date: string }): Promise<{
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log("LOG", res.data);
 
     return { success: true, res: res?.data };
   } catch (error: any) {

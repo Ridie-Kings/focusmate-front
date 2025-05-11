@@ -20,12 +20,10 @@ interface MonthlyStatsData {
 
 export default function StatsChard() {
   const [dailyStats, setDailyStats] = useState<MonthlyStatsData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadDailyStats = async () => {
-      setIsLoading(true);
       setError(null);
       try {
         const { data, success } = await GetMyStatsWeek();
@@ -37,8 +35,6 @@ export default function StatsChard() {
       } catch (error) {
         console.error("Error loading daily stats:", error);
         setError(error instanceof Error ? error.message : "Error desconocido");
-      } finally {
-        setIsLoading(false);
       }
     };
 

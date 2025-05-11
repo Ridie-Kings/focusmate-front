@@ -8,7 +8,8 @@ import {
   addDays,
   isSameDay,
   format,
-  subDays,
+  addMonths,
+  subMonths,
 } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -25,7 +26,6 @@ import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCale
 import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/CalendarNav";
 import Button from "@/components/Reusable/Button";
 import { ModalContext } from "@/components/Provider/ModalProvider";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 
@@ -94,8 +94,12 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 }) => {
   const [events, setEvents] = useState<TaskType[]>();
   const { setIsOpen } = useContext(ModalContext);
-  const handlePreviousDay = () => {
-    setDate(subDays(date, 1));
+
+  const handlePreviousMonth = () => {
+    setDate(subMonths(date, 1));
+  };
+  const handleNextMonth = () => {
+    setDate(addMonths(date, 1));
   };
 
   useEffect(() => {
@@ -117,10 +121,6 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 
     handleGetCalendarByRange();
   }, []);
-
-  const handleNextDay = () => {
-    setDate(addDays(date, 1));
-  };
 
   const handleMonthYearChange = (monthYear: string) => {
     setDate((currentDate) => {
@@ -146,8 +146,8 @@ const SmallCalendar: React.FC<CalendarProps> = ({
         } transition-all duration-300`}
       >
         <CalendarNav
-          handleNextDay={handleNextDay}
-          handlePreviousDay={handlePreviousDay}
+          handleNextMonth={handleNextMonth}
+          handlePreviousMonth={handlePreviousMonth}
           handleYearChange={handleMonthYearChange}
           date={date}
         />

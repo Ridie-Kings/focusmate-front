@@ -15,7 +15,7 @@ export default function PasswordRecovery() {
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const { addToast } = useContext(ToastContext);
 
-  console.log(emailSent);
+  (emailSent);
 
   const handleRequestPassword = async () => {
     try {

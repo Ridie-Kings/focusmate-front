@@ -5,7 +5,6 @@ import React, {
   useContext,
   useState,
   useCallback,
-  useEffect,
 } from "react";
 import ToastContainer from "./ToastProvider/ToastContainer";
 
@@ -51,7 +50,7 @@ export default function ToastProvider({
     }, duration * 1.5);
   }, []);
 
-  
+
   const removeToast = useCallback((id: string) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   }, []);
