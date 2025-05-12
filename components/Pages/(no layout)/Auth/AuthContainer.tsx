@@ -48,6 +48,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
     };
 
     loadSavedData();
+    router.refresh();
   }, [storageKey]);
 
   const [state, action, isLoading] = useActionState(handleAuth, {
@@ -118,17 +119,17 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
             </div>
           )}
           {error && <div className="text-red-500 text-sm">{error}</div>}
+          <div className="flex flex-col gap-4">
+            {type === "login" ? (
+              RenderActionButton({ type, isLoading })
+            ) : (
+              <>
+                {RenderActionLinks({ type })}
+                {RenderActionButton({ type, isLoading })}
+              </>
+            )}
+          </div>
         </form>
-        <div className="flex flex-col gap-4">
-          {type === "login" ? (
-            RenderActionButton({ type, isLoading })
-          ) : (
-            <>
-              {RenderActionLinks({ type })}
-              {RenderActionButton({ type, isLoading })}
-            </>
-          )}
-        </div>
         <LinkButtons />
       </div>
     </section>
