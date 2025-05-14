@@ -33,7 +33,7 @@ export type HabitOption = {
 };
 
 export type ModalHabitProps = {
-  isOpen: TypeIsOpen;
+  prevHabit: HabitsType;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 };
 

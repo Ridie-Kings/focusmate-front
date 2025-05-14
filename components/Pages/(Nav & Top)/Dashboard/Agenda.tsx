@@ -42,7 +42,7 @@ export default function Agenda() {
 
   return (
     <TemplateDashboard
-      grid="col-span-4 row-span-4 row-start-2"
+      grid={`col-span-4 row-span-4 row-start-2`}
       link="/calendar"
       title="Calendario"
     >

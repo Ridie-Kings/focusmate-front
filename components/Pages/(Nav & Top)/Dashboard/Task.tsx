@@ -19,7 +19,7 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
 
   return (
     <TemplateDashboard
-      grid="col-span-4 row-span-4 row-start-6 gap-0 "
+      grid="col-span-4 row-span-4 row-start-6 gap-0"
       title="Tus Tareas"
       link="/"
     >

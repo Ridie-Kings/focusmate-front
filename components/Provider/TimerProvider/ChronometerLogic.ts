@@ -1,21 +1,40 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { timeUtils } from "./TimeUtils";
 import { chipsIconType } from "@/components/Reusable/Chips";
+import ChronometerUtils from "@/lib/ChronometerUtils";
 
 export function useChronometer({
   menu,
   isType,
+  time,
+  setTime,
+  setIsPlay,
+  isPlay,
 }: {
+  isPlay: boolean;
+  setIsPlay: Dispatch<SetStateAction<boolean>>;
+  time: {
+    currentTime: TimeType;
+    initialTime: TimeType;
+  };
+  setTime: Dispatch<
+    SetStateAction<{
+      currentTime: TimeType;
+      initialTime: TimeType;
+    }>
+  >;
   menu: chipsIconType;
   isType: "pomodoro" | "cronometro" | "temporizador";
 }) {
-  const [time, setTime] = useState<TimeType>({ hours: 0, min: 0, seg: 0 });
-  const [isPlay, setIsPlay] = useState(false);
-
   const totalSecondsRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { resetTimer, togglePlay } = ChronometerUtils({
+    setIsPlay,
+    setTime,
+    totalSecondsRef,
+  });
 
   useEffect(() => {
     try {
@@ -26,7 +45,10 @@ export function useChronometer({
         const seconds = parseInt(savedTotalSeconds, 10);
 
         totalSecondsRef.current = seconds;
-        setTime(timeUtils.secondsToTime(seconds));
+        setTime((prev) => ({
+          ...prev,
+          currentTime: timeUtils.secondsToTime(seconds),
+        }));
       }
 
       if (savedIsPlay === "true") {
@@ -52,31 +74,6 @@ export function useChronometer({
     }
   }, [time, isPlay]);
 
-  const togglePlay = useCallback(() => {
-    setIsPlay((prev) => {
-      const newState = !prev;
-      try {
-        localStorage.setItem("chronometer_isPlay", newState.toString());
-      } catch (error) {
-        console.error("Error saving play state to localStorage:", error);
-      }
-      return newState;
-    });
-  }, []);
-
-  const resetTimer = useCallback(() => {
-    setIsPlay(false);
-    setTime({ hours: 0, min: 0, seg: 0 });
-    totalSecondsRef.current = 0;
-
-    try {
-      localStorage.setItem("chronometer_seconds", "0");
-      localStorage.setItem("chronometer_isPlay", "false");
-    } catch (error) {
-      console.error("Error resetting localStorage:", error);
-    }
-  }, []);
-
   useEffect(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -87,7 +84,7 @@ export function useChronometer({
       intervalRef.current = setInterval(() => {
         totalSecondsRef.current += 1;
         const newTime = timeUtils.secondsToTime(totalSecondsRef.current);
-        setTime(newTime);
+        setTime((prev) => ({ ...prev, currentTime: newTime }));
 
         try {
           localStorage.setItem(
@@ -109,8 +106,6 @@ export function useChronometer({
   }, [isPlay]);
 
   return {
-    time,
-    setTime,
     isPlay,
     setIsPlay,
     togglePlay,
