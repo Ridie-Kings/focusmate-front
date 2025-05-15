@@ -40,27 +40,24 @@ export const SocketIOProvider: React.FC<{
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  const handleJoinPomodoro = useCallback(
-    async (id: string): Promise<boolean> => {
-      if (!socket || !id) {
-        console.error("Cannot join: socket not connected or invalid ID");
-        return false;
-      }
+  const handleJoinPomodoro = (id: string) => {
+    console.log("EMIT", id);
 
-      try {
-        return new Promise<boolean>((resolve) => {
-          socket.emit("join", { id }, (response: { success: boolean }) => {
-            console.log("Join response:", response);
-            resolve(!!response?.success);
-          });
-        });
-      } catch (err) {
-        console.error("Error joining pomodoro:", err);
-        return false;
-      }
-    },
-    [socket]
-  );
+    try {
+      const res = socket?.emit(
+        "join",
+        { id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
+    } catch (e) {
+      console.log("error ws", e);
+    }
+  };
 
   useEffect(() => {
     let socketInstance: Socket | null = null;

@@ -64,12 +64,15 @@ export function useTimer({
     if (!status) return;
 
     if (status.state === "working") {
-      setIsPlay(true);
+      if (status.pausedState !== "paused") setIsPlay(true);
+
       setTime((prev) => ({
         ...prev,
         initialTime: timeUtils.secondsToTime(status.workDuration),
         currentTime: timeUtils.secondsToTime(
-          status.startAt.getTime() / 1000 - status.endsAt.getTime() / 1000
+          status.remainingTime ??
+            new Date(status.startAt).getTime() -
+              new Date(status.endsAt).getTime()
         ),
       }));
     } else if (status.state === "idle") {
@@ -143,8 +146,12 @@ export function useTimer({
               setMenu("enfoque");
               setTime((prev) => ({
                 ...prev,
-                currentTime: timeUtils.secondsToTime(status?.workDuration ?? 25),
-                initialTime: timeUtils.secondsToTime(status?.workDuration ?? 25),
+                currentTime: timeUtils.secondsToTime(
+                  status?.workDuration ?? 25
+                ),
+                initialTime: timeUtils.secondsToTime(
+                  status?.workDuration ?? 25
+                ),
               }));
               totalSecondsRef.current = status?.workDuration ?? 25;
               setCycles((prev) => {

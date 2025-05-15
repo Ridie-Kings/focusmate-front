@@ -4,8 +4,8 @@ import { Socket } from "socket.io-client";
 export type Pomodoro = {
   _id: string;
   userId: string;
-  startTime: Date;
-  endTime: Date;
+  startAt: Date;
+  endAt: Date;
   workDuration: number;
   shortBreak: number;
   longBreak: number;

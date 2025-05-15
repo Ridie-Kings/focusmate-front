@@ -9,7 +9,6 @@ export async function StartDefaultPomodoro(): Promise<{
 }> {
   try {
     const token = await getToken();
-    console.log("TOKEN", token);
 
     const res = await apiConnection.post(
       "pomodoro/default",
@@ -20,7 +19,6 @@ export async function StartDefaultPomodoro(): Promise<{
         },
       }
     );
-    console.log(res);
 
     return { success: true, res: res.data };
   } catch (error: any) {

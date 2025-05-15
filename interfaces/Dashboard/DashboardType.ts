@@ -9,6 +9,13 @@ export type DashboardContextType = {
   setTasks: Dispatch<SetStateAction<TaskType[]>>;
   habits: HabitsType[];
   setHabits: Dispatch<SetStateAction<HabitsType[]>>;
+
+  setLoadingEvents: Dispatch<SetStateAction<boolean>>;
+  setLoadingTask: Dispatch<SetStateAction<boolean>>;
+  setLoadingHabits: Dispatch<SetStateAction<boolean>>;
+  loadingEvents: boolean;
+  loadingTask: boolean;
+  loadingHabits: boolean;
 };
 
 export type PromiseGetHabitsStats = {

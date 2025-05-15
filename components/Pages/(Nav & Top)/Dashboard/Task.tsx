@@ -10,7 +10,7 @@ import StatusCards from "@/components/Pages/(Nav & Top)/Dashboard/Task/StatusCar
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
 export default function Task({ tasksList }: { tasksList: TaskType[] }) {
-  const { tasks, setTasks } = useContext(DashboardContext);
+  const { tasks, setTasks, loadingTask } = useContext(DashboardContext);
   const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
@@ -32,7 +32,12 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
             ? "Tareas " + filter + " prioridad"
             : "Tareas " + filter}
         </p>
-        <ListTask filter={filter} tasks={tasks} setTasks={setTasks} />
+        <ListTask
+          filter={filter}
+          tasks={tasks}
+          setTasks={setTasks}
+          loadingTask={loadingTask}
+        />
       </div>
     </TemplateDashboard>
   );

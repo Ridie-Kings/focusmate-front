@@ -32,33 +32,29 @@ export default function TimerProvider({
   const [startedElement, setStartedElement] = useState(false);
   const [isType, setIsType] = useState<TimerMode>("pomodoro");
 
-  const chronometerControls = useChronometer({
-    menu,
-    isType,
-    time,
-    setTime,
-    isPlay,
-    setIsPlay,
-  });
-
-  const timerControls = useTimer({
-    status,
-    isPlay,
-    setIsPlay,
-    time,
-    setTime,
-    menu,
-    setMenu,
-    setStartedElement,
-    setCycles,
-    setTotalCycles,
-    cycles: cycles ?? 0,
-    totalCycles,
-  });
-
   const { togglePlay, resetTimer } = isChronometer
-    ? chronometerControls
-    : timerControls;
+    ? useChronometer({
+        menu,
+        isType,
+        time,
+        setTime,
+        isPlay,
+        setIsPlay,
+      })
+    : useTimer({
+        status,
+        isPlay,
+        setIsPlay,
+        time,
+        setTime,
+        menu,
+        setMenu,
+        setStartedElement,
+        setCycles,
+        setTotalCycles,
+        cycles: cycles ?? 0,
+        totalCycles,
+      });
 
   const toggleChronometerMode = (e: boolean) => {
     if (isPlay) return;
@@ -82,6 +78,7 @@ export default function TimerProvider({
     setMenu,
     menu,
     startedElement,
+    setStartedElement,
     setIsType,
     isType,
     cycles,

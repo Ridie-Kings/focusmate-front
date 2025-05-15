@@ -11,10 +11,12 @@ export default function ListTask({
   filter,
   tasks,
   setTasks,
+  loadingTask,
 }: {
   filter: string;
   tasks: TaskType[];
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
+  loadingTask: boolean;
 }) {
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +85,14 @@ export default function ListTask({
         ref={listRef}
         className="flex flex-col w-full gap-4 h-[296px] pt-1 overflow-y-auto overflow-x-hidden transition-all duration-300"
       >
-        {filteredTasks.length > 0 ? (
+        {loadingTask ? (
+          <div className="flex flex-col items-center justify-center w-full h-full">
+            <div className="flex flex-col items-center gap-3 p-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-500"></div>
+              <p className="text-primary-500 font-medium">Cargando tareas...</p>
+            </div>
+          </div>
+        ) : filteredTasks.length > 0 ? (
           filteredTasks.map((task) => (
             <div key={task._id} data-id={task._id}>
               <TaskCard

@@ -28,6 +28,7 @@ export type TimerContextType = {
   menu: chipsIconType;
   setMenu: Dispatch<SetStateAction<chipsIconType>>;
   startedElement: boolean;
+  setStartedElement: Dispatch<SetStateAction<boolean>>;
   setIsType: Dispatch<
     SetStateAction<"pomodoro" | "cronometro" | "temporizador">
   >;

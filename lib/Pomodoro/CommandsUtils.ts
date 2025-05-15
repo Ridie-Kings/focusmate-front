@@ -10,7 +10,7 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 
 export default function CommandsUtils() {
   const { status, handleJoinPomodoro, setStatus } = useContext(SocketIOContext);
-  const { togglePlay, resetTimer, isPlay, startedElement } =
+  const { togglePlay, resetTimer, isPlay, startedElement, setStartedElement } =
     useContext(TimerContext);
   const { setIsOpen } = useContext(ModalContext);
 
@@ -30,7 +30,7 @@ export default function CommandsUtils() {
 
                 if (res.success) {
                   handleJoinPomodoro(res.res._id);
-                  setStatus(res.res);
+                  setStartedElement(true);
                 }
                 console.log("start default", res.res);
               } catch (error) {
@@ -48,13 +48,15 @@ export default function CommandsUtils() {
                 console.log("ERROR START", error);
               }
             }
-          } else if (status) {
-            try {
-              if (isPlay) await PausePomodoro({ id: status._id });
-              else await ResumePomodoro({ id: status._id });
-              console.log(isPlay ? "pause" : "resume");
-            } catch (error) {
-              console.log("ERROR ", isPlay ? " resume " : " pause ", error);
+          } else {
+            if (status) {
+              try {
+                if (isPlay) await PausePomodoro({ id: status._id });
+                else await ResumePomodoro({ id: status._id });
+                console.log(isPlay ? "pause" : "resume");
+              } catch (error) {
+                console.log("ERROR ", isPlay ? " resume " : " pause ", error);
+              }
             }
           }
           togglePlay();

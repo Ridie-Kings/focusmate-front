@@ -12,17 +12,19 @@ import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { format } from "date-fns";
 
 export default function Agenda() {
-  const { events, setEvents, setTasks } = useContext(DashboardContext);
+  const { events, setEvents, setTasks, loadingEvents, setLoadingEvents } =
+    useContext(DashboardContext);
   const [date, setDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
     const handleGetCalendarByDate = async (dateToFetch: Date) => {
+      setLoadingEvents(true);
       const events = await getCalendarByDate({
         date: format(dateToFetch, "yyyy-MM-dd"),
       });
-
       if (events.success) {
         setEvents(events.res);
+        setLoadingEvents(false);
       } else {
         console.error("Error al obtener el calendario", events.res);
         setEvents([]);
@@ -31,10 +33,11 @@ export default function Agenda() {
 
     const debouncedFetch = debounce((dateToFetch: Date) => {
       handleGetCalendarByDate(dateToFetch);
+      setLoadingEvents(false);
     }, 500);
 
     debouncedFetch(date ?? new Date());
-
+    setLoadingEvents(true);
     return () => {
       debouncedFetch.cancel();
     };
@@ -59,6 +62,7 @@ export default function Agenda() {
           events={events}
           setEvents={setEvents}
           setTasks={setTasks}
+          loadingEvents={loadingEvents}
         />
       </div>
     </TemplateDashboard>

@@ -28,6 +28,8 @@ export function useChronometer({
   menu: chipsIconType;
   isType: "pomodoro" | "cronometro" | "temporizador";
 }) {
+  console.log("CHRONOMETRO");
+  
   const totalSecondsRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { resetTimer, togglePlay } = ChronometerUtils({
