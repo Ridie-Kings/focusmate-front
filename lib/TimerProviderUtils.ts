@@ -17,6 +17,7 @@ export const defaultContextValue: TimerContextType = {
   setMenu: () => {},
   menu: "enfoque",
   startedElement: false,
+  setStartedElement: () => {}
   setIsType: () => {},
   isType: "pomodoro",
   cycles: 0,

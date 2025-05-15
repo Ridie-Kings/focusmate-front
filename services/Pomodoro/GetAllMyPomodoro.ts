@@ -23,6 +23,6 @@ export async function GetAllMyPomodoro(): Promise<{
     return { success: true, res: res.data };
   } catch (error: any) {
     console.error("Error starting timer:", error.response?.data);
-    return { success: false, res: error.response };
+    return { success: false, res: error.response.data };
   }
 }
