@@ -44,15 +44,7 @@ export const SocketIOProvider: React.FC<{
     console.log("EMIT", id);
 
     try {
-      const res = socket?.emit(
-        "join",
-        { id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = socket?.emit("join", { id });
       console.log(res);
     } catch (e) {
       console.log("error ws", e);

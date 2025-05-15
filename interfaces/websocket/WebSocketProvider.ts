@@ -36,7 +36,7 @@ export type PomodoroStatus = {
     | "completed";
   currentCycle: number;
   startAt: Date;
-  endsAt: Date;
+  endAt: Date;
   remainingTime: number | null;
   pausedState: "paused" | null;
   workDuration: number;

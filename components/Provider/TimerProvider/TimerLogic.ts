@@ -6,6 +6,7 @@ import { timeUtils } from "./TimeUtils";
 import { ToastContext } from "../ToastProvider";
 import TimerUtils from "@/lib/TimerUtils";
 import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { differenceInSeconds } from "date-fns";
 
 export function useTimer({
   status,
@@ -66,15 +67,43 @@ export function useTimer({
     if (status.state === "working") {
       if (status.pausedState !== "paused") setIsPlay(true);
 
-      setTime((prev) => ({
-        ...prev,
-        initialTime: timeUtils.secondsToTime(status.workDuration),
-        currentTime: timeUtils.secondsToTime(
-          status.remainingTime ??
-            new Date(status.startAt).getTime() -
-              new Date(status.endsAt).getTime()
-        ),
-      }));
+      setTime((prev) => {
+        try {
+          console.log("test", status);
+
+          if (!status.startAt || !status.endAt) {
+            console.error("Missing startAt or endAt timestamps");
+            return prev;
+          }
+
+          const startDate = new Date(status.startAt);
+          const endDate = new Date(status.endAt);
+
+          if (
+            startDate.toString() === "Invalid Date" ||
+            endDate.toString() === "Invalid Date"
+          ) {
+            console.error("Invalid date format for startAt or endAt");
+            return prev;
+          }
+
+          const timeInSeconds =
+            status.remainingTime !== null
+              ? status.remainingTime
+              : differenceInSeconds(endDate, startDate);
+
+          const positiveTimeInSeconds = Math.max(0, timeInSeconds);
+
+          return {
+            ...prev,
+            initialTime: timeUtils.secondsToTime(status.workDuration),
+            currentTime: timeUtils.secondsToTime(positiveTimeInSeconds),
+          };
+        } catch (error) {
+          console.error("Error calculating timer value:", error);
+          return prev;
+        }
+      });
     } else if (status.state === "idle") {
       setTime((prev) => ({
         ...prev,
