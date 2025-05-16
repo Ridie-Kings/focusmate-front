@@ -122,6 +122,7 @@ export function useTimer({
     setTotalCycles(status?.cycles ?? 4);
     setCycles(status?.currentCycle ?? 4);
     hasCyclesBeenSetRef.current = status?.currentCycle !== undefined;
+    if (status?.pausedState === "paused") setIsPlay(false);
   }, [status]);
 
   useEffect(() => {

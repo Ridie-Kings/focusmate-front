@@ -93,7 +93,7 @@ export const SocketIOProvider: React.FC<{
 
       socketInstance.on("pomodoro found", (pomodoro: Pomodoro) => {
         console.log("Received pomodoro found:", pomodoro);
-
+        
         if (pomodoro && pomodoro._id) {
           socketInstance?.emit("join", { id: pomodoro._id });
         }
