@@ -1,30 +1,61 @@
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import { useCallback, useContext } from "react";
-import { timeUtils } from "@/components/Provider/TimerProvider/TimeUtils";
+
+import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import { TimerContext } from "@/components/Provider/TimerProvider";
+import { ModalContext } from "@/components/Provider/ModalProvider";
+
+import { StartPomodoroById } from "@/services/Pomodoro/StartPomodoroById";
+import { StartDefaultPomodoro } from "@/services/Pomodoro/StartDefaultPomodoro";
+import { PausePomodoro } from "@/services/Pomodoro/PausePomodoro";
+import { ResumePomodoro } from "@/services/Pomodoro/ResumePomodoro";
+import { StopPomodoro } from "@/services/Pomodoro/StopPomodoro";
 
 export default function CommandsUtils() {
-  const { status, startPomodoro, stopPomodoro, pausePomodoro, resumePomodoro } =
-    useContext(SocketIOContext);
-  const { time, togglePlay, resetTimer, setIsOpen, isChronometer } =
-    useContext(TimerContext);
+  const { status, handleJoinPomodoro } = useContext(SocketIOContext);
+  const {
+    togglePlay,
+    resetTimer,
+    isPlay,
+    startedElement,
+    setStartedElement,
+    isChronometer,
+  } = useContext(TimerContext);
+  const { setIsOpen } = useContext(ModalContext);
 
   const handleClick = useCallback(
-    (action: string, disabled?: boolean) => {
+    async (action: string, disabled?: boolean) => {
       if (disabled) return;
-      switch (action) {
-        case "openFullScreen":
-          setIsOpen(true);
-          break;
 
+      switch (action) {
         case "togglePlay":
-          if (!isChronometer) {
-            if (!status?.active) {
-              startPomodoro(timeUtils.timeToSeconds(time));
-            } else if (!status.isPaused) {
-              pausePomodoro();
-            } else if (status.isPaused) {
-              resumePomodoro();
+          if (isChronometer) {
+            togglePlay();
+            return;
+          }
+
+          if (!startedElement) {
+            try {
+              const res = await (status
+                ? StartPomodoroById({ id: status._id })
+                : StartDefaultPomodoro());
+
+              if (res.success) {
+                handleJoinPomodoro(res.res._id);
+                if (!status) setStartedElement(true);
+              }
+            } catch (error) {
+              console.error("Error al iniciar pomodoro:", error);
+            }
+          } else if (status) {
+            try {
+              await (isPlay
+                ? PausePomodoro({ id: status._id })
+                : ResumePomodoro({ id: status._id }));
+            } catch (error) {
+              console.error(
+                `Error al ${isPlay ? "pausar" : "reanudar"} pomodoro:`,
+                error
+              );
             }
           }
 
@@ -32,27 +63,36 @@ export default function CommandsUtils() {
           break;
 
         case "reset":
-          if (status?.active && status?.pomodoroId && !isChronometer)
-            stopPomodoro(status.pomodoroId);
+          if (!isChronometer && status?._id) {
+            try {
+              await StopPomodoro({ id: status._id });
+            } catch (error) {
+              console.error("Error al detener pomodoro:", error);
+            }
+          }
           resetTimer();
           break;
 
-        default:
+        case "settings":
+          setIsOpen({
+            text: "pomodoroSettings",
+            other: status,
+          });
           break;
       }
     },
     [
-      isChronometer,
       status,
-      time,
-      startPomodoro,
-      pausePomodoro,
-      resumePomodoro,
-      stopPomodoro,
-      setIsOpen,
       togglePlay,
       resetTimer,
+      isPlay,
+      startedElement,
+      handleJoinPomodoro,
+      setStartedElement,
+      isChronometer,
+      setIsOpen,
     ]
   );
+
   return { handleClick };
 }

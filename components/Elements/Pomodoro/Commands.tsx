@@ -6,7 +6,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 import CommandsUtils from "@/lib/Pomodoro/CommandsUtils";
 
 export default function Commands({ fullScreen = false }: CommandsProps) {
-  const { isPlay, menu, isType } = useContext(TimerContext);
+  const { isPlay, menu, isType, startedElement } = useContext(TimerContext);
   const { status } = useContext(SocketIOContext);
   const { handleClick } = CommandsUtils();
 
@@ -26,6 +26,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
           menu,
           isType,
           status,
+          startedElement,
         })
           .filter((button) => button !== undefined)
           .map((button) => (

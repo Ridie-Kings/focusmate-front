@@ -17,6 +17,6 @@ export async function GetStatsBoardInfoUser({
     return { success: true, data: res?.data };
   } catch (error: any) {
     console.error("Error getting GetStatsBoardInfoUser:", error.response?.data);
-    return { success: false, data: error.response };
+    return { success: false, data: error.response.data };
   }
 }

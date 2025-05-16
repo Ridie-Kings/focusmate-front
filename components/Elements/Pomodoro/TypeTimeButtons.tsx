@@ -15,10 +15,9 @@ export default function TypeTimeButtons() {
   const {
     startedElement,
     setMenu,
+    setTime,
     menu,
-    setInitialTime,
     toggleChronometerMode,
-    fullScreen,
     isType,
   } = useContext(TimerContext);
 
@@ -71,11 +70,11 @@ export default function TypeTimeButtons() {
   useEffect(() => {
     if (isType === "cronometro") {
       setMenu("cronometro");
-      setInitialTime(menuTimes["cronometro"]);
+      setTime((prev) => ({ ...prev, initialTime: menuTimes["cronometro"] }));
       toggleChronometerMode(true);
     } else {
       setMenu("enfoque");
-      setInitialTime(menuTimes["enfoque"]);
+      setTime((prev) => ({ ...prev, initialTime: menuTimes["enfoque"] }));
       toggleChronometerMode(false);
     }
   }, [isType]);
@@ -83,7 +82,7 @@ export default function TypeTimeButtons() {
   const handleTimerSelection = (item: TimerItem) => {
     setMenu(item.type);
 
-    setInitialTime(menuTimes[item.type]);
+    setTime((prev) => ({ ...prev, initialTime: menuTimes[item.type] }));
     toggleChronometerMode(item.type === "cronometro");
   };
 
@@ -92,48 +91,28 @@ export default function TypeTimeButtons() {
   }
 
   return (
-    <ul
-      className={`flex flex-col xl:flex-row mx-auto gap-2 ${
-        fullScreen ? "" : "lg:p-0 p-2"
-      }`}
-    >
-      {timerItems.map((item) =>
-        fullScreen ? (
-          <button
-            key={item.id}
-            className={`p-2 flex-1 rounded-lg border border-white gap-2 flex items-center justify-center cursor-pointer transition-all duration-300 ${
-              item.type === menu
-                ? "bg-primary-500 text-white"
-                : "text-primary-500 bg-white hover:bg-primary-500-hover hover:text-white"
-            }`}
-            onClick={() => handleTimerSelection(item)}
-            aria-label={item.label}
-            disabled={startedElement}
-          >
-            <span>{item.label}</span>
-          </button>
-        ) : (
-          <Button
-            key={item.id}
-            size="large"
-            type="button"
-            button="pomodoro"
-            state={
-              startedElement && item.type === menu
-                ? "disabled-pressed"
-                : startedElement
-                ? "disabled"
-                : item.type === menu
-                ? "pressed"
-                : "enabled"
-            }
-            onClick={() => handleTimerSelection(item)}
-            aria-label={item.label}
-          >
-            {item.label}
-          </Button>
-        )
-      )}
+    <ul className="flex flex-col xl:flex-row mx-auto gap-2">
+      {timerItems.map((item) => (
+        <Button
+          key={item.id}
+          size="large"
+          type="button"
+          button="pomodoro"
+          state={
+            startedElement && item.type === menu
+              ? "disabled-pressed"
+              : startedElement
+              ? "disabled"
+              : item.type === menu
+              ? "pressed"
+              : "enabled"
+          }
+          onClick={() => handleTimerSelection(item)}
+          aria-label={item.label}
+        >
+          {item.label}
+        </Button>
+      ))}
     </ul>
   );
 }

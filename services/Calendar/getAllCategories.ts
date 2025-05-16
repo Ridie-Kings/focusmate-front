@@ -17,7 +17,7 @@ export async function getAllCategories(): Promise<{
 
     return { success: true, res: res?.data };
   } catch (error: any) {
-    console.error("Error fetching categories:", error.response);
-    return { success: false, res: error.response };
+    console.error("Error fetching categories:", error.response.data);
+    return { success: false, res: error.response.data };
   }
 }

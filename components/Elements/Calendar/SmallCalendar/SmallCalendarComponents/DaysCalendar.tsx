@@ -53,7 +53,7 @@ export default function DaysCalendar({
   };
 
   return (
-    <div className="grid grid-cols-7 justify-items-center space-x-1 space-y-1">
+    <div className="grid grid-cols-7 justify-items-center space-x-1 h-[264px] space-y-1">
       {days.map((day) => {
         const dayEvents = getEventsForDay(day);
         const hasEvents = dayEvents && dayEvents.length > 0;

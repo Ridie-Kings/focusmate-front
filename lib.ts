@@ -39,17 +39,17 @@ export async function updateSession(
   }
 
   // Verificación para rutas específicas
-  if (pathname === "/statsboard") {
-    try {
-      const user = await getMyProfile();
-      if (user?.user?.role !== "admin") {
-        return NextResponse.redirect(new URL("/404", req.nextUrl.origin));
-      }
-    } catch (error) {
-      console.error("Error al verificar el perfil:", error);
-      return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
-    }
-  }
+  // if (pathname === "/statsboard") {
+  //   try {
+  //     const user = await getMyProfile();
+  //     if (user?.user?.role !== "admin") {
+  //       return NextResponse.redirect(new URL("/404", req.nextUrl.origin));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error al verificar el perfil:", error);
+  //     return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
+  //   }
+  // }
 
   // Si la ruta no es un recurso estático
   if (!pathname.includes(".")) {

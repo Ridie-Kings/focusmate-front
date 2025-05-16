@@ -16,6 +16,6 @@ export async function GetGlobalInfo(): Promise<{
     return { success: true, data: res?.data };
   } catch (error: any) {
     console.error("Error gettin global info:", error.response?.data);
-    return { success: false, data: error.response };
+    return { success: false, data: error.response.data };
   }
 }

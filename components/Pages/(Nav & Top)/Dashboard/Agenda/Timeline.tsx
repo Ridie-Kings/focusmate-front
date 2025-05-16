@@ -13,6 +13,7 @@ interface TimelineProps {
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
   setTasks: Dispatch<SetStateAction<TaskType[]>>;
+  loadingEvents: boolean;
 }
 
 export default function Timeline({
@@ -20,8 +21,8 @@ export default function Timeline({
   events,
   setEvents,
   setTasks,
+  loadingEvents,
 }: TimelineProps) {
-
   const filteredEvents = useMemo(() => {
     return events
       .filter((event) => isSameDay(new Date(event.dueDate), date ?? new Date()))
@@ -42,25 +43,38 @@ export default function Timeline({
         Agenda del día
       </p>
       <div className="flex flex-1 gap-4">
-        <TimeLeftBar filteredEvents={filteredEvents} />
-        {filteredEvents.length === 0 ? (
-          <div className="flex flex-col items-center gap-3 justify-center p-2 bg-quaternary-100 rounded-2xl w-full h-full">
-            <MountainAgenda />
-            <p className="text-primary-500 2xl:text-xl text-center font-medium">
-              Todavía no hay eventos
-            </p>
+        {loadingEvents ? (
+          <div className="flex flex-col items-center justify-center w-full">
+            <div className="flex flex-col items-center gap-3 p-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-500"></div>
+              <p className="text-primary-500 font-medium">
+                Cargando eventos...
+              </p>
+            </div>
           </div>
         ) : (
-          <div className="flex-1 flex flex-col gap-2 pt-1.5">
-            {filteredEvents.map((event, index) => (
-              <TimelineCard
-                setTasks={setTasks}
-                key={`event-${index}-${event.title}`}
-                event={event}
-                setEvents={setEvents}
-              />
-            ))}
-          </div>
+          <>
+            <TimeLeftBar filteredEvents={filteredEvents} />
+            {filteredEvents.length !== 0 ? (
+              <div className="flex-1 flex flex-col gap-2 pt-1.5">
+                {filteredEvents.map((event, index) => (
+                  <TimelineCard
+                    setTasks={setTasks}
+                    key={`event-${index}-${event.title}`}
+                    event={event}
+                    setEvents={setEvents}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center gap-3 justify-center p-2 bg-quaternary-100 rounded-2xl w-full h-full">
+                <MountainAgenda />
+                <p className="text-primary-500 2xl:text-xl text-center font-medium">
+                  Todavía no hay eventos
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

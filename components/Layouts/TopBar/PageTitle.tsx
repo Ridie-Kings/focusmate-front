@@ -13,5 +13,5 @@ export default function PageTitle() {
     if (pathname === "/support") return "Feedback";
     return "Dashboard";
   };
-  return <h1 className="text-4xl md:text-5xl capitalize">{title()}</h1>;
+  return <h1 className="text-xl sm:text-4xl md:text-5xl capitalize">{title()}</h1>;
 }

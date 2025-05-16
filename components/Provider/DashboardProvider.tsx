@@ -11,6 +11,12 @@ export const DashboardContext = createContext<DashboardContextType>({
   setTasks: () => {},
   habits: [],
   setHabits: () => {},
+  setLoadingEvents: () => {},
+  setLoadingHabits: () => {},
+  setLoadingTask: () => {},
+  loadingEvents: false,
+  loadingHabits: false,
+  loadingTask: false,
 });
 
 export default function DashboardProvider({
@@ -22,10 +28,27 @@ export default function DashboardProvider({
   const [events, setEvents] = useState<TaskType[]>([]);
   const [habits, setHabits] = useState<HabitsType[]>([]);
 
+  const [loadingTask, setLoadingTask] = useState<boolean>(true);
+  const [loadingEvents, setLoadingEvents] = useState<boolean>(true);
+  const [loadingHabits, setLoadingHabits] = useState<boolean>(true);
+
+  const contextValue = {
+    events,
+    setEvents,
+    tasks,
+    setTasks,
+    habits,
+    setHabits,
+
+    setLoadingEvents,
+    setLoadingHabits,
+    setLoadingTask,
+    loadingEvents,
+    loadingHabits,
+    loadingTask,
+  };
   return (
-    <DashboardContext.Provider
-      value={{ events, setEvents, tasks, setTasks, habits, setHabits }}
-    >
+    <DashboardContext.Provider value={contextValue}>
       {children}
     </DashboardContext.Provider>
   );

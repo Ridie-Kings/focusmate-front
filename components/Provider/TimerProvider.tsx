@@ -1,35 +1,14 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
-import { TimerContextType, TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import TimerFullScreen from "../Elements/Timer/TimerFullScreen";
+import { createContext, useContext, useState } from "react";
+import { TimerContextType, TimerMode } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "../Reusable/Chips";
 import { useTimer } from "./TimerProvider/TimerLogic";
 import { useChronometer } from "./TimerProvider/ChronometerLogic";
 import { SocketIOContext } from "./WebsocketProvider";
-
-const DEFAULT_FOCUS_TIME = { hours: 0, min: 25, seg: 0 };
-const DEFAULT_SHORT_BREAK = { hours: 0, min: 5, seg: 0 };
-const INITIAL_TIMER_STATE = { hours: 0, min: 25, seg: 0 };
-
-const defaultContextValue: TimerContextType = {
-  isOpen: false,
-  setIsOpen: () => {},
-  time: INITIAL_TIMER_STATE,
-  setTime: () => {},
-  initialTime: DEFAULT_FOCUS_TIME,
-  setInitialTime: () => {},
-  isPlay: false,
-  togglePlay: () => {},
-  resetTimer: () => {},
-  isChronometer: false,
-  toggleChronometerMode: () => {},
-  setMenu: () => {},
-  menu: "enfoque",
-  startedElement: false,
-  fullScreen: false,
-  setIsType: () => {},
-  isType: "pomodoro",
-};
+import {
+  DEFAULT_FOCUS_TIME,
+  defaultContextValue,
+} from "@/lib/TimerProviderUtils";
 
 export const TimerContext =
   createContext<TimerContextType>(defaultContextValue);
@@ -41,87 +20,75 @@ export default function TimerProvider({
 }) {
   const { status } = useContext(SocketIOContext);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [initialTime, setInitialTime] = useState<TimeType>(DEFAULT_FOCUS_TIME);
+  const [time, setTime] = useState({
+    currentTime: DEFAULT_FOCUS_TIME,
+    initialTime: DEFAULT_FOCUS_TIME,
+  });
+  const [isPlay, setIsPlay] = useState(false);
   const [isChronometer, setIsChronometer] = useState(false);
   const [menu, setMenu] = useState<chipsIconType>("enfoque");
+  const [cycles, setCycles] = useState<number | undefined>(0);
+  const [totalCycles, setTotalCycles] = useState<number | undefined>(undefined);
   const [startedElement, setStartedElement] = useState(false);
-  const [isType, setIsType] = useState<
-    "pomodoro" | "cronometro" | "temporizador"
-  >("pomodoro");
+  const [isType, setIsType] = useState<TimerMode>("pomodoro");
 
-  const {
-    time: timerTime,
-    setTime: setTimerTime,
-    isPlay: timerIsPlay,
-    togglePlay: timerTogglePlay,
-    resetTimer: timerReset,
-  } = useTimer(
-    initialTime,
-    setInitialTime,
+  const timerControls = useTimer({
+    status,
+    isPlay: isPlay && !isChronometer,
+    setIsPlay,
+    time,
+    setTime,
     menu,
     setMenu,
-    DEFAULT_FOCUS_TIME,
-    DEFAULT_SHORT_BREAK
-  );
+    setStartedElement,
+    setCycles,
+    setTotalCycles,
+    cycles,
+    totalCycles,
+    isChronometer,
+  });
 
-  const {
-    time: chronometerTime,
-    setTime: setChronometerTime,
-    isPlay: chronometerIsPlay,
-    togglePlay: chronometerTogglePlay,
-    resetTimer: chronometerReset,
-  } = useChronometer({ menu, isType });
+  const chronometerControls = useChronometer({
+    menu,
+    isType,
+    time,
+    setTime,
+    isPlay: isPlay && isChronometer,
+    setIsPlay,
+    isChronometer,
+  });
 
-  useEffect(() => {
-    setMenu(menu);
-  }, [menu]);
-
-  const time = isChronometer ? chronometerTime : timerTime;
-  const setTime = isChronometer ? setChronometerTime : setTimerTime;
-  const isPlay = isChronometer ? chronometerIsPlay : timerIsPlay;
-  const togglePlay = isChronometer ? chronometerTogglePlay : timerTogglePlay;
-  const resetTimer = isChronometer ? chronometerReset : timerReset;
-
-  useEffect(() => {
-    if (status && status.active && status.pomodoroId) setStartedElement(true);
-    else setStartedElement(false);
-
-    if (status?.isBreak) setInitialTime(DEFAULT_SHORT_BREAK);
-    else if (!status?.isBreak) setInitialTime(DEFAULT_FOCUS_TIME);
-  }, [status]);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
+  const togglePlay = () => {
+    if (isChronometer) {
+      chronometerControls?.togglePlay();
     } else {
-      document.body.style.overflow = "";
-    }
 
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+      timerControls?.togglePlay();
+    }
+  };
+
+  const resetTimer = () => {
+    if (isChronometer) {
+      chronometerControls?.resetTimer();
+    } else {
+      timerControls?.resetTimer();
+    }
+  };
 
   const toggleChronometerMode = (e: boolean) => {
     if (isPlay) return;
 
     setIsChronometer(e);
 
-    if (e) {
-      setChronometerTime({ hours: 0, min: 0, seg: 0 });
-    } else {
-      setTimerTime(initialTime);
-    }
+    setTime((prev) => ({
+      ...prev,
+      currentTime: e ? { hours: 0, min: 0, seg: 0 } : prev.initialTime,
+    }));
   };
 
   const contextValue = {
-    isOpen,
-    setIsOpen,
     time,
     setTime,
-    initialTime,
-    setInitialTime,
     isPlay,
     togglePlay,
     resetTimer,
@@ -130,14 +97,15 @@ export default function TimerProvider({
     setMenu,
     menu,
     startedElement,
-    fullScreen: false,
+    setStartedElement,
     setIsType,
     isType,
+    cycles,
+    totalCycles,
   };
 
   return (
     <TimerContext.Provider value={contextValue}>
-      {isOpen && <TimerFullScreen />}
       {children}
     </TimerContext.Provider>
   );

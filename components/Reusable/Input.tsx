@@ -33,7 +33,7 @@ export default function Input({
 }: InputProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const containerClass =
-    "flex flex-col justify-center w-full relative gap-1 text-[#959595]";
+    "flex flex-col justify-center flex-1 relative gap-1 text-[#959595]";
   const labelClass = "flex items-center gap-1 text-black text-sm";
 
   const getBorderClass = () => {
