@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import { TimerContextType, TimerMode } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "../Reusable/Chips";
 import { useTimer } from "./TimerProvider/TimerLogic";
