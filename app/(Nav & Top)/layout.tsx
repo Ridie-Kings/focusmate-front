@@ -59,7 +59,7 @@ export default async function RootLayout({
               <ToastProvider>
                 <TimerProvider>
                   <NavBar />
-                  <main className="flex flex-col min-h-screen h-full flex-1">
+                  <main className="flex flex-col min-h-screen md:w-auto w-screen h-full flex-1">
                     <TopBar />
                     {children}
                     <PopUp />

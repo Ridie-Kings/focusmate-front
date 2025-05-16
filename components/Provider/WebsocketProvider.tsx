@@ -4,7 +4,7 @@ import {
   PomodoroStatus,
   SocketIOContextType,
 } from "@/interfaces/websocket/WebSocketProvider";
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useState, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 
 export const SocketIOContext = createContext<SocketIOContextType>({

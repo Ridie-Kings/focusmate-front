@@ -1,9 +1,11 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import Input from "@/components/Reusable/Input";
 import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
 import BtnSend from "./Modal/BtnSend";
 import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import { CreatePomodoro } from "@/services/Pomodoro/CreatePomodoro";
+import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
+import { UpdatePomodoroById } from "@/services/Pomodoro/UpdatePomodoroById";
 
 export default function ModalPomodoroSettings({
   status,
@@ -12,11 +14,12 @@ export default function ModalPomodoroSettings({
   status: PomodoroStatus;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 }) {
+  const { handleJoinPomodoro } = useContext(SocketIOContext);
   const [isLoading, setIsLoading] = useState(false);
   const [settings, setSettings] = useState({
-    pomodoroDuration: status?.workDuration || 25,
-    shortBreakDuration: status?.shortBreak || 5,
-    longBreakDuration: status?.longBreak || 15,
+    pomodoroDuration: status?.workDuration / 60 || 25,
+    shortBreakDuration: status?.shortBreak / 60 || 5,
+    longBreakDuration: status?.longBreak / 60 || 15,
     rounds: status?.cycles || 4,
   });
 
@@ -32,15 +35,26 @@ export default function ModalPomodoroSettings({
   ) => {
     e.preventDefault();
     setIsLoading(true);
+
     if (status) {
-    } else {
-      const res = await CreatePomodoro({
-        shortBreak: settings.shortBreakDuration,
-        longBreak: settings.longBreakDuration,
-        cycles: settings.rounds,
-        workDuration: settings.pomodoroDuration,
+      const res = await UpdatePomodoroById({
+        id: status._id,
+        pomodoro: {
+          shortBreak: settings.shortBreakDuration * 60,
+          longBreak: settings.longBreakDuration * 60,
+          cycles: settings.rounds,
+          workDuration: settings.pomodoroDuration * 60,
+        },
       });
       console.log(res);
+    } else {
+      const res = await CreatePomodoro({
+        shortBreak: settings.shortBreakDuration * 60,
+        longBreak: settings.longBreakDuration * 60,
+        cycles: settings.rounds,
+        workDuration: settings.pomodoroDuration * 60,
+      });
+      if (res.success) handleJoinPomodoro(res.res._id);
     }
     setIsOpen({ text: "" });
   };

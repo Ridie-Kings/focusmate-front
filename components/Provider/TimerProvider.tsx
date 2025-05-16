@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { TimerContextType, TimerMode } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "../Reusable/Chips";
 import { useTimer } from "./TimerProvider/TimerLogic";
@@ -27,34 +27,53 @@ export default function TimerProvider({
   const [isPlay, setIsPlay] = useState(false);
   const [isChronometer, setIsChronometer] = useState(false);
   const [menu, setMenu] = useState<chipsIconType>("enfoque");
-  const [cycles, setCycles] = useState<number | undefined>(undefined);
+  const [cycles, setCycles] = useState<number | undefined>(0);
   const [totalCycles, setTotalCycles] = useState<number | undefined>(undefined);
   const [startedElement, setStartedElement] = useState(false);
   const [isType, setIsType] = useState<TimerMode>("pomodoro");
 
-  const { togglePlay, resetTimer } = isChronometer
-    ? useChronometer({
-        menu,
-        isType,
-        time,
-        setTime,
-        isPlay,
-        setIsPlay,
-      })
-    : useTimer({
-        status,
-        isPlay,
-        setIsPlay,
-        time,
-        setTime,
-        menu,
-        setMenu,
-        setStartedElement,
-        setCycles,
-        setTotalCycles,
-        cycles: cycles ?? 0,
-        totalCycles,
-      });
+  const timerControls = useTimer({
+    status,
+    isPlay: isPlay && !isChronometer,
+    setIsPlay,
+    time,
+    setTime,
+    menu,
+    setMenu,
+    setStartedElement,
+    setCycles,
+    setTotalCycles,
+    cycles,
+    totalCycles,
+    isChronometer,
+  });
+
+  const chronometerControls = useChronometer({
+    menu,
+    isType,
+    time,
+    setTime,
+    isPlay: isPlay && isChronometer,
+    setIsPlay,
+    isChronometer,
+  });
+
+  const togglePlay = () => {
+    if (isChronometer) {
+      chronometerControls?.togglePlay();
+    } else {
+
+      timerControls?.togglePlay();
+    }
+  };
+
+  const resetTimer = () => {
+    if (isChronometer) {
+      chronometerControls?.resetTimer();
+    } else {
+      timerControls?.resetTimer();
+    }
+  };
 
   const toggleChronometerMode = (e: boolean) => {
     if (isPlay) return;

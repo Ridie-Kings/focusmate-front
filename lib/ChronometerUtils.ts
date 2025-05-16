@@ -28,6 +28,8 @@ export default function ChronometerUtils({
   }, []);
 
   const resetTimer = useCallback(() => {
+    console.log("dsadasdasd");
+    
     setIsPlay(false);
     setTime((prev) => ({ ...prev, currentTime: { hours: 0, min: 0, seg: 0 } }));
     if (totalSecondsRef && totalSecondsRef.current !== null) {

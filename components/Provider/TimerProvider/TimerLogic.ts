@@ -21,6 +21,7 @@ export function useTimer({
   setTotalCycles,
   cycles,
   totalCycles,
+  isChronometer,
 }: {
   status: PomodoroStatus | null;
   isPlay: boolean;
@@ -42,6 +43,7 @@ export function useTimer({
   setCycles: Dispatch<SetStateAction<number | undefined>>;
   cycles: number | undefined;
   totalCycles: number | undefined;
+  isChronometer: boolean;
 }) {
   const { addToast } = useContext(ToastContext);
 
@@ -59,18 +61,15 @@ export function useTimer({
     status,
     setCycles,
     totalCycles,
+    setStartedElement,
   });
 
   useEffect(() => {
-    if (!status) return;
+    if (!status || isChronometer) return;
 
     if (status.state === "working") {
-      if (status.pausedState !== "paused") setIsPlay(true);
-
       setTime((prev) => {
         try {
-          console.log("test", status);
-
           if (!status.startAt || !status.endAt) {
             console.error("Missing startAt or endAt timestamps");
             return prev;
@@ -90,6 +89,8 @@ export function useTimer({
           const timeInSeconds =
             status.remainingTime !== null
               ? status.remainingTime
+              : status.state !== "idle"
+              ? differenceInSeconds(endDate, new Date())
               : differenceInSeconds(endDate, startDate);
 
           const positiveTimeInSeconds = Math.max(0, timeInSeconds);
@@ -104,6 +105,8 @@ export function useTimer({
           return prev;
         }
       });
+
+      if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
     } else if (status.state === "idle") {
       setTime((prev) => ({
         ...prev,
@@ -113,7 +116,7 @@ export function useTimer({
     }
 
     setStartedElement(true);
-  }, [status]);
+  }, [status, isPlay]);
 
   useEffect(() => {
     setTotalCycles(status?.cycles ?? 4);

@@ -12,6 +12,7 @@ export function useChronometer({
   setTime,
   setIsPlay,
   isPlay,
+  isChronometer,
 }: {
   isPlay: boolean;
   setIsPlay: Dispatch<SetStateAction<boolean>>;
@@ -27,9 +28,8 @@ export function useChronometer({
   >;
   menu: chipsIconType;
   isType: "pomodoro" | "cronometro" | "temporizador";
+  isChronometer: boolean;
 }) {
-  console.log("CHRONOMETRO");
-  
   const totalSecondsRef = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const { resetTimer, togglePlay } = ChronometerUtils({
@@ -39,6 +39,7 @@ export function useChronometer({
   });
 
   useEffect(() => {
+    if (!isChronometer) return;
     try {
       const savedTotalSeconds = localStorage.getItem("chronometer_seconds");
       const savedIsPlay = localStorage.getItem("chronometer_isPlay");

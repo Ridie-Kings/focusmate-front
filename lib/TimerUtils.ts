@@ -13,6 +13,7 @@ export default function TimerUtils({
   status,
   totalCycles,
   setCycles,
+  setStartedElement,
 }: {
   audioRef: React.RefObject<HTMLAudioElement | null>;
   setIsPlay: Dispatch<SetStateAction<boolean>>;
@@ -27,6 +28,7 @@ export default function TimerUtils({
   status: PomodoroStatus | null;
   totalCycles: number | undefined;
   setCycles: Dispatch<SetStateAction<number | undefined>>;
+  setStartedElement: Dispatch<SetStateAction<boolean>>;
 }) {
   const playEndSound = useCallback(() => {
     if (audioRef.current) {
@@ -48,6 +50,7 @@ export default function TimerUtils({
       currentTime: timeUtils.secondsToTime(status?.workDuration ?? 25),
       initialTime: timeUtils.secondsToTime(status?.workDuration ?? 25),
     }));
+    setStartedElement(false);
     setMenu("enfoque");
     totalSecondsRef.current = status?.workDuration ?? 25;
     console.log(totalCycles);
