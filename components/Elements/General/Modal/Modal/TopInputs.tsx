@@ -19,7 +19,7 @@ export default function TopInputs({
         type="text"
         placeholder="Título"
         defaultValue={task.title}
-        className={`text-2xl outline-none ${
+        className={`text-2xl outline-none w-2/3 flex-1 ${
           error && !task.title ? "border-red-500 border-b-2" : "text-gray-500"
         }`}
         onChange={(e) => {
