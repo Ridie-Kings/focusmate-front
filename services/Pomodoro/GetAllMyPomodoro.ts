@@ -10,15 +10,11 @@ export async function GetAllMyPomodoro(): Promise<{
   try {
     const token = await getToken();
 
-    const res = await apiConnection.post(
-      "pomodoro/@me",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await apiConnection.get("pomodoro/@me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return { success: true, res: res.data };
   } catch (error: any) {

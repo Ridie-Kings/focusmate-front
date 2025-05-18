@@ -6,6 +6,7 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import TaskCard from "./ListTask/TaskCard";
 import AnimationElementsListUtils from "@/lib/AnimationElementsListUtils";
+import LoadingStatus from "@/components/Elements/General/LoadingStatus";
 
 export default function ListTask({
   filter,
@@ -86,12 +87,7 @@ export default function ListTask({
         className="flex flex-col w-full gap-4 h-[296px] pt-1 overflow-y-auto overflow-x-hidden transition-all duration-300"
       >
         {loadingTask ? (
-          <div className="flex flex-col items-center justify-center w-full h-full">
-            <div className="flex flex-col items-center gap-3 p-4">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-500"></div>
-              <p className="text-primary-500 font-medium">Cargando tareas...</p>
-            </div>
-          </div>
+          <LoadingStatus text="tareas" />
         ) : filteredTasks.length > 0 ? (
           filteredTasks.map((task) => (
             <div key={task._id} data-id={task._id}>

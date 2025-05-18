@@ -1,9 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
-import CurrentDate from "@/components/Elements/General/CurrentDate";
+
 import { ChevronLeft, ChevronRight, ListFilter, Search } from "lucide-react";
+
 import { addDays, addMonths, format } from "date-fns";
 import { es } from "date-fns/locale";
+
+import CurrentDate from "@/components/Elements/General/CurrentDate";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
+import { NavTypeType } from "../../../Calendar";
 
 export default function NavInfo({
   navType,
@@ -11,12 +15,12 @@ export default function NavInfo({
   setDate,
   date,
 }: {
-  navType: string;
-  setNavType: Dispatch<SetStateAction<string>>;
+  navType: NavTypeType;
+  setNavType: Dispatch<SetStateAction<NavTypeType>>;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   date: Date;
 }) {
-  const handleCalendar = (item: string) => {
+  const handleCalendar = (item: NavTypeType) => {
     setNavType(item);
     if (localStorage) localStorage.setItem("navCalendar", item);
   };

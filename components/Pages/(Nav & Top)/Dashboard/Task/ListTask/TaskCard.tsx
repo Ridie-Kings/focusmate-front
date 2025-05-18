@@ -64,7 +64,7 @@ export default function TaskCard({
     setTimeout(() => {
       handleChangeStatus(
         task.status === "completed"
-          ? ("dropped" as StatusType)
+          ? ("pending" as StatusType)
           : ("completed" as StatusType),
         task._id
       );

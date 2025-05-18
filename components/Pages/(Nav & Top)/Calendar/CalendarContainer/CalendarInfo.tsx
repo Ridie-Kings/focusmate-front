@@ -5,6 +5,7 @@ import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { NavTypeType } from "../../Calendar";
 
 export default function CalendarInfo({
   navType,
@@ -14,8 +15,8 @@ export default function CalendarInfo({
   events,
   setEvents,
 }: {
-  navType: string;
-  setNavType: Dispatch<SetStateAction<string>>;
+  navType: NavTypeType;
+  setNavType: Dispatch<SetStateAction<NavTypeType>>;
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   events: TaskType[];
@@ -40,9 +41,23 @@ export default function CalendarInfo({
           />
         );
       case "Mes":
-        return <MonthCalendar events={events} date={date} />;
+        return (
+          <MonthCalendar
+            events={events}
+            date={date}
+            setNavType={setNavType}
+            setDate={setDate}
+          />
+        );
       default:
-        return <MonthCalendar events={events} date={date} />;
+        return (
+          <MonthCalendar
+            events={events}
+            date={date}
+            setNavType={setNavType}
+            setDate={setDate}
+          />
+        );
     }
   };
 
