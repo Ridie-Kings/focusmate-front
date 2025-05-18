@@ -42,12 +42,12 @@ export default function Pomodoro() {
           disabled: startedElement,
           onClick: () => handleChangeType("cronometro", true),
         },
-        {
-          label: "Temporizador",
-          icon: <AlarmClock />,
-          disabled: startedElement,
-          onClick: () => handleChangeType("temporizador", false),
-        },
+        // {
+        //   label: "Temporizador",
+        //   icon: <AlarmClock />,
+        //   disabled: startedElement,
+        //   onClick: () => handleChangeType("temporizador", false),
+        // },
       ]}
     >
       <Timer />
