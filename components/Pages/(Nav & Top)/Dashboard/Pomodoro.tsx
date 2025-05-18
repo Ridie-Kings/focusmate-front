@@ -4,7 +4,7 @@ import Timer from "./Pomodoro/Timer";
 import { useContext } from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Commands from "@/components/Elements/Pomodoro/Commands";
-import { AlarmClock, Clock, Timer as TimerIcon } from "lucide-react";
+import { Clock, Timer as TimerIcon } from "lucide-react";
 // import AddTask from "./Pomodoro/AddTask";
 
 export default function Pomodoro() {

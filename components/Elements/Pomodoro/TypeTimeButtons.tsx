@@ -3,7 +3,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 
 type TimerItem = {
   id: number;
@@ -17,7 +17,6 @@ export default function TypeTimeButtons() {
     setMenu,
     setTime,
     menu,
-    toggleChronometerMode,
     isType,
   } = useContext(TimerContext);
 
@@ -25,8 +24,7 @@ export default function TypeTimeButtons() {
     () => ({
       enfoque: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
-      cronometro: { hours: 0, min: 0, seg: 0 },
-      temp: { hours: 0, min: 0, seg: 0 },
+      "D/Largo": { hours: 0, min: 15, seg: 0 },
     }),
     []
   );
@@ -67,23 +65,17 @@ export default function TypeTimeButtons() {
     return [];
   }, [isType]);
 
-  useEffect(() => {
-    if (isType === "cronometro") {
-      setMenu("cronometro");
-      setTime((prev) => ({ ...prev, initialTime: menuTimes["cronometro"] }));
-      toggleChronometerMode(true);
-    } else {
-      setMenu("enfoque");
-      setTime((prev) => ({ ...prev, initialTime: menuTimes["enfoque"] }));
-      toggleChronometerMode(false);
-    }
-  }, [isType]);
+  // useEffect(() => {
+  //   setMenu("enfoque");
+  //   setTime((prev) => ({ ...prev, initialTime: menuTimes["enfoque"] }));
+  //   toggleChronometerMode(false);
+  // }, [isType]);
 
   const handleTimerSelection = (item: TimerItem) => {
     setMenu(item.type);
 
     setTime((prev) => ({ ...prev, initialTime: menuTimes[item.type] }));
-    toggleChronometerMode(item.type === "cronometro");
+    // toggleChronometerMode(item.type === "cronometro");
   };
 
   if (timerItems.length === 0) {

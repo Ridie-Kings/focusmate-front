@@ -33,6 +33,6 @@ export type TimerContextType = {
     SetStateAction<"pomodoro" | "cronometro" | "temporizador">
   >;
   isType: "pomodoro" | "cronometro" | "temporizador";
-  cycles: number | undefined;
-  totalCycles: number | undefined;
+  cycles: number;
+  totalCycles: number;
 };

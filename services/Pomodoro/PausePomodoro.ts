@@ -9,7 +9,6 @@ export async function PausePomodoro({ id }: { id: string }): Promise<{
 }> {
   try {
     const token = await getToken();
-    console.log("TOKEN", token);
 
     const res = await apiConnection.post(
       `pomodoro/${id}/pause`,
