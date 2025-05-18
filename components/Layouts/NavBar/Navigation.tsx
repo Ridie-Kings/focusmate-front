@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { Grid2x2, Calendar, MessageCircle } from "lucide-react";
+import { Grid2x2, Calendar, MessageCircle, Timer } from "lucide-react";
 
 import { NavItem } from "@/interfaces/Nav/NavTypes";
 
@@ -16,12 +16,18 @@ const navigationItems: NavItem[] = [
   },
   {
     id: 2,
+    label: "Pomodoro",
+    link: "/pomodoro",
+    icon: <Timer size={24} />,
+  },
+  {
+    id: 3,
     label: "Calendario",
     link: "/calendar",
     icon: <Calendar size={24} />,
   },
   {
-    id: 3,
+    id: 4,
     label: "Feedback",
     link: "/support",
     icon: <MessageCircle size={24} />,

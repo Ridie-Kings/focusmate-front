@@ -20,7 +20,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <ul className="flex items-center place-content-between w-full gap-7 md:gap-6">
+      <ul className="flex items-center place-content-evenly w-full gap-7 md:gap-6">
         {CommandsHook({
           fullScreen,
           isPlay,

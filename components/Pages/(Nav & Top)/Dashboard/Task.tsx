@@ -17,6 +17,8 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
     setTasks(tasksList);
   }, [tasksList, setTasks]);
 
+  console.log(tasks);
+
   return (
     <TemplateDashboard
       grid="col-span-4 row-span-4 row-start-6 gap-0"
