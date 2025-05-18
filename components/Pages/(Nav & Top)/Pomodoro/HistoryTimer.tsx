@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { GetAllMyPomodoro } from "@/services/Pomodoro/GetAllMyPomodoro";
 import { Calendar, Clock } from "lucide-react";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
-import Menu from "@/components/Reusable/Menu";
 
 export default function HistoryTimer() {
   const [historyPomodoro, setHistoryPomodoro] = useState<Pomodoro[]>([]);
@@ -121,7 +120,7 @@ export default function HistoryTimer() {
                     {pomodoro.state}
                   </span>
                 )}
-                <Menu items={[]} />
+                {/* <Menu items={[]} /> */}
               </div>
             ))}
           </div>
