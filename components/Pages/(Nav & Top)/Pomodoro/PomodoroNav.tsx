@@ -1,6 +1,6 @@
 "use client";
 import { TimerContext } from "@/components/Provider/TimerProvider";
-import { AlarmClock, Clock, TimerIcon } from "lucide-react";
+import { Clock, TimerIcon } from "lucide-react";
 import { useContext } from "react";
 
 export default function PomodoroNav() {
