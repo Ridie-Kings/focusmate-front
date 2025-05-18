@@ -1,9 +1,8 @@
 "use client";
-import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
-import { ToastContext } from "../ToastProvider";
 import TimerUtils from "@/lib/TimerUtils";
 import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
 import { differenceInSeconds } from "date-fns";
@@ -39,13 +38,13 @@ export function useTimer({
   menu: chipsIconType;
   setMenu: (menu: chipsIconType) => void;
   setStartedElement: Dispatch<SetStateAction<boolean>>;
-  setTotalCycles: Dispatch<SetStateAction<number | undefined>>;
-  setCycles: Dispatch<SetStateAction<number | undefined>>;
-  cycles: number | undefined;
-  totalCycles: number | undefined;
+  setTotalCycles: Dispatch<SetStateAction<number>>;
+  setCycles: Dispatch<SetStateAction<number>>;
+  cycles: number;
+  totalCycles: number;
   isChronometer: boolean;
 }) {
-  const { addToast } = useContext(ToastContext);
+  // const { addToast } = useContext(ToastContext);
 
   const totalSecondsRef = useRef(timeUtils.timeToSeconds(time.initialTime));
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -67,7 +66,11 @@ export function useTimer({
   useEffect(() => {
     if (!status || isChronometer) return;
 
-    if (status.state === "working") {
+    if (
+      status.state === "working" ||
+      status.state === "shortBreak" ||
+      status.state === "longBreak"
+    ) {
       setTime((prev) => {
         try {
           if (!status.startAt || !status.endAt) {
@@ -106,7 +109,12 @@ export function useTimer({
         }
       });
 
-      if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
+      if (status.state === "working") setMenu("enfoque");
+      if (status.state === "shortBreak") setMenu("D/Corto");
+      if (status.state === "longBreak") setMenu("D/Largo");
+
+      if (status?.pausedState === "paused") setIsPlay(false);
+      else if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
     } else if (status.state === "idle") {
       setTime((prev) => ({
         ...prev,
@@ -115,14 +123,13 @@ export function useTimer({
       }));
     }
 
-    setStartedElement(true);
+    if (status.state !== "idle") setStartedElement(true);
   }, [status, isPlay]);
 
   useEffect(() => {
     setTotalCycles(status?.cycles ?? 4);
-    setCycles(status?.currentCycle ?? 4);
+    setCycles(status?.currentCycle ?? 0);
     hasCyclesBeenSetRef.current = status?.currentCycle !== undefined;
-    if (status?.pausedState === "paused") setIsPlay(false);
   }, [status]);
 
   useEffect(() => {
@@ -145,66 +152,21 @@ export function useTimer({
 
     if (isPlay) {
       intervalRef.current = setInterval(() => {
-        if (totalSecondsRef.current > 0) {
-          totalSecondsRef.current -= 1;
+        if (timeUtils.timeToSeconds(time.currentTime) > 0) {
           setTime((prev) => ({
             ...prev,
             currentTime: timeUtils.secondsToTime(
               timeUtils.timeToSeconds(prev.currentTime) - 1
             ),
           }));
-
-          if (totalSecondsRef.current <= 0) {
-            if (intervalRef.current) {
-              clearInterval(intervalRef.current);
-              intervalRef.current = null;
-            }
-
-            playEndSound();
-
-            if (menu === "enfoque") {
-              setMenu("D/Corto");
-              setTime((prev) => ({
-                ...prev,
-                currentTime: timeUtils.secondsToTime(status?.shortBreak ?? 15),
-                initialTime: timeUtils.secondsToTime(status?.shortBreak ?? 15),
-              }));
-              totalSecondsRef.current = status?.shortBreak ?? 15;
-              addToast({
-                type: "info",
-                message: "¡Tiempo terminado!",
-                duration: 5000,
-              });
-            } else if (menu === "D/Corto") {
-              setMenu("enfoque");
-              setTime((prev) => ({
-                ...prev,
-                currentTime: timeUtils.secondsToTime(
-                  status?.workDuration ?? 25
-                ),
-                initialTime: timeUtils.secondsToTime(
-                  status?.workDuration ?? 25
-                ),
-              }));
-              totalSecondsRef.current = status?.workDuration ?? 25;
-              setCycles((prev) => {
-                return prev !== undefined && prev > 0 ? prev - 1 : prev;
-              });
-              addToast({
-                type: "info",
-                message: "¡Descanso terminado!",
-                duration: 5000,
-              });
-            }
-          }
         }
       }, 1000);
     }
 
-    if (hasCyclesBeenSetRef.current && cycles === 0) {
-      resetTimer();
-      return;
-    }
+    // if (hasCyclesBeenSetRef.current && cycles === totalCycles) {
+    //   resetTimer();
+    //   return;
+    // }
 
     return () => {
       if (intervalRef.current) {

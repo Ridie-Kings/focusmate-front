@@ -26,8 +26,8 @@ export default function TimerUtils({
   totalSecondsRef: RefObject<number>;
   setMenu: (menu: chipsIconType) => void;
   status: PomodoroStatus | null;
-  totalCycles: number | undefined;
-  setCycles: Dispatch<SetStateAction<number | undefined>>;
+  totalCycles: number;
+  setCycles: Dispatch<SetStateAction<number>>;
   setStartedElement: Dispatch<SetStateAction<boolean>>;
 }) {
   const playEndSound = useCallback(() => {
@@ -53,7 +53,6 @@ export default function TimerUtils({
     setStartedElement(false);
     setMenu("enfoque");
     totalSecondsRef.current = status?.workDuration ?? 25;
-    console.log(totalCycles);
 
     setCycles(totalCycles);
   }, [status]);

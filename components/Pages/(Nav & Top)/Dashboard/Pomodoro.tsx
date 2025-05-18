@@ -4,7 +4,7 @@ import Timer from "./Pomodoro/Timer";
 import { useContext } from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Commands from "@/components/Elements/Pomodoro/Commands";
-import { AlarmClock, Clock, Timer as TimerIcon } from "lucide-react";
+import { Clock, Timer as TimerIcon } from "lucide-react";
 // import AddTask from "./Pomodoro/AddTask";
 
 export default function Pomodoro() {
@@ -42,12 +42,12 @@ export default function Pomodoro() {
           disabled: startedElement,
           onClick: () => handleChangeType("cronometro", true),
         },
-        {
-          label: "Temporizador",
-          icon: <AlarmClock />,
-          disabled: startedElement,
-          onClick: () => handleChangeType("temporizador", false),
-        },
+        // {
+        //   label: "Temporizador",
+        //   icon: <AlarmClock />,
+        //   disabled: startedElement,
+        //   onClick: () => handleChangeType("temporizador", false),
+        // },
       ]}
     >
       <Timer />

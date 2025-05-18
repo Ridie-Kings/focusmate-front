@@ -41,8 +41,6 @@ export const SocketIOProvider: React.FC<{
   const [isConnected, setIsConnected] = useState(false);
 
   const handleJoinPomodoro = (id: string) => {
-    console.log("EMIT", id);
-
     try {
       const res = socket?.emit("join", { id });
       console.log(res);
@@ -93,7 +91,7 @@ export const SocketIOProvider: React.FC<{
 
       socketInstance.on("pomodoro found", (pomodoro: Pomodoro) => {
         console.log("Received pomodoro found:", pomodoro);
-        
+
         if (pomodoro && pomodoro._id) {
           socketInstance?.emit("join", { id: pomodoro._id });
         }

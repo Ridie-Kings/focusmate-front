@@ -45,6 +45,7 @@ export default function TemplateBox({
             </div>
             <div
               style={{
+                width: 100 / items.length + "%",
                 transform: `translateX(${
                   title === "pomodoro"
                     ? "0"

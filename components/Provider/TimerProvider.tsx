@@ -27,8 +27,8 @@ export default function TimerProvider({
   const [isPlay, setIsPlay] = useState(false);
   const [isChronometer, setIsChronometer] = useState(false);
   const [menu, setMenu] = useState<chipsIconType>("enfoque");
-  const [cycles, setCycles] = useState<number | undefined>(0);
-  const [totalCycles, setTotalCycles] = useState<number | undefined>(undefined);
+  const [cycles, setCycles] = useState<number>(0);
+  const [totalCycles, setTotalCycles] = useState<number>(4);
   const [startedElement, setStartedElement] = useState(false);
   const [isType, setIsType] = useState<TimerMode>("pomodoro");
 
@@ -62,7 +62,6 @@ export default function TimerProvider({
     if (isChronometer) {
       chronometerControls?.togglePlay();
     } else {
-
       timerControls?.togglePlay();
     }
   };

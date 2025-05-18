@@ -28,7 +28,7 @@ export default function Timer() {
           <Time time={time.currentTime} />
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-2">
-              {totalCycles && cycles
+              {totalCycles
                 ? Array.from({ length: totalCycles }, (_, index) => (
                     <span key={index}>
                       {totalCycles - cycles > index ? (
