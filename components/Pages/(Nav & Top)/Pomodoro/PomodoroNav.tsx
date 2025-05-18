@@ -28,12 +28,12 @@ export default function PomodoroNav() {
       disabled: startedElement,
       onClick: () => handleChangeType("cronometro", true),
     },
-    {
-      label: "Temporizador",
-      icon: <AlarmClock />,
-      disabled: startedElement,
-      onClick: () => handleChangeType("temporizador", false),
-    },
+    // {
+    //   label: "Temporizador",
+    //   icon: <AlarmClock />,
+    //   disabled: startedElement,
+    //   onClick: () => handleChangeType("temporizador", false),
+    // },
   ];
 
   return (
@@ -54,6 +54,7 @@ export default function PomodoroNav() {
         </div>
         <div
           style={{
+            width: 100 / items.length + "%",
             transform: `translateX(${
               isType === "pomodoro"
                 ? "0"
@@ -62,7 +63,7 @@ export default function PomodoroNav() {
                 : "200%"
             })`,
           }}
-          className="w-1/3 h-0.5 bg-primary-500 transition-all duration-300"
+          className="h-0.5 bg-primary-500 transition-all duration-300"
         />
       </div>
     </div>
