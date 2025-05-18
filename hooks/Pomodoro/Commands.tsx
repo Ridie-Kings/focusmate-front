@@ -1,5 +1,5 @@
-import { PomodoroStatus } from "@/components/Provider/WebsocketProvider";
 import { chipsIconType } from "@/components/Reusable/Chips";
+import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
 import {
   EllipsisVertical,
   Maximize,
@@ -17,12 +17,14 @@ export default function CommandsHook({
   menu,
   isType,
   status,
+  startedElement,
 }: {
   fullScreen: boolean;
   isPlay: boolean;
   menu: chipsIconType;
   status: PomodoroStatus | null;
   isType: "cronometro" | "temporizador" | "pomodoro";
+  startedElement: boolean;
 }) {
   const iconSize = fullScreen ? 40 : 32;
   const primaryButtonPadding = "p-7 2xl:p-8";
@@ -55,7 +57,7 @@ export default function CommandsHook({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
-      disabled: menu === "D/Corto" && !status?.active,
+      disabled: startedElement ? false : true,
       className: secondaryButtonPadding,
     },
     {
@@ -73,7 +75,7 @@ export default function CommandsHook({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
-      disabled: menu === "D/Corto" && !status?.active,
+      disabled: false,
       className: primaryButtonPadding,
     },
     {
@@ -90,7 +92,6 @@ export default function CommandsHook({
         />
       ),
       disabled: true,
-      // disabled: menu === "D/Corto" && !status?.active,
       className: secondaryButtonPadding,
     },
     {
@@ -106,8 +107,7 @@ export default function CommandsHook({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
-      disabled: true,
-      // disabled: menu === "D/Corto" && !status?.active,
+      disabled: startedElement ? true : false,
       className: secondaryButtonPadding,
     },
   ];

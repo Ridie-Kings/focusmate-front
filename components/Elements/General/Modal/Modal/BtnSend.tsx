@@ -10,7 +10,7 @@ export default function BtnSend({
   loadingText = "Guardando...",
 }: {
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
-  handleClick: () => void;
+  handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   isLoading: boolean;
   text?: string;
   loadingText?: string;

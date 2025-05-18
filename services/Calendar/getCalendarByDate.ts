@@ -15,7 +15,6 @@ export async function getCalendarByDate({ date }: { date: string }): Promise<{
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("LOG", res.data);
 
     return { success: true, res: res?.data };
   } catch (error: any) {

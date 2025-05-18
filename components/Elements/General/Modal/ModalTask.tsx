@@ -7,22 +7,22 @@ import {
 } from "react";
 import { AlertCircle, Award, Text } from "lucide-react";
 
-import { createTask } from "@/services/Task/createTask";
 import BtnSend from "./Modal/BtnSend";
 import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
-import { updateTask } from "@/services/Task/updateTask";
 import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { TaskType } from "@/interfaces/Task/TaskType";
+import ModalTaskUtils from "@/lib/Task/ModalTaskUtils";
 
 export default function ModalTask({
   setIsOpen,
-  isOpen,
+  prevTask,
 }: {
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
-  isOpen: TypeIsOpen;
+  prevTask: TaskType;
 }) {
   const { setTasks } = useContext(DashboardContext);
 
@@ -38,125 +38,21 @@ export default function ModalTask({
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { handleSendTask, handleUpdateTask, trad } = ModalTaskUtils({
+    setError,
+    setTasks,
+    task,
+    setIsLoading,
+    setIsOpen,
+  });
 
   useEffect(() => {
-    if (
-      isOpen.other &&
-      isOpen.other instanceof Object &&
-      "title" in isOpen.other
-    ) {
+    if (prevTask && prevTask instanceof Object && "title" in prevTask) {
       setTask(() => ({
-        ...(isOpen.other as tempTaskType),
+        ...(prevTask as tempTaskType),
       }));
     }
-  }, [isOpen.other]);
-
-  const validateTask = () => {
-    if (!task.title.trim()) {
-      setError("El título es obligatorio");
-      return false;
-    }
-
-    if (task.endDate && task.startDate) {
-      if (task.endDate <= task.startDate) {
-        setError(
-          "La hora de finalización debe ser posterior a la hora de inicio"
-        );
-        return false;
-      }
-    }
-
-    return true;
-  };
-
-  const handleUpdateTask = async () => {
-    setError(null);
-
-    if (!validateTask()) {
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const res = await updateTask({
-        _id: task._id ?? "",
-        task: {
-          color: task.color,
-          description: task.description,
-          title: task.title,
-          priority: task.priority,
-          status: task.status,
-        },
-      });
-
-      if (!res.success) {
-        const errorMessage =
-          typeof res.message === "string"
-            ? res.message
-            : "Error al modificar la tarea";
-        setError(errorMessage);
-        console.error("Failed to modify task", res.message);
-        return;
-      }
-
-      setTasks((prev) =>
-        prev.map((prevTask) =>
-          prevTask._id === task._id ? res.message : prevTask
-        )
-      );
-
-      setIsOpen({ text: "" });
-    } catch (err) {
-      console.error("Error inesperado:", err);
-      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSendTask = async () => {
-    try {
-      setError(null);
-
-      if (!validateTask()) {
-        return;
-      }
-
-      setIsLoading(true);
-      const res = await createTask({ task });
-
-      if (res.success) {
-        setTasks((prev) => [...prev, res.message]);
-        console.log("Task created successfully", res.message);
-        setIsOpen({ text: "" });
-      } else {
-        setError(
-          typeof res.message === "string"
-            ? res.message
-            : "Error al crear la tarea"
-        );
-        console.error("Failed to create task", res.message);
-      }
-    } catch (err) {
-      console.error("Error inesperado:", err);
-      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const trad = () => {
-    switch (task.priority) {
-      case "high":
-        return "Alta";
-      case "medium":
-        return "Media";
-      case "low":
-        return "Baja";
-      default:
-        return "";
-    }
-  };
+  }, [prevTask]);
 
   return (
     <>

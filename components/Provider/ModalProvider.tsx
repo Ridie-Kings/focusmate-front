@@ -19,7 +19,7 @@ export type ModalItemType = {
 };
 
 export type TypeIsOpen = {
-  text: "task" | "habit" | "event" | "contact" | "";
+  text: "task" | "habit" | "event" | "contact" | "pomodoroSettings" | "";
   other?: unknown;
 };
 

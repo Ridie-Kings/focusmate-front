@@ -25,7 +25,7 @@ import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import Menu from "@/components/Reusable/Menu";
 import AgendaUtils from "@/lib/AgendaUtils";
-import TaskUtils from "@/lib/TaskUtils";
+import TaskUtils from "@/lib/Task/TaskUtils";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 
 const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];

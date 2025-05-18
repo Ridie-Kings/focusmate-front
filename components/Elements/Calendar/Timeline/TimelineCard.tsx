@@ -2,7 +2,7 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 import Menu from "@/components/Reusable/Menu";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
-import TaskUtils from "@/lib/TaskUtils";
+import TaskUtils from "@/lib/Task/TaskUtils";
 import { Check, Pen, Trash2 } from "lucide-react";
 import { Dispatch, SetStateAction, useContext } from "react";
 

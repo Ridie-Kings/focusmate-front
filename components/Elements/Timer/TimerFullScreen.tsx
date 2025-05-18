@@ -1,11 +1,9 @@
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import { useContext } from "react";
-import CloseBtn from "./CloseBtn";
 import TimerContainer from "./TimerComponent/TimerContainer";
 
 export default function TimerFullScreen() {
   const {
-    setIsOpen,
     // setTime,
     // time,
     // initialTime,
@@ -65,7 +63,7 @@ export default function TimerFullScreen() {
           </defs>
         </svg>
         <div className="w-full 2xl:h-44 xl:h-15 absolute top-0 group flex xl:items-center xl:justify-center justify-end p-5 z-50">
-          <CloseBtn setIsOpen={setIsOpen} />
+          {/* <CloseBtn setIsOpen={setIsOpen} /> */}
         </div>
         <TimerContainer />
       </div>

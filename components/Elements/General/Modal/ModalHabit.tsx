@@ -26,7 +26,7 @@ const TYPE_OPTIONS: HabitOption[] = [
   { label: "Trabajo", value: "work" },
 ];
 
-export default function ModalHabit({ setIsOpen, isOpen }: ModalHabitProps) {
+export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
   const { setHabits, habits } = useContext(DashboardContext);
 
   const [habit, setHabit] = useState<HabitFormData>({
@@ -52,15 +52,15 @@ export default function ModalHabit({ setIsOpen, isOpen }: ModalHabitProps) {
 
   useEffect(() => {
     if (
-      isOpen.other &&
-      isOpen.other instanceof Object &&
-      "name" in isOpen.other
+      prevHabit &&
+      prevHabit instanceof Object &&
+      "name" in prevHabit
     ) {
       setHabit(() => ({
-        ...(isOpen.other as HabitFormData),
+        ...(prevHabit as HabitFormData),
       }));
     }
-  }, [isOpen.other]);
+  }, [prevHabit]);
 
   const updateHabitField = useCallback(
     <K extends keyof HabitFormData>(field: K, value: HabitFormData[K]) => {

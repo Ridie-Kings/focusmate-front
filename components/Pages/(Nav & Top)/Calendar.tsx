@@ -21,17 +21,19 @@ import { es } from "date-fns/locale";
 
 import { debounce } from "lodash";
 
+export type NavTypeType = "Día" | "Semana" | "Mes"
+
 export default function CalendarPage() {
-  const [navType, setNavType] = useState<string>("Día");
+  const [navType, setNavType] = useState<NavTypeType>("Día");
   const { date, setDate } = useContext(CalendarContext);
   const [events, setEvents] = useState<TaskType[]>([]);
 
   useEffect(() => {
     const storedCalendar = localStorage.getItem("navCalendar") || "Día";
-    setNavType(storedCalendar);
+    setNavType(storedCalendar as NavTypeType);
   }, []);
 
-  const updateNavType = (type: string): void => {
+  const updateNavType = (type: NavTypeType): void => {
     setNavType(type);
     localStorage.setItem("navCalendar", type);
   };
@@ -96,7 +98,7 @@ export default function CalendarPage() {
           eventos
           setDate={setDate}
           date={date ?? new Date()}
-          inView={navType !== "Month"}
+          inView
         />
         {/* <Categories /> */}
       </div>
@@ -107,12 +109,12 @@ export default function CalendarPage() {
         setNavType={(value) => {
           if (typeof value === "function") {
             setNavType((prev) => {
-              const newValue = value(prev);
+              const newValue = value(prev) as NavTypeType;
               updateNavType(newValue);
               return newValue;
             });
           } else {
-            updateNavType(value);
+            updateNavType(value as NavTypeType);
           }
         }}
         date={date ?? new Date()}

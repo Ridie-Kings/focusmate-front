@@ -12,7 +12,7 @@ export default function Button({
   button: "primary" | "secondary" | "tertiary" | "pomodoro";
   type: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   state?: "enabled" | "pressed" | "disabled" | "disabled-pressed";
   size: "compact" | "large";
 }) {

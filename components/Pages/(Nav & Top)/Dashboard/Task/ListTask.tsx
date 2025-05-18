@@ -6,15 +6,18 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import TaskCard from "./ListTask/TaskCard";
 import AnimationElementsListUtils from "@/lib/AnimationElementsListUtils";
+import LoadingStatus from "@/components/Elements/General/LoadingStatus";
 
 export default function ListTask({
   filter,
   tasks,
   setTasks,
+  loadingTask,
 }: {
   filter: string;
   tasks: TaskType[];
   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
+  loadingTask: boolean;
 }) {
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +86,9 @@ export default function ListTask({
         ref={listRef}
         className="flex flex-col w-full gap-4 h-[296px] pt-1 overflow-y-auto overflow-x-hidden transition-all duration-300"
       >
-        {filteredTasks.length > 0 ? (
+        {loadingTask ? (
+          <LoadingStatus text="tareas" />
+        ) : filteredTasks.length > 0 ? (
           filteredTasks.map((task) => (
             <div key={task._id} data-id={task._id}>
               <TaskCard

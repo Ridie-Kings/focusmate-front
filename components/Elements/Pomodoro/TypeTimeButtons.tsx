@@ -3,7 +3,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 
 type TimerItem = {
   id: number;
@@ -15,10 +15,8 @@ export default function TypeTimeButtons() {
   const {
     startedElement,
     setMenu,
+    setTime,
     menu,
-    setInitialTime,
-    toggleChronometerMode,
-    fullScreen,
     isType,
   } = useContext(TimerContext);
 
@@ -26,8 +24,7 @@ export default function TypeTimeButtons() {
     () => ({
       enfoque: { hours: 0, min: 25, seg: 0 },
       "D/Corto": { hours: 0, min: 5, seg: 0 },
-      cronometro: { hours: 0, min: 0, seg: 0 },
-      temp: { hours: 0, min: 0, seg: 0 },
+      "D/Largo": { hours: 0, min: 15, seg: 0 },
     }),
     []
   );
@@ -68,23 +65,17 @@ export default function TypeTimeButtons() {
     return [];
   }, [isType]);
 
-  useEffect(() => {
-    if (isType === "cronometro") {
-      setMenu("cronometro");
-      setInitialTime(menuTimes["cronometro"]);
-      toggleChronometerMode(true);
-    } else {
-      setMenu("enfoque");
-      setInitialTime(menuTimes["enfoque"]);
-      toggleChronometerMode(false);
-    }
-  }, [isType]);
+  // useEffect(() => {
+  //   setMenu("enfoque");
+  //   setTime((prev) => ({ ...prev, initialTime: menuTimes["enfoque"] }));
+  //   toggleChronometerMode(false);
+  // }, [isType]);
 
   const handleTimerSelection = (item: TimerItem) => {
     setMenu(item.type);
 
-    setInitialTime(menuTimes[item.type]);
-    toggleChronometerMode(item.type === "cronometro");
+    setTime((prev) => ({ ...prev, initialTime: menuTimes[item.type] }));
+    // toggleChronometerMode(item.type === "cronometro");
   };
 
   if (timerItems.length === 0) {
@@ -92,48 +83,28 @@ export default function TypeTimeButtons() {
   }
 
   return (
-    <ul
-      className={`flex flex-col xl:flex-row mx-auto gap-2 ${
-        fullScreen ? "" : "lg:p-0 p-2"
-      }`}
-    >
-      {timerItems.map((item) =>
-        fullScreen ? (
-          <button
-            key={item.id}
-            className={`p-2 flex-1 rounded-lg border border-white gap-2 flex items-center justify-center cursor-pointer transition-all duration-300 ${
-              item.type === menu
-                ? "bg-primary-500 text-white"
-                : "text-primary-500 bg-white hover:bg-primary-500-hover hover:text-white"
-            }`}
-            onClick={() => handleTimerSelection(item)}
-            aria-label={item.label}
-            disabled={startedElement}
-          >
-            <span>{item.label}</span>
-          </button>
-        ) : (
-          <Button
-            key={item.id}
-            size="large"
-            type="button"
-            button="pomodoro"
-            state={
-              startedElement && item.type === menu
-                ? "disabled-pressed"
-                : startedElement
-                ? "disabled"
-                : item.type === menu
-                ? "pressed"
-                : "enabled"
-            }
-            onClick={() => handleTimerSelection(item)}
-            aria-label={item.label}
-          >
-            {item.label}
-          </Button>
-        )
-      )}
+    <ul className="flex flex-col xl:flex-row mx-auto gap-2">
+      {timerItems.map((item) => (
+        <Button
+          key={item.id}
+          size="large"
+          type="button"
+          button="pomodoro"
+          state={
+            startedElement && item.type === menu
+              ? "disabled-pressed"
+              : startedElement
+              ? "disabled"
+              : item.type === menu
+              ? "pressed"
+              : "enabled"
+          }
+          onClick={() => handleTimerSelection(item)}
+          aria-label={item.label}
+        >
+          {item.label}
+        </Button>
+      ))}
     </ul>
   );
 }

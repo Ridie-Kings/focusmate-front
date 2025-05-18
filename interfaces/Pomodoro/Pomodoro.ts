@@ -7,14 +7,20 @@ export type TimeType = {
   hours: number;
 };
 
+export type TimerMode = "pomodoro" | "cronometro" | "temporizador";
+
 export type TimerContextType = {
-  isOpen: boolean;
-  setIsOpen: (value: boolean) => void;
-  time: TimeType;
-  setTime: Dispatch<SetStateAction<TimeType>>;
+  time: {
+    currentTime: TimeType;
+    initialTime: TimeType;
+  };
+  setTime: Dispatch<
+    SetStateAction<{
+      currentTime: TimeType;
+      initialTime: TimeType;
+    }>
+  >;
   isPlay: boolean;
-  initialTime: TimeType;
-  setInitialTime: Dispatch<SetStateAction<TimeType>>;
   togglePlay: () => void;
   resetTimer: () => void;
   isChronometer: boolean;
@@ -22,9 +28,11 @@ export type TimerContextType = {
   menu: chipsIconType;
   setMenu: Dispatch<SetStateAction<chipsIconType>>;
   startedElement: boolean;
-  fullScreen: boolean;
+  setStartedElement: Dispatch<SetStateAction<boolean>>;
   setIsType: Dispatch<
     SetStateAction<"pomodoro" | "cronometro" | "temporizador">
   >;
   isType: "pomodoro" | "cronometro" | "temporizador";
+  cycles: number;
+  totalCycles: number;
 };

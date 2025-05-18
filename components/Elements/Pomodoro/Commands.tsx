@@ -1,3 +1,4 @@
+"use client";
 import { CommandAction, CommandsProps } from "@/interfaces/Pomodoro/Commands";
 import { useContext, useState } from "react";
 import CommandsHook from "@/hooks/Pomodoro/Commands";
@@ -6,7 +7,7 @@ import { TimerContext } from "@/components/Provider/TimerProvider";
 import CommandsUtils from "@/lib/Pomodoro/CommandsUtils";
 
 export default function Commands({ fullScreen = false }: CommandsProps) {
-  const { isPlay, menu, isType } = useContext(TimerContext);
+  const { isPlay, menu, isType, startedElement } = useContext(TimerContext);
   const { status } = useContext(SocketIOContext);
   const { handleClick } = CommandsUtils();
 
@@ -19,13 +20,14 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <ul className="flex items-center justify-center gap-7 md:gap-6">
+      <ul className="flex items-center place-content-evenly w-full gap-7 md:gap-6">
         {CommandsHook({
           fullScreen,
           isPlay,
           menu,
           isType,
           status,
+          startedElement,
         })
           .filter((button) => button !== undefined)
           .map((button) => (

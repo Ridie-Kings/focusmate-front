@@ -28,7 +28,7 @@ export async function updateHabit({
 
     return {
       success: false,
-      res: error.response || { message: error.message || "Unknown error" },
+      res: error.response.data,
     };
   }
 }

@@ -8,6 +8,7 @@ export default function TemplateBox({
   link,
   title,
   items,
+  onClick,
 }: {
   children: React.ReactNode;
   grid: string;
@@ -19,9 +20,11 @@ export default function TemplateBox({
     onClick: () => void;
     disabled?: boolean;
   }[];
+  onClick?: () => void;
 }) {
   return (
     <div
+      onClick={onClick}
       className={`relative border border-primary-200 rounded-3xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4 overflow-hidden`}
     >
       {items ? (
@@ -42,6 +45,7 @@ export default function TemplateBox({
             </div>
             <div
               style={{
+                width: 100 / items.length + "%",
                 transform: `translateX(${
                   title === "pomodoro"
                     ? "0"

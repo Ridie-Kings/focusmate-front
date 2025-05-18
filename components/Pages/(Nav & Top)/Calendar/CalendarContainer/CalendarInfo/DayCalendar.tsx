@@ -4,7 +4,7 @@ import { ModalContext } from "@/components/Provider/ModalProvider";
 import Menu from "@/components/Reusable/Menu";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
-import TaskUtils from "@/lib/TaskUtils";
+import TaskUtils from "@/lib/Task/TaskUtils";
 
 import { getHours, getMinutes, isSameDay, format } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
