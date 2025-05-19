@@ -1,10 +1,8 @@
 import { Plus } from "lucide-react";
 import {
   Dispatch,
-  FormEvent,
   SetStateAction,
   useContext,
-  useState,
 } from "react";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { ModalContext } from "@/components/Provider/ModalProvider";

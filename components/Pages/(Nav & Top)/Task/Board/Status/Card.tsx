@@ -1,11 +1,11 @@
 import Divider from "@/components/Elements/General/Divider";
-import { CardType } from "../../../Task";
 import DropIndicator from "./DropIndicator";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { AlarmCheck } from "lucide-react";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
-type CardProps = CardType & {
-  handleDragStart: Function;
+type CardProps = TaskType & {
+  handleDragStart: (e: React.DragEvent, card: TaskType) => void;
 };
 
 const Card = ({ title, _id, status, handleDragStart }: CardProps) => {
@@ -14,7 +14,9 @@ const Card = ({ title, _id, status, handleDragStart }: CardProps) => {
       <DropIndicator beforeId={_id} column={status} />
       <div
         draggable="true"
-        onDragStart={(e) => handleDragStart(e, { title, _id, status })}
+        onDragStart={(e) =>
+          handleDragStart(e, { title, _id, status } as TaskType)
+        }
         className="cursor-grab flex flex-col gap-2 text-primary-500 border-l-4 border border-primary-500 rounded-lg p-4 active:cursor-grabbing w-full"
       >
         <div className="flex w-full place-content-between">

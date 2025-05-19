@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { AlertCircle, Award, Text } from "lucide-react";
 
 import BtnSend from "./Modal/BtnSend";
@@ -12,7 +6,6 @@ import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import ModalTaskUtils from "@/lib/Task/ModalTaskUtils";
