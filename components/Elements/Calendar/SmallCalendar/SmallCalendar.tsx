@@ -47,7 +47,7 @@ const generateMonthDays = (date: Date | undefined): Date[] => {
 };
 
 type CalendarItemProps = {
-  date: Date | undefined;
+  date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   events?: TaskType[];
 };

@@ -10,7 +10,7 @@ interface SelectDateProps {
 
 export default function YearMonthSelector({
   handleDateChange,
-  date = new Date(),
+  date,
   yearRange = [2020, 2030],
 }: SelectDateProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(date || new Date());
