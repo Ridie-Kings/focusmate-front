@@ -10,9 +10,10 @@ import ModalContact from "./Modal/ModalContact";
 import { X } from "lucide-react";
 import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import ModalPomodoroSettings from "./Modal/ModalPomodoroSettings";
-import { TaskType } from "@/interfaces/Task/TaskType";
+import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import ModalTaskKanban from "./Modal/ModalTaskKanban";
 
 interface ModalProps {
   isOpen: TypeIsOpen;
@@ -28,6 +29,18 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
           <ModalTask
             setIsOpen={setIsOpen}
             prevTask={isOpen.other as TaskType}
+          />
+        );
+      case "taskKanban":
+        return (
+          <ModalTaskKanban
+            setIsOpen={setIsOpen}
+            tasks={
+              isOpen.other as {
+                column: StatusType;
+                setTasks: Dispatch<SetStateAction<TaskType[]>>;
+              }
+            }
           />
         );
       case "habit":

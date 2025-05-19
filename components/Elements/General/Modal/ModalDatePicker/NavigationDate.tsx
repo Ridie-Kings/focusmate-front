@@ -1,17 +1,23 @@
 "use client";
+import { addMonths, subMonths } from "date-fns";
 // import { Dispatch } from "react";
 import SelectDate from "../../SelectDate";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 
 export default function NavigationDate({
   date,
-}: // setDate,
-{
-  date: Date | undefined;
-  // setDate: Dispatch<React.SetStateAction<Date | undefined>>;
+  setDate,
+}: {
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
-  const handlePreviousMonth = () => {};
-  const handleNextMonth = () => {};
+  const handlePreviousMonth = () => {
+    setDate(subMonths(date, 1));
+  };
+  const handleNextMonth = () => {
+    setDate(addMonths(date, 1));
+  };
 
   const handleMonthYearChange = () => {
     // setDate((currentDate) => {

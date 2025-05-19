@@ -21,8 +21,14 @@ export default function ModalDatePicker({
   return (
     <div className="absolute -top-35 left-25 w-[360px] drop-shadow-lg rounded-lg bg-background-primary flex flex-col z-50">
       <Title date={selectedDate} />
-      <NavigationDate date={selectedDate} />
-      <CalendarItem setDate={setSelectedDate} date={selectedDate} />
+      <NavigationDate
+        date={selectedDate ?? new Date()}
+        setDate={setSelectedDate}
+      />
+      <CalendarItem
+        setDate={setSelectedDate}
+        date={selectedDate ?? new Date()}
+      />
       <div className="flex items-center justify-end p-2">
         <button
           onClick={() => {
