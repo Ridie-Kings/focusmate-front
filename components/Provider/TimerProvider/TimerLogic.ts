@@ -9,6 +9,7 @@ import { differenceInSeconds } from "date-fns";
 
 export function useTimer({
   status,
+  setStatus,
   isPlay,
   setIsPlay,
   time,
@@ -23,6 +24,7 @@ export function useTimer({
   isChronometer,
 }: {
   status: PomodoroStatus | null;
+  setStatus: Dispatch<SetStateAction<PomodoroStatus | null>>;
   isPlay: boolean;
   setIsPlay: Dispatch<SetStateAction<boolean>>;
   time: {
@@ -115,15 +117,19 @@ export function useTimer({
 
       if (status?.pausedState === "paused") setIsPlay(false);
       else if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
-    } else if (status.state === "idle") {
+    } else if (status.state === "idle" || status.state === "finished") {
+      setMenu("enfoque");
+      setIsPlay(false);
       setTime((prev) => ({
         ...prev,
         initialTime: timeUtils.secondsToTime(status.workDuration),
         currentTime: timeUtils.secondsToTime(status.workDuration),
       }));
+      setStartedElement(false);
     }
 
-    if (status.state !== "idle") setStartedElement(true);
+    if (status.state !== "idle" && status.state !== "finished")
+      setStartedElement(true);
   }, [status, isPlay]);
 
   useEffect(() => {
