@@ -47,12 +47,12 @@ export default function TimerUtils({
     setIsPlay(false);
     setTime((prev) => ({
       ...prev,
-      currentTime: timeUtils.secondsToTime(status?.workDuration ?? 25),
-      initialTime: timeUtils.secondsToTime(status?.workDuration ?? 25),
+      currentTime: timeUtils.secondsToTime(status?.workDuration ?? 1500),
+      initialTime: timeUtils.secondsToTime(status?.workDuration ?? 1500),
     }));
     setStartedElement(false);
     setMenu("enfoque");
-    totalSecondsRef.current = status?.workDuration ?? 25;
+    totalSecondsRef.current = status?.workDuration ?? 1500;
 
     setCycles(totalCycles);
   }, [status]);

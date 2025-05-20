@@ -58,7 +58,12 @@ export default function CommandsHook({
         />
       ),
       disabled:
-        status?.state === "idle" || status?.state === "working" ? false : true,
+        status?.state === "idle" ||
+        status?.state === "working" ||
+        status?.state === "longBreak" ||
+        status?.state === "shortBreak"
+          ? false
+          : true,
       className: secondaryButtonPadding,
     },
     {
