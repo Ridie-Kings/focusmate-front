@@ -4,7 +4,7 @@ import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
 import TimerUtils from "@/lib/TimerUtils";
-import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { differenceInSeconds } from "date-fns";
 
 export function useTimer({
@@ -23,8 +23,8 @@ export function useTimer({
   totalCycles,
   isChronometer,
 }: {
-  status: PomodoroStatus | null;
-  setStatus: Dispatch<SetStateAction<PomodoroStatus | null>>;
+  status: PomodoroStatusType | null;
+  setStatus: Dispatch<SetStateAction<PomodoroStatusType | null>>;
   isPlay: boolean;
   setIsPlay: Dispatch<SetStateAction<boolean>>;
   time: {
@@ -83,7 +83,7 @@ export function useTimer({
           //   console.error("Missing startAt or endAt timestamps");
           //   return prev;
           // }
-          
+
           const startDate = new Date(status.startAt);
           const endDate = new Date(status.endAt);
 

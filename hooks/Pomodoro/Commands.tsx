@@ -1,5 +1,5 @@
 import { chipsIconType } from "@/components/Reusable/Chips";
-import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import {
   EllipsisVertical,
   Maximize,
@@ -22,7 +22,7 @@ export default function CommandsHook({
   fullScreen: boolean;
   isPlay: boolean;
   menu: chipsIconType;
-  status: PomodoroStatus | null;
+  status: PomodoroStatusType | null;
   isType: "cronometro" | "temporizador" | "pomodoro";
   startedElement: boolean;
 }) {
@@ -138,7 +138,6 @@ export default function CommandsHook({
       filteredCommands.find((c) => c.id === "reset"),
       filteredCommands.find((c) => c.id === "skip"),
       filteredCommands.find((c) => c.id === "settings"),
-
     ].filter(Boolean);
   }
 

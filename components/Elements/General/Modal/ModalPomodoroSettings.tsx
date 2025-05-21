@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import Input from "@/components/Reusable/Input";
-import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import BtnSend from "./Modal/BtnSend";
 import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import { CreatePomodoro } from "@/services/Pomodoro/CreatePomodoro";
@@ -11,7 +11,7 @@ export default function ModalPomodoroSettings({
   status,
   setIsOpen,
 }: {
-  status: PomodoroStatus;
+  status: PomodoroStatusType;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 }) {
   const { handleJoinPomodoro } = useContext(SocketIOContext);

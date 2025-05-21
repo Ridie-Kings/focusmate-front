@@ -1,7 +1,7 @@
 "use client";
 import {
   Pomodoro,
-  PomodoroStatus,
+  PomodoroStatusType,
   SocketIOContextType,
 } from "@/interfaces/websocket/WebSocketProvider";
 import { createContext, useState, useEffect } from "react";
@@ -36,7 +36,7 @@ export const SocketIOProvider: React.FC<{
   children: React.ReactNode;
   token: string;
 }> = ({ children, token }) => {
-  const [status, setStatus] = useState<PomodoroStatus | null>(null);
+  const [status, setStatus] = useState<PomodoroStatusType | null>(null);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -97,15 +97,15 @@ export const SocketIOProvider: React.FC<{
         }
       });
 
-      socketInstance.on("status", (pomodoroStatus: PomodoroStatus) => {
-        console.log("Status update received:", pomodoroStatus);
+      socketInstance.on("status", (PomodoroStatusType: PomodoroStatusType) => {
+        console.log("Status update received:", PomodoroStatusType);
 
-        if (!pomodoroStatus) {
+        if (!PomodoroStatusType) {
           console.warn("Received empty status update");
           return;
         }
 
-        setStatus(pomodoroStatus);
+        setStatus(PomodoroStatusType);
       });
 
       socketInstance.on("connect_error", (error: Error) => {

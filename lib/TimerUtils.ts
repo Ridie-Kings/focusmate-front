@@ -2,7 +2,7 @@ import { Dispatch, RefObject, SetStateAction, useCallback } from "react";
 import { timeUtils } from "@/components/Provider/TimerProvider/TimeUtils";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
-import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 
 export default function TimerUtils({
   audioRef,
@@ -25,7 +25,7 @@ export default function TimerUtils({
   >;
   totalSecondsRef: RefObject<number>;
   setMenu: (menu: chipsIconType) => void;
-  status: PomodoroStatus | null;
+  status: PomodoroStatusType | null;
   totalCycles: number;
   setCycles: Dispatch<SetStateAction<number>>;
   setStartedElement: Dispatch<SetStateAction<boolean>>;
