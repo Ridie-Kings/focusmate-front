@@ -18,7 +18,7 @@ export default function TimerProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { status } = useContext(SocketIOContext);
+  const { status, setStatus } = useContext(SocketIOContext);
 
   const [time, setTime] = useState({
     currentTime: DEFAULT_FOCUS_TIME,
@@ -34,6 +34,7 @@ export default function TimerProvider({
 
   const timerControls = useTimer({
     status,
+    setStatus,
     isPlay: isPlay && !isChronometer,
     setIsPlay,
     time,

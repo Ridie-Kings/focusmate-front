@@ -9,6 +9,7 @@ import { differenceInSeconds } from "date-fns";
 
 export function useTimer({
   status,
+  setStatus,
   isPlay,
   setIsPlay,
   time,
@@ -23,6 +24,7 @@ export function useTimer({
   isChronometer,
 }: {
   status: PomodoroStatus | null;
+  setStatus: Dispatch<SetStateAction<PomodoroStatus | null>>;
   isPlay: boolean;
   setIsPlay: Dispatch<SetStateAction<boolean>>;
   time: {
@@ -44,8 +46,6 @@ export function useTimer({
   totalCycles: number;
   isChronometer: boolean;
 }) {
-  // const { addToast } = useContext(ToastContext);
-
   const totalSecondsRef = useRef(timeUtils.timeToSeconds(time.initialTime));
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -64,6 +64,12 @@ export function useTimer({
   });
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      audioRef.current = new Audio("/audio/ding-ding.mp3");
+    }
+  }, []);
+
+  useEffect(() => {
     if (!status || isChronometer) return;
 
     if (
@@ -73,35 +79,45 @@ export function useTimer({
     ) {
       setTime((prev) => {
         try {
-          if (!status.startAt || !status.endAt) {
-            console.error("Missing startAt or endAt timestamps");
-            return prev;
-          }
-
+          // if (!status.startAt || !status.endAt) {
+          //   console.error("Missing startAt or endAt timestamps");
+          //   return prev;
+          // }
+          
           const startDate = new Date(status.startAt);
           const endDate = new Date(status.endAt);
 
-          if (
-            startDate.toString() === "Invalid Date" ||
-            endDate.toString() === "Invalid Date"
-          ) {
-            console.error("Invalid date format for startAt or endAt");
-            return prev;
-          }
+          // if (
+          //   status.pausedState !== "paused" ||
+          //   startDate.toString() === "Invalid Date" ||
+          //   endDate.toString() === "Invalid Date"
+          // ) {
+          //   console.error("Invalid date format for startAt or endAt");
+          //   return prev;
+          // }
 
           const timeInSeconds =
             status.remainingTime !== null
               ? status.remainingTime
-              : status.state !== "idle"
-              ? differenceInSeconds(endDate, new Date())
-              : differenceInSeconds(endDate, startDate);
+              : status.pausedState === "paused"
+              ? differenceInSeconds(endDate, startDate)
+              : differenceInSeconds(endDate, new Date());
 
-          const positiveTimeInSeconds = Math.max(0, timeInSeconds);
+          // console.log(
+          //   "endDate, new Date()",
+          //   differenceInSeconds(endDate, new Date())
+          // );
+          // console.log(
+          //   "endDate, startDate",
+          //   differenceInSeconds(endDate, startDate)
+          // );
+          // console.log("status.remainingTime", status.remainingTime);
+          // console.log("timeInSeconds", timeInSeconds);
 
           return {
             ...prev,
             initialTime: timeUtils.secondsToTime(status.workDuration),
-            currentTime: timeUtils.secondsToTime(positiveTimeInSeconds),
+            currentTime: timeUtils.secondsToTime(timeInSeconds),
           };
         } catch (error) {
           console.error("Error calculating timer value:", error);
@@ -115,34 +131,37 @@ export function useTimer({
 
       if (status?.pausedState === "paused") setIsPlay(false);
       else if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
-    } else if (status.state === "idle") {
+    } else if (status.state === "idle" || status.state === "finished") {
+      setMenu("enfoque");
+      setIsPlay(false);
       setTime((prev) => ({
         ...prev,
         initialTime: timeUtils.secondsToTime(status.workDuration),
         currentTime: timeUtils.secondsToTime(status.workDuration),
       }));
+      setStartedElement(false);
     }
 
-    if (status.state !== "idle") setStartedElement(true);
-  }, [status, isPlay]);
+    if (status.state !== "idle" && status.state !== "finished")
+      setStartedElement(true);
+  }, [
+    status,
+    isPlay,
+    setIsPlay,
+    setMenu,
+    setStartedElement,
+    setTime,
+    setStatus,
+    isChronometer,
+  ]);
 
   useEffect(() => {
-    setTotalCycles(status?.cycles ?? 4);
-    setCycles(status?.currentCycle ?? 0);
-    hasCyclesBeenSetRef.current = status?.currentCycle !== undefined;
-  }, [status]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      audioRef.current = new Audio("/audio/ding-ding.mp3");
+    if (status) {
+      setTotalCycles(status.cycles ?? 4);
+      setCycles(status.currentCycle ?? 0);
+      hasCyclesBeenSetRef.current = status.currentCycle !== undefined;
     }
-  }, []);
-
-  useEffect(() => {
-    if (!isPlay) {
-      totalSecondsRef.current = timeUtils.timeToSeconds(time.currentTime);
-    }
-  }, [time, isPlay]);
+  }, [status, setCycles, setTotalCycles]);
 
   useEffect(() => {
     if (intervalRef.current) {
@@ -152,21 +171,28 @@ export function useTimer({
 
     if (isPlay) {
       intervalRef.current = setInterval(() => {
-        if (timeUtils.timeToSeconds(time.currentTime) > 0) {
-          setTime((prev) => ({
+        setTime((prev) => {
+          const currentSeconds = timeUtils.timeToSeconds(prev.currentTime);
+
+          if (currentSeconds <= 0) {
+            playEndSound();
+            clearInterval(intervalRef.current as NodeJS.Timeout);
+            intervalRef.current = null;
+            return prev;
+          }
+
+          return {
             ...prev,
-            currentTime: timeUtils.secondsToTime(
-              timeUtils.timeToSeconds(prev.currentTime) - 1
-            ),
-          }));
-        }
+            currentTime: timeUtils.secondsToTime(currentSeconds - 1),
+          };
+        });
       }, 1000);
     }
 
-    // if (hasCyclesBeenSetRef.current && cycles === totalCycles) {
-    //   resetTimer();
-    //   return;
-    // }
+    if (status?.state === "completed" || status?.state === "finished") {
+      resetTimer();
+      setStatus(null);
+    }
 
     return () => {
       if (intervalRef.current) {
@@ -174,7 +200,16 @@ export function useTimer({
         intervalRef.current = null;
       }
     };
-  }, [isPlay, menu, playEndSound, setMenu, cycles]);
+  }, [
+    isPlay,
+    menu,
+    playEndSound,
+    setMenu,
+    cycles,
+    totalCycles,
+    resetTimer,
+    setTime,
+  ]);
 
   return {
     togglePlay,

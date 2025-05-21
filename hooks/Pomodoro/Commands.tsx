@@ -57,7 +57,13 @@ export default function CommandsHook({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
-      disabled: startedElement ? false : true,
+      disabled:
+        status?.state === "idle" ||
+        status?.state === "working" ||
+        status?.state === "longBreak" ||
+        status?.state === "shortBreak"
+          ? false
+          : true,
       className: secondaryButtonPadding,
     },
     {
