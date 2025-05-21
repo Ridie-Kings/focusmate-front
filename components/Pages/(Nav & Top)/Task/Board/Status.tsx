@@ -40,7 +40,14 @@ const Column = ({ title, cards, status, setCards }: ColumnProps) => {
         }`}
       >
         {filteredCards.map((c) => {
-          return <Card key={c._id} {...c} handleDragStart={handleDragStart} />;
+          return (
+            <Card
+              key={c._id}
+              task={c}
+              setTasks={setCards}
+              handleDragStart={handleDragStart}
+            />
+          );
         })}
         <DropIndicator beforeId={null} column={status} />
         <AddCard column={status} setCards={setCards} />

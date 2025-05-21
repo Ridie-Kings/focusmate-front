@@ -1,10 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Column from "./Board/Status";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
-export const Board = ({ tasks }: { tasks: TaskType[] }) => {
-  const [cards, setCards] = useState<TaskType[]>(tasks);
+export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
+  const { setTasks, tasks } = useContext(DashboardContext);
+
+  useEffect(() => {
+    setTasks(prevTasks);
+  }, [prevTasks]);
 
   return (
     <div
@@ -14,32 +19,32 @@ export const Board = ({ tasks }: { tasks: TaskType[] }) => {
       <Column
         title="Pendientes"
         status="pending"
-        cards={cards}
-        setCards={setCards}
+        cards={tasks}
+        setCards={setTasks}
       />
       <Column
         title="En progreso"
         status="progress"
-        cards={cards}
-        setCards={setCards}
+        cards={tasks}
+        setCards={setTasks}
       />
       <Column
         title="En revision"
         status="revision"
-        cards={cards}
-        setCards={setCards}
+        cards={tasks}
+        setCards={setTasks}
       />
       <Column
         title="Completadas"
         status="completed"
-        cards={cards}
-        setCards={setCards}
+        cards={tasks}
+        setCards={setTasks}
       />
       <Column
         title="Incompletadas"
         status="dropped"
-        cards={cards}
-        setCards={setCards}
+        cards={tasks}
+        setCards={setTasks}
       />
     </div>
   );

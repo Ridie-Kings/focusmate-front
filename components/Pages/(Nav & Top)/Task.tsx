@@ -6,7 +6,7 @@ export default async function Task() {
 
   return (
     <div className="flex-1 w-full flex flex-col text-neutral-50">
-      <Board tasks={tasks.res} />
+      <Board prevTasks={tasks.res} />
     </div>
   );
 }

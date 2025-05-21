@@ -129,6 +129,18 @@ export default function CommandsHook({
       filteredCommands.find((c) => c.id === "reset"),
     ].filter(Boolean);
   }
+  if (startedElement) {
+    const filteredCommands = commands.filter(
+      (command) => !["togglePlay"].includes(command.id)
+    );
+    return [
+      filteredCommands.find((c) => c.id === "openFullScreen"),
+      filteredCommands.find((c) => c.id === "reset"),
+      filteredCommands.find((c) => c.id === "skip"),
+      filteredCommands.find((c) => c.id === "settings"),
+
+    ].filter(Boolean);
+  }
 
   return commands;
 }
