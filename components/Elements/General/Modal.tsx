@@ -11,7 +11,7 @@ import { X } from "lucide-react";
 import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import ModalPomodoroSettings from "./Modal/ModalPomodoroSettings";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
-import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import ModalTaskKanban from "./Modal/ModalTaskKanban";
 
@@ -59,7 +59,7 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
       case "pomodoroSettings":
         return (
           <ModalPomodoroSettings
-            status={isOpen.other as PomodoroStatus}
+            status={isOpen.other as PomodoroStatusType}
             setIsOpen={setIsOpen}
           />
         );

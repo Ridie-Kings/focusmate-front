@@ -7,11 +7,19 @@ export default function ButtonDropDown({
   items,
   className,
   onClick,
+  position = "bottom",
 }: {
   children: React.ReactNode;
   className?: string;
   items: { label: string; onClick: () => void }[];
   onClick?: () => void;
+  position?:
+    | "bottom"
+    | "top"
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right";
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -36,6 +44,25 @@ export default function ButtonDropDown({
     };
   }, []);
 
+  // Position styles based on the position prop
+  const getPositionStyles = () => {
+    switch (position) {
+      case "top":
+        return "bottom-full mb-2 right-1/2 translate-x-1/2";
+      case "top-left":
+        return "bottom-full mb-2 left-0";
+      case "top-right":
+        return "bottom-full mb-2 right-0";
+      case "bottom-left":
+        return "top-full mt-2 left-0";
+      case "bottom-right":
+        return "top-full mt-2 right-0";
+      case "bottom":
+      default:
+        return "top-full mt-2 right-1/2 translate-x-1/2";
+    }
+  };
+
   return (
     <div
       className="relative inline-block z-20"
@@ -54,7 +81,9 @@ export default function ButtonDropDown({
       </button>
 
       {isOpen && (
-        <div className="absolute min-w-3/4 max-w-44 right-1/2 translate-x-1/2 text-lg rounded-md bg-white drop-shadow-lg p-1 text-secondary-700">
+        <div
+          className={`absolute min-w-3/4 max-w-52 max-h-52 overflow-y-auto text-lg rounded-md bg-white drop-shadow-lg p-1 text-secondary-700 ${getPositionStyles()}`}
+        >
           {items.map((item, index) => (
             <button
               key={index}

@@ -1,7 +1,7 @@
 "use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
-import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function CreatePomodoro({
   cycles,
@@ -15,7 +15,7 @@ export async function CreatePomodoro({
   longBreak: number;
 }): Promise<{
   success: boolean;
-  res: PomodoroStatus;
+  res: PomodoroStatusType;
 }> {
   try {
     const token = await getToken();
