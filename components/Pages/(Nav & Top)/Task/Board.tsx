@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Column from "./Board/Status";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { DashboardContext } from "@/components/Provider/DashboardProvider";
