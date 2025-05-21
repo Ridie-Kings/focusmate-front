@@ -111,12 +111,7 @@ export default function HistoryTimer() {
                 </span>
                 <span className="mx-3">-</span>
                 <span className="text-gray-600">
-                  {pomodoro.workDuration} minutos
-                  {/* {pomodoro.description && (
-                    <span className="ml-2 italic">
-                      "{pomodoro.description}"
-                    </span>
-                  )} */}
+                  {pomodoro.workDuration / 60} minutos
                 </span>
                 {pomodoro.state && (
                   <span className="ml-auto bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
