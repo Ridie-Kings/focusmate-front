@@ -1,17 +1,24 @@
 "use server";
+"use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
-import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
-export async function StartDefaultPomodoro(): Promise<{
+export async function AddTaskToPomodoro({
+  taskId,
+  pomodoroId,
+}: {
+  taskId: string;
+  pomodoroId: string;
+}): Promise<{
   success: boolean;
-  res: PomodoroStatusType;
+  res: TaskType;
 }> {
   try {
     const token = await getToken();
 
     const res = await apiConnection.post(
-      "pomodoro/default",
+      `pomodoro-task-link/${pomodoroId}/link/${taskId}`,
       {},
       {
         headers: {
@@ -22,7 +29,7 @@ export async function StartDefaultPomodoro(): Promise<{
 
     return { success: true, res: res.data };
   } catch (error: any) {
-    console.error("Error starting default timer:", error.response?.data);
+    console.error("Error adding task to pomodoro:", error.response?.data);
     return { success: false, res: error.response.data };
   }
 }

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Socket } from "socket.io-client";
+import { TaskType } from "../Task/TaskType";
 
 export type Pomodoro = {
   _id: string;
@@ -25,7 +26,7 @@ export type Pomodoro = {
   pausedState: "paused" | null;
 };
 
-export type PomodoroStatus = {
+export type PomodoroStatusType = {
   _id: string;
   state:
     | "idle"
@@ -43,12 +44,13 @@ export type PomodoroStatus = {
   shortBreak: number;
   longBreak: number;
   cycles: number;
+  task: TaskType | null;
 };
 
 export type SocketIOContextType = {
-  status: PomodoroStatus | null;
+  status: PomodoroStatusType | null;
   socket: Socket | null;
-  setStatus: Dispatch<SetStateAction<PomodoroStatus | null>>;
+  setStatus: Dispatch<SetStateAction<PomodoroStatusType | null>>;
   handleJoinPomodoro: (id: string) => void;
   isConnected: boolean;
 };

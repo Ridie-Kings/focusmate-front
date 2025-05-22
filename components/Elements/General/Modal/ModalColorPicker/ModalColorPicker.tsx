@@ -47,7 +47,7 @@ export default function ModalColorPicker({
   };
 
   return (
-    <div className="relative flex items-center flex-1" ref={modalRef}>
+    <div className="relative flex items-center" ref={modalRef}>
       <button
         className="flex items-center space-x-2 rounded-md cursor-pointer gap-2"
         onClick={() => setOpen(!open)}

@@ -1,50 +1,51 @@
 "use client";
-import { useState } from "react";
-import { Status } from "./Status";
+import { useContext, useEffect } from "react";
+import Column from "./Board/Status";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { DashboardContext } from "@/components/Provider/DashboardProvider";
 
-export const Board = ({ tasks }: { tasks: TaskType[] }) => {
-  const [cards, setCards] = useState(tasks);
+export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
+  const { setTasks, tasks } = useContext(DashboardContext);
+
+  useEffect(() => {
+    setTasks(prevTasks);
+  }, [prevTasks]);
 
   return (
-    <>
-      <div className="flex h-full w-full gap-3 overflow-auto 2xl:p-12 p-5">
-        <Status
-          title="Pendientes"
-          status="pending"
-          cards={cards}
-          setCards={setCards}
-        />
-        <Status
-          title="En Progreso"
-          status="progress"
-          cards={cards}
-          setCards={setCards}
-        />
-        <Status
-          title="En Revisión"
-          status="revision"
-          cards={cards}
-          setCards={setCards}
-        />
-        <Status
-          title="Completados"
-          status="completed"
-          cards={cards}
-          setCards={setCards}
-        />
-        <Status
-          title="No Completados"
-          status="dropped"
-          cards={cards}
-          setCards={setCards}
-        />
-      </div>
-      {cards.length <= 0 && (
-        <p className="text-black flex-1 w-full flex items-center justify-center text-4xl">
-          No tienes tareas
-        </p>
-      )}
-    </>
+    <div
+      style={{ height: "calc(100vh - 125px)" }}
+      className="flex w-full gap-3 overflow-y-auto p-6"
+    >
+      <Column
+        title="Pendientes"
+        status="pending"
+        cards={tasks}
+        setCards={setTasks}
+      />
+      <Column
+        title="En progreso"
+        status="progress"
+        cards={tasks}
+        setCards={setTasks}
+      />
+      <Column
+        title="En revision"
+        status="revision"
+        cards={tasks}
+        setCards={setTasks}
+      />
+      <Column
+        title="Completadas"
+        status="completed"
+        cards={tasks}
+        setCards={setTasks}
+      />
+      <Column
+        title="Incompletadas"
+        status="dropped"
+        cards={tasks}
+        setCards={setTasks}
+      />
+    </div>
   );
 };

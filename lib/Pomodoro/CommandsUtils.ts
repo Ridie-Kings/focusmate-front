@@ -34,6 +34,8 @@ export default function CommandsUtils() {
           }
 
           if (!startedElement) {
+            console.log("CLICK 1");
+
             try {
               const res = await (status
                 ? StartPomodoroById({ id: status._id })
@@ -48,9 +50,11 @@ export default function CommandsUtils() {
             }
           } else if (status) {
             try {
-              await (isPlay
+              const res = await (isPlay
                 ? PausePomodoro({ id: status._id })
                 : ResumePomodoro({ id: status._id }));
+
+              console.log(res.res);
             } catch (error) {
               console.error(
                 `Error al ${isPlay ? "pausar" : "reanudar"} pomodoro:`,
@@ -58,8 +62,6 @@ export default function CommandsUtils() {
               );
             }
           }
-
-          togglePlay();
           break;
 
         case "reset":

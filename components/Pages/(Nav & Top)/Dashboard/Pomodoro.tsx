@@ -5,6 +5,8 @@ import { useContext } from "react";
 import { TimerContext } from "@/components/Provider/TimerProvider";
 import Commands from "@/components/Elements/Pomodoro/Commands";
 import { Clock, Timer as TimerIcon } from "lucide-react";
+import AddTask from "./Pomodoro/AddTask";
+import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 // import AddTask from "./Pomodoro/AddTask";
 
 export default function Pomodoro() {
@@ -13,9 +15,10 @@ export default function Pomodoro() {
     setIsType,
     startedElement,
     toggleChronometerMode,
-    // isChronometer,
+    isChronometer,
   } = useContext(TimerContext);
 
+  const { status } = useContext(SocketIOContext);
   const handleChangeType = (
     e: "pomodoro" | "cronometro" | "temporizador",
     cronometro: boolean
@@ -51,7 +54,9 @@ export default function Pomodoro() {
       ]}
     >
       <Timer />
-      {/* {!isChronometer && <AddTask />} */}
+      {!isChronometer && status && (
+        <AddTask status={status} pomodoroId={status?._id} />
+      )}
       <Commands fullScreen={false} />
     </TemplateDashboard>
   );

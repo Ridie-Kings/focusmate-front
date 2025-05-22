@@ -69,7 +69,7 @@ export default function DaysCalendar({
             <div>{day.getDate()}</div>
 
             {events && hasEvents && (
-              <div className="flex mt-1 space-x-0.5">
+              <div className="flex items-center justify-center mt-1 space-x-0.5">
                 {dayEvents.length <= 3 ? (
                   Array.from({ length: dayEvents.length }).map((_, i) => (
                     <div
@@ -82,9 +82,6 @@ export default function DaysCalendar({
                     <div className="size-1.5 rounded-full bg-secondary-700" />
                     <div className="size-1.5 rounded-full bg-secondary-700" />
                     <div className="size-1.5 rounded-full bg-secondary-700" />
-                    <div className="text-xs font-bold text-secondary-700 -mt-0.5">
-                      +
-                    </div>
                   </>
                 )}
               </div>

@@ -1,7 +1,7 @@
 "use server";
 import { getToken } from "@/lib";
 import { apiConnection } from "../axiosConfig";
-import { PomodoroStatus } from "@/interfaces/websocket/WebSocketProvider";
+import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function UpdatePomodoroById({
   id,
@@ -16,7 +16,7 @@ export async function UpdatePomodoroById({
   };
 }): Promise<{
   success: boolean;
-  res: PomodoroStatus;
+  res: PomodoroStatusType;
 }> {
   const { cycles, workDuration, shortBreak, longBreak } = pomodoro;
 
@@ -40,7 +40,7 @@ export async function UpdatePomodoroById({
 
     return { success: true, res: res.data };
   } catch (error: any) {
-    console.error("Error starting timer:", error.response?.data);
+    console.error("Error updating timer:", error.response?.data);
     return { success: false, res: error.response.data };
   }
 }
