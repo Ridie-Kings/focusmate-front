@@ -12,6 +12,7 @@ import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import ToastProvider from "@/components/Provider/ToastProvider";
+import { ThemeProvider } from "@/components/Provider/ThemeProvider";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -37,7 +38,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <Script id="hotjar-tracking" strategy="afterInteractive">
           {`
@@ -53,22 +54,24 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
-        <SocketIOProvider token={token ?? ""}>
-          <DashboardProvider>
-            <ModalProvider>
-              <ToastProvider>
-                <TimerProvider>
-                  <NavBar />
-                  <main className="flex flex-col min-h-screen md:w-auto w-screen h-full flex-1">
-                    <TopBar />
-                    {children}
-                    <PopUp />
-                  </main>
-                </TimerProvider>
-              </ToastProvider>
-            </ModalProvider>
-          </DashboardProvider>
-        </SocketIOProvider>
+        <ThemeProvider>
+          <SocketIOProvider token={token ?? ""}>
+            <DashboardProvider>
+              <ModalProvider>
+                <ToastProvider>
+                  <TimerProvider>
+                    <NavBar />
+                    <main className="flex flex-col min-h-screen md:w-auto w-screen h-full flex-1">
+                      <TopBar />
+                      {children}
+                      <PopUp />
+                    </main>
+                  </TimerProvider>
+                </ToastProvider>
+              </ModalProvider>
+            </DashboardProvider>
+          </SocketIOProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

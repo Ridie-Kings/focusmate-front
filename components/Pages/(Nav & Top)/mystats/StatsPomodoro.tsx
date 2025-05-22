@@ -19,7 +19,7 @@ export default function StatsPomodoro({
 
   return (
     <div className="flex flex-col gap-4">
-      <TemplateBox grid="" title="Pomodoro" link="/">
+      <TemplateBox grid="" title="Pomodoro" link="/dashboard">
         <SelectTimeButtons
           setSelectedMonth={setSelectedMonth}
           setSelectedYear={setSelectedYear}

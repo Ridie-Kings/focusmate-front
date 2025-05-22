@@ -1,9 +1,5 @@
 import { Plus } from "lucide-react";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-} from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { ModalContext } from "@/components/Provider/ModalProvider";
 
@@ -14,6 +10,7 @@ type AddCardProps = {
 
 const AddCard = ({ column, setCards }: AddCardProps) => {
   const { setIsOpen } = useContext(ModalContext);
+
   return (
     <button
       onClick={() =>

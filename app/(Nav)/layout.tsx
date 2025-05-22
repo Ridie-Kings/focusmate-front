@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import ToastProvider from "@/components/Provider/ToastProvider";
+import { ThemeProvider } from "@/components/Provider/ThemeProvider";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -31,7 +32,7 @@ export default async function RootLayout({
   if (!token) redirect("/login");
 
   return (
-    <html lang="en">
+    <html lang="es " data-theme="light">
       <head>
         <Script id="hotjar-tracking" strategy="afterInteractive">
           {`
@@ -48,17 +49,19 @@ export default async function RootLayout({
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        <ModalProvider>
-          <ToastProvider>
-            <TimerProvider>
-              <NavBar />
-              <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
-                {children}
-                <PopUp />
-              </main>
-            </TimerProvider>
-          </ToastProvider>
-        </ModalProvider>
+        <ThemeProvider>
+          <ModalProvider>
+            <ToastProvider>
+              <TimerProvider>
+                <NavBar />
+                <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
+                  {children}
+                  <PopUp />
+                </main>
+              </TimerProvider>
+            </ToastProvider>
+          </ModalProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

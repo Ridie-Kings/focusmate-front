@@ -34,7 +34,11 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   }, [habits]);
 
   return (
-    <TemplateDashboard grid="col-span-3 row-span-6 " title="Hábitos" link="/">
+    <TemplateDashboard
+      grid="col-span-3 row-span-6 "
+      title="Hábitos"
+      link="/dashboard"
+    >
       <div className="w-full flex flex-col xl:flex-row items-center place-content-evenly">
         <CircleProgressBar
           percent={porcent}

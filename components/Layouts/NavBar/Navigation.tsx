@@ -3,7 +3,13 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { Grid2x2, Calendar, MessageCircle, Timer } from "lucide-react";
+import {
+  Grid2x2,
+  Calendar,
+  MessageCircle,
+  Timer,
+  ListTodo,
+} from "lucide-react";
 
 import { NavItem } from "@/interfaces/Nav/NavTypes";
 
@@ -11,7 +17,7 @@ const navigationItems: NavItem[] = [
   {
     id: 1,
     label: "Dashboard",
-    link: "/",
+    link: "/dashboard",
     icon: <Grid2x2 size={24} />,
   },
   {
@@ -28,6 +34,12 @@ const navigationItems: NavItem[] = [
   },
   {
     id: 4,
+    label: "Tareas",
+    link: "/task",
+    icon: <ListTodo size={24} />,
+  },
+  {
+    id: 5,
     label: "Feedback",
     link: "/support",
     icon: <MessageCircle size={24} />,
