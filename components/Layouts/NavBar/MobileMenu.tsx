@@ -28,7 +28,7 @@ export default function MobileMenu({
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full pt-16 px-4">
+        <div className="flex flex-col h-full pt-16 sm:pt-32 px-4">
           <Navigation />
           <div className="flex flex-col w-full items-center gap-2 mt-auto mb-8">
             <PlanButtons profile={profile} />
