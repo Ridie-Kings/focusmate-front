@@ -103,16 +103,16 @@ export function useTimer({
               ? differenceInSeconds(endDate, startDate)
               : differenceInSeconds(endDate, new Date());
 
-          // console.log(
-          //   "endDate, new Date()",
-          //   differenceInSeconds(endDate, new Date())
-          // );
-          // console.log(
-          //   "endDate, startDate",
-          //   differenceInSeconds(endDate, startDate)
-          // );
-          // console.log("status.remainingTime", status.remainingTime);
-          // console.log("timeInSeconds", timeInSeconds);
+          console.log(
+            "endDate, new Date()",
+            differenceInSeconds(endDate, new Date())
+          );
+          console.log(
+            "endDate, startDate",
+            differenceInSeconds(endDate, startDate)
+          );
+          console.log("status.remainingTime", status.remainingTime);
+          console.log("timeInSeconds", timeInSeconds);
 
           return {
             ...prev,
