@@ -69,7 +69,7 @@ export default function ModalPomodoroSettings({
         <Input
           name="pomodoroDuration"
           type="text"
-          maxLength={4}
+          maxLength={3}
           defaultValue={settings.pomodoroDuration.toString()}
           placeholder="25"
           onChange={(e) =>
@@ -82,7 +82,7 @@ export default function ModalPomodoroSettings({
         <Input
           name="shortBreakDuration"
           type="text"
-          maxLength={4}
+          maxLength={3}
           defaultValue={settings.shortBreakDuration.toString()}
           placeholder="5"
           onChange={(e) =>
@@ -95,7 +95,7 @@ export default function ModalPomodoroSettings({
         <Input
           name="longBreakDuration"
           type="text"
-          maxLength={4}
+          maxLength={3}
           defaultValue={settings.longBreakDuration.toString()}
           placeholder="15"
           onChange={(e) =>
