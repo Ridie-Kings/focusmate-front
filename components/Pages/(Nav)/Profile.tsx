@@ -9,7 +9,7 @@ export default async function Profile() {
   return (
     <>
       <BannerExemple />
-      <div className="py-6 px-6 flex flex-col h-full flex-1">
+      <div className="py-6 px-4 sm:px-6 flex flex-col h-full flex-1">
         <HeaderProfile profile={profile} />
         <InfoProfile profile={profile} />
       </div>

@@ -16,7 +16,12 @@ export async function updateSession(
   const refreshToken = cookieStore.get("refresh_token")?.value;
   const { pathname } = req.nextUrl;
 
-  const publicPaths = new Set(["/login", "/register", "/"]);
+  const publicPaths = new Set([
+    "/login",
+    "/register",
+    "/",
+    "/passwordrecovery",
+  ]);
   const authOnlyPaths = new Set(["/login", "/register"]);
 
   if (!accessToken && refreshToken) {
@@ -38,7 +43,6 @@ export async function updateSession(
 
   return undefined;
 }
-
 
 export async function refreshSession(
   refreshToken: string

@@ -27,8 +27,10 @@ export default function CommandsHook({
   startedElement: boolean;
 }) {
   const iconSize = fullScreen ? 40 : 32;
-  const primaryButtonPadding = "p-7 2xl:p-8";
-  const secondaryButtonPadding = "p-3 2xl:p-4";
+  const primaryButtonPadding =
+    "sm:p-3 2xl:p-8 flex items-center justify-center";
+  const secondaryButtonPadding =
+    "sm:p-3 2xl:p-4 flex items-center justify-center";
 
   const commands = [
     {
@@ -39,7 +41,7 @@ export default function CommandsHook({
           className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ) : (
-        <Maximize size={iconSize} />
+        <Maximize />
       ),
       disabled: true,
       className: secondaryButtonPadding,
@@ -48,13 +50,11 @@ export default function CommandsHook({
       id: "reset",
       icon: fullScreen ? (
         <StepForward
-          size={iconSize}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
+          className={` group-hover:scale-110 scale-100 transition-all duration-300`}
         />
       ) : (
         <RefreshCw
-          size={iconSize}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
+          className={` group-hover:scale-110 scale-100 transition-all duration-300`}
         />
       ),
       disabled:
@@ -70,15 +70,13 @@ export default function CommandsHook({
       id: "togglePlay",
       icon: isPlay ? (
         <Pause
-          size={iconSize}
+          className={` group-hover:scale-110 scale-100 transition-all duration-300`}
           fill={fullScreen ? "white" : "#014e44"}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ) : (
         <Play
-          size={iconSize}
+          className={` group-hover:scale-110 scale-100 transition-all duration-300`}
           fill={fullScreen ? "white" : "#014e44"}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
         />
       ),
       disabled: false,
@@ -88,13 +86,13 @@ export default function CommandsHook({
       id: "skip",
       icon: fullScreen ? (
         <StepForward
-          size={iconSize}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
+          className={` group-hover:scale-110 scale-100 transition-all duration-300`}
         />
       ) : (
         <SkipForward
-          size={iconSize}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
+          className={`${
+            fullScreen ? "size-8" : "size-6 sm:size-20"
+          } group-hover:scale-110 scale-100 transition-all duration-300`}
         />
       ),
       disabled: true,
@@ -104,13 +102,11 @@ export default function CommandsHook({
       id: "settings",
       icon: fullScreen ? (
         <Settings
-          size={iconSize}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
+          className={` group-hover:scale-110 scale-100 transition-all duration-300`}
         />
       ) : (
         <Settings
-          size={iconSize}
-          className="group-hover:scale-110 scale-100 transition-all duration-300"
+          className={` group-hover:scale-110 scale-100 transition-all duration-300`}
         />
       ),
       disabled: startedElement ? true : false,

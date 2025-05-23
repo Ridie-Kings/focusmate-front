@@ -13,7 +13,7 @@ export default function MembershipUser() {
   return (
     <>
       <BannerMembership type="free" />
-      <div className="flex gap-8 place-content-between w-full">
+      <div className="flex flex-col sm:flex-row gap-8 place-content-between w-full">
         <InfoCard
           title="Incluido en tu plan"
           url={{ label: "Ver más", url: "/support" }}

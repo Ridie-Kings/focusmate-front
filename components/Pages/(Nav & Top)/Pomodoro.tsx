@@ -5,8 +5,8 @@ import PomodoroNav from "./Pomodoro/PomodoroNav";
 
 export default function Pomodoro() {
   return (
-    <div className="flex flex-1 gap-6 p-6 w-full">
-      <div className="flex flex-col w-2/5 px-10 py-5 border-2 border-secondary-400 rounded-3xl  place-content-between">
+    <div className="flex flex-col sm:flex-row flex-1 gap-6 p-6 w-full">
+      <div className="flex flex-col w-full overflow-hidden sm:w-2/5 px-4 sm:px-10 py-5 border-2 border-secondary-400 rounded-3xl  place-content-between">
         <PomodoroNav />
         <Timer />
         <Commands fullScreen={false} />

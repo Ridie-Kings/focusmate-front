@@ -6,7 +6,7 @@ export default function BannerExemple() {
       viewBox="0 0 1352 240"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-60 bg-[#57ac92] -my-18"
+      className="w-full h-40 sm:h-60 bg-[#57ac92] -my-18"
     >
       <g clipPath="url(#clip0_406_4265)" className="w-full">
         <rect width="1500" height="240" fill="#56AB91" className="w-full" />
