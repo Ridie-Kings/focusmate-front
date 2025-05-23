@@ -24,6 +24,13 @@ export async function updateSession(
   ]);
   const authOnlyPaths = new Set(["/login", "/register"]);
 
+  if (pathname === "/") {
+    if (accessToken || refreshToken) {
+      return NextResponse.redirect(new URL("/dashboard", req.nextUrl.origin));
+    }
+    return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
+  }
+
   if (!accessToken && refreshToken) {
     const newToken = await refreshSession(refreshToken);
     if (!newToken && !publicPaths.has(pathname)) {
