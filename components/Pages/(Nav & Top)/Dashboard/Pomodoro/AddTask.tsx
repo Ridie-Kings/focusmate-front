@@ -2,10 +2,9 @@ import { DashboardContext } from "@/components/Provider/DashboardProvider";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
-import { AddTaskToPomodoro } from "@/services/Pomodoro/AddTaskToPomodoro";
-import { RemoveTaskFromPomodoro } from "@/services/Pomodoro/RemoveTaskFromPomodoro";
+import AddTaskUtils from "@/lib/Pomodoro/AddTaskUtils";
 import { X } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function AddTask({
   status,
@@ -16,45 +15,20 @@ export default function AddTask({
 }) {
   const { tasks } = useContext(DashboardContext);
   const [selectedTask, setSelectedTask] = useState<TaskType | null>(
-    status?.task ?? null
+    status?.task || null
   );
   const [isSelectedMenu, setIsSelectedMenu] = useState(false);
 
-  const handleAddTaskToPomodoro = async (task: TaskType | null) => {
-    if (!task || !pomodoroId) return;
+  const { handleAddTaskToPomodoro, handleRemoveTaskFromPomodoro } =
+    AddTaskUtils({
+      status,
+      pomodoroId,
+      setSelectedTask,
+    });
 
-    setSelectedTask(task);
-    try {
-      const res = await AddTaskToPomodoro({ taskId: task?._id, pomodoroId });
-
-      if (res.success) {
-        console.log("Tarea añadida al pomodoro");
-      } else {
-        console.log("Error al añadir la tarea al pomodoro");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleRemoveTaskFromPomodoro = async () => {
-    if (!pomodoroId) return;
-
-    try {
-      const res = await RemoveTaskFromPomodoro({
-        pomodoroId,
-      });
-
-      if (res.success) {
-        console.log("Tarea eliminada del pomodoro");
-        setSelectedTask(null);
-      } else {
-        console.log("Error al eliminar la tarea del pomodoro");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  useEffect(() => {
+    setSelectedTask(status?.task || null);
+  }, [status]);
 
   const items = tasks.map((task) => ({
     label: task.title,
@@ -71,7 +45,7 @@ export default function AddTask({
       </p>
       {selectedTask ? (
         <button
-          onClick={() => handleRemoveTaskFromPomodoro()}
+          onClick={handleRemoveTaskFromPomodoro}
           className="bg-secondary-100 rounded cursor-pointer"
         >
           <X />

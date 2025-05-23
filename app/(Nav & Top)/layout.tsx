@@ -38,7 +38,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <Script id="hotjar-tracking" strategy="afterInteractive">
           {`

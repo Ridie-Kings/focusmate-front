@@ -53,7 +53,7 @@ export default function Pomodoro() {
       ]}
     >
       <Timer />
-      {!isChronometer && status && (
+      {!isChronometer && (
         <AddTask status={status} pomodoroId={status?._id} />
       )}
       <Commands fullScreen={false} />
