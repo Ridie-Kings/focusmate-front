@@ -67,7 +67,7 @@ export function useTimer({
     if (typeof window !== "undefined") {
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }
-  }, []);
+  }, [isPlay]);
 
   useEffect(() => {
     if (!status || isChronometer) return;
@@ -103,16 +103,16 @@ export function useTimer({
               ? differenceInSeconds(endDate, startDate)
               : differenceInSeconds(endDate, new Date());
 
-          // console.log(
-          //   "endDate, new Date()",
-          //   differenceInSeconds(endDate, new Date())
-          // );
-          // console.log(
-          //   "endDate, startDate",
-          //   differenceInSeconds(endDate, startDate)
-          // );
-          // console.log("status.remainingTime", status.remainingTime);
-          // console.log("timeInSeconds", timeInSeconds);
+          console.log(
+            "endDate, new Date()",
+            differenceInSeconds(endDate, new Date()) + 1
+          );
+          console.log(
+            "endDate, startDate",
+            differenceInSeconds(endDate, startDate)
+          );
+          console.log("status.remainingTime", status.remainingTime);
+          console.log("timeInSeconds", timeInSeconds);
 
           return {
             ...prev,
@@ -174,7 +174,10 @@ export function useTimer({
         setTime((prev) => {
           const currentSeconds = timeUtils.timeToSeconds(prev.currentTime);
 
-          if (currentSeconds <= 0) {
+          console.log(currentSeconds);
+          if (currentSeconds <= 1) {
+            console.log("playEndSound");
+
             playEndSound();
             clearInterval(intervalRef.current as NodeJS.Timeout);
             intervalRef.current = null;
