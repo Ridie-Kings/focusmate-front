@@ -30,10 +30,12 @@ export default function AddTask({
     setSelectedTask(status?.task || null);
   }, [status]);
 
-  const items = tasks.map((task) => ({
-    label: task.title,
-    onClick: () => handleAddTaskToPomodoro(task),
-  }));
+  const items = tasks
+    .filter((task) => task.status !== "completed" && task.status !== "dropped")
+    .map((task) => ({
+      label: task.title,
+      onClick: () => handleAddTaskToPomodoro(task),
+    }));
 
   return (
     <div
@@ -51,14 +53,20 @@ export default function AddTask({
           <X />
         </button>
       ) : (
-        <ButtonDropDown
-          position="top"
-          items={items}
-          onClick={() => setIsSelectedMenu(true)}
-          className="bg-secondary-100 py-1 rounded text-sm text-primary-500"
-        >
-          Añade aqui tu tarea
-        </ButtonDropDown>
+        <>
+          {items.length === 0 ? (
+            <p className="text-gray-500 text-sm z-10 bg-white w-full">No tienes tareas disponibles</p>
+          ) : (
+            <ButtonDropDown
+              position="top"
+              items={items}
+              onClick={() => setIsSelectedMenu(true)}
+              className="bg-secondary-100 py-1 rounded text-sm text-primary-500"
+            >
+              Añade aqui tu tarea
+            </ButtonDropDown>
+          )}
+        </>
       )}
     </div>
   );
