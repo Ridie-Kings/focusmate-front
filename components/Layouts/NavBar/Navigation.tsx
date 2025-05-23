@@ -61,7 +61,7 @@ export default function Navigation() {
                 href={item.link}
                 className={`
                   group relative flex items-center gap-3 px-4 py-2.5 w-full
-                  transition-color duration-300 hover:bg-white/10 group-hover:translate-x-0 translate-x-4
+                  transition-color duration-300 hover:bg-white/10 md:group-hover:translate-x-0 md:translate-x-4
                   ${
                     isActive
                       ? "bg-white/24 text-white border-l-2 border-white"
@@ -85,7 +85,7 @@ export default function Navigation() {
 
                 <span
                   className={`
-                  font-medium transition-all duration-300 sm:opacity-0 group-hover:opacity-100
+                  font-medium transition-all duration-300 md:opacity-0 group-hover:opacity-100
                 `}
                 >
                   {item.label}
@@ -95,7 +95,7 @@ export default function Navigation() {
                   className={`
                   absolute left-4 text-gray-300 transition-all duration-300
                   ${
-                    isActive ? "opacity-0" : "opacity-100 sm:group-hover:opacity-0"
+                    isActive ? "opacity-0" : "opacity-100 md:group-hover:opacity-0"
                   }
                 `}
                 >
