@@ -41,7 +41,7 @@ export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
         setCards={setTasks}
       />
       <Column
-        title="Incompletadas"
+        title="Incompletas"
         status="dropped"
         cards={tasks}
         setCards={setTasks}

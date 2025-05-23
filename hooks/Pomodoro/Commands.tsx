@@ -27,10 +27,8 @@ export default function CommandsHook({
   startedElement: boolean;
 }) {
   const iconSize = fullScreen ? 40 : 32;
-  const primaryButtonPadding =
-    "sm:p-3 2xl:p-8 flex items-center justify-center";
-  const secondaryButtonPadding =
-    "sm:p-3 2xl:p-4 flex items-center justify-center";
+  const primaryButtonPadding = "sm:p-3 flex items-center justify-center";
+  const secondaryButtonPadding = "sm:p-3 flex items-center justify-center";
 
   const commands = [
     {

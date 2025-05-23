@@ -86,7 +86,7 @@ export default function PasswordRecovery() {
               name="code"
               onChange={(e) => setResetCode(e.target.value)}
               defaultValue=""
-              field={1}
+              type="number"
             />
             <Input
               placeholder="Nueva contraseña"
@@ -94,7 +94,7 @@ export default function PasswordRecovery() {
               name="password"
               onChange={(e) => setNewPassword(e.target.value)}
               defaultValue=""
-              field={1}
+              type="password"
             />
             <Input
               placeholder="Confirma tu contraseña"
@@ -102,15 +102,15 @@ export default function PasswordRecovery() {
               name="repeat password"
               onChange={(e) => setNewRepeatPassword(e.target.value)}
               defaultValue=""
-              field={1}
+              type="text"
             />
           </div>
         ) : (
           <Input
             placeholder="ejemplo@correo.com"
-            field={2}
             label="Correo electrónico"
             name="email"
+            type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         )}

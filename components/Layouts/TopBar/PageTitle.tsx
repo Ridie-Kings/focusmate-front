@@ -6,7 +6,7 @@ export default function PageTitle() {
 
   const title = () => {
     if (pathname === "/dashboard") return "Dashboard";
-    if (pathname === "/task") return "Tus Task";
+    if (pathname === "/task") return "Tus Tareas";
     if (pathname === "/calendar") return "Calendario";
     if (pathname === "/habitaciones") return "Habitaciones";
     if (pathname === "/habits") return "Mis Hábitos";

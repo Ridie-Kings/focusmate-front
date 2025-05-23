@@ -47,7 +47,7 @@ const Card = ({ task, setTasks, handleDragStart }: CardProps) => {
                 label: "Modificar",
                 onClick: () => setIsOpen({ text: "task", other: task }),
               },
-              { label: "Delete", color: "red", onClick: () => handleDeleteTask(task._id) },
+              { label: "Eliminar", color: "red", onClick: () => handleDeleteTask(task._id) },
             ]}
           />
         </div>
