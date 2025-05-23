@@ -1,6 +1,5 @@
 import { Check } from "lucide-react";
 import Button from "../Reusable/Button";
-import Link from "next/link";
 
 const plans = [
   {

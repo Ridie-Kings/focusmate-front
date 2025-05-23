@@ -4,7 +4,6 @@ import TopLogo from "./NavBar/TopLogo";
 import { logout } from "@/lib";
 import PlanButtons from "./NavBar/PlanButtons";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
-import ThemeToggle from "../Elements/ThemeToggle";
 
 export default async function NavBar() {
   const profile = await getMyProfile();
