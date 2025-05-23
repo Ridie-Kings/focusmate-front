@@ -9,10 +9,10 @@ export async function CreatePomodoro({
   shortBreak,
   longBreak,
 }: {
-  cycles: number;
-  workDuration: number;
-  shortBreak: number;
-  longBreak: number;
+  cycles?: number;
+  workDuration?: number;
+  shortBreak?: number;
+  longBreak?: number;
 }): Promise<{
   success: boolean;
   res: PomodoroStatusType;

@@ -9,7 +9,7 @@ export async function resetPassword({
 }: {
   resetCode: string;
   newPassword: string;
-  email: string
+  email: string;
 }): Promise<{
   success: boolean;
   res: any;
@@ -19,16 +19,18 @@ export async function resetPassword({
 
     const res = await apiConnection.post(
       `auth/reset-password`,
-      { resetCode, newPassword },
+      { resetCode, newPassword, email },
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
-    return { success: true, res: res?.data };
+    console.log("res", res);
+
+    return { success: true, res: res?.data.message };
   } catch (error: any) {
     console.error("Error creating calendar event:", error.response.data);
-    return { success: false, res: error.response.data };
+    return { success: false, res: error.response.data.message[0] };
   }
 }

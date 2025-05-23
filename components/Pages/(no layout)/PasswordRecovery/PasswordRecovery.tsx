@@ -5,6 +5,7 @@ import Button from "@/components/Reusable/Button";
 import Input from "@/components/Reusable/Input";
 import { forgotPassword } from "@/services/Auth/forgotPassword";
 import { resetPassword } from "@/services/Auth/resetPassword";
+import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 
 export default function PasswordRecovery() {
@@ -14,6 +15,7 @@ export default function PasswordRecovery() {
   const [newRepeatPassword, setNewRepeatPassword] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const { addToast } = useContext(ToastContext);
+  const router = useRouter();
 
   const handleRequestPassword = async () => {
     try {
@@ -43,60 +45,71 @@ export default function PasswordRecovery() {
       if (res.success) {
         addToast({ message: "El password se a cambiado", type: "success" });
         setEmailSent(true);
+        setTimeout(() => {
+          router.push("/login");
+        }, 1000);
       } else
-        addToast({ message: "El no password se a cambiado", type: "error" });
+        addToast({
+          message: res.res ?? "El no password se a cambiado",
+          type: "error",
+        });
     } catch (e) {
       console.log("error:", e);
 
-      addToast({ message: "El no password se a cambiado", type: "error" });
+      addToast({
+        message: (e as string) ?? "El no password se a cambiado",
+        type: "error",
+      });
     }
   };
 
   return (
     <section className="w-full md:w-[45%] flex-1 flex flex-col items-center justify-center gap-10 px-4 md:px-10 py-8">
-      <div className="flex flex-col w-full items-center text-primary-500">
+      <div className="flex flex-col w-full items-center text-primary-500 mb-8">
         <GreenLogo size="size-26" />
-        <p className="text-4xl font-medium">SherApp</p>
+        <p className="text-4xl font-medium mt-2">SherApp</p>
       </div>
-      <div className="w-full flex flex-col gap-6">
-        <div className="flex flex-col items-center gap-2 w-full text-primary-500 text-center">
-          <h1 className="text-3xl md:text-5xl leading-9 font-semibold">
-            Olvidaste tu contraseña ?
+      <div className="w-full max-w-md flex flex-col gap-8 bg-white p-8 rounded-xl shadow-lg">
+        <div className="flex flex-col items-center gap-3 w-full text-primary-500 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold">
+            ¿Olvidaste tu contraseña?
           </h1>
-          <p className="text-center">Te mandamos un email</p>
+          <p className="text-gray-600 text-lg">
+            Te enviaremos un email para recuperarla
+          </p>
         </div>
         {emailSent ? (
-          <div>
+          <div className="space-y-4">
             <Input
-              placeholder="El codigo recivido"
-              label="El codigo"
+              placeholder="Ingresa el código recibido"
+              label="Código de verificación"
               name="code"
               onChange={(e) => setResetCode(e.target.value)}
               defaultValue=""
               field={1}
-            ></Input>
+            />
             <Input
-              placeholder="El Password"
-              label="El Password"
+              placeholder="Nueva contraseña"
+              label="Nueva contraseña"
               name="password"
               onChange={(e) => setNewPassword(e.target.value)}
               defaultValue=""
               field={1}
-            ></Input>
+            />
             <Input
-              placeholder="El password repeat"
-              label="El password repeat"
+              placeholder="Confirma tu contraseña"
+              label="Confirmar contraseña"
               name="repeat password"
               onChange={(e) => setNewRepeatPassword(e.target.value)}
               defaultValue=""
               field={1}
-            ></Input>
+            />
           </div>
         ) : (
           <Input
-            placeholder="Tu email"
+            placeholder="ejemplo@correo.com"
             field={2}
-            label="Email"
+            label="Correo electrónico"
             name="email"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -106,8 +119,9 @@ export default function PasswordRecovery() {
           button="primary"
           type="button"
           size="large"
+          className="w-full mt-4"
         >
-          {emailSent ? "Cambiar contraseña" : "Send Email"}
+          {emailSent ? "Cambiar contraseña" : "Enviar email"}
         </Button>
       </div>
     </section>

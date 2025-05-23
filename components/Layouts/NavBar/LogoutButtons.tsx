@@ -10,7 +10,7 @@ export default function LogoutButton({
       className="
         group relative flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg
         bg-secondary-500/50 hover:bg-secondary-400/50 text-gray-300
-        cursor-pointer transition-all duration-300 group-hover:w-full w-11
+        cursor-pointer transition-all duration-300 sm:group-hover:w-full sm:w-11 w-full
       "
       onClick={handleLogout}
       aria-label="Cerrar Sesión"
@@ -19,8 +19,8 @@ export default function LogoutButton({
       <span
         className="
         font-medium text-white whitespace-nowrap transition-all duration-300
-        overflow-hidden max-w-0 group-hover:max-w-xs
-        opacity-0 group-hover:opacity-100
+        overflow-hidden sm:max-w-0 group-hover:max-w-xs
+        sm:opacity-0 group-hover:opacity-100
       "
       >
         Cerrar Sesión
@@ -29,7 +29,7 @@ export default function LogoutButton({
       <span
         className="
         text-white transition-all duration-300
-        opacity-0 group-hover:opacity-100
+        opacity-0 sm:group-hover:opacity-100
       "
       >
         <LogOut size={20} />

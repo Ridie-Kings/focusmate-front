@@ -37,7 +37,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <Script id="hotjar-tracking" strategy="afterInteractive">
           {`
@@ -53,6 +53,12 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
+        {/* <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          > */}
         <SocketIOProvider token={token ?? ""}>
           <DashboardProvider>
             <ModalProvider>
@@ -69,6 +75,7 @@ export default async function RootLayout({
             </ModalProvider>
           </DashboardProvider>
         </SocketIOProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

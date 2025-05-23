@@ -23,7 +23,7 @@ export default function NotFound() {
         </p>
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           <Button button="primary" type="button" size="large">
-            <Link href="/" className="flex items-center">
+            <Link href="/dashboard" className="flex items-center">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Volver al Inicio
             </Link>

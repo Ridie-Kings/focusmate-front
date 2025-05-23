@@ -31,7 +31,7 @@ export default async function RootLayout({
   if (!token) redirect("/login");
 
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <Script id="hotjar-tracking" strategy="afterInteractive">
           {`
@@ -48,17 +48,24 @@ export default async function RootLayout({
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        <ModalProvider>
-          <ToastProvider>
-            <TimerProvider>
-              <NavBar />
-              <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
-                {children}
-                <PopUp />
-              </main>
-            </TimerProvider>
-          </ToastProvider>
-        </ModalProvider>
+        {/* <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        > */}
+          <ModalProvider>
+            <ToastProvider>
+              <TimerProvider>
+                <NavBar />
+                <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
+                  {children}
+                  <PopUp />
+                </main>
+              </TimerProvider>
+            </ToastProvider>
+          </ModalProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

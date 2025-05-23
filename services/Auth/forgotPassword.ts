@@ -18,11 +18,10 @@ export async function forgotPassword({ email }: { email: string }): Promise<{
         },
       }
     );
-    if (!res.data.success) throw new Error(res.data.res);
 
     return { success: true, res: res?.data };
   } catch (error: any) {
-    console.error("Error creating calendar event:", error.response.data);
+    console.error("Error forgot password:", error.response.data);
     return { success: false, res: error.response.data };
   }
 }

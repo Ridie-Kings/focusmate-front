@@ -9,8 +9,8 @@ export default async function TopBar() {
   const profil = await getMyProfile();
 
   return (
-    <header className="flex place-content-between py-2 px-6 sm:p-6 w-full border-b border-primary-200 bg-white z-50 ">
-      <div className="flex flex-col flex-1 justify-center">
+    <header className="flex place-content-between pr-15 sm:pr-0 py-2 px-6 sm:p-6 w-full border-b border-primary-200 bg-white z-50 ">
+      <div className="flex flex-col sm:flex-1 justify-center">
         <p className="sm:text-lg hidden sm:block text-primary-500 capitalize">
           Bienvenido, {profil?.user?.fullname}!
         </p>

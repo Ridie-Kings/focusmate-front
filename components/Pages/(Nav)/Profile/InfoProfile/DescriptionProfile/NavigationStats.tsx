@@ -19,7 +19,7 @@ export default function NavigationStats({
   ];
 
   return (
-    <nav className="flex place-content-between pb-2 border-b border-primary-200">
+    <nav className="flex place-content-between pb-2 border-b border-primary-200 overflow-x-auto sm:text-wrap text-nowrap">
       {navItems.map((item) => (
         <div
           key={item.label}

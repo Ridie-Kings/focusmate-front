@@ -20,7 +20,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <ul className="flex items-center place-content-evenly w-full gap-7 md:gap-6">
+      <ul className="flex items-center place-content-evenly w-full sm:gap-7 md:gap-6">
         {CommandsHook({
           fullScreen,
           isPlay,
@@ -47,6 +47,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
                   ${button.disabled ? disabledButtonClass : activeButtonClass}
                   ${button.className || ""}
                   group hover:scale-95 scale-100 transition-all duration-300
+                  size-8 sm:size-14
                 `}
                 aria-label={button.id}
                 disabled={button.disabled}

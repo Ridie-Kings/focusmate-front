@@ -15,7 +15,7 @@ export default function StatsHabits({
   console.log(stats);
 
   return (
-    <TemplateBox grid="" title="Habits" link="/">
+    <TemplateBox grid="" title="Habits" link="/dashboard">
       <SelectTimeButtons
         setSelectedMonth={setSelectedMonth}
         setSelectedYear={setSelectedYear}

@@ -116,6 +116,7 @@ export default function ListTask({
           onClick={() => setIsOpen({ text: "task" })}
           button="tertiary"
           type="button"
+          className="w-full"
         >
           Nueva Tarea
         </Button>

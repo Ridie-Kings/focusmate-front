@@ -148,7 +148,7 @@ export default function InformationUser({
 
   return (
     <div className="flex flex-col">
-      <div className="grid grid-cols-2">
+      <div className="grid sm:grid-cols-2">
         {userFields.map(({ icon, type, title, field }) => {
           const value = formData[field as keyof typeof formData];
 
@@ -158,7 +158,7 @@ export default function InformationUser({
               : value || "";
 
           return (
-            <div key={field} className="flex gap-4 px-6 py-2">
+            <div key={field} className="flex gap-4 sm:px-6 py-2">
               {icon}
               <div>
                 <p>{title}</p>
@@ -197,7 +197,7 @@ export default function InformationUser({
         })}
       </div>
 
-      <div className="flex gap-4 px-6 py-2">
+      <div className="flex gap-4 sm:px-6 py-2">
         <Locate />
         <div>
           <p>Biografía</p>

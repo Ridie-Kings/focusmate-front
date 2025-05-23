@@ -13,11 +13,13 @@ export default function HeaderProfile({
         width={152}
         height={152}
         alt="avatar"
-        className="rounded-full size-[152px] object-cover"
+        className="rounded-full size-[100px] sm:size-[152px] object-cover"
       />
       <div className="py-4 px-2 w-full flex items-center place-content-between">
-        <div className="text-black flex flex-col gap-2">
-          <p className="text-5xl capitalize">{profile?.user?.fullname}</p>
+        <div className="text-black flex flex-col gap-2 overflow-hidden">
+          <p className="text-3xl sm:text-5xl capitalize truncate">
+            {profile?.user?.fullname}
+          </p>
           <p>{profile?.user?.username}</p>
         </div>
         {/* <div className="flex items-center gap-2">
