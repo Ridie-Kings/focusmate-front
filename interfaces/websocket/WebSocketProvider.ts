@@ -24,6 +24,7 @@ export type Pomodoro = {
   interruptions: number;
   remainingTime: number | null;
   pausedState: "paused" | null;
+  task: TaskType | null;
 };
 
 export type PomodoroStatusType = {

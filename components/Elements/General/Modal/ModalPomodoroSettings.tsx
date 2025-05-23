@@ -31,7 +31,7 @@ export default function ModalPomodoroSettings({
   };
 
   const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>
   ) => {
     e.preventDefault();
     setIsLoading(true);

@@ -12,7 +12,7 @@ export default function StatsTask({ stats }: { stats: PromiseGetTasksStats }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <TemplateBox grid="" title="Tareas" link="/">
+      <TemplateBox grid="" title="Tareas" link="/dashboard">
         <SelectTimeButtons
           setSelectedMonth={setSelectedMonth}
           setSelectedYear={setSelectedYear}
