@@ -5,7 +5,7 @@ import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function StopPomodoro({ id }: { id: string }): Promise<{
   success: boolean;
-  res: Pomodoro;
+  res: Pomodoro | string;
 }> {
   try {
     const token = await getToken();
@@ -23,7 +23,7 @@ export async function StopPomodoro({ id }: { id: string }): Promise<{
 
     return { success: true, res: res.data };
   } catch (error: any) {
-    console.error("Error stop timer:", error.response);
-    return { success: false, res: error.response };
+    console.error("Error stop timer:", error.response.data.message);
+    return { success: false, res: error.response.data.message };
   }
 }

@@ -39,7 +39,7 @@ export default async function NavBar() {
           <LogoutButtons handleLogout={handleLogout} />
         </div>
       </header>
-      <MobileMenu profile={profile} />
+      <MobileMenu profile={profile} handleLogout={handleLogout} />
     </>
   );
 }
