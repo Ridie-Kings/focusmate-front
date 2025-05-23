@@ -24,7 +24,7 @@ export default function StatsTask({ stats }: { stats: PromiseGetTasksStats }) {
       </TemplateBox>
       <div className="flex flex-col w-full gap-4 text-sm text-primary-500">
         <div className="flex w-full px-4 place-content-between">
-          <p>Tareas Incompletadas</p>
+          <p>Tareas Incompletas</p>
           <p>{stats.pendingTasks}</p>
         </div>
         <div className="flex w-full px-4 place-content-between">

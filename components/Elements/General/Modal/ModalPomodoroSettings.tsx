@@ -67,9 +67,9 @@ export default function ModalPomodoroSettings({
       <div className="flex items-center justify-between w-full gap-3">
         <p className="flex-1">Duración del pomodoro:</p>
         <Input
-          label=""
           name="pomodoroDuration"
-          field={1}
+          type="text"
+          maxLength={4}
           defaultValue={settings.pomodoroDuration.toString()}
           placeholder="25"
           onChange={(e) =>
@@ -80,9 +80,9 @@ export default function ModalPomodoroSettings({
       <div className="flex items-center justify-between w-full gap-3">
         <p className="flex-1">Duración del descanso corto:</p>
         <Input
-          label=""
           name="shortBreakDuration"
-          field={1}
+          type="text"
+          maxLength={4}
           defaultValue={settings.shortBreakDuration.toString()}
           placeholder="5"
           onChange={(e) =>
@@ -93,9 +93,9 @@ export default function ModalPomodoroSettings({
       <div className="flex items-center justify-between w-full gap-3">
         <p className="flex-1">Duración del descanso largo:</p>
         <Input
-          label=""
           name="longBreakDuration"
-          field={1}
+          type="text"
+          maxLength={4}
           defaultValue={settings.longBreakDuration.toString()}
           placeholder="15"
           onChange={(e) =>
@@ -106,9 +106,9 @@ export default function ModalPomodoroSettings({
       <div className="flex items-center justify-between w-full gap-3">
         <p className="flex-1">Número de vueltas:</p>
         <Input
-          label=""
           name="rounds"
-          field={1}
+          type="text"
+          maxLength={2}
           defaultValue={settings.rounds.toString()}
           placeholder="4"
           onChange={(e) => handleChange("rounds", parseInt(e.target.value))}

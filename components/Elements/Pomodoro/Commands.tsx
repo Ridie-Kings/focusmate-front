@@ -47,7 +47,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
                   ${button.disabled ? disabledButtonClass : activeButtonClass}
                   ${button.className || ""}
                   group hover:scale-95 scale-100 transition-all duration-300
-                  size-8 sm:size-14
+                  size-12 sm:size-14
                 `}
                 aria-label={button.id}
                 disabled={button.disabled}
