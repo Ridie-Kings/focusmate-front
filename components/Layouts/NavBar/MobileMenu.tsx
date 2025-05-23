@@ -9,8 +9,10 @@ import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 export default function MobileMenu({
   profile,
+  handleLogout,
 }: {
   profile: ProfileType | null;
+  handleLogout: () => Promise<void>;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,7 +34,7 @@ export default function MobileMenu({
           <Navigation />
           <div className="flex flex-col w-full items-center gap-2 mt-auto mb-8">
             <PlanButtons profile={profile} />
-            <LogoutButtons handleLogout={async () => {}} />
+            <LogoutButtons handleLogout={handleLogout} />
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { StartDefaultPomodoro } from "@/services/Pomodoro/StartDefaultPomodoro";
 import { PausePomodoro } from "@/services/Pomodoro/PausePomodoro";
 import { ResumePomodoro } from "@/services/Pomodoro/ResumePomodoro";
 import { StopPomodoro } from "@/services/Pomodoro/StopPomodoro";
+import { useToast } from "@/components/Provider/ToastProvider";
 
 export default function CommandsUtils() {
   const { status, handleJoinPomodoro } = useContext(SocketIOContext);
@@ -21,6 +22,7 @@ export default function CommandsUtils() {
     isChronometer,
   } = useContext(TimerContext);
   const { setIsOpen } = useContext(ModalContext);
+  const { addToast } = useToast();
 
   const handleClick = useCallback(
     async (action: string, disabled?: boolean) => {
@@ -67,7 +69,15 @@ export default function CommandsUtils() {
         case "reset":
           if (!isChronometer && status?._id) {
             try {
-              await StopPomodoro({ id: status._id });
+              const res = await StopPomodoro({ id: status._id });
+              console.log(res);
+              
+              if (!res.success) {
+                addToast({
+                  message: res.res as string,
+                  type: "error",
+                });
+              }
             } catch (error) {
               console.error("Error al detener pomodoro:", error);
             }
