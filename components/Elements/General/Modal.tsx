@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 import ModalTask from "./Modal/ModalTask";
@@ -22,6 +22,16 @@ interface ModalProps {
 }
 
 export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen({ text: "" });
+      setIsClosing(false);
+    }, 300);
+  };
+
   const renderModal = () => {
     switch (isOpen.text) {
       case "task":
@@ -77,7 +87,7 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
 
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsOpen({ text: "" });
+        handleClose();
       }
     };
 
@@ -91,16 +101,23 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
     };
   }, [isOpen, setIsOpen]);
 
+  if (!isOpen.text) return null;
+
   return (
-    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60 bg-black/25 animate-fadeIn">
-      <div className="w-[95vw] md:w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl animate-modalOpen">
-        <X
-          onClick={() => setIsOpen({ text: "" })}
-          size={28}
-          className="cursor-pointer"
-        />
+    <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center z-60">
+      <div
+        className={`w-[95vw] md:w-[600px] bg-background-primary rounded-2xl p-6 flex flex-col items-end gap-4 drop-shadow-2xl ${
+          isClosing ? "animate-modalClose" : "animate-modalOpen"
+        } z-10`}
+      >
+        <X onClick={handleClose} size={28} className="cursor-pointer" />
         {renderModal()}
       </div>
+      <div
+        className={`fixed left-0 top-0 w-full h-full ${
+          isClosing ? "animate-blurEnd" : "animate-blurStart"
+        }`}
+      />
     </div>
   );
 }

@@ -34,13 +34,16 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <div className="bg-white py-24" id="planes">
+    <div
+      className="bg-gradient-to-b from-white to-emerald-50 py-24"
+      id="planes"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:text-center">
-          <h2 className="text-3xl font-extrabold text-primary-500 sm:text-4xl">
+        <div className="text-center">
+          <h2 className="text-4xl font-extrabold text-primary-500 sm:text-5xl animate-fade-in">
             Elige el plan que se ajuste según tus necesidades
           </h2>
-          <p className="mt-4 max-w-2xl text-xl text-primary-500 lg:mx-auto">
+          <p className="mt-6 text-xl text-primary-500 max-w-3xl mx-auto animate-slide-up">
             Planes flexibles que crecen contigo.
           </p>
         </div>
@@ -50,12 +53,17 @@ export default function Pricing() {
             <div
               key={plan.name}
               className={`relative p-8 ${
-                index === 0 ? "bg-primary-500" : "bg-white"
-              } border border-gray-200 rounded-2xl shadow-sm flex flex-col gap-4`}
+                index === 0
+                  ? "bg-gradient-to-br from-emerald-500 to-emerald-600"
+                  : "bg-white"
+              } rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border ${
+                index === 0 ? "border-emerald-400" : "border-emerald-100"
+              } hover:border-emerald-200 flex flex-col gap-6 animate-fade-in-up`}
+              style={{ animationDelay: `${index * 200}ms` }}
             >
               <div className="flex-1">
                 <h3
-                  className={`text-xl font-semibold ${
+                  className={`text-2xl font-bold ${
                     index === 0 ? "text-white" : "text-gray-900"
                   }`}
                 >
@@ -66,7 +74,7 @@ export default function Pricing() {
                     index === 0 ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  <span className="text-5xl font-extrabold tracking-tight">
+                  <span className="text-6xl font-extrabold tracking-tight">
                     {plan.price}
                   </span>
                   <span className="ml-1 text-xl font-semibold">
@@ -74,20 +82,34 @@ export default function Pricing() {
                   </span>
                 </p>
                 <p
-                  className={`mt-6 ${
-                    index === 0 ? "text-white" : "text-gray-500"
+                  className={`mt-6 text-lg ${
+                    index === 0 ? "text-emerald-100" : "text-gray-500"
                   }`}
                 >
                   {plan.description}
                 </p>
 
-                <ul role="list" className="mt-6 space-y-6">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex">
-                      <Check className="flex-shrink-0 w-6 h-6 text-emerald-500" />
+                <ul role="list" className="mt-8 space-y-6">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li
+                      key={feature}
+                      className="flex items-start animate-fade-in"
+                      style={{
+                        animationDelay: `${index * 200 + featureIndex * 100}ms`,
+                      }}
+                    >
+                      <div className="flex-shrink-0">
+                        <Check
+                          className={`h-6 w-6 ${
+                            index === 0
+                              ? "text-emerald-200"
+                              : "text-emerald-500"
+                          }`}
+                        />
+                      </div>
                       <span
-                        className={`ml-3 ${
-                          index === 0 ? "text-white" : "text-gray-500"
+                        className={`ml-3 text-base ${
+                          index === 0 ? "text-white" : "text-gray-600"
                         }`}
                       >
                         {feature}
@@ -102,6 +124,7 @@ export default function Pricing() {
                 type="button"
                 size="large"
                 href="/login"
+                className="w-full py-4 text-lg font-semibold hover:scale-105 transition-transform"
               >
                 Empezar hoy
               </Button>

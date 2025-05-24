@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { GetAllMyPomodoro } from "@/services/Pomodoro/GetAllMyPomodoro";
 import { Calendar, Clock } from "lucide-react";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
+import LoadingStatus from "@/components/Elements/General/LoadingStatus";
 
 export default function HistoryTimer() {
   const [historyPomodoro, setHistoryPomodoro] = useState<Pomodoro[]>([]);
@@ -17,7 +18,7 @@ export default function HistoryTimer() {
         const data = await GetAllMyPomodoro();
         setHistoryPomodoro(data.res);
         console.log(data.res);
-        
+
         const grouped = groupPomodororosByDate(data.res);
         setGroupedPomodoros(grouped);
       } catch (error) {
@@ -70,7 +71,11 @@ export default function HistoryTimer() {
   }
 
   if (isLoading) {
-    return <div className="w-full text-center py-8">Cargando historial...</div>;
+    return (
+      <div className="flex justify-center items-center flex-1">
+        <LoadingStatus text="historial" />
+      </div>
+    );
   }
 
   if (historyPomodoro.length === 0) {
@@ -115,7 +120,9 @@ export default function HistoryTimer() {
                   {pomodoro.workDuration / 60} minutos
                 </span>
                 <span className="mx-3">-</span>
-                <span className="text-gray-600">{pomodoro.task?.title ?? ""}</span>
+                <span className="text-gray-600">
+                  {pomodoro.task?.title ?? ""}
+                </span>
                 {pomodoro.state && (
                   <span className="ml-auto bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
                     {pomodoro.state}
