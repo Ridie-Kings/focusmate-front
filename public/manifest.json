@@ -14,7 +14,12 @@
   "screenshots": [
     {
       "src": "/screenshots/screenshot1.png",
-      "sizes": "1024x1536",
+      "sizes": "2160x1342",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshots/screenshot1.png",
+      "sizes": "2160x1342",
       "type": "image/png",
       "form_factor": "wide"
     }
