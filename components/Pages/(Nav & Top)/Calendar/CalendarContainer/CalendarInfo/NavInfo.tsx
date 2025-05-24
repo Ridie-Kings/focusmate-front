@@ -7,7 +7,7 @@ import { es } from "date-fns/locale";
 
 import CurrentDate from "@/components/Elements/General/CurrentDate";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
-import { NavTypeType } from "../../../Calendar";
+import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 
 export default function NavInfo({
   navType,
@@ -31,7 +31,7 @@ export default function NavInfo({
   ];
 
   return (
-    <div className="flex w-full items-center place-content-between text-primary-500">
+    <div className="flex flex-col sm:flex-row w-full items-center place-content-between text-primary-500">
       <CurrentDate background={false} />
       <div className="flex gap-2 items-center">
         <div className="flex items-center gap-2">

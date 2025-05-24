@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 import LogoutButtons from "./LogoutButtons";
 import PlanButtons from "./PlanButtons";
@@ -15,6 +15,18 @@ export default function MobileMenu({
   handleLogout: () => Promise<void>;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
     <>
@@ -31,7 +43,7 @@ export default function MobileMenu({
         }`}
       >
         <div className="flex flex-col h-full pt-16 sm:pt-32 px-4">
-          <Navigation />
+          <Navigation onClick={() => setIsOpen(false)} />
           <div className="flex flex-col w-full items-center gap-2 mt-auto mb-8">
             <PlanButtons profile={profile} />
             <LogoutButtons handleLogout={handleLogout} />

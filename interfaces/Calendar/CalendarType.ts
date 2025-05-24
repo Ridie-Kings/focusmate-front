@@ -28,3 +28,5 @@ export type PromiseCalendar = {
   createdAt: string;
   updatedAt: string;
 }[];
+
+export type NavTypeType = "Día" | "Semana" | "Mes";
