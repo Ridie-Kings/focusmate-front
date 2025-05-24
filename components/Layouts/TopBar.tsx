@@ -7,10 +7,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { UseScrollDirection } from "@/hooks/UseScrollDirection";
 import { useState, useEffect } from "react";
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 export default function TopBar() {
   const { isVisible } = UseScrollDirection();
-  const [profil, setProfil] = useState<any>(null);
+  const [profil, setProfil] = useState<ProfileType | null>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
