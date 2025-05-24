@@ -1,15 +1,32 @@
+"use client";
 // import { Search } from "lucide-react";
 // import Notification from "./TopBar/Notification";
 import PageTitle from "./TopBar/PageTitle";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
 import Image from "next/image";
 import Link from "next/link";
+import { UseScrollDirection } from "@/hooks/UseScrollDirection";
+import { useState, useEffect } from "react";
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
-export default async function TopBar() {
-  const profil = await getMyProfile();
+export default function TopBar() {
+  const { isVisible } = UseScrollDirection();
+  const [profil, setProfil] = useState<ProfileType | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const data = await getMyProfile();
+      setProfil(data);
+    };
+    fetchProfile();
+  }, []);
 
   return (
-    <header className="flex place-content-between pr-15 sm:pr-0 py-2 px-6 sm:p-6 w-full border-b border-primary-200 bg-white z-50 ">
+    <header
+      className={`sticky top-0 left-0 right-0 flex place-content-between pr-15 py-2 px-6 sm:p-6 w-full border-b border-primary-200 bg-white z-50 transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="flex flex-col sm:flex-1 justify-center">
         <p className="sm:text-lg hidden sm:block text-primary-500 capitalize">
           Bienvenido, {profil?.user?.fullname}!

@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import ToastProvider from "@/components/Provider/ToastProvider";
+import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -18,6 +19,7 @@ const poppinsSans = Poppins({
 
 export const metadata: Metadata = {
   title: "SherpApp | Para que estudiar no sea cuesta arriba",
+  manifest: "/manifest.json",
   description:
     "La herramienta de productividad diseñada para estudiantes y opositores que quieren organizar su estudio, medir su progreso y alcanzar sus metas.",
 };
@@ -54,17 +56,18 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         > */}
-          <ModalProvider>
-            <ToastProvider>
-              <TimerProvider>
-                <NavBar />
-                <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
-                  {children}
-                  <PopUp />
-                </main>
-              </TimerProvider>
-            </ToastProvider>
-          </ModalProvider>
+        <ModalProvider>
+          <ToastProvider>
+            <TimerProvider>
+              <NavBar />
+              <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
+                {children}
+                <PopUp />
+                <PWAInstallPrompt />
+              </main>
+            </TimerProvider>
+          </ToastProvider>
+        </ModalProvider>
         {/* </ThemeProvider> */}
       </body>
     </html>

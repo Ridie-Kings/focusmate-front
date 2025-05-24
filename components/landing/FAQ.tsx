@@ -34,47 +34,56 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className=" py-24" id="faq">
+    <div className="bg-gradient-to-b from-emerald-50 to-white py-24" id="faq">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:text-center mb-16">
-          <h2 className="text-3xl font-extrabold text-primary-500 sm:text-4xl">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-extrabold text-primary-500 sm:text-5xl animate-fade-in">
             ¡Respuestas a tus Preguntas!
           </h2>
-          <p className="mt-4 max-w-2xl text-xl text-primary-500 lg:mx-auto">
+          <p className="mt-6 text-xl text-primary-500 max-w-3xl mx-auto animate-slide-up">
             Todo lo que necesitas saber sobre SherpApp.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto divide-y-2 divide-gray-200">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="py-6 cursor-pointer"
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-            >
-              <button className="text-left w-full flex justify-between items-start text-gray-400 cursor-pointer">
-                <span className="text-lg font-medium text-gray-900">
-                  {faq.question}
-                </span>
-                <span className="ml-6">
-                  {openIndex === index ? (
-                    <ChevronUp className="h-6 w-6" />
-                  ) : (
-                    <ChevronDown className="h-6 w-6" />
-                  )}
-                </span>
-              </button>
-              <dd
-                className={`mt-2 text-base text-gray-500 overflow-hidden transition-all duration-300 ease-in-out ${
-                  openIndex === index
-                    ? "max-h-24 opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
+        <div className="max-w-3xl mx-auto">
+          <div className="space-y-6">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-emerald-100 hover:border-emerald-200 animate-fade-in-up"
+                style={{ animationDelay: `${index * 150}ms` }}
               >
-                {faq.answer}
-              </dd>
-            </div>
-          ))}
+                <button
+                  className="w-full px-6 py-4 text-left flex justify-between items-center cursor-pointer hover:bg-emerald-50/50 transition-colors"
+                  onClick={() =>
+                    setOpenIndex(openIndex === index ? null : index)
+                  }
+                >
+                  <span className="text-lg font-semibold text-gray-900">
+                    {faq.question}
+                  </span>
+                  <span className="ml-6 flex-shrink-0">
+                    {openIndex === index ? (
+                      <ChevronUp className="h-6 w-6 text-emerald-500 transform transition-transform duration-300" />
+                    ) : (
+                      <ChevronDown className="h-6 w-6 text-emerald-500 transform transition-transform duration-300" />
+                    )}
+                  </span>
+                </button>
+                <div
+                  className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${
+                    openIndex === index
+                      ? "max-h-48 opacity-100 pb-6"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <p className="text-base text-gray-600 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
