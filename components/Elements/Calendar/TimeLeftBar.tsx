@@ -19,7 +19,7 @@ export default function TimeLeftBar({
 
           return (
             <div key={i} className="relative flex items-center">
-              <div className="flex-1 px-7 text-center text-lg cursor-pointer">
+              <div className="flex-1 sm:px-7 text-center text-lg cursor-pointer">
                 {`${hours.toString().padStart(2, "0")}:${minutes
                   .toString()
                   .padStart(2, "0")}`}

@@ -187,7 +187,7 @@ const WeekCalendarItem = ({
   return (
     <div
       ref={scrollCalendar}
-      className="grid grid-cols-8 w-full h-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
+      className="grid grid-cols-8 w-full h-screen sm:h-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
     >
       <div className="flex flex-col gap-5 relative">
         <div

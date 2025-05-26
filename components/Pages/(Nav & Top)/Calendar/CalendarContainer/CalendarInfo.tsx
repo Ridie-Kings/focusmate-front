@@ -5,7 +5,7 @@ import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { NavTypeType } from "../../Calendar";
+import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 
 export default function CalendarInfo({
   navType,
@@ -62,7 +62,7 @@ export default function CalendarInfo({
   };
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 gap-10 sm:gap-0">
       <NavInfo
         navType={navType}
         setNavType={setNavType}

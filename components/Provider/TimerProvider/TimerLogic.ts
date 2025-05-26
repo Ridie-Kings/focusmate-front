@@ -101,11 +101,11 @@ export function useTimer({
               ? status.remainingTime
               : status.pausedState === "paused"
               ? differenceInSeconds(endDate, startDate)
-              : differenceInSeconds(endDate, new Date());
+              : differenceInSeconds(endDate, new Date()) - 2;
 
           console.log(
             "endDate, new Date()",
-            differenceInSeconds(endDate, new Date()) + 1
+            differenceInSeconds(endDate, new Date()) - 2
           );
           console.log(
             "endDate, startDate",
