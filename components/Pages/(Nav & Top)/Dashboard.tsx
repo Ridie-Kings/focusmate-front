@@ -29,8 +29,10 @@ export default function Dashboard() {
   } = useContext(DashboardContext);
 
   useEffect(() => {
+    if (!userInfo?.createdAt) return;
+
     const hasCompletedTour = localStorage.getItem("tourCompleted");
-    const userCreatedAt = new Date();
+    const userCreatedAt = new Date(userInfo?.createdAt);
     const today = new Date();
 
     if (!hasCompletedTour && userCreatedAt && isSameDay(userCreatedAt, today)) {
