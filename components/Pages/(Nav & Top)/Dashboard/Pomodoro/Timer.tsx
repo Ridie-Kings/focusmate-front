@@ -11,7 +11,7 @@ export default function Timer() {
     useContext(TimerContext);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2 w-full relative overflow-hidden min-h-[248px]">
+    <div id="timer-component" className="flex flex-col justify-center items-center gap-2 w-full relative overflow-hidden min-h-[248px]">
       <div
         className={`transform transition-all duration-300 ease-in-out ${
           isChronometer

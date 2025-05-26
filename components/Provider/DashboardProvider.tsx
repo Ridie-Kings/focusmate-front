@@ -1,6 +1,7 @@
 "use client";
 import { DashboardContextType } from "@/interfaces/Dashboard/DashboardType";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { createContext, useState } from "react";
 
@@ -17,6 +18,8 @@ export const DashboardContext = createContext<DashboardContextType>({
   loadingEvents: false,
   loadingHabits: false,
   loadingTask: false,
+  userInfo: {} as ProfileType,
+  setUserInfo: () => {},
 });
 
 export default function DashboardProvider({
@@ -27,6 +30,7 @@ export default function DashboardProvider({
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [events, setEvents] = useState<TaskType[]>([]);
   const [habits, setHabits] = useState<HabitsType[]>([]);
+  const [userInfo, setUserInfo] = useState<ProfileType>();
 
   const [loadingTask, setLoadingTask] = useState<boolean>(true);
   const [loadingEvents, setLoadingEvents] = useState<boolean>(true);
@@ -46,6 +50,8 @@ export default function DashboardProvider({
     loadingEvents,
     loadingHabits,
     loadingTask,
+    userInfo,
+    setUserInfo,
   };
   return (
     <DashboardContext.Provider value={contextValue}>

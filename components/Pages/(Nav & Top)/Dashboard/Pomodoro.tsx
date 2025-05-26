@@ -18,6 +18,7 @@ export default function Pomodoro() {
   } = useContext(TimerContext);
 
   const { status } = useContext(SocketIOContext);
+
   const handleChangeType = (
     e: "pomodoro" | "cronometro" | "temporizador",
     cronometro: boolean
@@ -28,9 +29,10 @@ export default function Pomodoro() {
 
   return (
     <TemplateDashboard
-      grid="col-span-3 row-span-3"
+      grid={`col-span-3 row-span-3`}
       title={isType}
       link="/pomodoro"
+      id="pomodoro-component"
       items={[
         {
           label: "Pomodoro",
@@ -53,9 +55,7 @@ export default function Pomodoro() {
       ]}
     >
       <Timer />
-      {!isChronometer && (
-        <AddTask status={status} pomodoroId={status?._id} />
-      )}
+      {!isChronometer && <AddTask status={status} pomodoroId={status?._id} />}
       <Commands fullScreen={false} />
     </TemplateDashboard>
   );

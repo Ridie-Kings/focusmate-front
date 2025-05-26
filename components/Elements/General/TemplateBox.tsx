@@ -9,6 +9,7 @@ export default function TemplateBox({
   title,
   items,
   onClick,
+  id,
 }: {
   children: React.ReactNode;
   grid: string;
@@ -21,14 +22,16 @@ export default function TemplateBox({
     disabled?: boolean;
   }[];
   onClick?: () => void;
+  id?: string;
 }) {
   return (
     <div
       onClick={onClick}
       className={`relative border border-primary-200 rounded-3xl p-3 2xl:p-6 place-content-between hover:shadow-lg transition-all duration-200 ease-out ${grid} mx-3 md:mx-0 flex flex-col gap-4 overflow-hidden`}
+      id={id}
     >
       {items ? (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-4" id="nav-component">
           <div className="w-full flex flex-col gap-2">
             <div className="flex items-center w-full gap-2 px-2">
               {items.map((item) => (

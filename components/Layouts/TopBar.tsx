@@ -6,17 +6,19 @@ import { getMyProfile } from "@/services/Profile/getMyProfile";
 import Image from "next/image";
 import Link from "next/link";
 import { UseScrollDirection } from "@/hooks/UseScrollDirection";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { DashboardContext } from "../Provider/DashboardProvider";
 
 export default function TopBar() {
   const { isVisible } = UseScrollDirection();
   const [profil, setProfil] = useState<ProfileType | null>(null);
-
+  const { setUserInfo } = useContext(DashboardContext);
   useEffect(() => {
     const fetchProfile = async () => {
       const data = await getMyProfile();
       setProfil(data);
+      setUserInfo(data as ProfileType);
     };
     fetchProfile();
   }, []);

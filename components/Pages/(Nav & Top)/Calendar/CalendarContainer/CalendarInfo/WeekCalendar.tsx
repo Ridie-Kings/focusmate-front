@@ -112,7 +112,7 @@ const DayColumn = ({
     <div className="flex flex-col gap-5">
       <div
         onClick={() => setDate(day)}
-        className={`flex cursor-pointer items-center place-content-between px-3 drop-shadow-lg text-center py-2   rounded-lg sticky top-0 z-10 ${
+        className={`flex cursor-pointer items-center place-content-between px-3 drop-shadow-lg text-center py-2 rounded-lg sticky top-0 z-10 ${
           isToday(day)
             ? "bg-primary-400 text-white"
             : isSameDay(day, selectedDate)
@@ -123,7 +123,7 @@ const DayColumn = ({
         {WeekDay[getDay(day)]}
         <Divider width="1px" height="100%" />
         <p
-          className={` text-white rounded-lg py-1 px-1.5 ${
+          className={` text-white rounded-lg text-xl py-1 px-1.5 ${
             isToday(day) ? "bg-primary-500" : "bg-primary-400"
           }`}
         >
