@@ -1,5 +1,5 @@
 import Dot from "@/components/Elements/General/Dot";
-import { NavTypeType } from "@/components/Pages/(Nav & Top)/Calendar";
+import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 
 import { TaskType } from "@/interfaces/Task/TaskType";
 

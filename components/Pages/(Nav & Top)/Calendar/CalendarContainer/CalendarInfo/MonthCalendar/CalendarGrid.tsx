@@ -9,7 +9,7 @@ import {
 import { es } from "date-fns/locale";
 import { Dispatch, memo, SetStateAction, useMemo } from "react";
 import CalendarDay from "./CalendarGrid/CalendarDay";
-import { NavTypeType } from "@/components/Pages/(Nav & Top)/Calendar";
+import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 
 const CalendarGrid = memo(
   ({
