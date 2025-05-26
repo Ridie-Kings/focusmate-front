@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/Provider/ToastProvider";
 import Button from "@/components/Reusable/Button";
+import { X } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -14,15 +15,14 @@ export default function PWAInstallPrompt() {
     useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const { addToast } = useToast();
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Check if the app is already installed
     if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
       return;
     }
 
-    // Listen for the beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
@@ -30,7 +30,6 @@ export default function PWAInstallPrompt() {
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
-    // Listen for the appinstalled event
     const handleAppInstalled = () => {
       setIsInstalled(true);
       addToast({
@@ -53,13 +52,10 @@ export default function PWAInstallPrompt() {
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
 
-    // Show the install prompt
     deferredPrompt.prompt();
 
-    // Wait for the user to respond to the prompt
     const { outcome } = await deferredPrompt.userChoice;
 
-    // Clear the deferredPrompt
     setDeferredPrompt(null);
 
     if (outcome === "accepted") {
@@ -70,13 +66,16 @@ export default function PWAInstallPrompt() {
     }
   };
 
-  if (isInstalled || !deferredPrompt) return null;
+  if (isInstalled || !deferredPrompt || !isVisible) return null;
 
   return (
     <div className="fixed bottom-4 left-4 z-50 bg-white p-4 rounded-lg shadow-lg border border-emerald-200">
-      <p className="text-sm text-gray-600 mb-2">
-        Instala SherpApp para una mejor experiencia
-      </p>
+      <div className="flex justify-between items-center mb-2 gap-2">
+        <p className="text-sm text-gray-600">
+          Instala SherpApp para una mejor experiencia
+        </p>
+        <X className="cursor-pointer" onClick={() => setIsVisible(false)} />
+      </div>
       <Button
         type="button"
         button="primary"
