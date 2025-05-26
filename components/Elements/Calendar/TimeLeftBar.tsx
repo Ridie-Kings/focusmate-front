@@ -9,7 +9,7 @@ export default function TimeLeftBar({
 }) {
   return (
     <div className="flex flex-col gap-5 relative">
-      <div className="h-full flex flex-col gap-15 text-sm text-gray-600 relative">
+      <div className="h-full flex flex-col gap-10 text-sm text-gray-600 relative">
         {Array.from({ length: length }, (_, i) => {
           const hours = Math.floor(i / divider);
           let minutes = 0;

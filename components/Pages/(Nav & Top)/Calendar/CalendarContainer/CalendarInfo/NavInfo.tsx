@@ -33,23 +33,23 @@ export default function NavInfo({
   return (
     <div className="flex flex-col sm:flex-row w-full items-center place-content-between text-primary-500">
       <CurrentDate background={false} />
-      <div className="flex gap-2 items-center">
-        <div className="flex items-center gap-2">
+      <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-3 bg-gray-50 px-4 py-2 rounded-lg">
           <ChevronLeft
-            className="cursor-pointer"
+            className="cursor-pointer hover:text-primary-600 transition-colors"
             onClick={() =>
               setDate(
                 navType === "Mes" ? addMonths(date, -1) : addDays(date, -1)
               )
             }
           />
-          <p>
+          <p className="font-medium">
             {format(date, navType === "Mes" ? "MMMM" : "dd MMMM", {
               locale: es,
             })}
           </p>
           <ChevronRight
-            className="cursor-pointer"
+            className="cursor-pointer hover:text-primary-600 transition-colors"
             onClick={() =>
               setDate(navType === "Mes" ? addMonths(date, 1) : addDays(date, 1))
             }
