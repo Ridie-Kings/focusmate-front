@@ -7,16 +7,7 @@ import AgendaUtils from "@/lib/AgendaUtils";
 import TaskUtils from "@/lib/Task/TaskUtils";
 
 import { getHours, getMinutes, isSameDay, format } from "date-fns";
-import {
-  Pen,
-  Trash2,
-  MoreVertical,
-  Plus,
-  Bell,
-  Palette,
-  LinkIcon,
-} from "lucide-react";
-import { Clock, User, MapPin } from "lucide-react";
+import { Pen, Trash2 } from "lucide-react";
 
 import {
   SetStateAction,
@@ -40,13 +31,11 @@ const DayCalendarItem = ({
   events,
   setEvents,
   setSelectedEvent,
-  selectedEvent,
 }: {
   date: Date;
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
   setSelectedEvent: Dispatch<SetStateAction<TaskType | null>>;
-  selectedEvent: TaskType | null;
 }) => {
   const scrollCalendar = useRef<HTMLDivElement>(null);
   const { setIsOpen } = useContext(ModalContext);
@@ -170,7 +159,6 @@ const DayCalendarItem = ({
   );
 };
 
-
 export default function DayCalendar({
   events,
   date,
@@ -188,7 +176,6 @@ export default function DayCalendar({
         date={date}
         events={events}
         setEvents={setEvents}
-        selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
       />
       <SelectedEventInfo selectedEvent={selectedEvent} />

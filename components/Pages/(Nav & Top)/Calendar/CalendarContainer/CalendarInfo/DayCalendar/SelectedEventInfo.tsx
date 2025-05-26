@@ -17,7 +17,7 @@ export default function SelectedEventInfo({
 }: {
   selectedEvent: TaskType | null;
 }) {
-  
+
   return (
     <div
       className={`h-full bg-white dark:bg-gray-900 rounded-2xl shadow-lg transition-all duration-300 flex-nowrap ${
@@ -86,7 +86,7 @@ export default function SelectedEventInfo({
               <span>Ubicación</span>
             </div>
             <div className="text-sm text-gray-400">
-              {selectedEvent.location || "San Rafael - Mendoza"}
+              {/* {selectedEvent.location || "San Rafael - Mendoza"} */}
             </div>
           </div>
 
@@ -119,12 +119,12 @@ export default function SelectedEventInfo({
               <span>Link</span>
             </div>
             <a
-              href={selectedEvent.link || "https://sherp-app.com/login"}
+              // href={selectedEvent.link || "https://sherp-app.com/login"}
               className="text-sm text-gray-400 underline break-all"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {selectedEvent.link || "https://sherp-app.com/login"}
+              {/* {selectedEvent.link || "https://sherp-app.com/login"} */}
             </a>
           </div>
 
@@ -134,7 +134,7 @@ export default function SelectedEventInfo({
               <span>Recordatorios</span>
             </div>
             <div className="text-sm text-gray-400">
-              {selectedEvent.reminder || "30 min. antes"}
+              {/* {selectedEvent.reminder || "30 min. antes"} */}
             </div>
           </div>
         </div>
