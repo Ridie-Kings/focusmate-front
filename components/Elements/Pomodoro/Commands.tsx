@@ -19,7 +19,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
   const disabledButtonClass = "bg-gray-400 cursor-not-allowed";
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2" id="commands-component">
       <ul className="flex items-center place-content-evenly w-full sm:gap-7 md:gap-6">
         {CommandsHook({
           fullScreen,
@@ -31,7 +31,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
         })
           .filter((button) => button !== undefined)
           .map((button) => (
-            <li key={button.id}>
+            <li key={button.id} id={button.id}>
               <button
                 onClick={() =>
                   handleClick(button.id as CommandAction, button.disabled)

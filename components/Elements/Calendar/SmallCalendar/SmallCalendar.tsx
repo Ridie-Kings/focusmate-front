@@ -139,7 +139,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   };
 
   return (
-    <div className="flex flex-col place-content-between">
+    <div className="flex flex-col place-content-between" id="small-calendar-component">
       <div
         className={`w-full flex flex-col py-2 overflow-hidden ${className} ${
           !inView && "hidden"

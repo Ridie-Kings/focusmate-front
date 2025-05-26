@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { TaskType } from "../Task/TaskType";
 import { HabitsType } from "../Habits/HabitsType";
+import { ProfileType } from "../Profile/ProfileType";
 
 export type DashboardContextType = {
   events: TaskType[];
@@ -16,6 +17,8 @@ export type DashboardContextType = {
   loadingEvents: boolean;
   loadingTask: boolean;
   loadingHabits: boolean;
+  userInfo: ProfileType | undefined;
+  setUserInfo: Dispatch<SetStateAction<ProfileType | undefined>>;
 };
 
 export type PromiseGetHabitsStats = {

@@ -48,6 +48,7 @@ export default function Agenda() {
       grid={`col-span-4 row-span-4 row-start-2`}
       link="/calendar"
       title="Calendario"
+      id="agenda-component"
     >
       <div className="flex flex-col xl:flex-row w-full h-full gap-4">
         <SmallCalendar
