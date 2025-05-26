@@ -1,3 +1,4 @@
+import { TaskType } from "@/interfaces/Task/TaskType";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 import { format } from "date-fns";
@@ -11,7 +12,7 @@ export default function CalendarUtils({
   firstDate: Date;
   secondDate: Date;
   date: Date | undefined;
-  setEvents: (events: any[]) => void;
+  setEvents: (events: TaskType[]) => void;
 }) {
   const handleGetCalendarByRange = async () => {
     const event = await getCalendarByRange({ firstDate, secondDate });
