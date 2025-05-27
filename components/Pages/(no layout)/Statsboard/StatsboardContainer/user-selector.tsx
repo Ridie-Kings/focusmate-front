@@ -37,17 +37,17 @@ export function UserSelector({
     setError(null);
 
     try {
-      const { success, data } = await GetAllUsers();
+      const { success, res } = await GetAllUsers();
 
       if (!success) {
-        throw new Error(`Error: ${data}`);
+        throw new Error(`Error: ${res}`);
       }
 
-      if (!Array.isArray(data)) {
+      if (!Array.isArray(res)) {
         throw new Error("Formato de datos inválido");
       }
 
-      setUsers(data);
+      setUsers(res);
     } catch (error) {
       console.error("Error cargando usuarios:", error);
       setError(error instanceof Error ? error.message : "Error desconocido");

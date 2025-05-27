@@ -19,7 +19,7 @@ export default function TaskUtils({
         setEvents((prev) => prev.filter((task) => task._id !== id));
       console.log("Task deleted successfully");
     } else {
-      console.log("Failed to delete task", res.message);
+      console.log("Failed to delete task", res.res);
     }
   };
 

@@ -88,7 +88,7 @@ export default function InformationUser({
         });
         setTimeout(() => setMessage(null), 3000);
       } else {
-        setMessage({ text: response?.data, type: "error" });
+        setMessage({ text: response?.res, type: "error" });
       }
     } catch (err) {
       console.error(err);

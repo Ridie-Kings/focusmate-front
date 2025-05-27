@@ -66,7 +66,7 @@ export default function KanbanUtils({
         else {
           console.error(
             "Erreur lors de la mise à jour du statut de la tâche",
-            response.message
+            response.res
           );
         }
       } catch (error) {

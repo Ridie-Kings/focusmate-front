@@ -1,10 +1,10 @@
 "use server";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { apiClient } from "../api";
+import { UserType } from "@/interfaces/User/UserType";
 
 export async function GetAllUsers(): Promise<{
   success: boolean;
-  res: ProfileType[];
+  res: UserType[];
 }> {
   try {
     const res = await apiClient.get(`users`);
