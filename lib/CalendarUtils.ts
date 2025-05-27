@@ -15,25 +15,35 @@ export default function CalendarUtils({
   setEvents: (events: TaskType[]) => void;
 }) {
   const handleGetCalendarByRange = async () => {
-    const event = await getCalendarByRange({ firstDate, secondDate });
+    try {
+      const event = await getCalendarByRange({ firstDate, secondDate });
+      if (event.success) {
+        setEvents(event.res);
+      } else {
+        console.error("Error al obtener el calendario client", event.res);
+        setEvents([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener el calendario server", error);
 
-    if (event.success) {
-      setEvents(event.res);
-    } else {
-      console.error("Error al obtener el calendario", event.res);
       setEvents([]);
     }
   };
 
   const handleGetCalendarByDate = async () => {
-    const event = await getCalendarByDate({
-      date: format(date ?? new Date(), "yyyy-MM-dd"),
-    });
+    try {
+      const event = await getCalendarByDate({
+        date: format(date ?? new Date(), "yyyy-MM-dd"),
+      });
 
-    if (event.success) {
-      setEvents(event.res);
-    } else {
-      console.error("Error al obtener el calendario", event.res);
+      if (event.success) {
+        setEvents(event.res);
+      } else {
+        console.error("Error al obtener el calendario client", event.res);
+        setEvents([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener el calendario server", error);
       setEvents([]);
     }
   };

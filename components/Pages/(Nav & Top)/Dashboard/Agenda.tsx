@@ -19,14 +19,16 @@ export default function Agenda() {
   useEffect(() => {
     const handleGetCalendarByDate = async (dateToFetch: Date) => {
       setLoadingEvents(true);
-      const events = await getCalendarByDate({
-        date: format(dateToFetch, "yyyy-MM-dd"),
-      });
-      if (events.success) {
-        setEvents(events.res);
-        setLoadingEvents(false);
-      } else {
-        console.error("Error al obtener el calendario", events.res);
+      try {
+        const events = await getCalendarByDate({
+          date: format(dateToFetch, "yyyy-MM-dd"),
+        });
+        if (events.success) {
+          setEvents(events.res);
+          setLoadingEvents(false);
+        }
+      } catch (error) {
+        console.error("Error al obtener el calendario", error);
         setEvents([]);
       }
     };
