@@ -10,7 +10,7 @@ export async function createHabit({
   try {
     const res = await apiClient.post("habits", habit);
 
-    if (!res?.data) {
+    if (!res) {
       return {
         success: false,
         res: "Error al crear el hábito: Respuesta vacía",
@@ -19,15 +19,8 @@ export async function createHabit({
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.log("Error creating habit:", error.message);
-    if (error?.message) {
-      return { success: false, res: error.message.message };
-    }
+    console.error("Error creating habit:", error);
 
-    if (error.message) {
-      return { success: false, res: error.message.message };
-    }
-
-    return { success: false, res: "Error inesperado al crear el hábito" };
+    return { success: false, res: error.message };
   }
 }

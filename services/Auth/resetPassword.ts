@@ -22,7 +22,8 @@ export async function resetPassword({
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error creating calendar event:", error.message);
-    return { success: false, res: error.message.message[0] };
+    console.error("Error reset password:", error);
+
+    return { success: false, res: error.message };
   }
 }

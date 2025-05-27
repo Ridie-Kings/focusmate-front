@@ -7,11 +7,12 @@ export async function getCalendarByDate({ date }: { date: string }): Promise<{
   res: PromiseCalendar;
 }> {
   try {
-    const res = await apiClient.get(`calendar/${date}/`);
+    const res = await apiClient.get(`calendar/${date}`);
 
     return { success: true, res };
   } catch (error: any) {
-    console.error(`Error fetching calendar of ${date}:`, error.message);
+    console.error(`Error fetching calendar of ${date}:`, error);
+
     return { success: false, res: error.message };
   }
 }

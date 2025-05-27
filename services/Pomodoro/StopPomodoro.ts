@@ -9,11 +9,11 @@ export async function StopPomodoro({ id }: { id: string }): Promise<{
 }> {
   try {
     const res = await apiClient.post(`pomodoro/${id}/stop`);
-    if (!res.success) throw new Error(res.res);
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error stop timer:", error.message);
-    return { success: false, res: error.message.message };
+    console.error("Error stopping pomodoro:", error);
+
+    return { success: false, res: error.message };
   }
 }

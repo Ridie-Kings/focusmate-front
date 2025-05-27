@@ -34,13 +34,18 @@ api.interceptors.response.use(
       throw new NetworkError("No se pudo conectar con el servidor");
     }
 
-    const { status, data } = error.request;
+    const { status, data } = error.response;
+
+    const errorData =
+      data && typeof data === "object" && !Array.isArray(data)
+        ? (data as Record<string, unknown>)
+        : null;
 
     switch (status) {
       case 400:
         throw new ValidationError(
           typeof data === "string" ? data : "Datos inválidos",
-          data
+          errorData
         );
       case 401:
         throw new AuthError("Sesión expirada");

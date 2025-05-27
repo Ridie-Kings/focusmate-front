@@ -13,15 +13,17 @@ export async function getCalendarByRange({
   res: PromiseCalendar;
 }> {
   try {
+    const firstDateString = firstDate.toISOString().split("T")[0];
+    const secondDateString = secondDate.toISOString().split("T")[0];
+
     const res = await apiClient.get(
-      `calendar/${firstDate.toISOString().split("T")[0]}/${
-        secondDate.toISOString().split("T")[0]
-      }`
+      `calendar/${firstDateString}/${secondDateString}`
     );
 
     return { success: true, res };
   } catch (error: any) {
-    console.error(`Error fetching calendar:`, error);
+    console.error(`Error fetching calendar by range:`, error);
+
     return { success: false, res: error.message };
   }
 }

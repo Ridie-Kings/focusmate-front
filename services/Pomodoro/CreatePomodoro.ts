@@ -24,11 +24,12 @@ export async function CreatePomodoro({
       longBreak,
     };
 
-    const res = await apiClient.post("pomodoro", pomodoroData);
+    const res = await apiClient.post("pomodoro/create", pomodoroData);
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error creating timer:", error.message);
+    console.error("Error creating pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }

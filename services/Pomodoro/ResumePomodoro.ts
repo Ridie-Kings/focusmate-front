@@ -11,7 +11,8 @@ export async function ResumePomodoro({ id }: { id: string }): Promise<{
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error resume timer:", error.message);
+    console.error("Error resume pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }

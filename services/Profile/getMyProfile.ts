@@ -12,7 +12,8 @@ export async function getMyProfile(): Promise<{
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error fetching user profile:", error.message);
-    return { success: false, res: null };
+    console.error("Error fetching user profile:", error);
+
+    return { success: false, res: error.message };
   }
 }

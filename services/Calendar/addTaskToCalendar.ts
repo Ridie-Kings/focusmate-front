@@ -7,13 +7,14 @@ export async function addTaskToCalendar({ _id }: { _id: string }): Promise<{
   res: any;
 }> {
   try {
-    const res = await apiClient.patch(`calendar/${_id}/add-task`, {
+    const res = await apiClient.patch(`calendar/addTask/${_id}`, {
       taskId: _id,
     });
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error creating calendar event:", error.message);
+    console.error("Error adding task to calendar:", error);
+
     return { success: false, res: error.message };
   }
 }

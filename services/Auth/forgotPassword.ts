@@ -10,7 +10,8 @@ export async function forgotPassword({ email }: { email: string }): Promise<{
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error forgot password:", error.message);
+    console.error("Error forgot password:", error);
+
     return { success: false, res: error.message };
   }
 }

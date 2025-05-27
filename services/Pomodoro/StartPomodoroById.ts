@@ -11,7 +11,8 @@ export async function StartPomodoroById({ id }: { id: string }): Promise<{
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error starting timer:", error.message);
+    console.error("Error starting pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }

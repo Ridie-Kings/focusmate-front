@@ -10,7 +10,8 @@ export async function getAllCategories(): Promise<{
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error fetching categories:", error.message);
+    console.error("Error fetching categories:", error);
+
     return { success: false, res: error.message };
   }
 }

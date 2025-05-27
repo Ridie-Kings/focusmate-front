@@ -8,9 +8,10 @@ export async function GetGlobalInfo(): Promise<{
   try {
     const res = await apiClient.get(`dashboard/global`);
 
-    return { success: true, data: res?.data };
+    return { success: true, data: res };
   } catch (error: any) {
-    console.error("Error gettin global info:", error.message);
-    return { success: false, data: error };
+    console.error("Error getting global info:", error);
+
+    return { success: false, data: error.message };
   }
 }

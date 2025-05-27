@@ -7,11 +7,12 @@ export async function StartDefaultPomodoro(): Promise<{
   res: PomodoroStatusType;
 }> {
   try {
-    const res = await apiClient.post("pomodoro/start-default");
+    const res = await apiClient.post("pomodoro/default");
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error starting default timer:", error.message);
+    console.error("Error starting default pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }
