@@ -8,13 +8,14 @@ export async function UpdateUser({
 }: {
   id: string;
   user: any;
-}): Promise<{ success: boolean; data: any }> {
+}): Promise<{ success: boolean; res: any }> {
   try {
     const res = await apiClient.patch(`users/${id}`, user);
 
-    return { success: true, data: res?.data };
+    return { success: true, res };
   } catch (error: any) {
-    console.error("Error updating user:", error.message);
-    return { success: false, data: error };
+    console.error("Error updating user:", error);
+
+    return { success: false, res: error.message };
   }
 }

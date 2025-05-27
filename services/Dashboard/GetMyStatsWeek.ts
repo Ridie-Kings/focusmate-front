@@ -8,9 +8,10 @@ export async function GetMyStatsWeek(): Promise<{
   try {
     const res = await apiClient.get(`/dashboard/stats/week`);
 
-    return { success: true, data: res?.data };
+    return { success: true, data: res };
   } catch (error: any) {
-    console.error("Error gettin stats of user:", error.message);
-    return { success: false, data: error };
+    console.error("Error gettin stats of user:", error);
+
+    return { success: false, data: error.message };
   }
 }

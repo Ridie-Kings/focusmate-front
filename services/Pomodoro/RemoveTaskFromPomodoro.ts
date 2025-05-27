@@ -13,12 +13,13 @@ export async function RemoveTaskFromPomodoro({
 }> {
   try {
     const res = await apiClient.delete(
-      `pomodoro-task-link/${pomodoroId}/unlink/`
+      `pomodoro-task-link/${pomodoroId}/unlink`
     );
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error adding task to pomodoro:", error.message);
+    console.error("Error removing task from pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }

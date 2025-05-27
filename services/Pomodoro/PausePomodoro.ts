@@ -11,7 +11,8 @@ export async function PausePomodoro({ id }: { id: string }): Promise<{
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error pausing timer:", error.message);
+    console.error("Error pausing pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }

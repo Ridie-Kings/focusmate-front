@@ -30,7 +30,8 @@ export async function UpdatePomodoroById({
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error updating timer:", error.message);
+    console.error("Error updating pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }

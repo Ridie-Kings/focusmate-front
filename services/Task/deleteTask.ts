@@ -4,17 +4,18 @@ import { apiClient } from "../api";
 
 export async function deleteTask({ _id }: { _id: string }): Promise<{
   success: boolean;
-  message: string;
+  res: string;
 }> {
   try {
     const res = await apiClient.delete(`tasks/${_id}`);
 
-    return { success: true, message: res?.data };
+    return { success: true, res };
   } catch (error: any) {
-    console.error("Error deleting task:", error || error || error);
+    console.error("Error deleting task:", error);
+
     return {
       success: false,
-      message: error || error.message || "Unknown error",
+      res: error.message,
     };
   }
 }

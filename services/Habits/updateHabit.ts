@@ -14,10 +14,7 @@ export async function updateHabit({
 
     return { success: true, res };
   } catch (error: any) {
-    console.error(
-      "Error updating habit:",
-      error || error.message || "Unknown error"
-    );
+    console.error("Error updating habit:", error);
 
     return {
       success: false,

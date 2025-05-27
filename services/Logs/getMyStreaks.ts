@@ -10,7 +10,8 @@ export async function getMyStreaks(): Promise<{
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error fetching tasks:", error.message);
+    console.error("Error fetching streaks:", error);
+
     return { success: false, res: error.message };
   }
 }

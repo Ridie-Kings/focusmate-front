@@ -11,7 +11,8 @@ export async function GetAllMyPomodoro(): Promise<{
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error getallpomodoro timer:", error.message);
+    console.error("Error getting all my pomodoros:", error);
+
     return { success: false, res: error.message };
   }
 }

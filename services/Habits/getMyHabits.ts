@@ -7,7 +7,8 @@ export async function getMyHabits(): Promise<{ success: boolean; res: any }> {
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error fetching tasks:", error.message);
+    console.error("Error fetching tasks:", error);
+
     return { success: false, res: error.message };
   }
 }

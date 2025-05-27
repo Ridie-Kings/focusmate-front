@@ -14,11 +14,12 @@ export async function AddTaskToPomodoro({
 }> {
   const url = `pomodoro-task-link/${pomodoroId}/link/${taskId}`;
   try {
-    const res = await apiClient.post(url, {});
+    const res = await apiClient.post(url);
 
     return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error adding task to pomodoro:", error.message);
+    console.error("Error adding task to pomodoro:", error);
+
     return { success: false, res: error.message };
   }
 }

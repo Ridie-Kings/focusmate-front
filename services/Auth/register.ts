@@ -44,7 +44,7 @@ export async function register(
       };
     }
     const response = await apiClient.post("auth/register", userData);
-    const { access_token, refresh_token } = response?.data;
+    const { access_token, refresh_token } = response;
 
     const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
     const hardExpired = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7j

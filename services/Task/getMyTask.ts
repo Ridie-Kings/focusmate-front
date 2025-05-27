@@ -12,7 +12,8 @@ export async function getMyTask(): Promise<{
 
     return { success: true, res };
   } catch (error: any) {
-    console.error("Error fetching tasks:", error.message);
+    console.error("Error fetching tasks:", error);
+
     return { success: false, res: error.message };
   }
 }
