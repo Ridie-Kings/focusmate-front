@@ -19,6 +19,7 @@ import { es } from "date-fns/locale";
 import { debounce } from "lodash";
 import CalendarUtils from "@/lib/CalendarUtils";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
+import ListEvents from "./Calendar/CalendarContainer/ListEvents";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<NavTypeType>("Día");
@@ -75,14 +76,14 @@ export default function CalendarPage() {
 
   return (
     <section className="flex sm:flex-row flex-col flex-1 h-full sm:gap-6 p-6 overflow-hidden transition-all duration-300">
-      <div className="w-fullsm:w-1/3 xl:w-1/4 h-full flex flex-col gap-2">
+      <div className="w-full sm:w-1/3 xl:w-1/4 h-full flex flex-col gap-2">
         <SmallCalendar
           eventos
           setDate={setDate}
           date={date ?? new Date()}
           inView
         />
-        {/* <Categories /> */}
+        <ListEvents items={events} />
       </div>
       <CalendarInfo
         events={events}
