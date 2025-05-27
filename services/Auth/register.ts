@@ -1,6 +1,6 @@
 "use server";
 import { AuthResponse } from "@/interfaces/Auth/AuthType";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../../lib/api";
 import { cookies } from "next/headers";
 
 function generateUsername(fullname: string): string {
@@ -43,7 +43,7 @@ export async function register(
         message: testUser?.message || "Errors in Inputs",
       };
     }
-    const response = await apiConnection.post("auth/register", userData);
+    const response = await apiClient.post("auth/register", userData);
     const { access_token, refresh_token } = response?.data;
 
     const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
@@ -68,9 +68,7 @@ export async function register(
   } catch (error: any) {
     return {
       success: false,
-      message:
-        error.response?.data.message ||
-        "An unexpected error occurred during registration.",
+      message: error || "An unexpected error occurred during registration.",
     };
   }
 }

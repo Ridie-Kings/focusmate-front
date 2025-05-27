@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Clock, CheckSquare, Calendar, Activity, Users } from "lucide-react";
 import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
 import { GetStatsBoardInfoUser } from "@/services/Dashboard/GetStatsBoardInfoUser";
+import LoadingState from "@/components/Elements/General/LoadingState";
 
 interface KpiCardsProps {
   selectedUser?: string | null;
@@ -99,6 +100,10 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
     );
   }
 
+  if (isLoading) {
+    return <LoadingState variant="skeleton" text="Cargando datos..." />;
+  }
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {viewMode === "global" && (
@@ -107,9 +112,7 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
             <span className="text-sm font-medium">Usuarios Activos</span>
             <Users className="h-4 w-4 text-muted-foreground" />
           </div>
-          <div className="text-2xl font-bold">
-            {isLoading ? "..." : kpiData.totalUsers}
-          </div>
+          <div className="text-2xl font-bold">{kpiData.totalUsers}</div>
           <p className="text-xs text-muted-foreground mt-1">
             En el período seleccionado
           </p>
@@ -122,9 +125,7 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
             <span className="text-sm font-medium">Racha Actual</span>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </div>
-          <div className="text-2xl font-bold">
-            {isLoading ? "..." : kpiData.streak} días
-          </div>
+          <div className="text-2xl font-bold">{kpiData.streak} días</div>
           <p className="text-xs text-muted-foreground mt-1">
             Sesiones consecutivas
           </p>
@@ -136,9 +137,7 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
           <span className="text-sm font-medium">Pomodoros Completados</span>
           <Clock className="h-4 w-4 text-muted-foreground" />
         </div>
-        <div className="text-2xl font-bold">
-          {isLoading ? "..." : kpiData.completedPomodoros}
-        </div>
+        <div className="text-2xl font-bold">{kpiData.completedPomodoros}</div>
         <p className="text-xs text-muted-foreground mt-1">Total de pomodoros</p>
       </div>
 
@@ -147,9 +146,7 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
           <span className="text-sm font-medium">Tareas Completadas</span>
           <CheckSquare className="h-4 w-4 text-muted-foreground" />
         </div>
-        <div className="text-2xl font-bold">
-          {isLoading ? "..." : kpiData.completedTasks}
-        </div>
+        <div className="text-2xl font-bold">{kpiData.completedTasks}</div>
         <p className="text-xs text-muted-foreground mt-1">
           {kpiData.completionRate} de finalización
         </p>
@@ -160,9 +157,7 @@ export function KpiCards({ selectedUser, viewMode }: KpiCardsProps) {
           <span className="text-sm font-medium">Hábitos Activos</span>
           <Calendar className="h-4 w-4 text-muted-foreground" />
         </div>
-        <div className="text-2xl font-bold">
-          {isLoading ? "..." : kpiData.totalHabits}
-        </div>
+        <div className="text-2xl font-bold">{kpiData.totalHabits}</div>
         <p className="text-xs text-muted-foreground mt-1">
           Hábitos en seguimiento
         </p>

@@ -48,7 +48,7 @@ export default function CommandsUtils() {
                 if (!status) setStartedElement(true);
               }
             } catch (error) {
-              console.error("Error al iniciar pomodoro:", error);
+              console.error("Error al iniciar pomodoro:", error.message);
             }
           } else if (status) {
             try {
@@ -71,7 +71,7 @@ export default function CommandsUtils() {
             try {
               const res = await StopPomodoro({ id: status._id });
               console.log(res);
-              
+
               if (!res.success) {
                 addToast({
                   message: res.res as string,
@@ -79,7 +79,7 @@ export default function CommandsUtils() {
                 });
               }
             } catch (error) {
-              console.error("Error al detener pomodoro:", error);
+              console.error("Error al detener pomodoro:", error.message);
             }
           }
           resetTimer();

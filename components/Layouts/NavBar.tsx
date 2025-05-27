@@ -18,10 +18,10 @@ export default async function NavBar() {
       if (
         error instanceof Error &&
         "response" in error &&
-        error.response &&
-        typeof error.response === "string"
+        error &&
+        typeof error === "string"
       ) {
-        console.error("Error logging out:", error.response);
+        console.error("Error logging out:", error);
       } else {
         console.error("Error logging out:", error);
       }

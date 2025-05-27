@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../../lib/api";
 
 export async function removeHabit({
   _id,
@@ -8,17 +7,11 @@ export async function removeHabit({
   _id: string;
 }): Promise<{ success: boolean; res: any }> {
   try {
-    const token = await getToken();
+    const res = await apiClient.delete(`habits/${_id}`);
 
-    const res = await apiConnection.delete(`habits/${_id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return { success: true, res: res?.data };
+    return { success: true, res };
   } catch (error: any) {
-    console.error("Error deleting habit:", error.response?.data);
-    return { success: false, res: error.response.data };
+    console.error("Error deleting habit:", error.message);
+    return { success: false, res: error.message };
   }
 }

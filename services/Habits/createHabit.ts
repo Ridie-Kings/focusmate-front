@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../../lib/api";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 
 export async function createHabit({
@@ -9,13 +8,7 @@ export async function createHabit({
   habit: { name: string; description: string; frequency: string; type: string };
 }): Promise<{ success: boolean; res: HabitsType | string }> {
   try {
-    const token = await getToken();
-
-    const res = await apiConnection.post("habits", habit, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await apiClient.post("habits", habit);
 
     if (!res?.data) {
       return {
@@ -24,15 +17,15 @@ export async function createHabit({
       };
     }
 
-    return { success: true, res: res.data };
+    return { success: true, res: res };
   } catch (error: any) {
-    console.log("Error creating habit:", error);
-    if (error.response?.data?.message) {
-      return { success: false, res: error.response.data.message };
+    console.log("Error creating habit:", error.message);
+    if (error?.message) {
+      return { success: false, res: error.message.message };
     }
 
     if (error.message) {
-      return { success: false, res: error.message };
+      return { success: false, res: error.message.message };
     }
 
     return { success: false, res: "Error inesperado al crear el hábito" };

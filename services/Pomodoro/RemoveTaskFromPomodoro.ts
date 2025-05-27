@@ -1,6 +1,6 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { apiClient } from "../../lib/api";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export async function RemoveTaskFromPomodoro({
@@ -12,20 +12,13 @@ export async function RemoveTaskFromPomodoro({
   res: TaskType;
 }> {
   try {
-    const token = await getToken();
-
-    const res = await apiConnection.delete(
-      `/pomodoro-task-link/${pomodoroId}/unlink`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const res = await apiClient.delete(
+      `pomodoro-task-link/${pomodoroId}/unlink/`
     );
 
-    return { success: true, res: res.data };
+    return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error adding task to pomodoro:", error.response?.data);
-    return { success: false, res: error.response.data };
+    console.error("Error adding task to pomodoro:", error.message);
+    return { success: false, res: error.message };
   }
 }

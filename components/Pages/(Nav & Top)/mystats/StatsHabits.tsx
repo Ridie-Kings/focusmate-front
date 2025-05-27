@@ -12,8 +12,6 @@ export default function StatsHabits({
   const [selectedMonth, setSelectedMonth] = useState("enero-febrero");
   const [selectedYear, setSelectedYear] = useState("2025");
 
-  console.log(stats);
-
   return (
     <TemplateBox grid="" title="Habits" link="/dashboard">
       <SelectTimeButtons

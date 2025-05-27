@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../../lib/api";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function StartPomodoroById({ id }: { id: string }): Promise<{
@@ -8,21 +7,11 @@ export async function StartPomodoroById({ id }: { id: string }): Promise<{
   res: Pomodoro;
 }> {
   try {
-    const token = await getToken();
+    const res = await apiClient.post(`pomodoro/${id}/start`);
 
-    const res = await apiConnection.post(
-      `pomodoro/${id}/start`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return { success: true, res: res.data };
+    return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error starting timer:", error.response?.data);
-    return { success: false, res: error.response.data };
+    console.error("Error starting timer:", error.message);
+    return { success: false, res: error.message };
   }
 }

@@ -33,6 +33,7 @@ export default function BtnSend({
         onClick={handleClick}
         button="primary"
         type="button"
+        id="guardar"
         className="w-full"
       >
         {isLoading ? loadingText : text}

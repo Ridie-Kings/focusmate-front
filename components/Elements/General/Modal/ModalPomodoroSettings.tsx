@@ -46,7 +46,6 @@ export default function ModalPomodoroSettings({
           workDuration: settings.pomodoroDuration * 60,
         },
       });
-      console.log(res);
     } else {
       const res = await CreatePomodoro({
         shortBreak: settings.shortBreakDuration * 60,

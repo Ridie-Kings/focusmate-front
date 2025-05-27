@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 export default function ModalColorPicker({
   defaultValue,
@@ -9,7 +10,10 @@ export default function ModalColorPicker({
 }) {
   const [open, setOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState(defaultValue);
-  const modalRef = useRef<HTMLDivElement>(null);
+
+  const modalRef = useClickOutside<HTMLDivElement>(() => {
+    if (open) setOpen(false);
+  });
 
   const colors = [
     { hex: "#e9d2ee", name: "Lavender" },
@@ -21,24 +25,6 @@ export default function ModalColorPicker({
     { hex: "#56ab91", name: "Jade" },
     { hex: "#248277", name: "Teal" },
   ];
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent): void {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
 
   const handleColorSelect = (color: string, close: boolean): void => {
     setSelectedColor(color);

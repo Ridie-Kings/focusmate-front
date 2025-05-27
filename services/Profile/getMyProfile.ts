@@ -1,21 +1,15 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { apiClient } from "../../lib/api";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 export async function getMyProfile(): Promise<ProfileType | null> {
   try {
-    const token = await getToken();
-
-    const res = await apiConnection.get("profile/@me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await apiClient.get("profile/@me");
 
     return res?.data;
   } catch (error: any) {
-    console.error("Error fetching user profile:", error);
+    console.error("Error fetching user profile:", error.message);
     return error;
   }
 }

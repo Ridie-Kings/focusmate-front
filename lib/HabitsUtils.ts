@@ -56,7 +56,7 @@ export default function HabitsUtils({
           })
             .then((res) => console.log("Habit updated:", res))
             .catch((error) => {
-              console.error("Error updating habit:", error);
+              console.error("Error updating habit:", error.message);
               setHabits((prev) =>
                 prev.map((habit) =>
                   habit._id === id ? { ...habit, status: !habit.status } : habit
@@ -85,7 +85,7 @@ export default function HabitsUtils({
           setHabits((prev) => [...prev, habitToRemove]);
         }
       } catch (error) {
-        console.error("Error deleting habit:", error);
+        console.error("Error deleting habit:", error.message);
         setHabits((prev) => [...prev, habitToRemove]);
       }
     },

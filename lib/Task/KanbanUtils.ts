@@ -70,7 +70,10 @@ export default function KanbanUtils({
           );
         }
       } catch (error) {
-        console.error("Erreur lors de la communication avec l'API:", error);
+        console.error(
+          "Erreur lors de la communication avec l'API:",
+          error.message
+        );
       }
     }
   };
