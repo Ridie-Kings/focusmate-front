@@ -18,10 +18,10 @@ export default async function NavBar() {
       if (
         error instanceof Error &&
         "response" in error &&
-        error.response &&
-        typeof error.response === "string"
+        error &&
+        typeof error === "string"
       ) {
-        console.error("Error logging out:", error.response);
+        console.error("Error logging out:", error);
       } else {
         console.error("Error logging out:", error);
       }
@@ -35,11 +35,11 @@ export default async function NavBar() {
         <Navigation />
         {/* <ThemeToggle /> */}
         <div className="flex flex-col w-full items-center gap-2">
-          <PlanButtons profile={profile} />
+          <PlanButtons profile={profile.res} />
           <LogoutButtons handleLogout={handleLogout} />
         </div>
       </header>
-      <MobileMenu profile={profile} handleLogout={handleLogout} />
+      <MobileMenu profile={profile.res} handleLogout={handleLogout} />
     </>
   );
 }

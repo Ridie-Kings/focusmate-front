@@ -1,6 +1,7 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 export default function ButtonDropDown({
   children,
@@ -22,29 +23,15 @@ export default function ButtonDropDown({
     | "bottom-right";
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+
+  const dropdownRef = useClickOutside<HTMLDivElement>(() => {
+    if (isOpen) setIsOpen(false);
+  });
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !(dropdownRef.current as HTMLElement).contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // Position styles based on the position prop
   const getPositionStyles = () => {
     switch (position) {
       case "top":

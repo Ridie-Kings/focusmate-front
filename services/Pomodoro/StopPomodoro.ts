@@ -1,6 +1,6 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { apiClient } from "../api";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function StopPomodoro({ id }: { id: string }): Promise<{
@@ -8,22 +8,12 @@ export async function StopPomodoro({ id }: { id: string }): Promise<{
   res: Pomodoro | string;
 }> {
   try {
-    const token = await getToken();
+    const res = await apiClient.post(`pomodoro/${id}/stop`);
+    if (!res.success) throw new Error(res.res);
 
-    const res = await apiConnection.post(
-      `pomodoro/${id}/stop`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (!res.data.success) throw new Error(res.data.res);
-
-    return { success: true, res: res.data };
+    return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error stop timer:", error.response.data.message);
-    return { success: false, res: error.response.data.message };
+    console.error("Error stop timer:", error.message);
+    return { success: false, res: error.message.message };
   }
 }

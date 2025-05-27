@@ -9,16 +9,28 @@ import { UseScrollDirection } from "@/hooks/UseScrollDirection";
 import { useState, useEffect, useContext } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { DashboardContext } from "../Provider/DashboardProvider";
+import LoadingState from "@/components/Elements/General/LoadingState";
 
 export default function TopBar() {
   const { isVisible } = UseScrollDirection();
   const [profil, setProfil] = useState<ProfileType | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { setUserInfo } = useContext(DashboardContext);
+
   useEffect(() => {
     const fetchProfile = async () => {
-      const data = await getMyProfile();
-      setProfil(data);
-      setUserInfo(data as ProfileType);
+      try {
+        setIsLoading(true);
+        const data = await getMyProfile();
+        if (data.success) {
+          setProfil(data.res);
+          setUserInfo(data.res as ProfileType);
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchProfile();
   }, []);
@@ -43,19 +55,23 @@ export default function TopBar() {
         <Notification /> */}
         <Link
           href={"/profile"}
-          className="overflow-hidden rounded-full cursor-pointer size-9"
+          className="overflow-hidden rounded-full flex items-center justify-center cursor-pointer size-9"
         >
-          <Image
-            src={
-              profil && profil?.avatar !== ""
-                ? profil?.avatar
-                : "/images/errors/errorImage.png"
-            }
-            width={36}
-            height={36}
-            alt="avatar"
-            className="w-full h-full object-cover"
-          />
+          {isLoading ? (
+            <LoadingState size="sm" />
+          ) : (
+            <Image
+              src={
+                profil && profil?.avatar !== ""
+                  ? profil?.avatar
+                  : "/images/errors/errorImage.png"
+              }
+              width={36}
+              height={36}
+              alt="avatar"
+              className="w-full h-full object-cover"
+            />
+          )}
         </Link>
       </div>
     </header>

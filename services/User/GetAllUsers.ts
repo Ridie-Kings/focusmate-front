@@ -1,21 +1,16 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 
 export async function GetAllUsers(): Promise<{
   success: boolean;
   data: any;
 }> {
   try {
-    const token = await getToken();
-    const res = await apiConnection.get(`users`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await apiClient.get(`users`);
+
     return { success: true, data: res?.data };
   } catch (error: any) {
-    console.error("Error get all user profile:", error.response?.data);
-    return { success: false, data: error.response };
+    console.error("Error get all user profile:", error.message);
+    return { success: false, data: error };
   }
 }

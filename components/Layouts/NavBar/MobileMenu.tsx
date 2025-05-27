@@ -33,11 +33,17 @@ export default function MobileMenu({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed top-1.5 right-2 z-99999 md:hidden bg-primary-500 p-2 rounded-lg text-white"
+        aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={isOpen}
+        aria-controls="mobile-menu"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       <div
+        id="mobile-menu"
+        role="navigation"
+        aria-label="Menú principal"
         className={`fixed inset-0 bg-primary-500 z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}

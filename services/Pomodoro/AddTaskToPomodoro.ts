@@ -1,7 +1,5 @@
 "use server";
-"use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export async function AddTaskToPomodoro({
@@ -14,22 +12,13 @@ export async function AddTaskToPomodoro({
   success: boolean;
   res: TaskType;
 }> {
+  const url = `pomodoro-task-link/${pomodoroId}/link/${taskId}`;
   try {
-    const token = await getToken();
+    const res = await apiClient.post(url, {});
 
-    const res = await apiConnection.post(
-      `pomodoro-task-link/${pomodoroId}/link/${taskId}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return { success: true, res: res.data };
+    return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error adding task to pomodoro:", error.response?.data);
-    return { success: false, res: error.response.data };
+    console.error("Error adding task to pomodoro:", error.message);
+    return { success: false, res: error.message };
   }
 }

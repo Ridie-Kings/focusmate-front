@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
-import { ReactNode, useRef, useState, useEffect } from "react";
+import { ReactNode, useState } from "react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 interface InputModalProps {
   type: "text" | "select";
@@ -21,33 +22,11 @@ export default function InputModal({
   defaultValue,
 }: InputModalProps) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuOpen &&
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node) &&
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
-        setMenuOpen(false);
-      }
-
-      if (document.getElementById("guardar") === event.target)
-        setMenuOpen(false);
-    };
-
-    if (menuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuOpen]);
+  const modalRef = useClickOutside<HTMLDivElement>((event) => {
+    if (menuOpen) setMenuOpen(false);
+    if (document.getElementById("guardar") === event.target) setMenuOpen(false);
+  });
 
   const handleOptionClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (type === "select" && !propagand) e.stopPropagation();
@@ -85,11 +64,7 @@ export default function InputModal({
               />
             </div>
             {menuOpen && (
-              <div
-                ref={menuRef}
-                onClick={handleOptionClick}
-                className="relative"
-              >
+              <div onClick={handleOptionClick} className="relative">
                 {option}
               </div>
             )}

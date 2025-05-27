@@ -71,7 +71,7 @@ export default function CommandsUtils() {
             try {
               const res = await StopPomodoro({ id: status._id });
               console.log(res);
-              
+
               if (!res.success) {
                 addToast({
                   message: res.res as string,

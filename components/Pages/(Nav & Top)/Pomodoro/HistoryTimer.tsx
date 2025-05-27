@@ -17,7 +17,6 @@ export default function HistoryTimer() {
       try {
         const data = await GetAllMyPomodoro();
         setHistoryPomodoro(data.res);
-        console.log(data.res);
 
         const grouped = groupPomodororosByDate(data.res);
         setGroupedPomodoros(grouped);

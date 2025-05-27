@@ -10,6 +10,7 @@ export default function Button({
   state = "enabled",
   className,
   href,
+  id,
 }: {
   button: "primary" | "secondary" | "tertiary" | "pomodoro";
   type: "button" | "submit" | "reset" | undefined;
@@ -21,6 +22,7 @@ export default function Button({
   size: "compact" | "large";
   className?: string;
   href?: string;
+  id?: string;
 }) {
   const commonClasses = `flex items-center justify-center gap-2 ${className} ${
     size === "large" ? "rounded-2xl" : "rounded-lg"
@@ -43,7 +45,7 @@ export default function Button({
     }
 
     return (
-      <button type={type} disabled={state === "disabled"} {...props}>
+      <button type={type} disabled={state === "disabled"} {...props} id={id}>
         {children}
       </button>
     );

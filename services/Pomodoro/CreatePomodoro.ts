@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function CreatePomodoro({
@@ -18,26 +17,18 @@ export async function CreatePomodoro({
   res: PomodoroStatusType;
 }> {
   try {
-    const token = await getToken();
+    const pomodoroData = {
+      cycles,
+      workDuration,
+      shortBreak,
+      longBreak,
+    };
 
-    const res = await apiConnection.post(
-      "pomodoro/create",
-      {
-        cycles,
-        workDuration,
-        shortBreak,
-        longBreak,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await apiClient.post("pomodoro", pomodoroData);
 
-    return { success: true, res: res.data };
+    return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error creating timer:", error.response?.data);
-    return { success: false, res: error.response.data };
+    console.error("Error creating timer:", error.message);
+    return { success: false, res: error.message };
   }
 }

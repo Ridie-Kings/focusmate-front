@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 export default function ModalColorPicker({
   defaultValue,
@@ -9,7 +10,10 @@ export default function ModalColorPicker({
 }) {
   const [open, setOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState(defaultValue);
-  const modalRef = useRef<HTMLDivElement>(null);
+
+  const modalRef = useClickOutside<HTMLDivElement>(() => {
+    if (open) setOpen(false);
+  });
 
   const colors = [
     { hex: "#e9d2ee", name: "Lavender" },
@@ -22,28 +26,12 @@ export default function ModalColorPicker({
     { hex: "#248277", name: "Teal" },
   ];
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent): void {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
-
-  const handleColorSelect = (color: string): void => {
+  const handleColorSelect = (color: string, close: boolean): void => {
     setSelectedColor(color);
     onChange({ target: { value: color } });
-    setOpen(false);
+    if (close) {
+      setOpen(false);
+    }
   };
 
   return (
@@ -76,7 +64,7 @@ export default function ModalColorPicker({
                 className={`size-6 rounded-full flex items-center justify-center cursor-pointer`}
                 style={{ backgroundColor: color.hex }}
                 onClick={() => {
-                  handleColorSelect(color.hex);
+                  handleColorSelect(color.hex, true);
                 }}
                 aria-label={color.name}
                 title={color.name}
@@ -99,6 +87,16 @@ export default function ModalColorPicker({
                 )}
               </button>
             ))}
+            <input
+              type="color"
+              value={selectedColor}
+              onChange={(e) => {
+                e.preventDefault();
+                handleColorSelect(e.target.value, false);
+              }}
+              className="col-span-2 w-full h-8 rounded-md cursor-pointer"
+              aria-label="Custom color input"
+            />
           </div>
         </div>
       )}

@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import LoadingState from "@/components/Elements/General/LoadingState";
 
 interface TasksOverviewProps {
   selectedUser?: string | null;
@@ -126,6 +127,21 @@ export function TasksOverview({ selectedUser, viewMode }: TasksOverviewProps) {
           <div className="p-4 bg-red-50 text-red-600 rounded-lg">
             Error al cargar datos: {error}
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900">
+            Resumen de Tareas
+          </h3>
+        </div>
+        <div className="p-6">
+          <LoadingState variant="skeleton" text="Cargando datos..." />
         </div>
       </div>
     );

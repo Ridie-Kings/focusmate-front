@@ -50,7 +50,7 @@ export default function ModalProvider({
     const fetchProfile = async () => {
       try {
         const profileData = await getMyProfile();
-        setProfile(profileData);
+        setProfile(profileData.res);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }

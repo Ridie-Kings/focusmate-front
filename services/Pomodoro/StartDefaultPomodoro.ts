@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function StartDefaultPomodoro(): Promise<{
@@ -8,21 +7,11 @@ export async function StartDefaultPomodoro(): Promise<{
   res: PomodoroStatusType;
 }> {
   try {
-    const token = await getToken();
+    const res = await apiClient.post("pomodoro/start-default");
 
-    const res = await apiConnection.post(
-      "pomodoro/default",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return { success: true, res: res.data };
+    return { success: true, res: res };
   } catch (error: any) {
-    console.error("Error starting default timer:", error.response?.data);
-    return { success: false, res: error.response.data };
+    console.error("Error starting default timer:", error.message);
+    return { success: false, res: error.message };
   }
 }

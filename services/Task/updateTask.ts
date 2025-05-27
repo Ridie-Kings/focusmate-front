@@ -1,6 +1,6 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { apiClient } from "../api";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export async function updateTask({
@@ -14,23 +14,14 @@ export async function updateTask({
   message: TaskType;
 }> {
   try {
-    const token = await getToken();
-
-    const res = await apiConnection.patch(`tasks/${_id}`, task, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await apiClient.patch(`tasks/${_id}`, task);
 
     return { success: true, message: res?.data };
   } catch (error: any) {
-    console.error(
-      "Error creating task:",
-      error.response?.data || error.response || error
-    );
+    console.error("Error creating task:", error || error || error);
     return {
       success: false,
-      message: error.response?.data || error.message || "Unknown error",
+      message: error || error.message || "Unknown error",
     };
   }
 }
