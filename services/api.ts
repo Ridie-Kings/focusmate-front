@@ -12,12 +12,11 @@ import { getToken } from "@/lib";
 
 const api = axios.create({
   baseURL: process.env.connection_url,
-  headers: {
-    "Content-Type": "application/json",
-  },
   timeout: 10000,
   withCredentials: true,
 });
+
+console.log("api", api);
 
 api.interceptors.request.use(async (config) => {
   const token = await getToken();
