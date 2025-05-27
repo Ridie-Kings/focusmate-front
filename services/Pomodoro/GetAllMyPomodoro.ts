@@ -1,5 +1,5 @@
 "use server";
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
 
 export async function GetAllMyPomodoro(): Promise<{

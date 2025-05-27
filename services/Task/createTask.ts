@@ -1,6 +1,6 @@
 "use server";
 
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { format } from "date-fns";

@@ -1,6 +1,6 @@
 "use server";
 
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 
 export async function addTaskToCalendar({ _id }: { _id: string }): Promise<{
   success: boolean;

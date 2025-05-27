@@ -1,6 +1,6 @@
 "use server";
 
-import { apiClient } from "@/lib/api";
+import { apiClient } from "@/services/api";
 
 export async function getProfile({ slug }: { slug: string }) {
   try {

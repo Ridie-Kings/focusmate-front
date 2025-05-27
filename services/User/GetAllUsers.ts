@@ -1,5 +1,5 @@
 "use server";
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 
 export async function GetAllUsers(): Promise<{
   success: boolean;

@@ -1,5 +1,5 @@
 "use server";
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 import { PromiseGetMyStats } from "@/interfaces/Dashboard/DashboardType";
 
 export async function GetMyStats(): Promise<{

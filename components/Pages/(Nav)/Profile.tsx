@@ -10,8 +10,8 @@ export default async function Profile() {
     <>
       <BannerExemple />
       <div className="py-6 px-4 sm:px-6 flex flex-col h-full flex-1">
-        <HeaderProfile profile={profile} />
-        <InfoProfile profile={profile} />
+        <HeaderProfile profile={profile.res} />
+        <InfoProfile profile={profile.res} />
       </div>
     </>
   );

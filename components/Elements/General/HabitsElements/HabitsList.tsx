@@ -4,7 +4,7 @@ import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import HabitsUtils from "@/lib/HabitsUtils";
 import Menu from "@/components/Reusable/Menu";
 import { ModalContext } from "@/components/Provider/ModalProvider";
-import renderIconHabit from "@/hooks/renderIcon";
+import renderIconHabit from "@/config/RenderIconHabit";
 
 interface HabitsListProps {
   habits: HabitsType[];

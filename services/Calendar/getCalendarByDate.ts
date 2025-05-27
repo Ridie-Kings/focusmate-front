@@ -1,5 +1,5 @@
 "use server";
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 import { PromiseCalendar } from "@/interfaces/Calendar/CalendarType";
 
 export async function getCalendarByDate({ date }: { date: string }): Promise<{

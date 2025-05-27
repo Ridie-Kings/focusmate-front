@@ -7,7 +7,7 @@ import {
   RateLimitError,
   ServerError,
   retryOperation,
-} from "./errorHandling";
+} from "../lib/errorHandling";
 import { getToken } from "@/lib";
 
 const api = axios.create({

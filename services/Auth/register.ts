@@ -1,6 +1,6 @@
 "use server";
 import { AuthResponse } from "@/interfaces/Auth/AuthType";
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 import { cookies } from "next/headers";
 
 function generateUsername(fullname: string): string {

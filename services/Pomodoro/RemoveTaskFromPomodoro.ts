@@ -1,6 +1,6 @@
 "use server";
 
-import { apiClient } from "../../lib/api";
+import { apiClient } from "../api";
 import { TaskType } from "@/interfaces/Task/TaskType";
 
 export async function RemoveTaskFromPomodoro({

@@ -10,7 +10,7 @@ import {
   HabitOption,
   ModalHabitProps,
 } from "@/interfaces/Habits/HabitsType";
-import renderIconHabit from "@/hooks/renderIcon";
+import renderIconHabit from "@/config/RenderIconHabit";
 
 const FREQUENCY_OPTIONS: HabitOption[] = [
   { label: "Diario", value: "daily" },
@@ -51,11 +51,7 @@ export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
   });
 
   useEffect(() => {
-    if (
-      prevHabit &&
-      prevHabit instanceof Object &&
-      "name" in prevHabit
-    ) {
+    if (prevHabit && prevHabit instanceof Object && "name" in prevHabit) {
       setHabit(() => ({
         ...(prevHabit as HabitFormData),
       }));

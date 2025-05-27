@@ -22,8 +22,10 @@ export default function TopBar() {
       try {
         setIsLoading(true);
         const data = await getMyProfile();
-        setProfil(data);
-        setUserInfo(data as ProfileType);
+        if (data.success) {
+          setProfil(data.res);
+          setUserInfo(data.res as ProfileType);
+        }
       } catch (error) {
         console.error("Error fetching profile:", error);
       } finally {

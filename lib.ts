@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { apiClient } from "./lib/api";
+import { apiClient } from "./services/api";
 
 export async function getToken(): Promise<string | undefined> {
   const cookieStore = await cookies();
