@@ -79,22 +79,8 @@ export function useTimer({
     ) {
       setTime((prev) => {
         try {
-          // if (!status.startAt || !status.endAt) {
-          //   console.error("Missing startAt or endAt timestamps");
-          //   return prev;
-          // }
-
           const startDate = new Date(status.startAt);
           const endDate = new Date(status.endAt);
-
-          // if (
-          //   status.pausedState !== "paused" ||
-          //   startDate.toString() === "Invalid Date" ||
-          //   endDate.toString() === "Invalid Date"
-          // ) {
-          //   console.error("Invalid date format for startAt or endAt");
-          //   return prev;
-          // }
 
           const timeInSeconds =
             status.remainingTime !== null
