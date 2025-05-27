@@ -40,10 +40,12 @@ export default function ModalColorPicker({
     };
   }, [open]);
 
-  const handleColorSelect = (color: string): void => {
+  const handleColorSelect = (color: string, close: boolean): void => {
     setSelectedColor(color);
     onChange({ target: { value: color } });
-    setOpen(false);
+    if (close) {
+      setOpen(false);
+    }
   };
 
   return (
@@ -76,7 +78,7 @@ export default function ModalColorPicker({
                 className={`size-6 rounded-full flex items-center justify-center cursor-pointer`}
                 style={{ backgroundColor: color.hex }}
                 onClick={() => {
-                  handleColorSelect(color.hex);
+                  handleColorSelect(color.hex, true);
                 }}
                 aria-label={color.name}
                 title={color.name}
@@ -99,6 +101,16 @@ export default function ModalColorPicker({
                 )}
               </button>
             ))}
+            <input
+              type="color"
+              value={selectedColor}
+              onChange={(e) => {
+                e.preventDefault();
+                handleColorSelect(e.target.value, false);
+              }}
+              className="col-span-2 w-full h-8 rounded-md cursor-pointer"
+              aria-label="Custom color input"
+            />
           </div>
         </div>
       )}
