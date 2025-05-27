@@ -19,7 +19,7 @@ export default async function Pricing() {
         mejor, organizarte y alcanzar tus objetivos. <br />
         Te avisaremos en cuanto esté disponible. Muchas gracias.
       </p>
-      <ButtonSend profile={profile ?? ({} as ProfileType)} />
+      <ButtonSend profile={profile.res as ProfileType} />
       <svg
         width="1440"
         height="1024"

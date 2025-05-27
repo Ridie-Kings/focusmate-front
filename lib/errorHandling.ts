@@ -3,7 +3,7 @@ export class AppError extends Error {
     message: string,
     public code: string,
     public status: number = 500,
-    public data?: any,
+    public data?: Record<string, unknown> | null,
     public retryable: boolean = false
   ) {
     super(message);
@@ -12,7 +12,7 @@ export class AppError extends Error {
 }
 
 export class ValidationError extends AppError {
-  constructor(message: string, data?: any) {
+  constructor(message: string, data?: Record<string, unknown> | null) {
     super(message, "VALIDATION_ERROR", 400, data, false);
     this.name = "ValidationError";
   }

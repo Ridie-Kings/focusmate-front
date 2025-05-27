@@ -48,7 +48,7 @@ export default function CommandsUtils() {
                 if (!status) setStartedElement(true);
               }
             } catch (error) {
-              console.error("Error al iniciar pomodoro:", error.message);
+              console.error("Error al iniciar pomodoro:", error);
             }
           } else if (status) {
             try {
@@ -79,7 +79,7 @@ export default function CommandsUtils() {
                 });
               }
             } catch (error) {
-              console.error("Error al detener pomodoro:", error.message);
+              console.error("Error al detener pomodoro:", error);
             }
           }
           resetTimer();

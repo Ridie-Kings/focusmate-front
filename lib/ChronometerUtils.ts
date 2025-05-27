@@ -21,10 +21,7 @@ export default function ChronometerUtils({
       try {
         localStorage.setItem("chronometer_isPlay", newState.toString());
       } catch (error) {
-        console.error(
-          "Error saving play state to localStorage:",
-          error.message
-        );
+        console.error("Error saving play state to localStorage:", error);
       }
       return newState;
     });
@@ -41,7 +38,7 @@ export default function ChronometerUtils({
       localStorage.setItem("chronometer_seconds", "0");
       localStorage.setItem("chronometer_isPlay", "false");
     } catch (error) {
-      console.error("Error resetting localStorage:", error.message);
+      console.error("Error resetting localStorage:", error);
     }
   }, []);
   return {

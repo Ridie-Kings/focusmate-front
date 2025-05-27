@@ -85,7 +85,7 @@ export default function HabitsUtils({
           setHabits((prev) => [...prev, habitToRemove]);
         }
       } catch (error) {
-        console.error("Error deleting habit:", error.message);
+        console.error("Error deleting habit:", error);
         setHabits((prev) => [...prev, habitToRemove]);
       }
     },

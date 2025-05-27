@@ -4,5 +4,5 @@ import SupportClient from "./Support/SupportClient";
 export default async function Support() {
   const profile = await getMyProfile();
 
-  return <SupportClient profile={profile} />;
+  return <SupportClient profile={profile.res} />;
 }

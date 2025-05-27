@@ -35,11 +35,11 @@ export default async function NavBar() {
         <Navigation />
         {/* <ThemeToggle /> */}
         <div className="flex flex-col w-full items-center gap-2">
-          <PlanButtons profile={profile} />
+          <PlanButtons profile={profile.res} />
           <LogoutButtons handleLogout={handleLogout} />
         </div>
       </header>
-      <MobileMenu profile={profile} handleLogout={handleLogout} />
+      <MobileMenu profile={profile.res} handleLogout={handleLogout} />
     </>
   );
 }
