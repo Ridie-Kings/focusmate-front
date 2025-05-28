@@ -47,10 +47,12 @@ export default function ModalPomodoroSettings({
           workDuration: settings.pomodoroDuration * 60,
         },
       });
-      addToast({
-        type: "success",
-        message: "Pomodoro actualizado correctamente",
-      });
+      if (res.success) {
+        addToast({
+          type: "success",
+          message: "Pomodoro actualizado correctamente",
+        });
+      }
     } else {
       const res = await CreatePomodoro({
         shortBreak: settings.shortBreakDuration * 60,
@@ -80,6 +82,7 @@ export default function ModalPomodoroSettings({
         onChange={(e) =>
           handleChange("pomodoroDuration", Number(e.target.value))
         }
+        className="flex-row grid grid-cols-2"
       />
       <Input
         label="Duración del Descanso Corto (minutos)"
@@ -89,6 +92,7 @@ export default function ModalPomodoroSettings({
         onChange={(e) =>
           handleChange("shortBreakDuration", Number(e.target.value))
         }
+        className="flex-row grid grid-cols-2"
       />
       <Input
         label="Duración del Descanso Largo (minutos)"
@@ -98,6 +102,7 @@ export default function ModalPomodoroSettings({
         onChange={(e) =>
           handleChange("longBreakDuration", Number(e.target.value))
         }
+        className="flex-row grid grid-cols-2"
       />
       <Input
         label="Número de Rondas"
@@ -105,6 +110,7 @@ export default function ModalPomodoroSettings({
         type="number"
         value={settings.rounds.toString()}
         onChange={(e) => handleChange("rounds", Number(e.target.value))}
+        className="flex-row grid grid-cols-2"
       />
       <BtnSend
         setIsOpen={setIsOpen}

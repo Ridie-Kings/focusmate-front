@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
+import Modal from "@/components/Elements/General/Modal";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -28,7 +29,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const token = await getToken();
-
   if (!token) {
     redirect("/login");
   }
@@ -50,12 +50,7 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
-        {/* <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          > */}
+        <Modal />
         <NavBar />
         <main className="flex flex-col min-h-screen md:w-auto w-screen h-full flex-1">
           <TopBar />
@@ -63,7 +58,6 @@ export default async function RootLayout({
           <PopUp />
           <PWAInstallPrompt />
         </main>
-        {/* </ThemeProvider> */}
       </body>
     </html>
   );

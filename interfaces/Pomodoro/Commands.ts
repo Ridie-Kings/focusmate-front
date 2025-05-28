@@ -3,7 +3,8 @@ export type CommandAction =
   | "pause"
   | "reset"
   | "share"
-  | "openFullScreen";
+  | "openFullScreen"
+  | "settings";
 
 export type CommandButton = {
   id: CommandAction;

@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
+import Modal from "@/components/Elements/General/Modal";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -47,19 +48,13 @@ export default async function RootLayout({
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        {/* <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        > */}
         <NavBar />
         <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
           {children}
           <PopUp />
           <PWAInstallPrompt />
         </main>
-        {/* </ThemeProvider> */}
+        <Modal />
       </body>
     </html>
   );
