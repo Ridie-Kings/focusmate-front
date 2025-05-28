@@ -1,19 +1,12 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState, useMemo } from "react";
 import { AlertCircle } from "lucide-react";
 
 import BodyInputs from "./ModalEvent/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import ModalEventUtils from "@/lib/ModalEventUtils";
 
@@ -35,7 +28,7 @@ const DEFAULT_TASK: tempTaskType = {
 };
 
 export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
-  const { setEvents, setTasks } = useContext(DashboardContext);
+  const { setEvents, setTasks } = useDashboardStore();
   const initialDate = useMemo(
     () => (events instanceof Date ? events : new Date()),
     [events]

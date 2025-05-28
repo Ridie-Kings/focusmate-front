@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useToast } from "@/components/Provider/ToastProvider";
 import Button from "@/components/Reusable/Button";
 import { X } from "lucide-react";
+import { useToastStore } from "@/stores/toastStore";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -14,7 +14,7 @@ export default function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
-  const { addToast } = useToast();
+  const { addToast } = useToastStore();
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {

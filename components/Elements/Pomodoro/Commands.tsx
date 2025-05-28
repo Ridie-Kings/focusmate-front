@@ -1,14 +1,14 @@
 "use client";
 import { CommandAction, CommandsProps } from "@/interfaces/Pomodoro/Commands";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import CommandsHook from "@/hooks/Pomodoro/Commands";
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
-import { TimerContext } from "@/components/Provider/TimerProvider";
+import { useTimerStore } from "@/stores/timerStore";
+import { useWebSocketStore } from "@/stores/websocketStore";
 import CommandsUtils from "@/lib/Pomodoro/CommandsUtils";
 
 export default function Commands({ fullScreen = false }: CommandsProps) {
-  const { isPlay, menu, isType, startedElement } = useContext(TimerContext);
-  const { status } = useContext(SocketIOContext);
+  const { isPlay, menu, isType, startedElement } = useTimerStore();
+  const { status } = useWebSocketStore();
   const { handleClick } = CommandsUtils();
 
   const [showTooltip, setShowTooltip] = useState<boolean>(false);

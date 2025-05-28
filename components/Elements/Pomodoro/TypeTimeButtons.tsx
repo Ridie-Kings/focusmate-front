@@ -1,9 +1,8 @@
 "use client";
-import { TimerContext } from "@/components/Provider/TimerProvider";
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
-import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
+import { useTimerStore } from "@/stores/timerStore";
 
 type TimerItem = {
   id: number;
@@ -12,99 +11,35 @@ type TimerItem = {
 };
 
 export default function TypeTimeButtons() {
-  const {
-    startedElement,
-    setMenu,
-    setTime,
-    menu,
-    isType,
-  } = useContext(TimerContext);
+  const { menu, setMenu } = useTimerStore();
 
-  const menuTimes = useMemo<Record<chipsIconType, TimeType>>(
-    () => ({
-      enfoque: { hours: 0, min: 25, seg: 0 },
-      "D/Corto": { hours: 0, min: 5, seg: 0 },
-      "D/Largo": { hours: 0, min: 15, seg: 0 },
-    }),
+  const timerItems: TimerItem[] = useMemo(
+    () => [
+      { id: 1, label: "Enfoque", type: "enfoque" },
+      { id: 2, label: "Descanso Corto", type: "D/Corto" },
+      { id: 3, label: "Descanso Largo", type: "D/Largo" },
+    ],
     []
   );
 
-  const timerItems = useMemo(() => {
-    if (isType === "pomodoro") {
-      return [
-        {
-          id: 1,
-          label: "Concentración",
-          type: "enfoque" as chipsIconType,
-        },
-        {
-          id: 2,
-          label: "Descanso Corto",
-          type: "D/Corto" as chipsIconType,
-        },
-        {
-          id: 3,
-          label: "Descanso largo",
-          type: "D/Largo" as chipsIconType,
-        },
-      ];
-    } else if (isType === "cronometro") {
-      return [
-        {
-          id: 1,
-          label: "Cronómetro",
-          type: "cronometro" as chipsIconType,
-        },
-        {
-          id: 2,
-          label: "Temporizador",
-          type: "temp" as chipsIconType,
-        },
-      ];
-    }
-    return [];
-  }, [isType]);
-
-  // useEffect(() => {
-  //   setMenu("enfoque");
-  //   setTime((prev) => ({ ...prev, initialTime: menuTimes["enfoque"] }));
-  //   toggleChronometerMode(false);
-  // }, [isType]);
-
-  const handleTimerSelection = (item: TimerItem) => {
-    setMenu(item.type);
-
-    setTime((prev) => ({ ...prev, initialTime: menuTimes[item.type] }));
-    // toggleChronometerMode(item.type === "cronometro");
-  };
-
-  if (timerItems.length === 0) {
-    return null;
-  }
-
   return (
-    <ul className="flex flex-col xl:flex-row mx-auto gap-2">
+    <div className="flex gap-2">
       {timerItems.map((item) => (
         <Button
-          key={item.id}
-          size="large"
-          type="button"
           button="pomodoro"
-          state={
-            startedElement && item.type === menu
-              ? "disabled-pressed"
-              : startedElement
-              ? "disabled"
-              : item.type === menu
-              ? "pressed"
-              : "enabled"
-          }
-          onClick={() => handleTimerSelection(item)}
-          aria-label={item.label}
+          type="button"
+          size="large"
+          key={item.id}
+          onClick={() => setMenu(item.type)}
+          className={`${
+            menu === item.type
+              ? "bg-primary-500 text-white"
+              : "bg-secondary-100 text-primary-500"
+          }`}
         >
           {item.label}
         </Button>
       ))}
-    </ul>
+    </div>
   );
 }

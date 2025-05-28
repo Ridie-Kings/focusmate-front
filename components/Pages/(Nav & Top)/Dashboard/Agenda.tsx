@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import debounce from "lodash/debounce";
 
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
@@ -8,12 +8,12 @@ import Timeline from "./Agenda/Timeline";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { useDashboardStore } from "@/stores/dashboardStore";
 import { format } from "date-fns";
 
 export default function Agenda() {
   const { events, setEvents, setTasks, loadingEvents, setLoadingEvents } =
-    useContext(DashboardContext);
+    useDashboardStore();
   const [date, setDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {

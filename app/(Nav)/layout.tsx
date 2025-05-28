@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
-import TimerProvider from "@/components/Provider/TimerProvider";
 import { getToken } from "@/lib";
-import ModalProvider from "@/components/Provider/ModalProvider";
 import { redirect } from "next/navigation";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
-import ToastProvider from "@/components/Provider/ToastProvider";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 
 const poppinsSans = Poppins({
@@ -56,18 +53,12 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         > */}
-        <ModalProvider>
-          <ToastProvider>
-            <TimerProvider>
-              <NavBar />
-              <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
-                {children}
-                <PopUp />
-                <PWAInstallPrompt />
-              </main>
-            </TimerProvider>
-          </ToastProvider>
-        </ModalProvider>
+        <NavBar />
+        <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
+          {children}
+          <PopUp />
+          <PWAInstallPrompt />
+        </main>
         {/* </ThemeProvider> */}
       </body>
     </html>

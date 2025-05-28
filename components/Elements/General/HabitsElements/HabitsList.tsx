@@ -1,9 +1,8 @@
 import { Pen, Trash2 } from "lucide-react";
-import { useContext } from "react";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import HabitsUtils from "@/lib/HabitsUtils";
 import Menu from "@/components/Reusable/Menu";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 import renderIconHabit from "@/config/RenderIconHabit";
 
 interface HabitsListProps {
@@ -21,7 +20,7 @@ const HabitItem = ({
   onRemove: (id: string) => void;
 }) => {
   const { _id, status, type, name, description } = habit;
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
 
   return (
     <li className="flex items-center gap-4">

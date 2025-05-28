@@ -1,12 +1,12 @@
 "use client";
 import GreenLogo from "@/components/Elements/Svg/Logos/GreenLogo";
-import { ToastContext } from "@/components/Provider/ToastProvider";
+import { useToastStore } from "@/stores/toastStore";
 import Button from "@/components/Reusable/Button";
 import Input from "@/components/Reusable/Input";
 import { forgotPassword } from "@/services/Auth/forgotPassword";
 import { resetPassword } from "@/services/Auth/resetPassword";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 export default function PasswordRecovery() {
   const [email, setEmail] = useState<string>("");
@@ -14,7 +14,7 @@ export default function PasswordRecovery() {
   const [newPassword, setNewPassword] = useState<string>("");
   const [newRepeatPassword, setNewRepeatPassword] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
-  const { addToast } = useContext(ToastContext);
+  const { addToast } = useToastStore();
   const router = useRouter();
 
   const handleRequestPassword = async () => {

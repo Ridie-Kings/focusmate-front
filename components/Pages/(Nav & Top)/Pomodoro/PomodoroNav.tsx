@@ -1,11 +1,10 @@
 "use client";
-import { TimerContext } from "@/components/Provider/TimerProvider";
+import { useTimerStore } from "@/stores/timerStore";
 import { Clock, TimerIcon } from "lucide-react";
-import { useContext } from "react";
 
 export default function PomodoroNav() {
   const { startedElement, isType, setIsType, toggleChronometerMode } =
-    useContext(TimerContext);
+    useTimerStore();
 
   const handleChangeType = (
     e: "pomodoro" | "cronometro" | "temporizador",

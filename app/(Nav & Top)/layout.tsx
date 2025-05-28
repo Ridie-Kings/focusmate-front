@@ -3,15 +3,10 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import NavBar from "@/components/Layouts/NavBar";
 import TopBar from "@/components/Layouts/TopBar";
-import TimerProvider from "@/components/Provider/TimerProvider";
 import { getToken } from "@/lib";
-import ModalProvider from "@/components/Provider/ModalProvider";
-import DashboardProvider from "@/components/Provider/DashboardProvider";
 import { redirect } from "next/navigation";
-import { SocketIOProvider } from "@/components/Provider/WebsocketProvider";
 import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
-import ToastProvider from "@/components/Provider/ToastProvider";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 
 const poppinsSans = Poppins({
@@ -61,23 +56,13 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           > */}
-        <SocketIOProvider token={token ?? ""}>
-          <DashboardProvider>
-            <ModalProvider>
-              <ToastProvider>
-                <TimerProvider>
-                  <NavBar />
-                  <main className="flex flex-col min-h-screen md:w-auto w-screen h-full flex-1">
-                    <TopBar />
-                    {children}
-                    <PopUp />
-                    <PWAInstallPrompt />
-                  </main>
-                </TimerProvider>
-              </ToastProvider>
-            </ModalProvider>
-          </DashboardProvider>
-        </SocketIOProvider>
+        <NavBar />
+        <main className="flex flex-col min-h-screen md:w-auto w-screen h-full flex-1">
+          <TopBar />
+          {children}
+          <PopUp />
+          <PWAInstallPrompt />
+        </main>
         {/* </ThemeProvider> */}
       </body>
     </html>

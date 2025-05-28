@@ -1,8 +1,8 @@
 "use client";
 
 import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
-import { useContext, useState, useEffect } from "react";
-import { CalendarContext } from "@/components/Provider/CalendarProvider";
+import { useState, useEffect } from "react";
+import { useCalendarStore } from "@/stores/calendarStore";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
@@ -23,7 +23,7 @@ import ListEvents from "./Calendar/CalendarContainer/ListEvents";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<NavTypeType>("Día");
-  const { date, setDate } = useContext(CalendarContext);
+  const { date, setDate } = useCalendarStore();
   const [events, setEvents] = useState<TaskType[]>([]);
 
   useEffect(() => {
@@ -82,6 +82,7 @@ export default function CalendarPage() {
           setDate={setDate}
           date={date ?? new Date()}
           inView
+          btn
         />
         <ListEvents items={events} />
       </div>

@@ -1,10 +1,10 @@
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { AddTaskToPomodoro } from "@/services/Pomodoro/AddTaskToPomodoro";
 import { CreatePomodoro } from "@/services/Pomodoro/CreatePomodoro";
 import { RemoveTaskFromPomodoro } from "@/services/Pomodoro/RemoveTaskFromPomodoro";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction } from "react";
+import { useWebSocketStore } from "@/stores/websocketStore";
 
 export default function AddTaskUtils({
   status,
@@ -15,7 +15,7 @@ export default function AddTaskUtils({
   pomodoroId: string | undefined;
   setSelectedTask: Dispatch<SetStateAction<TaskType | null>>;
 }) {
-  const { handleJoinPomodoro } = useContext(SocketIOContext);
+  const { handleJoinPomodoro } = useWebSocketStore();
 
   const handleAddTaskToPomodoro = async (task: TaskType | null) => {
     if (!task) return;

@@ -5,8 +5,8 @@ import { AlarmCheck } from "lucide-react";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { format } from "date-fns";
 import Menu from "@/components/Reusable/Menu";
-import { Dispatch, SetStateAction, useContext } from "react";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { Dispatch, SetStateAction } from "react";
+import { useModalStore } from "@/stores/modalStore";
 import TaskUtils from "@/lib/Task/TaskUtils";
 
 type CardProps = {
@@ -16,7 +16,7 @@ type CardProps = {
 };
 
 const Card = ({ task, setTasks, handleDragStart }: CardProps) => {
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
   const { handleDeleteTask } = TaskUtils({
     setTasks,
   });
@@ -47,7 +47,11 @@ const Card = ({ task, setTasks, handleDragStart }: CardProps) => {
                 label: "Modificar",
                 onClick: () => setIsOpen({ text: "task", other: task }),
               },
-              { label: "Eliminar", color: "red", onClick: () => handleDeleteTask(task._id) },
+              {
+                label: "Eliminar",
+                color: "red",
+                onClick: () => handleDeleteTask(task._id),
+              },
             ]}
           />
         </div>

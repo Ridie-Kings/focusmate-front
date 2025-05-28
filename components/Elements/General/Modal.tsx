@@ -8,12 +8,12 @@ import ModalEvent from "./Modal/ModalEvent";
 import ModalContact from "./Modal/ModalContact";
 
 import { X } from "lucide-react";
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import ModalPomodoroSettings from "./Modal/ModalPomodoroSettings";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import ModalTaskKanban from "./Modal/ModalTaskKanban";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 
 interface ModalProps {
   isOpen: TypeIsOpen;
@@ -27,7 +27,7 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
-      setIsOpen({ text: "" });
+      setIsOpen({ text: "", other: null });
       setIsClosing(false);
     }, 300);
   };
@@ -68,10 +68,7 @@ export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
         return <ModalContact setIsOpen={setIsOpen} profile={profile} />;
       case "pomodoroSettings":
         return (
-          <ModalPomodoroSettings
-            status={isOpen.other as PomodoroStatusType}
-            setIsOpen={setIsOpen}
-          />
+          <ModalPomodoroSettings status={isOpen.other as PomodoroStatusType} />
         );
       default:
         return "";

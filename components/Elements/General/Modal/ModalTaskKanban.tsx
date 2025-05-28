@@ -6,7 +6,7 @@ import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import ModalTaskUtils from "@/lib/Task/ModalTaskUtils";
 
