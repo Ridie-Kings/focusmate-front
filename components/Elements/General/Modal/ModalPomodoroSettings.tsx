@@ -6,6 +6,7 @@ import { CreatePomodoro } from "@/services/Pomodoro/CreatePomodoro";
 import { UpdatePomodoroById } from "@/services/Pomodoro/UpdatePomodoroById";
 import { useWebSocketStore } from "@/stores/websocketStore";
 import { useModalStore } from "@/stores/modalStore";
+import { useToastStore } from "@/stores/toastStore";
 
 export default function ModalPomodoroSettings({
   status,
@@ -21,6 +22,7 @@ export default function ModalPomodoroSettings({
     longBreakDuration: status?.longBreak / 60 || 15,
     rounds: status?.cycles || 4,
   });
+  const { addToast } = useToastStore();
 
   const handleChange = (field: string, value: number) => {
     setSettings((prev) => ({
@@ -45,7 +47,10 @@ export default function ModalPomodoroSettings({
           workDuration: settings.pomodoroDuration * 60,
         },
       });
-      console.log(res);
+      addToast({
+        type: "success",
+        message: "Pomodoro actualizado correctamente",
+      });
     } else {
       const res = await CreatePomodoro({
         shortBreak: settings.shortBreakDuration * 60,
@@ -53,7 +58,14 @@ export default function ModalPomodoroSettings({
         cycles: settings.rounds,
         workDuration: settings.pomodoroDuration * 60,
       });
-      if (res.success) handleJoinPomodoro(res.res._id);
+
+      if (res.success) {
+        handleJoinPomodoro(res.res._id);
+        addToast({
+          type: "success",
+          message: "Pomodoro creado correctamente",
+        });
+      }
     }
     setIsOpen({ text: "" });
   };

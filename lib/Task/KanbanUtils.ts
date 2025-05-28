@@ -53,7 +53,6 @@ export default function KanbanUtils({
           copy.splice(insertAtIndex, 0, cardToTransfer);
         }
       }
-      console.log(cardToTransfer);
 
       setCards(copy);
       try {
