@@ -33,7 +33,7 @@ export default function HistoryTimer() {
   function groupPomodororosByDate(pomodoros: Pomodoro[]) {
     const grouped: Record<string, Pomodoro[]> = {};
 
-    pomodoros.forEach((pomodoro) => {
+    pomodoros.reverse().forEach((pomodoro) => {
       if (!pomodoro.startAt) return;
 
       const date = new Date(pomodoro.startAt);
@@ -85,6 +85,19 @@ export default function HistoryTimer() {
     );
   }
 
+  function formatDuration(totalSeconds: number) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+
+    if (minutes === 0) {
+      return `${seconds} segundo${seconds !== 1 ? "s" : ""}`;
+    } else if (seconds === 0) {
+      return `${minutes} minuto${minutes !== 1 ? "s" : ""}`;
+    } else {
+      return `${minutes} min ${seconds} seg`;
+    }
+  }
+
   return (
     <div
       style={{ maxHeight: "calc(100vh - 173px)" }}
@@ -116,7 +129,16 @@ export default function HistoryTimer() {
                 </span>
                 <span className="mx-3">-</span>
                 <span className="text-gray-600">
-                  {pomodoro.workDuration / 60} minutos
+                  {(() => {
+                    const totalSeconds =
+                      pomodoro.currentCycle !== 0
+                        ? (pomodoro.workDuration / 60) *
+                          pomodoro.currentCycle *
+                          60 // Convertir a segundos
+                        : pomodoro.workDuration - pomodoro.remainingTime;
+
+                    return formatDuration(totalSeconds);
+                  })()}
                 </span>
                 <span className="mx-3">-</span>
                 <span className="text-gray-600">

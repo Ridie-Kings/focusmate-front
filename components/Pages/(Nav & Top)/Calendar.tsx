@@ -82,6 +82,7 @@ export default function CalendarPage() {
           setDate={setDate}
           date={date ?? new Date()}
           inView
+          btn
         />
         <ListEvents items={events} />
       </div>
