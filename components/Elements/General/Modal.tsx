@@ -1,6 +1,5 @@
 "use client";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
@@ -13,15 +12,11 @@ import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import ModalTaskKanban from "./Modal/ModalTaskKanban";
-import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
+import { useModalStore } from "@/stores/modalStore";
 
-interface ModalProps {
-  isOpen: TypeIsOpen;
-  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
-  profile: ProfileType | null;
-}
+export default function Modal() {
+  const { isOpen, setIsOpen, profile } = useModalStore();
 
-export default function Modal({ isOpen, setIsOpen, profile }: ModalProps) {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {

@@ -34,7 +34,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
             <li key={button.id} id={button.id}>
               <button
                 onClick={() =>
-                  handleClick(button.id as CommandAction, button.disabled)
+                  handleClick(button.id as CommandAction)
                 }
                 onMouseEnter={() =>
                   button.id === "openFullScreen" && setShowTooltip(true)

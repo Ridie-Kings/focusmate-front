@@ -19,9 +19,7 @@ export default function CommandsUtils() {
   const { addToast } = useToastStore();
 
   const handleClick = useCallback(
-    async (action: CommandAction, disabled: boolean) => {
-      if (disabled) return;
-
+    async (action: CommandAction) => {
       if (isChronometer) {
         if (action === "play") {
           togglePlay();
@@ -46,6 +44,8 @@ export default function CommandsUtils() {
               message: "Error al iniciar el pomodoro",
             });
           }
+        } else if (action === "settings") {
+          setIsOpen({ text: "pomodoroSettings" });
         }
         return;
       }

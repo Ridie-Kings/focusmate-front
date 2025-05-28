@@ -3,7 +3,14 @@ import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { StatusType } from "@/interfaces/Task/TaskType";
 
 export type TypeIsOpen = {
-  text: string;
+  text:
+    | "task"
+    | "habit"
+    | "event"
+    | "contact"
+    | "pomodoroSettings"
+    | "taskKanban"
+    | "";
   other?: any;
 };
 export type ModalContextType = {

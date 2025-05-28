@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import Carousel from "@/components/Layouts/Marquee";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
+import Modal from "@/components/Elements/General/Modal";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -31,6 +32,7 @@ export default function RootLayout({
           {children}
           <PWAInstallPrompt />
         </main>
+        <Modal />
       </body>
     </html>
   );
