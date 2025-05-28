@@ -89,17 +89,6 @@ export function useTimer({
               ? differenceInSeconds(endDate, startDate)
               : differenceInSeconds(endDate, new Date());
 
-          console.log(
-            "endDate, new Date()",
-            differenceInSeconds(endDate, new Date())
-          );
-          console.log(
-            "endDate, startDate",
-            differenceInSeconds(endDate, startDate)
-          );
-          console.log("status.remainingTime", status.remainingTime);
-          console.log("timeInSeconds", timeInSeconds);
-
           return {
             ...prev,
             initialTime: timeUtils.secondsToTime(status.workDuration),
@@ -117,7 +106,7 @@ export function useTimer({
 
       if (status?.pausedState === "paused") setIsPlay(false);
       else if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
-    } else if (status.state === "idle" || status.state === "finished") {
+    } else if (status.state === "idle") {
       setMenu("enfoque");
       setIsPlay(false);
       setTime((prev) => ({
@@ -128,7 +117,11 @@ export function useTimer({
       setStartedElement(false);
     }
 
-    if (status.state !== "idle" && status.state !== "finished")
+    if (
+      status.state !== "idle" &&
+      status.state !== "finished" &&
+      status.state !== "completed"
+    )
       setStartedElement(true);
   }, [
     status,
@@ -160,10 +153,7 @@ export function useTimer({
         setTime((prev) => {
           const currentSeconds = timeUtils.timeToSeconds(prev.currentTime);
 
-          console.log(currentSeconds);
           if (currentSeconds <= 1) {
-            console.log("playEndSound");
-
             playEndSound();
             clearInterval(intervalRef.current as NodeJS.Timeout);
             intervalRef.current = null;
@@ -180,6 +170,13 @@ export function useTimer({
 
     if (status?.state === "completed" || status?.state === "finished") {
       resetTimer();
+      setTime((prev) => ({
+        ...prev,
+        initialTime: timeUtils.secondsToTime(1500),
+        currentTime: timeUtils.secondsToTime(1500),
+      }));
+      setCycles(0);
+      setTotalCycles(4);
       setStatus(null);
     }
 

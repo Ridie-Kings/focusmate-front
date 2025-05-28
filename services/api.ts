@@ -16,8 +16,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-console.log("api", api);
-
 api.interceptors.request.use(async (config) => {
   const token = await getToken();
   if (token) {
