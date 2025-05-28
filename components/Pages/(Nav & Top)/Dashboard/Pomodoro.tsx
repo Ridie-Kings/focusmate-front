@@ -1,12 +1,11 @@
 "use client";
 import TemplateDashboard from "../../../Elements/General/TemplateBox";
-import Timer from "./Pomodoro/Timer";
-import { useContext } from "react";
-import { TimerContext } from "@/components/Provider/TimerProvider";
+import PomodoroContainer from "./Pomodoro/PomodoroContainer";
 import Commands from "@/components/Elements/Pomodoro/Commands";
 import { Clock, Timer as TimerIcon } from "lucide-react";
 import AddTask from "./Pomodoro/AddTask";
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
+import { useTimerStore } from "@/stores/timerStore";
+import { useWebSocketStore } from "@/stores/websocketStore";
 
 export default function Pomodoro() {
   const {
@@ -15,9 +14,9 @@ export default function Pomodoro() {
     startedElement,
     toggleChronometerMode,
     isChronometer,
-  } = useContext(TimerContext);
+  } = useTimerStore();
 
-  const { status } = useContext(SocketIOContext);
+  const { status } = useWebSocketStore();
 
   const handleChangeType = (
     e: "pomodoro" | "cronometro" | "temporizador",
@@ -54,7 +53,7 @@ export default function Pomodoro() {
         // },
       ]}
     >
-      <Timer />
+      <PomodoroContainer size="medium" />
       {!isChronometer && <AddTask status={status} pomodoroId={status?._id} />}
       <Commands fullScreen={false} />
     </TemplateDashboard>

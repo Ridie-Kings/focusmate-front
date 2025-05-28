@@ -1,20 +1,19 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
 import Input from "@/components/Reusable/Input";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
+import { useState } from "react";
 import BtnSend from "./Modal/BtnSend";
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import { CreatePomodoro } from "@/services/Pomodoro/CreatePomodoro";
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
 import { UpdatePomodoroById } from "@/services/Pomodoro/UpdatePomodoroById";
+import { useWebSocketStore } from "@/stores/websocketStore";
+import { useModalStore } from "@/stores/modalStore";
 
 export default function ModalPomodoroSettings({
   status,
-  setIsOpen,
 }: {
   status: PomodoroStatusType;
-  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 }) {
-  const { handleJoinPomodoro } = useContext(SocketIOContext);
+  const { handleJoinPomodoro } = useWebSocketStore();
+  const { setIsOpen } = useModalStore();
   const [isLoading, setIsLoading] = useState(false);
   const [settings, setSettings] = useState({
     pomodoroDuration: status?.workDuration / 60 || 25,
@@ -60,69 +59,47 @@ export default function ModalPomodoroSettings({
   };
 
   return (
-    <form className="w-full flex flex-col gap-4">
-      <p className="text-center font-semibold text-2xl">
-        Configuración del pomodoro
-      </p>
-      <div className="flex items-center justify-between w-full gap-3">
-        <p className="flex-1">Duración del pomodoro:</p>
-        <Input
-          name="pomodoroDuration"
-          type="text"
-          maxLength={3}
-          defaultValue={settings.pomodoroDuration.toString()}
-          placeholder="25"
-          onChange={(e) =>
-            handleChange("pomodoroDuration", parseInt(e.target.value))
-          }
-        />
-      </div>
-      <div className="flex items-center justify-between w-full gap-3">
-        <p className="flex-1">Duración del descanso corto:</p>
-        <Input
-          name="shortBreakDuration"
-          type="text"
-          maxLength={3}
-          defaultValue={settings.shortBreakDuration.toString()}
-          placeholder="5"
-          onChange={(e) =>
-            handleChange("shortBreakDuration", parseInt(e.target.value))
-          }
-        />
-      </div>
-      <div className="flex items-center justify-between w-full gap-3">
-        <p className="flex-1">Duración del descanso largo:</p>
-        <Input
-          name="longBreakDuration"
-          type="text"
-          maxLength={3}
-          defaultValue={settings.longBreakDuration.toString()}
-          placeholder="15"
-          onChange={(e) =>
-            handleChange("longBreakDuration", parseInt(e.target.value))
-          }
-        />
-      </div>
-      <div className="flex items-center justify-between w-full gap-3">
-        <p className="flex-1">Número de vueltas:</p>
-        <Input
-          name="rounds"
-          type="text"
-          maxLength={2}
-          defaultValue={settings.rounds.toString()}
-          placeholder="4"
-          onChange={(e) => handleChange("rounds", parseInt(e.target.value))}
-        />
-      </div>
-      <div className="mt-4">
-        <BtnSend
-          text={"Modificar"}
-          loadingText={"Modificando..."}
-          handleClick={handleSubmit}
-          isLoading={isLoading}
-          setIsOpen={setIsOpen}
-        />
-      </div>
-    </form>
+    <div className="flex flex-col gap-4">
+      <Input
+        label="Duración del Pomodoro (minutos)"
+        type="number"
+        name="pomodoroDuration"
+        value={settings.pomodoroDuration.toString()}
+        onChange={(e) =>
+          handleChange("pomodoroDuration", Number(e.target.value))
+        }
+      />
+      <Input
+        label="Duración del Descanso Corto (minutos)"
+        type="number"
+        name="shortBreakDuration"
+        value={settings.shortBreakDuration.toString()}
+        onChange={(e) =>
+          handleChange("shortBreakDuration", Number(e.target.value))
+        }
+      />
+      <Input
+        label="Duración del Descanso Largo (minutos)"
+        type="number"
+        name="longBreakDuration"
+        value={settings.longBreakDuration.toString()}
+        onChange={(e) =>
+          handleChange("longBreakDuration", Number(e.target.value))
+        }
+      />
+      <Input
+        label="Número de Rondas"
+        name="rounds"
+        type="number"
+        value={settings.rounds.toString()}
+        onChange={(e) => handleChange("rounds", Number(e.target.value))}
+      />
+      <BtnSend
+        setIsOpen={setIsOpen}
+        handleClick={handleSubmit}
+        isLoading={isLoading}
+        text="Guardar"
+      />
+    </div>
   );
 }

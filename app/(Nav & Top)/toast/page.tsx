@@ -1,8 +1,8 @@
 "use client";
-import { useToast } from "@/components/Provider/ToastProvider";
+import { useToastStore } from "@/stores/toastStore";
 
 export default function ToastDemo() {
-  const { addToast } = useToast();
+  const { addToast } = useToastStore();
 
   const showSuccessToast = () => {
     addToast({

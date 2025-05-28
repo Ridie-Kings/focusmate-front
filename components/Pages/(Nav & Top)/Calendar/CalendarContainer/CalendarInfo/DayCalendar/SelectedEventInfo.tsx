@@ -5,6 +5,7 @@ import { Pen } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import Menu from "@/components/Reusable/Menu";
+import Image from "next/image";
 
 const mockParticipants = [
   { name: "Alice", avatar: "https://randomuser.me/api/portraits/women/1.jpg" },
@@ -17,7 +18,6 @@ export default function SelectedEventInfo({
 }: {
   selectedEvent: TaskType | null;
 }) {
-
   return (
     <div
       className={`h-full bg-white dark:bg-gray-900 rounded-2xl shadow-lg transition-all duration-300 flex-nowrap ${
@@ -67,11 +67,13 @@ export default function SelectedEventInfo({
             </div>
             <div className="flex items-center -space-x-2">
               {mockParticipants.map((p, i) => (
-                <img
+                <Image
                   key={i}
                   src={p.avatar}
                   alt={p.name}
                   className="w-12 h-12 rounded-full border-2 border-white dark:border-gray-900 -ml-2 first:ml-0"
+                  width={48}
+                  height={48}
                 />
               ))}
               <button className="w-12 h-12 rounded-full border border-secondary-600 flex items-center justify-center text-secondary-600 bg-white">

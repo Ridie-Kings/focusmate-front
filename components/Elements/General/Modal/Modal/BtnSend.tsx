@@ -1,5 +1,5 @@
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 import Button from "@/components/Reusable/Button";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { Dispatch, SetStateAction } from "react";
 
 export default function BtnSend({

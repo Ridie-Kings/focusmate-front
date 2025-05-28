@@ -1,6 +1,6 @@
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
@@ -9,14 +9,7 @@ import TaskUtils from "@/lib/Task/TaskUtils";
 import { getHours, getMinutes, isSameDay, format } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
 
-import {
-  SetStateAction,
-  Dispatch,
-  useRef,
-  useEffect,
-  useContext,
-  useState,
-} from "react";
+import { SetStateAction, Dispatch, useRef, useEffect, useState } from "react";
 import SelectedEventInfo from "./DayCalendar/SelectedEventInfo";
 
 const getPosition = (date: Date) => {
@@ -38,7 +31,7 @@ const DayCalendarItem = ({
   setSelectedEvent: Dispatch<SetStateAction<TaskType | null>>;
 }) => {
   const scrollCalendar = useRef<HTMLDivElement>(null);
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
 
   const { handleDeleteTask } = TaskUtils({

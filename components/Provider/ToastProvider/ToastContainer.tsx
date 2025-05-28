@@ -1,8 +1,8 @@
 import { CircleCheck, CircleX, Info, TriangleAlert } from "lucide-react";
-import { ToastItem, useToast } from "../ToastProvider";
+import { ToastItem, useToastStore } from "@/stores/toastStore";
 
 const ToastContainer = () => {
-  const { toasts, removeToast } = useToast();
+  const { toasts, removeToast } = useToastStore();
 
   if (toasts.length === 0) return null;
 

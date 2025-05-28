@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 
 const benefits = [
@@ -48,7 +49,7 @@ export default function Benefits() {
         <div className="mt-20 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
           <div className="relative animate-fade-in">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500">
-              <img
+              <Image
                 className="w-full h-auto transform hover:scale-105 transition-transform duration-700"
                 src="/images/dashboard-preview.png"
                 alt="Dashboard Preview"

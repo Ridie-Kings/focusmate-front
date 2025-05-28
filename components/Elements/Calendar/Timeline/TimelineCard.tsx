@@ -1,10 +1,10 @@
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
 import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
 import TaskUtils from "@/lib/Task/TaskUtils";
 import { Check, Pen, Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export default function TimelineCard({
   event,
@@ -20,7 +20,7 @@ export default function TimelineCard({
     setEvents,
     setTasks,
   });
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
 
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
   const darkerColor = getDarkerColor(event.color);

@@ -1,5 +1,4 @@
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
-import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { tempTaskType, TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 import { createTask } from "@/services/Task/createTask";

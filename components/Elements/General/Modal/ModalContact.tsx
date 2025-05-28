@@ -8,7 +8,7 @@ import {
 import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 
 interface ContactForm {
   title: string;

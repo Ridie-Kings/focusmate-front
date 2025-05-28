@@ -12,13 +12,7 @@ import {
   format,
 } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
-import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useContext,
-  useEffect,
-} from "react";
+import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
 import Divider from "@/components/Elements/General/Divider";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
@@ -26,7 +20,7 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import Menu from "@/components/Reusable/Menu";
 import AgendaUtils from "@/lib/AgendaUtils";
 import TaskUtils from "@/lib/Task/TaskUtils";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 
 const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];
 
@@ -48,7 +42,7 @@ const EventItem = ({
   eventStartPosition: number;
   eventEndPosition: number;
 }) => {
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
   const { isLightColor } = AgendaUtils();
 
   const { handleDeleteTask } = TaskUtils({

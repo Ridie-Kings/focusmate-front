@@ -1,8 +1,7 @@
 "use client";
 import { MailWarning, Lightbulb } from "lucide-react";
 import Button from "@/components/Reusable/Button";
-import { useContext } from "react";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
 interface SupportClientProps {
@@ -10,7 +9,7 @@ interface SupportClientProps {
 }
 
 export default function SupportClient({ profile }: SupportClientProps) {
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
   console.info(profile);
   return (
     <div className="flex flex-col gap-8 p-8 w-full justify-center items-center">

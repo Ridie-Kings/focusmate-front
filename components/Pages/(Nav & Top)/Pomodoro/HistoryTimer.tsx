@@ -4,6 +4,7 @@ import { GetAllMyPomodoro } from "@/services/Pomodoro/GetAllMyPomodoro";
 import { Calendar, Clock } from "lucide-react";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
 import LoadingStatus from "@/components/Elements/General/LoadingStatus";
+import HistoryTimerUtils from "@/lib/HistoryTimerUtils";
 
 export default function HistoryTimer() {
   const [historyPomodoro, setHistoryPomodoro] = useState<Pomodoro[]>([]);
@@ -11,6 +12,13 @@ export default function HistoryTimer() {
     Record<string, Pomodoro[]>
   >({});
   const [isLoading, setIsLoading] = useState(true);
+
+  const {
+    formatDateToSpanish,
+    formatTime,
+    groupPomodororosByDate,
+    formatDuration,
+  } = HistoryTimerUtils();
 
   useEffect(() => {
     async function fetchData() {
@@ -30,45 +38,6 @@ export default function HistoryTimer() {
     fetchData();
   }, []);
 
-  function groupPomodororosByDate(pomodoros: Pomodoro[]) {
-    const grouped: Record<string, Pomodoro[]> = {};
-
-    pomodoros.reverse().forEach((pomodoro) => {
-      if (!pomodoro.startAt) return;
-
-      const date = new Date(pomodoro.startAt);
-      const dateKey = date.toISOString().split("T")[0];
-
-      if (!grouped[dateKey]) {
-        grouped[dateKey] = [];
-      }
-
-      grouped[dateKey].push(pomodoro);
-    });
-
-    return Object.fromEntries(
-      Object.entries(grouped).sort((a, b) => b[0].localeCompare(a[0]))
-    );
-  }
-
-  function formatDateToSpanish(dateStr: string): string {
-    const date = new Date(dateStr);
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return date.toLocaleDateString("es-ES", options);
-  }
-
-  function formatTime(date: Date): string {
-    return date.toLocaleTimeString("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center flex-1">
@@ -85,19 +54,6 @@ export default function HistoryTimer() {
     );
   }
 
-  function formatDuration(totalSeconds: number) {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = Math.floor(totalSeconds % 60);
-
-    if (minutes === 0) {
-      return `${seconds} segundo${seconds !== 1 ? "s" : ""}`;
-    } else if (seconds === 0) {
-      return `${minutes} minuto${minutes !== 1 ? "s" : ""}`;
-    } else {
-      return `${minutes} min ${seconds} seg`;
-    }
-  }
-
   return (
     <div
       style={{ maxHeight: "calc(100vh - 173px)" }}
@@ -107,7 +63,7 @@ export default function HistoryTimer() {
 
       {Object.entries(groupedPomodoros).map(([date, pomodoros]) => (
         <div key={date} className="mb-8">
-          <div className="flex items-center gap-2 mb-3 bg-gray-100 p-3 rounded-lg">
+          <div className="sticky top-0 flex items-center gap-2 mb-3 bg-gray-100 p-3 rounded-lg">
             <Calendar className="text-blue-600" />
             <h2 className="text-xl font-semibold capitalize">
               {formatDateToSpanish(date)}

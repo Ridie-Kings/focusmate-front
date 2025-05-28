@@ -1,4 +1,4 @@
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { HabitFormData, HabitsType } from "@/interfaces/Habits/HabitsType";
 import { createHabit } from "@/services/Habits/createHabit";
 import { removeHabit } from "@/services/Habits/removeHabit";

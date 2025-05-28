@@ -1,10 +1,11 @@
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
+"use client";
+import { useDashboardStore } from "@/stores/dashboardStore";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import AddTaskUtils from "@/lib/Pomodoro/AddTaskUtils";
 import { X } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddTask({
   status,
@@ -13,7 +14,7 @@ export default function AddTask({
   status: PomodoroStatusType | null;
   pomodoroId: string | undefined;
 }) {
-  const { tasks } = useContext(DashboardContext);
+  const { tasks } = useDashboardStore();
   const [selectedTask, setSelectedTask] = useState<TaskType | null>(
     status?.task || null
   );

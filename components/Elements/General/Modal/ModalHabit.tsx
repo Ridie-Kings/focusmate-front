@@ -1,9 +1,9 @@
-import { useState, useContext, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AudioLines, Text, AlertCircle } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 
 import BtnSend from "./Modal/BtnSend";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { useDashboardStore } from "@/stores/dashboardStore";
 import HabitsUtils from "@/lib/HabitsUtils";
 import {
   HabitFormData,
@@ -27,7 +27,7 @@ const TYPE_OPTIONS: HabitOption[] = [
 ];
 
 export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
-  const { setHabits, habits } = useContext(DashboardContext);
+  const { setHabits, habits } = useDashboardStore();
 
   const [habit, setHabit] = useState<HabitFormData>({
     _id: undefined,
