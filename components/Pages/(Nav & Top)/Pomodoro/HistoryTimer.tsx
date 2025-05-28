@@ -134,16 +134,20 @@ export default function HistoryTimer() {
                       pomodoro.currentCycle !== 0
                         ? (pomodoro.workDuration / 60) *
                           pomodoro.currentCycle *
-                          60 // Convertir a segundos
+                          60
                         : pomodoro.workDuration - pomodoro.remainingTime;
 
                     return formatDuration(totalSeconds);
                   })()}
                 </span>
-                <span className="mx-3">-</span>
-                <span className="text-gray-600">
-                  {pomodoro.task?.title ?? ""}
-                </span>
+                {pomodoro.task?.title && (
+                  <>
+                    <span className="mx-3">-</span>
+                    <span className="text-gray-600">
+                      {pomodoro.task?.title}
+                    </span>
+                  </>
+                )}
                 {pomodoro.state && (
                   <span className="ml-auto bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
                     {pomodoro.state}
