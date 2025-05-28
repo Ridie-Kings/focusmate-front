@@ -5,7 +5,6 @@ import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
 import TimerUtils from "@/lib/TimerUtils";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
-import { differenceInSeconds } from "date-fns";
 
 export function useTimer({
   status,
@@ -79,15 +78,10 @@ export function useTimer({
     ) {
       setTime((prev) => {
         try {
-          const startDate = new Date(status.startAt);
-          const endDate = new Date(status.endAt);
-
           const timeInSeconds =
-            status.remainingTime !== null
-              ? status.remainingTime
-              : status.pausedState === "paused"
-              ? differenceInSeconds(endDate, startDate)
-              : differenceInSeconds(endDate, new Date());
+            status.currentTime !== 0
+              ? status.currentTime
+              : status.remainingTime;
 
           return {
             ...prev,
