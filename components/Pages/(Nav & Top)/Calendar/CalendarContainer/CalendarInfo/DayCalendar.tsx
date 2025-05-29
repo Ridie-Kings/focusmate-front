@@ -1,6 +1,6 @@
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
@@ -9,26 +9,29 @@ import TaskUtils from "@/lib/Task/TaskUtils";
 import { getHours, getMinutes, isSameDay, format } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
 
-import { SetStateAction, Dispatch, useRef, useEffect, useContext } from "react";
+import { SetStateAction, Dispatch, useRef, useEffect, useState } from "react";
+import SelectedEventInfo from "./DayCalendar/SelectedEventInfo";
 
 const getPosition = (date: Date) => {
   const hours = getHours(date);
   const minutes = getMinutes(date);
 
-  return 14 + hours * 2 * 88 + minutes * (88 / 30);
+  return 14 + hours * 2 * (28 + 40) + minutes * ((28 + 40) / 30);
 };
 
 const DayCalendarItem = ({
   date,
   events,
   setEvents,
+  setSelectedEvent,
 }: {
   date: Date;
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
+  setSelectedEvent: Dispatch<SetStateAction<TaskType | null>>;
 }) => {
   const scrollCalendar = useRef<HTMLDivElement>(null);
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
 
   const { handleDeleteTask } = TaskUtils({
@@ -70,7 +73,7 @@ const DayCalendarItem = ({
   return (
     <div
       ref={scrollCalendar}
-      className="flex w-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
+      className="flex w-full h-screen sm:h-full rounded-2xl relative gap-2  xl:h-[calc(100vh-200px)] 2xl:h-[calc(100vh-300px)] overflow-x-hidden overflow-y-auto"
     >
       <TimeLeftBar length={48} divider={2} calc={1} />
       <TimeBar pos={getPosition(new Date())} />
@@ -89,6 +92,13 @@ const DayCalendarItem = ({
               <div
                 key={index}
                 className="absolute w-full  hover:shadow-lg text-black px-8 py-6 rounded-lg drop-shadow-xl flex flex-col place-content-between transition-all duration-300"
+                onDoubleClick={() => {
+                  setSelectedEvent((prev) => (prev === event ? null : event));
+                  scrollCalendar.current?.scrollTo({
+                    top: getPosition(event.startDate),
+                    behavior: "smooth",
+                  });
+                }}
                 style={{
                   backgroundColor: event.color,
                   top: `${eventStartPosition}px`,
@@ -151,5 +161,17 @@ export default function DayCalendar({
   date: Date;
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
-  return <DayCalendarItem date={date} events={events} setEvents={setEvents} />;
+  const [selectedEvent, setSelectedEvent] = useState<TaskType | null>(null);
+
+  return (
+    <div className="flex flex-1 gap-2">
+      <DayCalendarItem
+        date={date}
+        events={events}
+        setEvents={setEvents}
+        setSelectedEvent={setSelectedEvent}
+      />
+      <SelectedEventInfo selectedEvent={selectedEvent} />
+    </div>
+  );
 }

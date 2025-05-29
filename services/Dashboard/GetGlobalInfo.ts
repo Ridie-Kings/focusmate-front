@@ -1,21 +1,17 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 
 export async function GetGlobalInfo(): Promise<{
   success: boolean;
   data: any;
 }> {
   try {
-    const token = await getToken();
-    const res = await apiConnection.get(`dashboard/global`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return { success: true, data: res?.data };
+    const res = await apiClient.get(`dashboard/global`);
+
+    return { success: true, data: res };
   } catch (error: any) {
-    console.error("Error gettin global info:", error.response?.data);
-    return { success: false, data: error.response.data };
+    console.error("Error getting global info:", error);
+
+    return { success: false, data: error.message };
   }
 }

@@ -1,4 +1,4 @@
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { Dispatch, SetStateAction } from "react";
 
 export type HabitsType = {

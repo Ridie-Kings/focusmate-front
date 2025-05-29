@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 
 export async function GetStatsBoardInfoUser({
   id,
@@ -8,15 +7,12 @@ export async function GetStatsBoardInfoUser({
   id: string;
 }): Promise<{ success: boolean; data: any }> {
   try {
-    const token = await getToken();
-    const res = await apiConnection.get(`dashboard/user/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return { success: true, data: res?.data };
+    const res = await apiClient.get(`dashboard/user/${id}`);
+
+    return { success: true, data: res };
   } catch (error: any) {
-    console.error("Error getting GetStatsBoardInfoUser:", error.response?.data);
-    return { success: false, data: error.response.data };
+    console.error("Error getting GetStatsBoardInfoUser:", error);
+
+    return { success: false, data: error.message };
   }
 }

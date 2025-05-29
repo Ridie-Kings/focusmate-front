@@ -1,6 +1,6 @@
 "use server";
 import { AuthResponse } from "@/interfaces/Auth/AuthType";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 import { cookies } from "next/headers";
 
 export default async function login(
@@ -23,9 +23,9 @@ export default async function login(
       }
     }
 
-    const res = await apiConnection.post("auth/login", userData);
+    const res = await apiClient.post("auth/login", userData);
 
-    const { access_token, refresh_token } = res?.data;
+    const { access_token, refresh_token } = res;
 
     const softExpired = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
     const hardExpired = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7j
@@ -49,7 +49,7 @@ export default async function login(
   } catch (error: any) {
     return {
       success: false,
-      message: error.response?.data.message || "Unexpected error during login",
+      message: error || "Unexpected error during login",
     };
   }
 }

@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { apiConnection } from "./services/axiosConfig";
+import { apiClient } from "./services/api";
 
 export async function getToken(): Promise<string | undefined> {
   const cookieStore = await cookies();
@@ -56,7 +56,7 @@ export async function refreshSession(
 ): Promise<string | undefined> {
   try {
     const cookieStore = await cookies();
-    const response = await apiConnection.post("auth/refresh", { refreshToken });
+    const response = await apiClient.post("auth/refresh", { refreshToken });
     const newAccessToken = response?.data?.accessToken;
 
     if (!newAccessToken) {

@@ -1,7 +1,7 @@
 import { TaskType } from "@/interfaces/Task/TaskType";
 import CalendarGrid from "./MonthCalendar/CalendarGrid";
 import { Dispatch, SetStateAction } from "react";
-import { NavTypeType } from "../../../Calendar";
+import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 
 export default function MonthCalendar({
   events,

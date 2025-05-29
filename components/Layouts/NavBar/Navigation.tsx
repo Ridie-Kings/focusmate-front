@@ -46,7 +46,7 @@ const navigationItems: NavItem[] = [
   },
 ];
 
-export default function Navigation() {
+export default function Navigation({ onClick }: { onClick?: () => void }) {
   const pathname = usePathname();
 
   return (
@@ -59,6 +59,7 @@ export default function Navigation() {
             <li key={item.id}>
               <Link
                 href={item.link}
+                onClick={onClick}
                 className={`
                   group relative flex items-center gap-3 px-4 py-2.5 w-full
                   transition-color duration-300 hover:bg-white/10 md:group-hover:translate-x-0 md:translate-x-4
@@ -95,7 +96,9 @@ export default function Navigation() {
                   className={`
                   absolute left-4 text-gray-300 transition-all duration-300
                   ${
-                    isActive ? "opacity-0" : "opacity-100 md:group-hover:opacity-0"
+                    isActive
+                      ? "opacity-0"
+                      : "opacity-100 md:group-hover:opacity-0"
                   }
                 `}
                 >

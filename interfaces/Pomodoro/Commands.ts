@@ -1,4 +1,10 @@
-export type CommandAction = "togglePlay" | "reset" | "share" | "openFullScreen";
+export type CommandAction =
+  | "togglePlay"
+  | "pause"
+  | "reset"
+  | "share"
+  | "openFullScreen"
+  | "settings";
 
 export type CommandButton = {
   id: CommandAction;

@@ -41,6 +41,7 @@ export default function Timeline({
 
   return (
     <div
+      id="timeline-component"
       className={`flex-1 ${
         filteredEvents.length === 0 ? "" : "min-h-44 max-h-[500px]"
       } overflow-y-auto overflow-x-hidden flex flex-col gap-4 py-2`}

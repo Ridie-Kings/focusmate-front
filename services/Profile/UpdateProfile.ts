@@ -1,6 +1,7 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { apiClient } from "../api";
 
 export async function updateProfile({
   id,
@@ -8,18 +9,14 @@ export async function updateProfile({
 }: {
   id: string;
   profile: any;
-}): Promise<{ success: boolean; data: any }> {
-
+}): Promise<{ success: boolean; res: ProfileType | null }> {
   try {
-    const token = await getToken();
-    const res = await apiConnection.patch(`profile/${id}`, profile, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return { success: true, data: res?.data };
+    const res = await apiClient.patch(`profile/${id}`, profile);
+
+    return { success: true, res };
   } catch (error: any) {
-    console.error("Error updating user profile:", error.response?.data);
-    return { success: false, data: "Error updating user profile" };
+    console.error("Error updating user profile:", error);
+
+    return { success: false, res: error.message };
   }
 }

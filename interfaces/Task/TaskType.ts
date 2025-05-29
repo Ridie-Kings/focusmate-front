@@ -37,7 +37,7 @@ export type DropIndicatorProps = {
 };
 
 export type CardProps = TaskType & {
-  handleDragStart: (e: DragEvent<Element>, card: TaskType) => void; // Updated function type
+  handleDragStart: (e: DragEvent<Element>, card: TaskType) => void;
 };
 
 export type AddCardProps = {

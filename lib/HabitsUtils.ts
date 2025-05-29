@@ -1,4 +1,4 @@
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { HabitFormData, HabitsType } from "@/interfaces/Habits/HabitsType";
 import { createHabit } from "@/services/Habits/createHabit";
 import { removeHabit } from "@/services/Habits/removeHabit";
@@ -56,7 +56,7 @@ export default function HabitsUtils({
           })
             .then((res) => console.log("Habit updated:", res))
             .catch((error) => {
-              console.error("Error updating habit:", error);
+              console.error("Error updating habit:", error.message);
               setHabits((prev) =>
                 prev.map((habit) =>
                   habit._id === id ? { ...habit, status: !habit.status } : habit

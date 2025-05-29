@@ -1,9 +1,9 @@
 import Button from "@/components/Reusable/Button";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import MountainTask from "@/components/Elements/Svg/Mountain/MountainTask";
-import { useContext, useState, useEffect, useRef } from "react";
-import { ModalContext } from "@/components/Provider/ModalProvider";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { useState, useEffect, useRef } from "react";
+import { useModalStore } from "@/stores/modalStore";
+import { useDashboardStore } from "@/stores/dashboardStore";
 import TaskCard from "./ListTask/TaskCard";
 import AnimationElementsListUtils from "@/lib/AnimationElementsListUtils";
 import LoadingStatus from "@/components/Elements/General/LoadingStatus";
@@ -25,8 +25,8 @@ export default function ListTask({
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
-  const { setIsOpen } = useContext(ModalContext);
-  const { setEvents } = useContext(DashboardContext);
+  const { setIsOpen } = useModalStore();
+  const { setEvents } = useDashboardStore();
   const { capturePositions, animateFLIP } = AnimationElementsListUtils({
     listRef,
   });

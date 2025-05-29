@@ -1,5 +1,4 @@
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
-import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { tempTaskType, TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 import { createTask } from "@/services/Task/createTask";
@@ -62,22 +61,18 @@ export default function ModalEventUtils({
 
       if (!res.success) {
         const errorMessage =
-          typeof res.message === "string"
-            ? res.message
-            : "Error al modificar la tarea";
+          typeof res.res === "string" ? res.res : "Error al modificar la tarea";
         setError(errorMessage);
-        console.error("Failed to modify task", res.message);
+        console.error("Failed to modify task", res.res);
         return;
       }
 
       setEvents((prev) =>
-        prev.map((event) => (event._id === task._id ? res.message : event))
+        prev.map((event) => (event._id === task._id ? res.res : event))
       );
 
       setTasks((prev) =>
-        prev.map((prevTask) =>
-          prevTask._id === task._id ? res.message : prevTask
-        )
+        prev.map((prevTask) => (prevTask._id === task._id ? res.res : prevTask))
       );
 
       setIsOpen({ text: "" });
@@ -110,20 +105,18 @@ export default function ModalEventUtils({
 
       if (!res.success) {
         const errorMessage =
-          typeof res.message === "string"
-            ? res.message
-            : "Error al crear la tarea";
+          typeof res.res === "string" ? res.res : "Error al crear la tarea";
         setError(errorMessage);
-        console.error("Failed to create task", res.message);
+        console.error("Failed to create task", res.res);
         return;
       }
 
-      setEvents((prev) => [...prev, res.message]);
-      setTasks((prev) => [...prev, res.message]);
+      setEvents((prev) => [...prev, res.res]);
+      setTasks((prev) => [...prev, res.res]);
 
       try {
         const calendarResponse = await addTaskToCalendar({
-          _id: res.message._id,
+          _id: res.res._id,
         });
         if (!calendarResponse.success) {
           console.error(

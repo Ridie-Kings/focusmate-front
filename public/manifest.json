@@ -1,0 +1,47 @@
+{
+  "name": "SherpApp",
+  "short_name": "SherpApp",
+  "description": "La herramienta de productividad diseñada para estudiantes y opositores que quieren organizar su estudio, medir su progreso y alcanzar sus metas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#014e44",
+  "theme_color": "#014e44",
+  "orientation": "portrait",
+  "scope": "/",
+  "id": "/",
+  "prefer_related_applications": false,
+  "categories": ["productivity", "education"],
+  "screenshots": [
+    {
+      "src": "/screenshots/screenshot1.png",
+      "sizes": "2160x1342",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshots/screenshot1.png",
+      "sizes": "2160x1342",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

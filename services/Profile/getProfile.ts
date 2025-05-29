@@ -1,18 +1,19 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
 
-export async function getProfile({ slug }: { slug: string }) {
+import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { apiClient } from "@/services/api";
+
+export async function getProfile({ slug }: { slug: string }): Promise<{
+  success: boolean;
+  res: ProfileType | null;
+}> {
   try {
-    const token = await getToken();
-    const res = await apiConnection.get(`users/${slug}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res?.data;
+    const res = await apiClient.get(`users/${slug}`);
+
+    return { success: true, res };
   } catch (error: any) {
-    console.error(`Error fetching user profile ${slug}:`, error.response?.data);
-    return null;
+    console.error(`Error fetching user profile ${slug}:`, error);
+
+    return { success: false, res: error.message };
   }
 }

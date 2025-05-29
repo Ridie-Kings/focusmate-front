@@ -1,16 +1,14 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import { TaskType } from "@/interfaces/Task/TaskType";
-
 import ListTask from "@/components/Pages/(Nav & Top)/Dashboard/Task/ListTask";
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import StatusCards from "@/components/Pages/(Nav & Top)/Dashboard/Task/StatusCards";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function Task({ tasksList }: { tasksList: TaskType[] }) {
-  const { tasks, setTasks, loadingTask } = useContext(DashboardContext);
+  const { tasks, setTasks, loadingTask } = useDashboardStore();
   const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
@@ -19,9 +17,10 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
 
   return (
     <TemplateDashboard
-      grid="col-span-4 row-span-4 row-start-6 gap-0"
+      grid={`col-span-4 row-span-4 row-start-6 gap-0`}
       title="Tus Tareas"
       link="/task"
+      id="tasks-component"
     >
       <StatusCards filter={filter} setFilter={setFilter} tasks={tasks} />
       <div className="flex flex-col gap-3">

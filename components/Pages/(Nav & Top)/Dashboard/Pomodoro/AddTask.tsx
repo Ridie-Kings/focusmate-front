@@ -1,10 +1,11 @@
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
+"use client";
+import { useDashboardStore } from "@/stores/dashboardStore";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import AddTaskUtils from "@/lib/Pomodoro/AddTaskUtils";
 import { X } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddTask({
   status,
@@ -13,7 +14,7 @@ export default function AddTask({
   status: PomodoroStatusType | null;
   pomodoroId: string | undefined;
 }) {
-  const { tasks } = useContext(DashboardContext);
+  const { tasks } = useDashboardStore();
   const [selectedTask, setSelectedTask] = useState<TaskType | null>(
     status?.task || null
   );
@@ -41,6 +42,7 @@ export default function AddTask({
     <div
       style={{ width: isSelectedMenu ? 448 : 214 }}
       className="mx-auto flex place-content-between items-center justify-end relative border-2 p-1 border-secondary-100 rounded-lg transition-all duration-300"
+      id="add-task-component"
     >
       <p className="text-sm text-gray-400 absolute left-1">
         {selectedTask ? selectedTask.title : "Ninguna tarea seleccionada"}
@@ -55,7 +57,9 @@ export default function AddTask({
       ) : (
         <>
           {items.length === 0 ? (
-            <p className="text-gray-500 text-sm z-10 bg-white w-full">No tienes tareas disponibles</p>
+            <p className="text-gray-500 text-sm z-10 bg-white w-full">
+              No tienes tareas disponibles
+            </p>
           ) : (
             <ButtonDropDown
               position="top"

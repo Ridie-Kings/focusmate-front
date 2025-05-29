@@ -1,14 +1,14 @@
 "use client";
 import { CommandAction, CommandsProps } from "@/interfaces/Pomodoro/Commands";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import CommandsHook from "@/hooks/Pomodoro/Commands";
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
-import { TimerContext } from "@/components/Provider/TimerProvider";
+import { useTimerStore } from "@/stores/timerStore";
+import { useWebSocketStore } from "@/stores/websocketStore";
 import CommandsUtils from "@/lib/Pomodoro/CommandsUtils";
 
 export default function Commands({ fullScreen = false }: CommandsProps) {
-  const { isPlay, menu, isType, startedElement } = useContext(TimerContext);
-  const { status } = useContext(SocketIOContext);
+  const { isPlay, menu, isType, startedElement } = useTimerStore();
+  const { status } = useWebSocketStore();
   const { handleClick } = CommandsUtils();
 
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -19,7 +19,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
   const disabledButtonClass = "bg-gray-400 cursor-not-allowed";
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2" id="commands-component">
       <ul className="flex items-center place-content-evenly w-full sm:gap-7 md:gap-6">
         {CommandsHook({
           fullScreen,
@@ -31,10 +31,10 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
         })
           .filter((button) => button !== undefined)
           .map((button) => (
-            <li key={button.id}>
+            <li key={button.id} id={button.id}>
               <button
                 onClick={() =>
-                  handleClick(button.id as CommandAction, button.disabled)
+                  handleClick(button.id as CommandAction)
                 }
                 onMouseEnter={() =>
                   button.id === "openFullScreen" && setShowTooltip(true)

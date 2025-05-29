@@ -2,17 +2,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --animate-marquee-vertical: marquee-vertical 20s linear infinite;
-  --animate-marquee2-vertical: marquee2-vertical 20s linear infinite;
-  --animate-marquee-vertical-reverse: marquee-vertical-reverse 95s linear
-    infinite;
-  --animate-marquee2-vertical-reverse: marquee2-vertical-reverse 95s linear
-    infinite;
-
-  --font-poppins: "Poppins", sans-serif;
-}
-
 @layer base {
   :root {
     --color-background-primary: #fff9f9;
@@ -117,6 +106,8 @@
 }
 
 @theme {
+  --font-poppins: "Poppins", sans-serif;
+
   --color-background-primary: var(--color-background-primary);
   --color-background-secondary: var(--color-background-secondary);
 
@@ -177,6 +168,7 @@
       opacity: 1;
     }
   }
+
   --animate-fadeIn: fadeIn 0.3s ease-in-out;
   @keyframes fadeIn {
     0% {
@@ -186,6 +178,7 @@
       opacity: 1;
     }
   }
+
   --animate-fadeOut: fadeOut 0.3s ease-in-out;
   @keyframes fadeOut {
     0% {
@@ -198,17 +191,54 @@
 
   --animate-modalOpen: modalOpen 0.3s ease-in-out;
   @keyframes modalOpen {
-    0% {
-      transform: translateY(10%);
-      scale: 0.9;
+    from {
       opacity: 0;
+      transform: scale(0.95);
     }
-    100% {
-      transform: translateY(0);
-      scale: 1;
+    to {
       opacity: 1;
+      transform: scale(1);
     }
   }
+
+  --animate-modalClose: modalClose 0.3s ease-in-out;
+  @keyframes modalClose {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  --animate-blurStart: blurStart 0.5s ease-in-out forwards;
+  @keyframes blurStart {
+    from {
+      backdrop-filter: blur(0);
+    }
+    to {
+      backdrop-filter: blur(4px);
+    }
+  }
+
+  --animate-blurEnd: blurEnd 0.5s ease-in-out forwards;
+  @keyframes blurEnd {
+    from {
+      backdrop-filter: blur(4px);
+    }
+    to {
+      backdrop-filter: blur(0);
+    }
+  }
+
+  --animate-marquee-vertical: marquee-vertical 20s linear infinite;
+  --animate-marquee2-vertical: marquee2-vertical 20s linear infinite;
+  --animate-marquee-vertical-reverse: marquee-vertical-reverse 95s linear
+    infinite;
+  --animate-marquee2-vertical-reverse: marquee2-vertical-reverse 95s linear
+    infinite;
 
   @keyframes marquee-vertical-reverse {
     0% {

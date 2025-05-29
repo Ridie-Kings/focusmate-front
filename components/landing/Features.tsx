@@ -29,37 +29,41 @@ const features = [
 
 export default function Features() {
   return (
-    <div className="py-24" id="caracteristicas">
+    <div
+      className="py-24 bg-gradient-to-b from-emerald-50 to-white"
+      id="caracteristicas"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="w-full">
-          <h2 className="text-3xl font-extrabold sm:text-4xl text-primary-500">
+        <div className="text-center">
+          <h2 className="text-4xl font-extrabold sm:text-5xl text-primary-500 animate-fade-in">
             Características
           </h2>
-          <p className="mt-4 w-full text-lg text-primary-500">
+          <p className="mt-6 text-xl text-primary-500 max-w-3xl mx-auto animate-slide-up">
             Todo lo que necesitas para mantener tu productividad al máximo
             nivel.
           </p>
         </div>
 
-        <div className="mt-15">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
-            {features.map((feature) => (
+        <div className="mt-20">
+          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-2">
+            {features.map((feature, index) => (
               <div
                 key={feature.name}
-                className="relative bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                className="relative bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:border-emerald-200 animate-fade-in-up"
+                style={{ animationDelay: `${index * 150}ms` }}
               >
                 <div>
-                  <div className="absolute h-12 w-12 rounded-md bg-emerald-500 flex items-center justify-center">
+                  <div className="absolute h-14 w-14 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
                     <feature.icon
-                      className="h-6 w-6 text-white"
+                      className="h-7 w-7 text-white"
                       aria-hidden="true"
                     />
                   </div>
-                  <div className="ml-16">
-                    <h3 className="text-lg font-medium text-gray-900">
+                  <div className="ml-20">
+                    <h3 className="text-xl font-semibold text-gray-900">
                       {feature.name}
                     </h3>
-                    <p className="mt-2 text-base text-gray-500">
+                    <p className="mt-3 text-base text-gray-600 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>

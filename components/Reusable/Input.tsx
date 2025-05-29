@@ -53,11 +53,20 @@ export default function Input({
     if (disabled) return "border-[#E5E5E5] bg-[#F5F5F5] cursor-not-allowed";
     switch (state) {
       case "error":
-        return "border-[#C32826] focus:outline-[#C32826]";
+        return "border-[#C32826] focus:outline-[#C32826] focus:ring-2 focus:ring-red-200";
       case "success":
-        return "border-[#56AB91] focus:outline-[#56AB91]";
+        return "border-[#56AB91] focus:outline-[#56AB91] focus:ring-2 focus:ring-green-200";
       default:
-        return "border-[#959595] focus:outline-[#8882CC]";
+        return "border-[#959595] focus:outline-[#8882CC] focus:ring-2 focus:ring-primary-200";
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (onBlur) onBlur(e);
+    if (required && !e.target.value) {
+      e.target.setCustomValidity("Este campo es requerido");
+    } else {
+      e.target.setCustomValidity("");
     }
   };
 
@@ -67,7 +76,11 @@ export default function Input({
         <label htmlFor={name} className={labelClass}>
           {icon}
           {label}
-          {required && <span className="text-[#C32826]">*</span>}
+          {required && (
+            <span className="text-[#C32826]" aria-hidden="true">
+              *
+            </span>
+          )}
         </label>
       )}
       <div className="relative w-full flex items-center">
@@ -75,12 +88,12 @@ export default function Input({
           id={name}
           name={name}
           type={type === "password" && showPassword ? "text" : type}
-          className={`w-full py-2 pr-2 pl-4 placeholder:text-[#959595] text-black border rounded ${getBorderClass()}`}
+          className={`w-full py-2 pr-2 pl-4 placeholder:text-[#959595] text-black border rounded transition-all duration-200 ${getBorderClass()}`}
           placeholder={placeholder}
           value={value}
           defaultValue={defaultValue}
           onChange={onChange}
-          onBlur={onBlur}
+          onBlur={handleBlur}
           required={required}
           disabled={disabled}
           readOnly={readOnly}
@@ -88,6 +101,8 @@ export default function Input({
           maxLength={maxLength}
           minLength={minLength}
           pattern={pattern}
+          aria-invalid={state === "error"}
+          aria-describedby={state === "error" ? `${name}-error` : undefined}
         />
         {type === "password" && (
           <div

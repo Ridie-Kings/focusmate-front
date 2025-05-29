@@ -13,19 +13,13 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import WeekDays from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/WeekDays";
 import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
 import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/CalendarNav";
 import Button from "@/components/Reusable/Button";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 
@@ -93,7 +87,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   eventos,
 }) => {
   const [events, setEvents] = useState<TaskType[]>();
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
 
   const handlePreviousMonth = () => {
     setDate(subMonths(date, 1));
@@ -139,7 +133,10 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   };
 
   return (
-    <div className="flex flex-col place-content-between">
+    <div
+      className="flex flex-col place-content-between"
+      id="small-calendar-component"
+    >
       <div
         className={`w-full flex flex-col py-2 overflow-hidden ${className} ${
           !inView && "hidden"

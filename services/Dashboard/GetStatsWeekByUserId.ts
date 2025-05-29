@@ -1,6 +1,6 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { apiClient } from "../api";
 
 export async function GetStatsWeekByUserId({
   id,
@@ -8,15 +8,12 @@ export async function GetStatsWeekByUserId({
   id: string;
 }): Promise<{ success: boolean; data: any }> {
   try {
-    const token = await getToken();
-    const res = await apiConnection.get(`/dashboard/stats/week?userId=${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return { success: true, data: res?.data };
+    const res = await apiClient.get(`/dashboard/stats/week?userId=${id}`);
+
+    return { success: true, data: res };
   } catch (error: any) {
-    console.error("Error gettin stats of user:", error.response?.data);
-    return { success: false, data: error.response };
+    console.error("Error gettin stats of user:", error);
+
+    return { success: false, data: error.message };
   }
 }

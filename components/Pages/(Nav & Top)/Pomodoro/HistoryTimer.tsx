@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { GetAllMyPomodoro } from "@/services/Pomodoro/GetAllMyPomodoro";
 import { Calendar, Clock } from "lucide-react";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
+import LoadingStatus from "@/components/Elements/General/LoadingStatus";
+import HistoryTimerUtils from "@/lib/HistoryTimerUtils";
 
 export default function HistoryTimer() {
   const [historyPomodoro, setHistoryPomodoro] = useState<Pomodoro[]>([]);
@@ -11,13 +13,19 @@ export default function HistoryTimer() {
   >({});
   const [isLoading, setIsLoading] = useState(true);
 
+  const {
+    formatDateToSpanish,
+    formatTime,
+    groupPomodororosByDate,
+    formatDuration,
+  } = HistoryTimerUtils();
+
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await GetAllMyPomodoro();
         setHistoryPomodoro(data.res);
-        console.log(data.res);
-        
+
         const grouped = groupPomodororosByDate(data.res);
         setGroupedPomodoros(grouped);
       } catch (error) {
@@ -30,47 +38,12 @@ export default function HistoryTimer() {
     fetchData();
   }, []);
 
-  function groupPomodororosByDate(pomodoros: Pomodoro[]) {
-    const grouped: Record<string, Pomodoro[]> = {};
-
-    pomodoros.forEach((pomodoro) => {
-      if (!pomodoro.startAt) return;
-
-      const date = new Date(pomodoro.startAt);
-      const dateKey = date.toISOString().split("T")[0];
-
-      if (!grouped[dateKey]) {
-        grouped[dateKey] = [];
-      }
-
-      grouped[dateKey].push(pomodoro);
-    });
-
-    return Object.fromEntries(
-      Object.entries(grouped).sort((a, b) => b[0].localeCompare(a[0]))
-    );
-  }
-
-  function formatDateToSpanish(dateStr: string): string {
-    const date = new Date(dateStr);
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return date.toLocaleDateString("es-ES", options);
-  }
-
-  function formatTime(date: Date): string {
-    return date.toLocaleTimeString("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
-
   if (isLoading) {
-    return <div className="w-full text-center py-8">Cargando historial...</div>;
+    return (
+      <div className="flex justify-center items-center flex-1">
+        <LoadingStatus text="historial" />
+      </div>
+    );
   }
 
   if (historyPomodoro.length === 0) {
@@ -90,7 +63,7 @@ export default function HistoryTimer() {
 
       {Object.entries(groupedPomodoros).map(([date, pomodoros]) => (
         <div key={date} className="mb-8">
-          <div className="flex items-center gap-2 mb-3 bg-gray-100 p-3 rounded-lg">
+          <div className="sticky top-0 flex items-center gap-2 mb-3 bg-gray-100 p-3 rounded-lg">
             <Calendar className="text-blue-600" />
             <h2 className="text-xl font-semibold capitalize">
               {formatDateToSpanish(date)}
@@ -112,10 +85,25 @@ export default function HistoryTimer() {
                 </span>
                 <span className="mx-3">-</span>
                 <span className="text-gray-600">
-                  {pomodoro.workDuration / 60} minutos
+                  {(() => {
+                    const totalSeconds =
+                      pomodoro.currentCycle !== 0
+                        ? (pomodoro.workDuration / 60) *
+                          pomodoro.currentCycle *
+                          60
+                        : pomodoro.workDuration - pomodoro.remainingTime;
+
+                    return formatDuration(totalSeconds);
+                  })()}
                 </span>
-                <span className="mx-3">-</span>
-                <span className="text-gray-600">{pomodoro.task?.title ?? ""}</span>
+                {pomodoro.task?.title && (
+                  <>
+                    <span className="mx-3">-</span>
+                    <span className="text-gray-600">
+                      {pomodoro.task?.title}
+                    </span>
+                  </>
+                )}
                 {pomodoro.state && (
                   <span className="ml-auto bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
                     {pomodoro.state}

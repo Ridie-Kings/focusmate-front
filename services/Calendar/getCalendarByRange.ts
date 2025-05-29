@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 import { PromiseCalendar } from "@/interfaces/Calendar/CalendarType";
 
 export async function getCalendarByRange({
@@ -14,22 +13,17 @@ export async function getCalendarByRange({
   res: PromiseCalendar;
 }> {
   try {
-    const token = await getToken();
+    const firstDateString = firstDate.toISOString().split("T")[0];
+    const secondDateString = secondDate.toISOString().split("T")[0];
 
-    const res = await apiConnection.get(
-      `calendar/${firstDate.toISOString().split("T")[0]}/${
-        secondDate.toISOString().split("T")[0]
-      }`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const res = await apiClient.get(
+      `calendar/${firstDateString}/${secondDateString}`
     );
 
-    return { success: true, res: res?.data };
+    return { success: true, res };
   } catch (error: any) {
-    console.error(`Error fetching calendar:`, error.response?.data);
-    return { success: false, res: error.response?.data };
+    console.error(`Error fetching calendar by range:`, error);
+
+    return { success: false, res: error.message };
   }
 }

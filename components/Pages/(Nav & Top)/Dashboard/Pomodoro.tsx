@@ -1,12 +1,30 @@
 "use client";
 import TemplateDashboard from "../../../Elements/General/TemplateBox";
-import Timer from "./Pomodoro/Timer";
-import { useContext } from "react";
-import { TimerContext } from "@/components/Provider/TimerProvider";
-import Commands from "@/components/Elements/Pomodoro/Commands";
 import { Clock, Timer as TimerIcon } from "lucide-react";
+import { useTimerStore } from "@/stores/timerStore";
+import { useWebSocketStore } from "@/stores/websocketStore";
+import PomodoroContainer from "./Pomodoro/PomodoroContainer";
 import AddTask from "./Pomodoro/AddTask";
-import { SocketIOContext } from "@/components/Provider/WebsocketProvider";
+import Commands from "@/components/Elements/Pomodoro/Commands";
+
+// Lazy load les composants lourds
+// const PomodoroContainer = dynamic(
+//   () => import("./Pomodoro/PomodoroContainer"),
+//   {
+//     loading: () => <div>Loading...</div>,
+//   }
+// );
+
+// const Commands = dynamic(
+//   () => import("@/components/Elements/Pomodoro/Commands"),
+//   {
+//     loading: () => <div>Loading...</div>,
+//   }
+// );
+
+// const AddTask = dynamic(() => import("./Pomodoro/AddTask"), {
+//   loading: () => <div>Loading...</div>,
+// });
 
 export default function Pomodoro() {
   const {
@@ -15,9 +33,10 @@ export default function Pomodoro() {
     startedElement,
     toggleChronometerMode,
     isChronometer,
-  } = useContext(TimerContext);
+  } = useTimerStore();
 
-  const { status } = useContext(SocketIOContext);
+  const { status } = useWebSocketStore();
+
   const handleChangeType = (
     e: "pomodoro" | "cronometro" | "temporizador",
     cronometro: boolean
@@ -28,9 +47,10 @@ export default function Pomodoro() {
 
   return (
     <TemplateDashboard
-      grid="col-span-3 row-span-3"
+      grid={`col-span-3 row-span-3`}
       title={isType}
       link="/pomodoro"
+      id="pomodoro-component"
       items={[
         {
           label: "Pomodoro",
@@ -52,10 +72,8 @@ export default function Pomodoro() {
         // },
       ]}
     >
-      <Timer />
-      {!isChronometer && (
-        <AddTask status={status} pomodoroId={status?._id} />
-      )}
+      <PomodoroContainer size="medium" />
+      {!isChronometer && <AddTask status={status} pomodoroId={status?._id} />}
       <Commands fullScreen={false} />
     </TemplateDashboard>
   );

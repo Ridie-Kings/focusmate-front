@@ -22,7 +22,7 @@ export type Pomodoro = {
   isShared: boolean;
   sharedWith: string[];
   interruptions: number;
-  remainingTime: number | null;
+  remainingTime: number;
   pausedState: "paused" | null;
   task: TaskType | null;
 };
@@ -39,7 +39,8 @@ export type PomodoroStatusType = {
   currentCycle: number;
   startAt: Date;
   endAt: Date;
-  remainingTime: number | null;
+  currentTime: number;
+  remainingTime: number;
   pausedState: "paused" | null;
   workDuration: number;
   shortBreak: number;

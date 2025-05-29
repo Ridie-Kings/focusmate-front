@@ -12,13 +12,7 @@ import {
   format,
 } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
-import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useContext,
-  useEffect,
-} from "react";
+import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
 import Divider from "@/components/Elements/General/Divider";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
@@ -26,7 +20,7 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import Menu from "@/components/Reusable/Menu";
 import AgendaUtils from "@/lib/AgendaUtils";
 import TaskUtils from "@/lib/Task/TaskUtils";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useModalStore } from "@/stores/modalStore";
 
 const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];
 
@@ -48,7 +42,7 @@ const EventItem = ({
   eventStartPosition: number;
   eventEndPosition: number;
 }) => {
-  const { setIsOpen } = useContext(ModalContext);
+  const { setIsOpen } = useModalStore();
   const { isLightColor } = AgendaUtils();
 
   const { handleDeleteTask } = TaskUtils({
@@ -112,7 +106,7 @@ const DayColumn = ({
     <div className="flex flex-col gap-5">
       <div
         onClick={() => setDate(day)}
-        className={`flex cursor-pointer items-center place-content-between px-3 drop-shadow-lg text-center py-2   rounded-lg sticky top-0 z-10 ${
+        className={`flex cursor-pointer items-center place-content-between px-3 drop-shadow-lg text-center py-2 rounded-lg sticky top-0 z-10 ${
           isToday(day)
             ? "bg-primary-400 text-white"
             : isSameDay(day, selectedDate)
@@ -123,7 +117,7 @@ const DayColumn = ({
         {WeekDay[getDay(day)]}
         <Divider width="1px" height="100%" />
         <p
-          className={` text-white rounded-lg py-1 px-1.5 ${
+          className={` text-white rounded-lg text-xl py-1 px-1.5 ${
             isToday(day) ? "bg-primary-500" : "bg-primary-400"
           }`}
         >
@@ -187,7 +181,7 @@ const WeekCalendarItem = ({
   return (
     <div
       ref={scrollCalendar}
-      className="grid grid-cols-8 w-full h-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
+      className="grid grid-cols-8 w-full h-screen sm:h-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
     >
       <div className="flex flex-col gap-5 relative">
         <div

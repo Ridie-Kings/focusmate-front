@@ -1,5 +1,6 @@
 import { ChevronLeft, EllipsisVertical } from "lucide-react";
 import { ReactNode, useEffect, useRef, useState } from "react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 interface MenuItemProps {
   label: string;
@@ -141,28 +142,13 @@ export default function Menu({
   className,
 }: MenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = () => setIsOpen(false);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        triggerRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        !triggerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const menuRef = useClickOutside<HTMLDivElement>(() => {
+    if (isOpen) setIsOpen(false);
+  });
 
   useEffect(() => {
     if (isOpen && menuRef.current && triggerRef.current) {

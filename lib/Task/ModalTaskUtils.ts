@@ -1,4 +1,4 @@
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
@@ -25,7 +25,9 @@ export default function ModalTaskUtils({
     }
 
     if (task.endDate && task.startDate && task.endDate <= task.startDate) {
-      setError("La hora de finalización debe ser posterior a la hora de inicio");
+      setError(
+        "La hora de finalización debe ser posterior a la hora de inicio"
+      );
       return false;
     }
 
@@ -50,17 +52,16 @@ export default function ModalTaskUtils({
       });
 
       if (!res.success) {
-        const errorMessage = typeof res.message === "string"
-          ? res.message
-          : "Error al modificar la tarea";
+        const errorMessage =
+          typeof res.res === "string" ? res.res : "Error al modificar la tarea";
         setError(errorMessage);
-        console.error("Failed to modify task", res.message);
+        console.error("Failed to modify task", res.res);
         return;
       }
 
-      setTasks((prev) => prev.map((prevTask) =>
-        prevTask._id === task._id ? res.message : prevTask
-      ));
+      setTasks((prev) =>
+        prev.map((prevTask) => (prevTask._id === task._id ? res.res : prevTask))
+      );
       setIsOpen({ text: "" });
     } catch (err) {
       console.error("Error inesperado:", err);
@@ -79,13 +80,13 @@ export default function ModalTaskUtils({
       const res = await createTask({ task });
 
       if (res.success) {
-        setTasks((prev) => [...prev, res.message]);
+        setTasks((prev) => [...prev, res.res]);
         setIsOpen({ text: "" });
       } else {
-        setError(typeof res.message === "string"
-          ? res.message
-          : "Error al crear la tarea");
-        console.error("Failed to create task", res.message);
+        setError(
+          typeof res.res === "string" ? res.res : "Error al crear la tarea"
+        );
+        console.error("Failed to create task", res.res);
       }
     } catch (err) {
       console.error("Error inesperado:", err);
@@ -99,7 +100,7 @@ export default function ModalTaskUtils({
     const priorityMap = {
       high: "Alta",
       medium: "Media",
-      low: "Baja"
+      low: "Baja",
     };
 
     return priorityMap[task.priority as keyof typeof priorityMap] || "";

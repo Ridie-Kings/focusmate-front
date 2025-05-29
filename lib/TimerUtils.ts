@@ -3,6 +3,7 @@ import { timeUtils } from "@/components/Provider/TimerProvider/TimeUtils";
 import { TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
+import { useTimerStore } from "@/stores/timerStore";
 
 export default function TimerUtils({
   audioRef,
@@ -30,18 +31,25 @@ export default function TimerUtils({
   setCycles: Dispatch<SetStateAction<number>>;
   setStartedElement: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { resetTimer: resetTimerStore } = useTimerStore();
+
   const playEndSound = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play().catch((err) => {
-        console.error("Error:", err);
-      });
+      audioRef.current.play().catch(() => {});
+    }
+  }, []);
+
+  const preloadSound = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
     }
   }, []);
 
   const togglePlay = useCallback(() => {
+    preloadSound();
     setIsPlay((prev) => !prev);
-  }, []);
+  }, [preloadSound]);
 
   const resetTimer = useCallback(() => {
     setIsPlay(false);
@@ -55,11 +63,22 @@ export default function TimerUtils({
     totalSecondsRef.current = status?.workDuration ?? 1500;
 
     setCycles(totalCycles);
-  }, [status]);
+    resetTimerStore();
+  }, [
+    status,
+    totalCycles,
+    setCycles,
+    setMenu,
+    setStartedElement,
+    setIsPlay,
+    setTime,
+    resetTimerStore,
+  ]);
 
   return {
     playEndSound,
     togglePlay,
     resetTimer,
+    preloadSound,
   };
 }

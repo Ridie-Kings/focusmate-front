@@ -6,6 +6,7 @@ import Pricing from "@/components/landing/Pricing";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import Hero from "@/components/landing/Hero";
+import Modal from "@/components/Elements/General/Modal";
 
 export default function LandingPage() {
   return (
@@ -18,6 +19,7 @@ export default function LandingPage() {
       <Pricing />
       <ContactForm />
       <Footer />
+      <Modal />
     </main>
   );
 }

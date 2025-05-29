@@ -1,13 +1,16 @@
 import React, { ReactNode, useMemo } from "react";
+import RoundedVersion from "./CircleTime/RoundedVersion";
 
 type CircleProgressBarProps = {
   percent: number;
   children: ReactNode;
+  rounded?: boolean;
 };
 
 const CircleTime: React.FC<CircleProgressBarProps> = ({
   percent,
   children,
+  rounded = false,
 }) => {
   const safePercent = useMemo(() => {
     return isNaN(percent) ? 100 : Math.min(Math.max(percent, 0), 100);
@@ -27,6 +30,12 @@ const CircleTime: React.FC<CircleProgressBarProps> = ({
       angle,
     };
   }, [safePercent]);
+
+  if (rounded) {
+    return (
+      <RoundedVersion safePercent={safePercent}>{children}</RoundedVersion>
+    );
+  }
 
   return (
     <div className="relative flex items-center justify-center text-primary-500">
@@ -60,7 +69,9 @@ const CircleTime: React.FC<CircleProgressBarProps> = ({
         />
       </svg>
 
-      <div className="absolute flex flex-col items-center gap-4">{children}</div>
+      <div className="absolute flex flex-col items-center gap-4">
+        {children}
+      </div>
     </div>
   );
 };

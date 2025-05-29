@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Check, ChevronDown, User, AlertCircle } from "lucide-react";
+import { Check, User, AlertCircle } from "lucide-react";
 import { GetAllUsers } from "@/services/User/GetAllUsers";
+import LoadingState from "@/components/Elements/General/LoadingState";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 interface User {
   _id: string;
@@ -24,8 +26,10 @@ export function UserSelector({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const modalRef = useClickOutside<HTMLDivElement>(() => {
+    if (open) setOpen(false);
+  });
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const loadUsers = useCallback(async () => {
@@ -33,17 +37,17 @@ export function UserSelector({
     setError(null);
 
     try {
-      const { success, data } = await GetAllUsers();
+      const { success, res } = await GetAllUsers();
 
       if (!success) {
-        throw new Error(`Error: ${data}`);
+        throw new Error(`Error: ${res}`);
       }
 
-      if (!Array.isArray(data)) {
+      if (!Array.isArray(res)) {
         throw new Error("Formato de datos inválido");
       }
 
-      setUsers(data);
+      setUsers(res);
     } catch (error) {
       console.error("Error cargando usuarios:", error);
       setError(error instanceof Error ? error.message : "Error desconocido");
@@ -56,59 +60,11 @@ export function UserSelector({
     loadUsers();
   }, [loadUsers]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isOpen) return;
-
-      switch (event.key) {
-        case "Escape":
-          setIsOpen(false);
-          buttonRef.current?.focus();
-          break;
-        case "Tab":
-          break;
-        default:
-          break;
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen]);
-
   const handleUserSelect = (user: User | null) => {
     setSelectedUser(user);
     onUserSelect(user?._id || null);
-    setIsOpen(false);
+    setOpen(false);
     buttonRef.current?.focus();
-  };
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
   };
 
   const handleRetry = () => {
@@ -116,30 +72,29 @@ export function UserSelector({
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div ref={modalRef}>
       <button
         ref={buttonRef}
-        onClick={toggleDropdown}
-        onKeyDown={(e) => e.key === "Enter" && toggleDropdown()}
-        className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-        aria-label="Seleccionar usuario"
-        type="button"
+        onClick={() => setOpen(!open)}
+        className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
       >
-        <User className="h-4 w-4" aria-hidden="true" />
-        <span className="truncate max-w-[150px]">
-          {selectedUser ? selectedUser.username : defaultLabel}
-        </span>
-        <ChevronDown
-          className={`h-4 w-4 opacity-50 transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
+        <span>{selectedUser ? selectedUser.username : defaultLabel}</span>
+        <svg
+          className="w-5 h-5 ml-2 -mr-1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
           aria-hidden="true"
-        />
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
       </button>
 
-      {isOpen && (
+      {open && (
         <div
           className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 max-h-60 overflow-auto"
           role="listbox"
@@ -164,9 +119,12 @@ export function UserSelector({
             </button>
 
             {isLoading && (
-              <div className="w-full px-4 py-2 text-sm text-gray-500 text-left flex items-center gap-2">
-                <div className="animate-spin h-4 w-4 border-2 border-gray-500 border-t-transparent rounded-full" />
-                <span>Cargando usuarios...</span>
+              <div className="w-full px-4 py-2">
+                <LoadingState
+                  variant="dots"
+                  size="sm"
+                  text="Cargando usuarios..."
+                />
               </div>
             )}
 

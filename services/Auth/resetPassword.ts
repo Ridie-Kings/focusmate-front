@@ -1,6 +1,5 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+import { apiClient } from "../api";
 
 export async function resetPassword({
   resetCode,
@@ -15,22 +14,16 @@ export async function resetPassword({
   res: any;
 }> {
   try {
-    const token = await getToken();
+    const res = await apiClient.post("auth/reset-password", {
+      resetCode,
+      newPassword,
+      email,
+    });
 
-    const res = await apiConnection.post(
-      `auth/reset-password`,
-      { resetCode, newPassword, email },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log("res", res);
-
-    return { success: true, res: res?.data.message };
+    return { success: true, res };
   } catch (error: any) {
-    console.error("Error creating calendar event:", error.response.data);
-    return { success: false, res: error.response.data.message[0] };
+    console.error("Error reset password:", error);
+
+    return { success: false, res: error.message };
   }
 }

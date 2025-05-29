@@ -1,8 +1,18 @@
 import { Dispatch, SetStateAction } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { StatusType } from "@/interfaces/Task/TaskType";
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
 
+export type TypeIsOpen = {
+  text:
+    | "task"
+    | "habit"
+    | "event"
+    | "contact"
+    | "pomodoroSettings"
+    | "taskKanban"
+    | "";
+  other?: any;
+};
 export type ModalContextType = {
   isOpen: TypeIsOpen;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;

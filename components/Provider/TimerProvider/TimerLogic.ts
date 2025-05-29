@@ -5,7 +5,6 @@ import { chipsIconType } from "@/components/Reusable/Chips";
 import { timeUtils } from "./TimeUtils";
 import TimerUtils from "@/lib/TimerUtils";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
-import { differenceInSeconds } from "date-fns";
 
 export function useTimer({
   status,
@@ -64,6 +63,8 @@ export function useTimer({
   });
 
   useEffect(() => {
+    console.log("isPlay", isPlay);
+
     if (typeof window !== "undefined") {
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }
@@ -79,40 +80,10 @@ export function useTimer({
     ) {
       setTime((prev) => {
         try {
-          // if (!status.startAt || !status.endAt) {
-          //   console.error("Missing startAt or endAt timestamps");
-          //   return prev;
-          // }
-
-          const startDate = new Date(status.startAt);
-          const endDate = new Date(status.endAt);
-
-          // if (
-          //   status.pausedState !== "paused" ||
-          //   startDate.toString() === "Invalid Date" ||
-          //   endDate.toString() === "Invalid Date"
-          // ) {
-          //   console.error("Invalid date format for startAt or endAt");
-          //   return prev;
-          // }
-
           const timeInSeconds =
-            status.remainingTime !== null
-              ? status.remainingTime
-              : status.pausedState === "paused"
-              ? differenceInSeconds(endDate, startDate)
-              : differenceInSeconds(endDate, new Date());
-
-          console.log(
-            "endDate, new Date()",
-            differenceInSeconds(endDate, new Date()) + 1
-          );
-          console.log(
-            "endDate, startDate",
-            differenceInSeconds(endDate, startDate)
-          );
-          console.log("status.remainingTime", status.remainingTime);
-          console.log("timeInSeconds", timeInSeconds);
+            status.currentTime !== 0
+              ? status.currentTime
+              : status.remainingTime;
 
           return {
             ...prev,
@@ -131,7 +102,7 @@ export function useTimer({
 
       if (status?.pausedState === "paused") setIsPlay(false);
       else if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
-    } else if (status.state === "idle" || status.state === "finished") {
+    } else if (status.state === "idle") {
       setMenu("enfoque");
       setIsPlay(false);
       setTime((prev) => ({
@@ -142,7 +113,11 @@ export function useTimer({
       setStartedElement(false);
     }
 
-    if (status.state !== "idle" && status.state !== "finished")
+    if (
+      status.state !== "idle" &&
+      status.state !== "finished" &&
+      status.state !== "completed"
+    )
       setStartedElement(true);
   }, [
     status,
@@ -174,11 +149,10 @@ export function useTimer({
         setTime((prev) => {
           const currentSeconds = timeUtils.timeToSeconds(prev.currentTime);
 
-          console.log(currentSeconds);
-          if (currentSeconds <= 1) {
-            console.log("playEndSound");
-
+          if (currentSeconds <= 2) {
             playEndSound();
+          }
+          if (currentSeconds <= 1) {
             clearInterval(intervalRef.current as NodeJS.Timeout);
             intervalRef.current = null;
             return prev;
@@ -194,6 +168,13 @@ export function useTimer({
 
     if (status?.state === "completed" || status?.state === "finished") {
       resetTimer();
+      setTime((prev) => ({
+        ...prev,
+        initialTime: timeUtils.secondsToTime(1500),
+        currentTime: timeUtils.secondsToTime(1500),
+      }));
+      setCycles(0);
+      setTotalCycles(4);
       setStatus(null);
     }
 

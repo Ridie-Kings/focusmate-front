@@ -1,29 +1,21 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { apiClient } from "../api";
 
 export async function deleteTask({ _id }: { _id: string }): Promise<{
   success: boolean;
-  message: string;
+  res: string;
 }> {
   try {
-    const token = await getToken();
+    const res = await apiClient.delete(`tasks/${_id}`);
 
-    const res = await apiConnection.delete(`tasks/${_id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return { success: true, message: res?.data };
+    return { success: true, res };
   } catch (error: any) {
-    console.error(
-      "Error deleting task:",
-      error.response?.data || error.response || error
-    );
+    console.error("Error deleting task:", error);
+
     return {
       success: false,
-      message: error.response?.data || error.message || "Unknown error",
+      res: error.message,
     };
   }
 }

@@ -1,11 +1,11 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import Column from "./Board/Status";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
-  const { setTasks, tasks } = useContext(DashboardContext);
+  const { setTasks, tasks } = useDashboardStore();
 
   useEffect(() => {
     setTasks(prevTasks);

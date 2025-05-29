@@ -1,17 +1,15 @@
 "use server";
-import { getToken } from "@/lib";
-import { apiConnection } from "../axiosConfig";
+
+import { apiClient } from "../api";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { format } from "date-fns";
 
 export async function createTask({ task }: { task: tempTaskType }): Promise<{
   success: boolean;
-  message: TaskType;
+  res: TaskType;
 }> {
   try {
-    const token = await getToken();
-
     const newTask = {
       ...task,
       startDate: task.startDate ? task.startDate.toISOString() : undefined,
@@ -19,21 +17,12 @@ export async function createTask({ task }: { task: tempTaskType }): Promise<{
       dueDate: task.dueDate ? format(task.dueDate, "yyyy-MM-dd") : undefined,
     };
 
-    const res = await apiConnection.post("tasks", newTask, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await apiClient.post("tasks", newTask);
 
-    return { success: true, message: res?.data };
+    return { success: true, res };
   } catch (error: any) {
-    console.error(
-      "Error creating task:",
-      error.response?.data || error.response || error
-    );
-    return {
-      success: false,
-      message: error.response?.data || error.message || "Unknown error",
-    };
+    console.error("Error creating task:", error);
+
+    return { success: false, res: error.message };
   }
 }

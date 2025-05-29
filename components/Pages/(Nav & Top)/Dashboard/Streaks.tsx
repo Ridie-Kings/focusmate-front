@@ -51,6 +51,7 @@ export default function Streaks({ number }: { number: number }) {
           : "bg-secondary-100 text-primary-700"
       }`}
       link=""
+      id="streaks-component"
     >
       <div className="w-full z-20">
         <p className=" text-xl font-semibold">{text().title}</p>

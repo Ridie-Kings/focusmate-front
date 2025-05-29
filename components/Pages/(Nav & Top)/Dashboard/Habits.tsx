@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import CircleProgressBar from "@/components/Elements/General/HabitsElements/CircleProgress";
@@ -9,14 +9,12 @@ import Button from "@/components/Reusable/Button";
 
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import MountainHabits from "@/components/Elements/Svg/Mountain/MountainHabits";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
-import { ModalContext } from "@/components/Provider/ModalProvider";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { useModalStore } from "@/stores/modalStore";
 
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
-  const { habits, setHabits } = useContext(DashboardContext);
-  const { setIsOpen } = useContext(ModalContext) as {
-    setIsOpen: (params: { text: string; other?: unknown }) => void;
-  };
+  const { habits, setHabits } = useDashboardStore();
+  const { setIsOpen } = useModalStore();
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
 
@@ -35,9 +33,10 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
 
   return (
     <TemplateDashboard
-      grid="col-span-3 row-span-6 "
+      grid={`col-span-3 row-span-6`}
       title="Hábitos"
       link="/dashboard"
+      id="habits-component"
     >
       <div className="w-full flex flex-col xl:flex-row items-center place-content-evenly">
         <CircleProgressBar

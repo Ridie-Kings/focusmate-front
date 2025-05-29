@@ -21,7 +21,6 @@ export function TopUsers({ viewMode }: TopUsersProps) {
 
   useEffect(() => {
     const loadTopUsers = async () => {
-      // Only show in global view
       if (viewMode !== "global") {
         setTopUsers([]);
         setIsLoading(false);
@@ -50,7 +49,6 @@ export function TopUsers({ viewMode }: TopUsersProps) {
     loadTopUsers();
   }, [viewMode]);
 
-  // Don't show in personal view
   if (viewMode !== "global") {
     return null;
   }

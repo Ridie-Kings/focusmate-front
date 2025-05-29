@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AlertCircle, Award, Text } from "lucide-react";
 
 import BtnSend from "./Modal/BtnSend";
@@ -12,8 +6,8 @@ import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
-import { DashboardContext } from "@/components/Provider/DashboardProvider";
-import { TypeIsOpen } from "@/components/Provider/ModalProvider";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import ModalTaskUtils from "@/lib/Task/ModalTaskUtils";
 
@@ -24,7 +18,7 @@ export default function ModalTask({
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
   prevTask: TaskType;
 }) {
-  const { setTasks } = useContext(DashboardContext);
+  const { setTasks } = useDashboardStore();
 
   const [task, setTask] = useState<tempTaskType>({
     _id: undefined,

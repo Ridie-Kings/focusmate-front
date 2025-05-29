@@ -53,7 +53,6 @@ export default function KanbanUtils({
           copy.splice(insertAtIndex, 0, cardToTransfer);
         }
       }
-      console.log(cardToTransfer);
 
       setCards(copy);
       try {
@@ -66,7 +65,7 @@ export default function KanbanUtils({
         else {
           console.error(
             "Erreur lors de la mise à jour du statut de la tâche",
-            response.message
+            response.res
           );
         }
       } catch (error) {
