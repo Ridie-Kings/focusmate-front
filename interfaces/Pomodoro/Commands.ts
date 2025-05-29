@@ -1,5 +1,5 @@
 export type CommandAction =
-  | "play"
+  | "togglePlay"
   | "pause"
   | "reset"
   | "share"

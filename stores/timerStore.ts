@@ -1,49 +1,77 @@
+"use client";
 import { create } from "zustand";
 import { TimerMode, TimeType } from "@/interfaces/Pomodoro/Pomodoro";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import { DEFAULT_FOCUS_TIME } from "@/lib/TimerProviderUtils";
+import { Dispatch, SetStateAction } from "react";
 
 interface TimerStore {
   time: {
     currentTime: TimeType;
     initialTime: TimeType;
   };
-  setTime: (time: { currentTime: TimeType; initialTime: TimeType }) => void;
+  setTime: Dispatch<
+    SetStateAction<{ currentTime: TimeType; initialTime: TimeType }>
+  >;
   isPlay: boolean;
+  setIsPlay: Dispatch<SetStateAction<boolean>>;
   togglePlay: () => void;
   resetTimer: () => void;
   isChronometer: boolean;
   toggleChronometerMode: (e: boolean) => void;
   menu: chipsIconType;
-  setMenu: (menu: chipsIconType) => void;
+  setMenu: Dispatch<SetStateAction<chipsIconType>>;
   startedElement: boolean;
-  setStartedElement: (started: boolean) => void;
+  setStartedElement: Dispatch<SetStateAction<boolean>>;
   isType: TimerMode;
   setIsType: (type: TimerMode) => void;
   cycles: number;
-  setCycles: (cycles: number) => void;
+  setCycles: Dispatch<SetStateAction<number>>;
   totalCycles: number;
-  setTotalCycles: (cycles: number) => void;
+  setTotalCycles: Dispatch<SetStateAction<number>>;
 }
 
-export const useTimerStore = create<TimerStore>((set) => ({
+export const useTimerStore = create<TimerStore>((set, get) => ({
   time: {
     currentTime: DEFAULT_FOCUS_TIME,
     initialTime: DEFAULT_FOCUS_TIME,
   },
-  setTime: (time) => set({ time }),
-  isPlay: false,
-  togglePlay: () => set((state) => ({ isPlay: !state.isPlay })),
-  resetTimer: () =>
+  setTime: (time) => {
     set((state) => ({
+      time: typeof time === "function" ? time(state.time) : time,
+    }));
+  },
+  isPlay: false,
+  setIsPlay: (isPlay) => set({ isPlay: isPlay as boolean }),
+  togglePlay: () => {
+    const state = get();
+
+    if (state.isChronometer) {
+      if (state.isPlay) {
+        set({ isPlay: false });
+      } else {
+        set({ isPlay: true });
+      }
+    } else {
+      if (state.isPlay) {
+        set({ isPlay: false });
+      } else {
+        set({ isPlay: true });
+      }
+    }
+  },
+  resetTimer: () => {
+    const state = get();
+    set({
       time: {
         currentTime: state.time.initialTime,
         initialTime: state.time.initialTime,
       },
       isPlay: false,
-    })),
+    });
+  },
   isChronometer: false,
-  toggleChronometerMode: (e) =>
+  toggleChronometerMode: (e: boolean) =>
     set((state) => {
       if (state.isPlay) return state;
       return {
@@ -57,13 +85,13 @@ export const useTimerStore = create<TimerStore>((set) => ({
       };
     }),
   menu: "enfoque",
-  setMenu: (menu) => set({ menu }),
+  setMenu: (menu) => set({ menu: menu as chipsIconType }),
   startedElement: false,
-  setStartedElement: (started) => set({ startedElement: started }),
+  setStartedElement: (started) => set({ startedElement: started as boolean }),
   isType: "pomodoro",
   setIsType: (type) => set({ isType: type }),
   cycles: 0,
-  setCycles: (cycles) => set({ cycles }),
+  setCycles: (cycles) => set({ cycles: cycles as number }),
   totalCycles: 4,
-  setTotalCycles: (cycles) => set({ totalCycles: cycles }),
+  setTotalCycles: (cycles) => set({ totalCycles: cycles as number }),
 }));

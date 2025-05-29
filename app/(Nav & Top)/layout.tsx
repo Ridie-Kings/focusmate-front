@@ -9,6 +9,8 @@ import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 import Modal from "@/components/Elements/General/Modal";
+import WebSocketInitializer from "@/config/WebSocketInitializer";
+import TimerInitializer from "@/config/TimerInitializer";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -50,6 +52,8 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
+        <WebSocketInitializer token={token} />
+        <TimerInitializer />
         <Modal />
         <NavBar />
         <main className="flex flex-col min-h-screen md:w-auto w-screen h-full flex-1">

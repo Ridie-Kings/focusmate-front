@@ -36,15 +36,20 @@ export default function TimerUtils({
   const playEndSound = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play().catch((err) => {
-        console.error("Error:", err);
-      });
+      audioRef.current.play().catch(() => {});
+    }
+  }, []);
+
+  const preloadSound = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
     }
   }, []);
 
   const togglePlay = useCallback(() => {
+    preloadSound();
     setIsPlay((prev) => !prev);
-  }, []);
+  }, [preloadSound]);
 
   const resetTimer = useCallback(() => {
     setIsPlay(false);
@@ -74,5 +79,6 @@ export default function TimerUtils({
     playEndSound,
     togglePlay,
     resetTimer,
+    preloadSound,
   };
 }

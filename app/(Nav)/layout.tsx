@@ -8,6 +8,8 @@ import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 import Modal from "@/components/Elements/General/Modal";
+import WebSocketInitializer from "@/config/WebSocketInitializer";
+import TimerInitializer from "@/config/TimerInitializer";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -29,7 +31,6 @@ export default async function RootLayout({
 }>) {
   const token = await getToken();
   if (!token) redirect("/login");
-
   return (
     <html lang="es">
       <head>
@@ -52,6 +53,8 @@ export default async function RootLayout({
         <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
           {children}
           <PopUp />
+          <WebSocketInitializer token={token} />
+          <TimerInitializer />
           <PWAInstallPrompt />
         </main>
         <Modal />
