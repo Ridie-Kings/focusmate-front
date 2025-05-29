@@ -9,7 +9,6 @@ import { DailyTrends } from "./StatsboardContainer/daily-trends";
 import { TopUsers } from "./StatsboardContainer/top-users";
 import { UserSelector } from "./StatsboardContainer/user-selector";
 
-// Definición de pestañas para facilitar mantenimiento
 const TABS = [
   { id: "overview", label: "Resumen" },
   { id: "tasks", label: "Tareas" },

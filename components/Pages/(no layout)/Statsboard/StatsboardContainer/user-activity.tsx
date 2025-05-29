@@ -1,4 +1,3 @@
-// user-activity.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -66,7 +65,6 @@ export function UserActivity({ selectedUser, viewMode }: UserActivityProps) {
     loadActivityData();
   }, [selectedUser, viewMode]);
 
-  // Only show in personal view
   if (viewMode !== "personal") {
     return null;
   }

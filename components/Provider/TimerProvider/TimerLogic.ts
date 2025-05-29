@@ -63,6 +63,8 @@ export function useTimer({
   });
 
   useEffect(() => {
+    console.log("isPlay", isPlay);
+
     if (typeof window !== "undefined") {
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }
@@ -147,8 +149,10 @@ export function useTimer({
         setTime((prev) => {
           const currentSeconds = timeUtils.timeToSeconds(prev.currentTime);
 
-          if (currentSeconds <= 1) {
+          if (currentSeconds <= 2) {
             playEndSound();
+          }
+          if (currentSeconds <= 1) {
             clearInterval(intervalRef.current as NodeJS.Timeout);
             intervalRef.current = null;
             return prev;
