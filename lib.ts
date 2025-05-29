@@ -24,12 +24,12 @@ export async function updateSession(
   ]);
   const authOnlyPaths = new Set(["/login", "/register"]);
 
-  // if (pathname === "/") {
-  //   if (accessToken || refreshToken) {
-  //     return NextResponse.redirect(new URL("/dashboard", req.nextUrl.origin));
-  //   }
-  //   return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
-  // }
+  if (pathname === "/") {
+    if (accessToken || refreshToken) {
+      return NextResponse.redirect(new URL("/dashboard", req.nextUrl.origin));
+    }
+    return NextResponse.redirect(new URL("/login", req.nextUrl.origin));
+  }
 
   if (!accessToken && refreshToken) {
     const newToken = await refreshSession(refreshToken);
@@ -74,12 +74,12 @@ export async function refreshSession(
 
     return newAccessToken;
   } catch (error) {
-    // console.error("Error al refrescar la sesión:", error);
-    // // Eliminar cookies inválidas
-    // const cookieStore = await cookies();
-    // cookieStore.delete("access_token");
-    // cookieStore.delete("refresh_token");
-    // return undefined;
+    console.error("Error al refrescar la sesión:", error);
+    // Eliminar cookies inválidas
+    const cookieStore = await cookies();
+    cookieStore.delete("access_token");
+    cookieStore.delete("refresh_token");
+    return undefined;
   }
 }
 
