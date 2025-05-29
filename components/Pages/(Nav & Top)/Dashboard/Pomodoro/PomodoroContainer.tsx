@@ -1,7 +1,22 @@
 import Chronometer from "./Chronometer/Chronometer";
 import PomodoroElement from "./PomodoroContainer/PomodoroElement";
 
-export default function PomodoroContainer({ size }: { size: "medium" | "large" }) {
+// const Chronometer = dynamic(() => import("./Chronometer/Chronometer"), {
+//   loading: () => <div>Loading...</div>,
+// });
+
+// const PomodoroElement = dynamic(
+//   () => import("./PomodoroContainer/PomodoroElement"),
+//   {
+//     loading: () => <div>Loading...</div>,
+//   }
+// );
+
+export default function PomodoroContainer({
+  size,
+}: {
+  size: "medium" | "large";
+}) {
   return (
     <div
       id="timer-component"
