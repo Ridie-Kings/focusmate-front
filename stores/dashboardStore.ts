@@ -23,17 +23,53 @@ interface DashboardStore {
 
 export const useDashboardStore = create<DashboardStore>((set) => ({
   events: [],
-  setEvents: (events) => set({ events: events as TaskType[] }),
+  setEvents: (newEvents) => {
+    set((state) => ({
+      events:
+        typeof newEvents === "function" ? newEvents(state.events) : newEvents,
+    }));
+  },
   tasks: [],
-  setTasks: (tasks) => set({ tasks: tasks as TaskType[] }),
+  setTasks: (newTasks) =>
+    set((state) => ({
+      tasks: typeof newTasks === "function" ? newTasks(state.tasks) : newTasks,
+    })),
   habits: [],
-  setHabits: (habits) => set({ habits: habits as HabitsType[] }),
+  setHabits: (newHabits) =>
+    set((state) => ({
+      habits:
+        typeof newHabits === "function" ? newHabits(state.habits) : newHabits,
+    })),
   loadingEvents: true,
-  setLoadingEvents: (loading) => set({ loadingEvents: loading as boolean }),
+  setLoadingEvents: (newLoadingEvents) =>
+    set((state) => ({
+      loadingEvents:
+        typeof newLoadingEvents === "function"
+          ? newLoadingEvents(state.loadingEvents)
+          : newLoadingEvents,
+    })),
   loadingTask: true,
-  setLoadingTask: (loading) => set({ loadingTask: loading as boolean }),
+  setLoadingTask: (newLoadingTask) =>
+    set((state) => ({
+      loadingTask:
+        typeof newLoadingTask === "function"
+          ? newLoadingTask(state.loadingTask)
+          : newLoadingTask,
+    })),
   loadingHabits: true,
-  setLoadingHabits: (loading) => set({ loadingHabits: loading as boolean }),
+  setLoadingHabits: (newLoadingHabits) =>
+    set((state) => ({
+      loadingHabits:
+        typeof newLoadingHabits === "function"
+          ? newLoadingHabits(state.loadingHabits)
+          : newLoadingHabits,
+    })),
   userInfo: undefined,
-  setUserInfo: (userInfo) => set({ userInfo: userInfo as ProfileType }),
+  setUserInfo: (newUserInfo) =>
+    set((state) => ({
+      userInfo:
+        typeof newUserInfo === "function"
+          ? newUserInfo(state.userInfo)
+          : newUserInfo,
+    })),
 }));
