@@ -12,7 +12,8 @@ export default function PageTitle() {
     if (pathname === "/habits") return "Mis Hábitos";
     if (pathname === "/pomodoro") return "Pomodoro";
     if (pathname === "/support") return "Feedback";
-    return "Dashboard";
+    if (pathname === "/streaks-ranking") return "Ranking";
+    return pathname.split("/")[1].split("-").join(" ");
   };
   return (
     <h1 className="text-xl sm:text-4xl md:text-5xl capitalize">{title()}</h1>
