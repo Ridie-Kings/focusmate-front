@@ -15,5 +15,9 @@ export const useModalStore = create<ModalStore>((set) => ({
   isOpen: { text: "" },
   setIsOpen: (isOpen) => set({ isOpen: isOpen as TypeIsOpen }),
   profile: null,
-  setProfile: (profile) => set({ profile: profile as ProfileType }),
+  setProfile: (profile) =>
+    set((state) => ({
+      profile:
+        typeof profile === "function" ? profile(state.profile) : profile,
+    })),
 }));

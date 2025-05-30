@@ -29,6 +29,7 @@ export default function Timeline({
     }
   }, [loadingEvents, isInitialLoading]);
 
+  console.log(events);
   const filteredEvents = useMemo(() => {
     return events
       .filter((event) => isSameDay(new Date(event.dueDate), date ?? new Date()))
