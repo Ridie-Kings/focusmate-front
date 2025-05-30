@@ -77,13 +77,7 @@ export default function CalendarPage() {
   return (
     <section className="flex sm:flex-row flex-col flex-1 h-full sm:gap-6 p-6 overflow-hidden transition-all duration-300">
       <div className="w-full sm:w-1/3 xl:w-1/4 h-full flex flex-col gap-2">
-        <SmallCalendar
-          eventos
-          setDate={setDate}
-          date={date ?? new Date()}
-          inView
-          btn
-        />
+        <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
         <ListEvents items={events} />
       </div>
       <CalendarInfo

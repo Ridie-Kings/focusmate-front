@@ -1,48 +1,50 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import debounce from "lodash/debounce";
 
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import Timeline from "./Agenda/Timeline";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
-import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { useDashboardStore } from "@/stores/dashboardStore";
-import { format } from "date-fns";
+import { getCalendarOfMonthByDate } from "@/services/Calendar/getCalendarOfMonthByDate";
+import { isSameMonth } from "date-fns";
 
 export default function Agenda() {
   const { events, setEvents, setTasks, loadingEvents, setLoadingEvents } =
     useDashboardStore();
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
+    if (currentMonth && isSameMonth(date ?? new Date(), currentMonth)) {
+      return;
+    }
+
     const handleGetCalendarByDate = async (dateToFetch: Date) => {
       setLoadingEvents(true);
+
       try {
-        const events = await getCalendarByDate({
-          date: format(dateToFetch, "yyyy-MM-dd"),
+        const events = await getCalendarOfMonthByDate({
+          date: dateToFetch,
         });
+
         if (events.success) {
           setEvents(events.res);
-          setLoadingEvents(false);
+
+          if (!isSameMonth(dateToFetch, currentMonth))
+            setCurrentMonth(dateToFetch);
         }
       } catch (error) {
         console.error("Error al obtener el calendario", error);
+
         setEvents([]);
+      } finally {
+        setLoadingEvents(false);
       }
     };
 
-    const debouncedFetch = debounce((dateToFetch: Date) => {
-      handleGetCalendarByDate(dateToFetch);
-      setLoadingEvents(false);
-    }, 500);
-
-    debouncedFetch(date ?? new Date());
-    setLoadingEvents(true);
-    return () => {
-      debouncedFetch.cancel();
-    };
+    handleGetCalendarByDate(date ?? new Date());
   }, [date, setEvents]);
 
   return (
@@ -53,13 +55,7 @@ export default function Agenda() {
       id="agenda-component"
     >
       <div className="flex flex-col xl:flex-row w-full h-full gap-4">
-        <SmallCalendar
-          eventos
-          setDate={setDate}
-          date={date ?? new Date()}
-          inView
-          btn
-        />
+        <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
         <Timeline
           date={date}
           events={events}
