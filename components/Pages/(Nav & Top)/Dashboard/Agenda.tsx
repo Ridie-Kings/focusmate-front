@@ -7,8 +7,8 @@ import Timeline from "./Agenda/Timeline";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
 import { useDashboardStore } from "@/stores/dashboardStore";
-import { getCalendarOfMonthByDate } from "@/services/Calendar/getCalendarOfMonthByDate";
 import { isSameMonth } from "date-fns";
+import CalendarUtils from "@/lib/CalendarUtils";
 
 export default function Agenda() {
   const { events, setEvents, setTasks, loadingEvents, setLoadingEvents } =
@@ -21,30 +21,17 @@ export default function Agenda() {
       return;
     }
 
-    const handleGetCalendarByDate = async (dateToFetch: Date) => {
-      setLoadingEvents(true);
+    const { handleGetCalendarOfMonthByDate } = CalendarUtils({
+      firstDate: date ?? new Date(),
+      secondDate: date ?? new Date(),
+      date: date ?? new Date(),
+      setEvents,
+      setCurrentMonth,
+      setLoadingEvents,
+      currentMonth,
+    });
 
-      try {
-        const events = await getCalendarOfMonthByDate({
-          date: dateToFetch,
-        });
-
-        if (events.success) {
-          setEvents(events.res);
-
-          if (!isSameMonth(dateToFetch, currentMonth))
-            setCurrentMonth(dateToFetch);
-        }
-      } catch (error) {
-        console.error("Error al obtener el calendario", error);
-
-        setEvents([]);
-      } finally {
-        setLoadingEvents(false);
-      }
-    };
-
-    handleGetCalendarByDate(date ?? new Date());
+    handleGetCalendarOfMonthByDate(date ?? new Date());
   }, [date, setEvents]);
 
   return (

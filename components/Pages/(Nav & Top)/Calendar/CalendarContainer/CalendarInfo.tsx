@@ -6,6 +6,7 @@ import MonthCalendar from "./CalendarInfo/MonthCalendar";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
+import LoadingState from "@/components/Elements/General/LoadingState";
 
 export default function CalendarInfo({
   navType,
@@ -14,6 +15,7 @@ export default function CalendarInfo({
   setDate,
   events,
   setEvents,
+  loadingEvents,
 }: {
   navType: NavTypeType;
   setNavType: Dispatch<SetStateAction<NavTypeType>>;
@@ -21,10 +23,12 @@ export default function CalendarInfo({
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   events: TaskType[];
   setEvents: Dispatch<SetStateAction<TaskType[]>>;
+  loadingEvents: boolean;
 }) {
   const scrollCalendar = useRef<HTMLDivElement>(null);
 
   const renderCalenderType = () => {
+    if (loadingEvents) return <LoadingState />;
     switch (navType) {
       case "Día":
         return (

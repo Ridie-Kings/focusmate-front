@@ -74,14 +74,36 @@ export default function DaysCalendar({
                   Array.from({ length: dayEvents.length }).map((_, i) => (
                     <div
                       key={`event-dot-${i}`}
-                      className="size-1.5 rounded-full bg-secondary-700"
+                      className={`size-1.5 rounded-full transition-colors duration-200 ${
+                        isSameDay(day, date ?? new Date())
+                          ? "bg-white"
+                          : "bg-secondary-700"
+                      }`}
                     />
                   ))
                 ) : (
                   <>
-                    <div className="size-1.5 rounded-full bg-secondary-700" />
-                    <div className="size-1.5 rounded-full bg-secondary-700" />
-                    <div className="size-1.5 rounded-full bg-secondary-700" />
+                    <div
+                      className={`size-1.5 rounded-full transition-colors duration-200 ${
+                        isSameDay(day, date ?? new Date())
+                          ? "bg-white"
+                          : "bg-secondary-700"
+                      }`}
+                    />
+                    <div
+                      className={`size-1.5 rounded-full transition-colors duration-200 ${
+                        isSameDay(day, date ?? new Date())
+                          ? "bg-white"
+                          : "bg-secondary-700"
+                      }`}
+                    />
+                    <div
+                      className={`size-1.5 rounded-full transition-colors duration-200 ${
+                        isSameDay(day, date ?? new Date())
+                          ? "bg-white"
+                          : "bg-secondary-700"
+                      }`}
+                    />
                   </>
                 )}
               </div>
