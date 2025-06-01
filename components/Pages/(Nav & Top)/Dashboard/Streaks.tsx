@@ -1,9 +1,21 @@
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
-import StreaksBg1 from "@/components/Elements/Svg/Streaks/StreaksBg1";
-import StreaksBg2 from "@/components/Elements/Svg/Streaks/StreaksBg2";
-import StreaksBg3 from "@/components/Elements/Svg/Streaks/StreaksBg3";
-import StreaksBgMax from "@/components/Elements/Svg/Streaks/StreaksBgMax";
-import StreaksNull from "@/components/Elements/Svg/Streaks/StreaksNull";
+import dynamic from "next/dynamic";
+
+const StreaksBg1 = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBg1")
+);
+const StreaksBg2 = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBg2")
+);
+const StreaksBg3 = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBg3")
+);
+const StreaksBgMax = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBgMax")
+);
+const StreaksNull = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksNull")
+);
 
 export default function Streaks({ number }: { number: number }) {
   const text = (): { title: string; desc: string } => {

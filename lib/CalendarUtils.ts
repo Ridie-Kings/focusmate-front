@@ -66,7 +66,7 @@ export default function CalendarUtils({
       if (events.success) {
         setEvents(events.res);
 
-        if (!isSameMonth(dateToFetch, currentMonth))
+        if (!isSameMonth(dateToFetch, currentMonth ?? new Date()))
           setCurrentMonth(dateToFetch);
       }
     } catch (error) {

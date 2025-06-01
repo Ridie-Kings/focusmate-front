@@ -48,7 +48,7 @@ export default function LoadingState({
       case "skeleton":
         return (
           <div
-            className={`animate-pulse rounded bg-gray-200 ${
+            className={`animate-pulse rounded bg-gray-200 w-full ${
               size === "sm" ? "h-4" : size === "md" ? "h-8" : "h-12"
             } ${className}`}
           />

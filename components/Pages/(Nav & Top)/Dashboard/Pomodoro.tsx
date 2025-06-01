@@ -7,25 +7,6 @@ import PomodoroContainer from "./Pomodoro/PomodoroContainer";
 import AddTask from "./Pomodoro/AddTask";
 import Commands from "@/components/Elements/Pomodoro/Commands";
 
-// Lazy load les composants lourds
-// const PomodoroContainer = dynamic(
-//   () => import("./Pomodoro/PomodoroContainer"),
-//   {
-//     loading: () => <div>Loading...</div>,
-//   }
-// );
-
-// const Commands = dynamic(
-//   () => import("@/components/Elements/Pomodoro/Commands"),
-//   {
-//     loading: () => <div>Loading...</div>,
-//   }
-// );
-
-// const AddTask = dynamic(() => import("./Pomodoro/AddTask"), {
-//   loading: () => <div>Loading...</div>,
-// });
-
 export default function Pomodoro() {
   const {
     isType,

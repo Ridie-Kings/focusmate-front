@@ -112,7 +112,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 
   return (
     <div
-      className="flex flex-col place-content-between"
+      className="flex flex-col place-content-between pb-2"
       id="small-calendar-component"
     >
       <div

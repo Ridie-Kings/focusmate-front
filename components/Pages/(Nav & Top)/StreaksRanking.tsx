@@ -22,11 +22,16 @@ export default function StreaksRanking() {
 
         if (response.success) {
           const sortedUsers = response.data.topUsers
-            .map((user: any, index: number) => ({
-              id: index,
-              username: user.username,
-              completedTasks: user.completedTasks || 0,
-            }))
+            .map(
+              (
+                user: { username: string; completedTasks: number },
+                index: number
+              ) => ({
+                id: index,
+                username: user.username,
+                completedTasks: user.completedTasks || 0,
+              })
+            )
             .sort(
               (a: UserStreak, b: UserStreak) =>
                 b.completedTasks - a.completedTasks
