@@ -49,7 +49,7 @@ export default async function login(
   } catch (error: any) {
     return {
       success: false,
-      message: error || "Unexpected error during login",
+      message: error.message || "Unexpected error during login",
     };
   }
 }
