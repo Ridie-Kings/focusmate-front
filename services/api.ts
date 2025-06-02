@@ -40,9 +40,11 @@ api.interceptors.response.use(
       case 400:
         throw new ValidationError(data.message ?? "Datos inválidos");
       case 401:
-        throw new AuthError("Sesión expirada");
+        throw new AuthError("Unauthorized: " + data.message);
       case 403:
-        throw new AuthError("No tienes permisos para realizar esta acción");
+        throw new AuthError(
+          "No tienes permisos para realizar esta acción: " + data.message
+        );
       case 404:
         throw new AppError("Recurso no encontrado", data.error ?? "NOT_FOUND");
       case 409:

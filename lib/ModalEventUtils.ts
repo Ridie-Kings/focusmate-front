@@ -142,8 +142,6 @@ export default function ModalEventUtils({
         return;
       }
 
-      console.log("setIsOpen");
-
       setIsOpen({ text: "" });
     } catch (err) {
       console.error("Error inesperado:", err);

@@ -63,8 +63,6 @@ export function useTimer({
   });
 
   useEffect(() => {
-    console.log("isPlay", isPlay);
-
     if (typeof window !== "undefined") {
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }

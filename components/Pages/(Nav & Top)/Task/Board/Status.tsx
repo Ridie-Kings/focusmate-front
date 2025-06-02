@@ -31,7 +31,7 @@ const Column = ({ title, cards, status, setCards }: ColumnProps) => {
         filteredCards.length >= 5 ? "overflow-y-auto" : ""
       }`}
     >
-      <div className="flex flex-col py-4 px-2 text-sm border-2 border-secondary-200 text-primary-500 rounded-2xl sticky top-0 bg-white">
+      <div className="flex flex-col py-4 px-2 text-sm border-2 border-secondary-200 text-primary-500 rounded-2xl sticky top-0 bg-white z-10">
         <h3>{title}</h3>
         <span>{filteredCards.length}</span>
       </div>
