@@ -2,7 +2,7 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export default function LanguageSwitcher({ darkMode }: { darkMode: boolean }) {
+export default function LanguageSwitcher({ darkMode }: { darkMode?: boolean }) {
   const locale = useLocale();
   const router = useRouter();
   const nextLocale = locale === "es" ? "en" : "es";

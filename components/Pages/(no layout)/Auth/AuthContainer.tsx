@@ -3,7 +3,6 @@
 import { useActionState, useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 import { AUTH_CONFIG } from "@/config/AuthConfig";
 import { register } from "@/services/Auth/register";
