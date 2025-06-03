@@ -2,7 +2,7 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ darkMode }: { darkMode: boolean }) {
   const locale = useLocale();
   const router = useRouter();
   const nextLocale = locale === "es" ? "en" : "es";
@@ -15,7 +15,11 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={handleSwitch}
-      className="mt-4 px-3 py-1 rounded bg-white/10 text-white hover:bg-white/20 transition"
+      className={`mt-4 px-3 py-1 rounded  transition cursor-pointer ${
+        darkMode
+          ? "bg-primary-500/10 text-primary-500 hover:bg-primary-500/20"
+          : "bg-white/10 hover:bg-white/20"
+      }`}
     >
       {locale === "es" ? "EN" : "ES"}
     </button>

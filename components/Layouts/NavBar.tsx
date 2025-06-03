@@ -5,7 +5,7 @@ import { logout } from "@/lib";
 import PlanButtons from "./NavBar/PlanButtons";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
 import MobileMenu from "./NavBar/MobileMenu";
-import LanguageSwitcher from "./NavBar/LanguageSwitcher";
+import LanguageSwitcher from "../Elements/General/LanguageSwitcher";
 
 export default async function NavBar() {
   const profile = await getMyProfile();
