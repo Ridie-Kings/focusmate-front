@@ -164,6 +164,13 @@ export function useTimer({
           intervalRef.current = null;
           return;
         }
+        if (typeof document !== "undefined") {
+          document.title = `SherpApp | ${
+            timeUtils.secondsToTime(currentSeconds).hours
+          }:${timeUtils.secondsToTime(currentSeconds).min}:${
+            timeUtils.secondsToTime(currentSeconds).seg
+          }`;
+        }
 
         setTime((prev) => ({
           ...prev,
