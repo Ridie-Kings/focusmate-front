@@ -1,0 +1,41 @@
+{
+  "HomePage": {
+    "title": "Hola mundo!"
+  },
+  "Auth": {
+    "login": {
+      "title": "¡Bienvenido de Nuevo!",
+      "description": "Organiza tu tiempo, alcanza tus metas.",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes cuenta?",
+      "signUp": "Regístrate",
+      "loginButton": "Iniciar Sesión",
+      "or": "O puedes",
+      "googleLogin": "Iniciar Sesión con Google"
+    },
+    "register": {
+      "title": "Vamos a crear tu cuenta",
+      "description": "Completa estos datos para empezar tu camino hacia la organización y el éxito académico. ¡Es muy sencillo!",
+      "fullname": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "repeatPassword": "Repite Contraseña",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "signIn": "Iniciar Sesión",
+      "registerButton": "Registrarse",
+      "or": "O puedes",
+      "googleRegister": "Registrarse con Google"
+    }
+  },
+  "Common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar"
+  }
+}

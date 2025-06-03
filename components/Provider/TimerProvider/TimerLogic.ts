@@ -63,8 +63,6 @@ export function useTimer({
   });
 
   useEffect(() => {
-    console.log("isPlay", isPlay);
-
     if (typeof window !== "undefined") {
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }
@@ -145,25 +143,27 @@ export function useTimer({
     }
 
     if (isPlay) {
+      const startTime = Date.now();
+      const initialSeconds = timeUtils.timeToSeconds(time.currentTime);
+
       intervalRef.current = setInterval(() => {
-        setTime((prev) => {
-          const currentSeconds = timeUtils.timeToSeconds(prev.currentTime);
+        const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+        const currentSeconds = initialSeconds - elapsedSeconds;
 
-          if (currentSeconds <= 2) {
-            playEndSound();
-          }
-          if (currentSeconds <= 1) {
-            clearInterval(intervalRef.current as NodeJS.Timeout);
-            intervalRef.current = null;
-            return prev;
-          }
+        if (currentSeconds <= 2) {
+          playEndSound();
+        }
+        if (currentSeconds <= 1) {
+          clearInterval(intervalRef.current as NodeJS.Timeout);
+          intervalRef.current = null;
+          return;
+        }
 
-          return {
-            ...prev,
-            currentTime: timeUtils.secondsToTime(currentSeconds - 1),
-          };
-        });
-      }, 1000);
+        setTime((prev) => ({
+          ...prev,
+          currentTime: timeUtils.secondsToTime(currentSeconds),
+        }));
+      }, 100);
     }
 
     if (status?.state === "completed" || status?.state === "finished") {

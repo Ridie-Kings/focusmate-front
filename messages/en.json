@@ -1,0 +1,41 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "Auth": {
+    "login": {
+      "title": "Welcome Back!",
+      "description": "Organize your time, achieve your goals.",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot Password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up",
+      "loginButton": "Login",
+      "or": "Or you can",
+      "google": "Login with Google"
+    },
+    "register": {
+      "title": "Let's create your account",
+      "description": "Complete these details to start your journey towards organization and academic success. It's very simple!",
+      "fullname": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "repeatpassword": "Repeat Password",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign In",
+      "registerButton": "Register",
+      "or": "Or you can",
+      "google": "Register with Google"
+    }
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit"
+  }
+}

@@ -25,11 +25,11 @@ export default function HeaderProfile({
         {/* <div className="flex items-center gap-2">
           <Button size="compact" button="primary" state="enabled" type="button">
             <p>Editar Perfil</p> <Pen size={24} />
-          </Button>
+            </Button>
           <Button size="compact" button="primary" state="enabled" type="button">
-            <p>Cambiar foto</p> <Camera className="flex-1" size={24} />
+          <p>Cambiar foto</p> <Camera className="flex-1" size={24} />
           </Button>
-        </div> */}
+          </div> */}
       </div>
     </div>
   );

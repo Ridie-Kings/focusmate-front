@@ -36,6 +36,7 @@ export default function ModalEventUtils({
 
     return true;
   };
+
   const handleUpdateEvent = async () => {
     setError(null);
 
@@ -118,17 +119,27 @@ export default function ModalEventUtils({
         const calendarResponse = await addTaskToCalendar({
           _id: res.res._id,
         });
+
         if (!calendarResponse.success) {
           console.error(
             "Error al añadir la tarea al calendario:",
             calendarResponse.res
           );
+
+          setEvents((prev) =>
+            prev.filter((event) => event._id !== res.res._id)
+          );
+          setTasks((prev) => prev.filter((task) => task._id !== res.res._id));
+
+          setError(calendarResponse.res);
+          return;
         }
       } catch (calendarError) {
         console.error(
           "Error al comunicarse con el servicio de calendario:",
           calendarError
         );
+        return;
       }
 
       setIsOpen({ text: "" });

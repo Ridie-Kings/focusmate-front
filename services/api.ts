@@ -31,25 +31,27 @@ api.interceptors.response.use(
       throw new NetworkError("No se pudo conectar con el servidor");
     }
 
-    const { status, data } = error.response;
-
-    const errorData =
-      data && typeof data === "object" && !Array.isArray(data)
-        ? (data as Record<string, unknown>)
-        : null;
+    const { status, data } = error.response as {
+      status: number;
+      data: { message: string; error: string; statusCode: number };
+    };
 
     switch (status) {
       case 400:
-        throw new ValidationError(
-          typeof data === "string" ? data : "Datos inválidos",
-          errorData
-        );
+        throw new ValidationError(data.message ?? "Datos inválidos");
       case 401:
-        throw new AuthError("Sesión expirada");
+        throw new AuthError("Unauthorized: " + data.message);
       case 403:
-        throw new AuthError("No tienes permisos para realizar esta acción");
+        throw new AuthError(
+          "No tienes permisos para realizar esta acción: " + data.message
+        );
       case 404:
-        throw new AppError("Recurso no encontrado", "NOT_FOUND", 404);
+        throw new AppError("Recurso no encontrado", data.error ?? "NOT_FOUND");
+      case 409:
+        throw new AppError(
+          data.message ?? "Error de conflicto",
+          data.error ?? "CONFLICT"
+        );
       case 429:
         throw new RateLimitError(
           "Demasiadas peticiones. Por favor, espera un momento."
@@ -58,8 +60,8 @@ api.interceptors.response.use(
         throw new ServerError("Error interno del servidor");
       default:
         throw new AppError(
-          typeof data === "string" ? data : "Error desconocido",
-          "UNKNOWN_ERROR",
+          data.message ?? "Error desconocido",
+          data.error ?? "UNKNOWN_ERROR",
           status
         );
     }

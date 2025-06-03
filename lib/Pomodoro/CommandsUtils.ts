@@ -36,7 +36,6 @@ export default function CommandsUtils() {
 
       if (!status) {
         if (action === "togglePlay") {
-          console.log("START DEFAULT POMODORO");
           const response = await StartDefaultPomodoro();
 
           if (response.success) {
@@ -56,8 +55,6 @@ export default function CommandsUtils() {
       }
 
       if (!startedElement && action === "togglePlay") {
-        console.log("START POMODORO BY ID");
-
         const response = await StartPomodoroById({ id: status._id });
 
         if (response.success) {
@@ -74,10 +71,7 @@ export default function CommandsUtils() {
       }
 
       if (action === "togglePlay") {
-        console.log("TOGGLE PLAY");
-
         if (status.pausedState === "paused") {
-          console.log("RESUME POMODORO");
           const response = await ResumePomodoro({ id: status._id });
           if (response.success) {
             togglePlay();
@@ -88,8 +82,6 @@ export default function CommandsUtils() {
             });
           }
         } else {
-          console.log("PAUSE POMODORO");
-
           const response = await PausePomodoro({ id: status._id });
           if (response.success) {
             togglePlay();

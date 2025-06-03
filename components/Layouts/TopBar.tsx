@@ -10,8 +10,10 @@ import { useState, useEffect } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { useDashboardStore } from "@/stores/dashboardStore";
 import LoadingState from "@/components/Elements/General/LoadingState";
+import { useTranslations } from "next-intl";
 
 export default function TopBar() {
+  const t = useTranslations("HomePage");
   const { isVisible } = UseScrollDirection();
   const [profil, setProfil] = useState<ProfileType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +45,7 @@ export default function TopBar() {
     >
       <div className="flex flex-col sm:flex-1 justify-center">
         <p className="sm:text-lg hidden sm:block text-primary-500 capitalize">
-          Bienvenido, {profil?.user?.fullname}!
+          {t("title")}, {profil?.user?.fullname}!
         </p>
         <PageTitle />
       </div>

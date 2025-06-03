@@ -20,7 +20,7 @@ export default function CalendarNav({
 }: CalendarNavProps) {
   return (
     <div className="flex flex-col justify-center items-center divide-y divide-primary-200">
-      <p className="text-xl text-primary-500 capitalize w-full text-center py-4 px-6">
+      <p className="text-xl text-primary-500 capitalize w-full text-center pb-4">
         {format(date ?? new Date(), "EEEE dd, MMMM", { locale: es })}
       </p>
       <div className="flex w-full items-center place-content-between py-2 px-4">

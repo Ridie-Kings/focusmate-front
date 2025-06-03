@@ -1,11 +1,11 @@
 import Divider from "@/components/Elements/General/Divider";
-import DropIndicator from "./DropIndicator";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
-import { AlarmCheck } from "lucide-react";
-import { TaskType } from "@/interfaces/Task/TaskType";
-import { format } from "date-fns";
 import Menu from "@/components/Reusable/Menu";
 import { Dispatch, SetStateAction } from "react";
+import { AlarmCheck } from "lucide-react";
+import { format } from "date-fns";
+import { TaskType } from "@/interfaces/Task/TaskType";
+import DropIndicator from "./DropIndicator";
 import { useModalStore } from "@/stores/modalStore";
 import TaskUtils from "@/lib/Task/TaskUtils";
 
@@ -33,27 +33,31 @@ const Card = ({ task, setTasks, handleDragStart }: CardProps) => {
             status: task.status,
           } as TaskType)
         }
-        className="cursor-grab flex flex-col gap-2 text-primary-500 border-l-4 border border-primary-500 rounded-lg p-4 active:cursor-grabbing w-full"
+        className="cursor-grab flex flex-col gap-2 text-primary-500 border-l-5 border border-primary-500 rounded-lg p-4 active:cursor-grabbing w-full"
       >
         <div className="flex w-full place-content-between">
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             <AlarmCheck />
-            <p>{format(task.dueDate ?? new Date(), "dd MMMM")}</p>
+            <p className="text-sm">
+              {format(task.dueDate ?? new Date(), "dd MMMM")}
+            </p>
           </div>
-          <PriorityBadge priority={task.priority} status="" />
-          <Menu
-            items={[
-              {
-                label: "Modificar",
-                onClick: () => setIsOpen({ text: "task", other: task }),
-              },
-              {
-                label: "Eliminar",
-                color: "red",
-                onClick: () => handleDeleteTask(task._id),
-              },
-            ]}
-          />
+          <div className="flex items-center gap-2">
+            <PriorityBadge priority={task.priority} status="" />
+            <Menu
+              items={[
+                {
+                  label: "Modificar",
+                  onClick: () => setIsOpen({ text: "task", other: task }),
+                },
+                {
+                  label: "Eliminar",
+                  color: "red",
+                  onClick: () => handleDeleteTask(task._id),
+                },
+              ]}
+            />
+          </div>
         </div>
         <Divider backgroundColor="#014e44" height="1.5px" />
         <p>{task.title}</p>

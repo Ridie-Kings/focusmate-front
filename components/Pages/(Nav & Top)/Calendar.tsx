@@ -3,28 +3,21 @@
 import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
 import { useState, useEffect } from "react";
 import { useCalendarStore } from "@/stores/calendarStore";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
-import {
-  endOfDay,
-  endOfMonth,
-  endOfWeek,
-  startOfDay,
-  startOfMonth,
-  startOfWeek,
-} from "date-fns";
-import { es } from "date-fns/locale";
+import { isSameMonth } from "date-fns";
 
-import { debounce } from "lodash";
 import CalendarUtils from "@/lib/CalendarUtils";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 import ListEvents from "./Calendar/CalendarContainer/ListEvents";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function CalendarPage() {
   const [navType, setNavType] = useState<NavTypeType>("Día");
   const { date, setDate } = useCalendarStore();
-  const [events, setEvents] = useState<TaskType[]>([]);
+  const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
+  const { setLoadingEvents, events, setEvents, loadingEvents } =
+    useDashboardStore();
 
   useEffect(() => {
     const storedCalendar = localStorage.getItem("navCalendar") || "Día";
@@ -37,58 +30,33 @@ export default function CalendarPage() {
   };
 
   useEffect(() => {
-    let firstDate: Date;
-    let secondDate: Date;
-
-    if (navType === "Mes") {
-      firstDate = startOfWeek(startOfMonth(date ?? new Date()), { locale: es });
-      secondDate = endOfWeek(endOfMonth(date ?? new Date()), { locale: es });
-    } else {
-      firstDate = startOfDay(
-        startOfWeek(date ?? new Date(), { weekStartsOn: 1 })
-      );
-      secondDate = endOfDay(endOfWeek(date ?? new Date(), { weekStartsOn: 1 }));
+    if (currentMonth && isSameMonth(date ?? new Date(), currentMonth)) {
+      return;
     }
 
-    const { handleGetCalendarByRange, handleGetCalendarByDate } = CalendarUtils(
-      {
-        firstDate,
-        secondDate,
-        date,
-        setEvents,
-      }
-    );
+    const { handleGetCalendarOfMonthByDate } = CalendarUtils({
+      firstDate: date ?? new Date(),
+      secondDate: date ?? new Date(),
+      date: date,
+      setEvents,
+      setCurrentMonth,
+      setLoadingEvents,
+      currentMonth,
+    });
 
-    const debouncedFetch = debounce(() => {
-      if (navType === "Día") {
-        handleGetCalendarByDate();
-      } else {
-        handleGetCalendarByRange();
-      }
-    }, 500);
-
-    debouncedFetch();
-
-    return () => {
-      debouncedFetch.cancel();
-    };
+    handleGetCalendarOfMonthByDate(date ?? new Date());
   }, [date, navType]);
 
   return (
     <section className="flex sm:flex-row flex-col flex-1 h-full sm:gap-6 p-6 overflow-hidden transition-all duration-300">
       <div className="w-full sm:w-1/3 xl:w-1/4 h-full flex flex-col gap-2">
-        <SmallCalendar
-          eventos
-          setDate={setDate}
-          date={date ?? new Date()}
-          inView
-          btn
-        />
+        <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
         <ListEvents items={events} />
       </div>
       <CalendarInfo
         events={events}
         setEvents={setEvents}
+        loadingEvents={loadingEvents}
         navType={navType}
         setNavType={(value) => {
           if (typeof value === "function") {

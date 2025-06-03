@@ -9,7 +9,7 @@ export default function TopLogo() {
     >
       <span
         className="
-        transition-all duration-300
+        transition-all duration-300 delay-150
         opacity-0 group-hover:opacity-100
       "
       >
@@ -19,7 +19,7 @@ export default function TopLogo() {
       <h1
         className="
         text-2xl font-extrabold text-white whitespace-nowrap
-        transition-all duration-300
+        transition-all duration-300 delay-150
         opacity-0 group-hover:opacity-100
       "
       >
@@ -29,7 +29,7 @@ export default function TopLogo() {
       <span
         className="
         absolute left-1/2 -translate-x-1/2
-        transition-all duration-300
+        transition-all duration-300 delay-150
         opacity-100 group-hover:opacity-0
       "
       >
