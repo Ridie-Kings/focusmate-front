@@ -2,11 +2,12 @@ import { Dispatch, SetStateAction } from "react";
 import InputModal from "@/components/Reusable/InputModal";
 import { Award, Calendar, Text, Timer } from "lucide-react";
 import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { enUS, es } from "date-fns/locale";
 import ModalDatePicker from "../ModalDatePicker/ModalDatePicker";
 import ModalTimePicker from "../ModalTimePicker/ModalTimePicker";
 import ModalPriorityPicker from "../ModalPriorityPicker/ModalPriorityPicker";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function BodyInputs({
   error,
@@ -21,14 +22,17 @@ export default function BodyInputs({
   setTask: Dispatch<SetStateAction<tempTaskType>>;
   date: Date;
 }) {
+  const tCommon = useTranslations("Common");
+  const tPriority = useTranslations("Modal.event.priority");
+  const locale = useLocale();
   const trad = () => {
     switch (task.priority) {
       case "high":
-        return "Alta";
+        return tPriority("high");
       case "medium":
-        return "Media";
+        return tPriority("medium");
       case "low":
-        return "Baja";
+        return tPriority("low");
       default:
         return "";
     }
@@ -42,7 +46,7 @@ export default function BodyInputs({
           setTask((prev) => ({ ...prev, description: e.target.value }))
         }
         type="text"
-        placeholder="Descripción"
+        placeholder={tCommon("description")}
         icon={<Text />}
       />
       {/* <InputModal
@@ -62,7 +66,7 @@ export default function BodyInputs({
       <InputModal
         type="select"
         placeholder={format(task.dueDate ?? new Date(), "dd MMMM yyyy", {
-          locale: es,
+          locale: locale === "es" ? es : enUS,
         })}
         option={
           <ModalDatePicker
@@ -84,7 +88,7 @@ export default function BodyInputs({
         <InputModal
           type="select"
           placeholder={format(task.startDate ?? new Date(), "HH:mm", {
-            locale: es,
+            locale: locale === "es" ? es : enUS,
           })}
           option={
             <ModalTimePicker
@@ -140,7 +144,7 @@ export default function BodyInputs({
       <InputModal
         type="select"
         defaultValue={task.priority}
-        placeholder={task?.priority ? trad() : "Estado"}
+        placeholder={task?.priority ? trad() : tCommon("status")}
         option={
           <ModalPriorityPicker
             top="20px"

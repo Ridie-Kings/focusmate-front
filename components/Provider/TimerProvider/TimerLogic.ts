@@ -85,7 +85,13 @@ export function useTimer({
 
           return {
             ...prev,
-            initialTime: timeUtils.secondsToTime(status.workDuration),
+            initialTime: timeUtils.secondsToTime(
+              status.state === "working"
+                ? status.workDuration
+                : status.state === "shortBreak"
+                ? status.shortBreak
+                : status.longBreak
+            ),
             currentTime: timeUtils.secondsToTime(timeInSeconds),
           };
         } catch (error) {
@@ -94,14 +100,14 @@ export function useTimer({
         }
       });
 
-      if (status.state === "working") setMenu("enfoque");
-      if (status.state === "shortBreak") setMenu("D/Corto");
-      if (status.state === "longBreak") setMenu("D/Largo");
+      if (status.state === "working") setMenu("focus");
+      if (status.state === "shortBreak") setMenu("break");
+      if (status.state === "longBreak") setMenu("longBreak");
 
       if (status?.pausedState === "paused") setIsPlay(false);
       else if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
     } else if (status.state === "idle") {
-      setMenu("enfoque");
+      setMenu("focus");
       setIsPlay(false);
       setTime((prev) => ({
         ...prev,

@@ -15,9 +15,9 @@ export default function TypeTimeButtons() {
 
   const timerItems: TimerItem[] = useMemo(
     () => [
-      { id: 1, label: "Enfoque", type: "enfoque" },
-      { id: 2, label: "Descanso Corto", type: "D/Corto" },
-      { id: 3, label: "Descanso Largo", type: "D/Largo" },
+      { id: 1, label: "Enfoque", type: "focus" },
+      { id: 2, label: "Descanso Corto", type: "break" },
+      { id: 3, label: "Descanso Largo", type: "longBreak" },
     ],
     []
   );

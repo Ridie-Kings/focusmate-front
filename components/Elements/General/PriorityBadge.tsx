@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 export default function PriorityBadge({
   priority,
   status,
@@ -9,16 +11,17 @@ export default function PriorityBadge({
   className?: string;
   style?: React.CSSProperties;
 }) {
+  const t = useTranslations("Dashboard.tasks");
   const trad = () => {
-    if (status === "completed") return "Completada";
+    if (status === "completed") return t("completed");
     else
       switch (priority) {
         case "high":
-          return "Alta";
+          return t("priority.high");
         case "medium":
-          return "Media";
+          return t("priority.medium");
         case "low":
-          return "Baja";
+          return t("priority.low");
         default:
           return "";
       }

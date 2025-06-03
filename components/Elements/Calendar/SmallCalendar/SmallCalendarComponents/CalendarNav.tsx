@@ -1,9 +1,10 @@
 import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { enUS, es } from "date-fns/locale";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import SelectDate from "@/components/Elements/General/SelectDate";
+import { useLocale } from "next-intl";
 
 interface CalendarNavProps {
   handlePreviousMonth: () => void;
@@ -18,10 +19,14 @@ export default function CalendarNav({
   handleYearChange,
   handleNextMonth,
 }: CalendarNavProps) {
+  const locale = useLocale();
+
   return (
     <div className="flex flex-col justify-center items-center divide-y divide-primary-200">
       <p className="text-xl text-primary-500 capitalize w-full text-center pb-4">
-        {format(date ?? new Date(), "EEEE dd, MMMM", { locale: es })}
+        {format(date ?? new Date(), "EEEE dd, MMMM", {
+          locale: locale === "es" ? es : enUS,
+        })}
       </p>
       <div className="flex w-full items-center place-content-between py-2 px-4">
         <SelectDate

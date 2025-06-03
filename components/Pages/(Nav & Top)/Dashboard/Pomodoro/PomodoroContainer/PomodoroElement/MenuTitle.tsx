@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 export default function MenuTitle({
   size,
   menu,
@@ -5,6 +7,8 @@ export default function MenuTitle({
   size: "medium" | "large";
   menu: string;
 }) {
+  const t = useTranslations("Dashboard.pomodoro.menu");
+
   return (
     <p
       className={`capitalize bg-secondary-200 rounded-full px-1 cursor-default transition-all duration-300 ${
@@ -13,7 +17,7 @@ export default function MenuTitle({
           : "text-sm hover:scale-105"
       }`}
     >
-      {menu}
+      {t(menu.toLocaleLowerCase())}
     </p>
   );
 }

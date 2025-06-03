@@ -11,23 +11,28 @@ import {
   ModalHabitProps,
 } from "@/interfaces/Habits/HabitsType";
 import renderIconHabit from "@/config/RenderIconHabit";
-
-const FREQUENCY_OPTIONS: HabitOption[] = [
-  { label: "Diario", value: "daily" },
-  { label: "Semanal", value: "weekly" },
-  { label: "Cada Mes", value: "monthly" },
-];
-
-const TYPE_OPTIONS: HabitOption[] = [
-  { label: "Estudio", value: "study" },
-  { label: "Deporte", value: "sport" },
-  { label: "Comida", value: "food" },
-  { label: "Beber", value: "drink" },
-  { label: "Trabajo", value: "work" },
-];
+import { useTranslations } from "next-intl";
 
 export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
   const { setHabits, habits } = useDashboardStore();
+  const t = useTranslations("Modal.habit");
+  const tFrequency = useTranslations("Modal.habit.frequency");
+  const tType = useTranslations("Modal.habit.type");
+  const tCommon = useTranslations("Common");
+
+  const FREQUENCY_OPTIONS: HabitOption[] = [
+    { label: tFrequency("daily"), value: "daily" },
+    { label: tFrequency("weekly"), value: "weekly" },
+    { label: tFrequency("monthly"), value: "monthly" },
+  ];
+
+  const TYPE_OPTIONS: HabitOption[] = [
+    { label: tType("study"), value: "study" },
+    { label: tType("sport"), value: "sport" },
+    { label: tType("food"), value: "food" },
+    { label: tType("drink"), value: "drink" },
+    { label: tType("work"), value: "work" },
+  ];
 
   const [habit, setHabit] = useState<HabitFormData>({
     _id: undefined,
@@ -101,7 +106,7 @@ export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
     <div className="flex flex-col gap-2 w-full">
       <input
         type="text"
-        placeholder="Título"
+        placeholder={t("title")}
         defaultValue={habit.name}
         className={`text-2xl outline-none ${
           error && !habit.name ? "border-red-500 border-b-2" : "text-gray-500"
@@ -115,7 +120,7 @@ export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
         <InputModal
           defaultValue={habit.description}
           type="text"
-          placeholder="Descripción"
+          placeholder={t("description")}
           onChange={(e) => updateHabitField("description", e.target.value)}
           icon={<Text />}
         />
@@ -124,7 +129,7 @@ export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
           type="select"
           placeholder={
             FREQUENCY_OPTIONS.find((option) => option.value === habit.frequency)
-              ?.label || "Frecuencia"
+              ?.label || tFrequency("title")
           }
           option={renderSelectOptions(FREQUENCY_OPTIONS, "frequency")}
           icon={<AudioLines />}
@@ -134,7 +139,7 @@ export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
           type="select"
           placeholder={
             TYPE_OPTIONS.find((prev) => prev.value === habit.type)?.label ||
-            "Tipo de hábito"
+            tType("title")
           }
           option={renderSelectOptions(TYPE_OPTIONS, "type")}
           icon={renderIconHabit({
@@ -147,8 +152,8 @@ export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
       </div>
 
       <BtnSend
-        text={isEditMode ? "Modificar" : undefined}
-        loadingText={isEditMode ? "Modificando..." : undefined}
+        text={isEditMode ? tCommon("save") : undefined}
+        loadingText={isEditMode ? tCommon("saveLoading") : undefined}
         handleClick={isEditMode ? handleUpdateHabit : handleCreateHabit}
         isLoading={isLoading}
         setIsOpen={setIsOpen}

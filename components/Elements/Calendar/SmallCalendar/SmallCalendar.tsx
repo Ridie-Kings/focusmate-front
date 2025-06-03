@@ -22,6 +22,7 @@ import Button from "@/components/Reusable/Button";
 import { useModalStore } from "@/stores/modalStore";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { useDashboardStore } from "@/stores/dashboardStore";
+import { useTranslations } from "next-intl";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -86,6 +87,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 }) => {
   const { events } = useDashboardStore();
   const { setIsOpen } = useModalStore();
+  const t = useTranslations("Common.buttons");
 
   const handlePreviousMonth = () => {
     setDate(subMonths(date, 1));
@@ -135,7 +137,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
           button="tertiary"
           type="button"
         >
-          Nuevo Evento
+          {t("newEvent")}
         </Button>
       )}
     </div>

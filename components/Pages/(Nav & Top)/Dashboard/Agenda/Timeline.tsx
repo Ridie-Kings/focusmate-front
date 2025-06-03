@@ -4,6 +4,7 @@ import LoadingStatus from "@/components/Elements/General/LoadingStatus";
 import MountainAgenda from "@/components/Elements/Svg/Mountain/MountainAgenda";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { isSameDay } from "date-fns";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction, useMemo, useState, useEffect } from "react";
 
 interface TimelineProps {
@@ -22,6 +23,7 @@ export default function Timeline({
   loadingEvents,
 }: TimelineProps) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const t = useTranslations("Dashboard.agenda.timeline");
 
   useEffect(() => {
     if (!loadingEvents && isInitialLoading) {
@@ -47,7 +49,7 @@ export default function Timeline({
       } overflow-y-auto overflow-x-hidden flex flex-col gap-4 py-2`}
     >
       <p className="text-xl text-primary-500 text-center sticky top-0 bg-white">
-        Agenda del día
+        {t("title")}
       </p>
       <div className="flex flex-1 gap-4">
         {loadingEvents ? (
@@ -72,7 +74,7 @@ export default function Timeline({
               <div className="flex flex-col items-center gap-3 justify-center p-2 bg-quaternary-100 rounded-2xl w-full h-full">
                 <MountainAgenda />
                 <p className="text-primary-500 2xl:text-xl text-center font-medium">
-                  Todavía no hay eventos
+                  {t("noEvents")}
                 </p>
               </div>
             )}

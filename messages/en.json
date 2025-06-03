@@ -1,6 +1,6 @@
 {
   "HomePage": {
-    "title": "Hello world!"
+    "title": "Welcome, {name}!"
   },
   "Auth": {
     "login": {
@@ -33,9 +33,146 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "success": "Success",
+    "send": "Send",
+    "sending": "Sending...",
     "save": "Save",
+    "saveLoading": "Saving...",
     "cancel": "Cancel",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "description": "Description",
+    "status": "Status",
+    "selectDate": "Select Date",
+
+    "buttons": {
+      "newEvent": "New Event",
+      "newTask": "New Task",
+      "newHabit": "New Habit"
+    }
+  },
+  "Dashboard": {
+    "streaks": {
+      "title": "Your Streak",
+      "levels": {
+        "level0": {
+          "title": "Wet Wood",
+          "description": "You haven't ignited your spark yet... but the forest is full of possibilities."
+        },
+        "level1": {
+          "title": "Initial Spark",
+          "description": "You've started your journey. A spark of intention is enough to ignite something great"
+        },
+        "level2": {
+          "title": "Fire Lit",
+          "description": "The campfire stays alive. Consistency is starting to show."
+        },
+        "level3": {
+          "title": "Fire Guardian",
+          "description": "Your fire doesn't go out. You set the pace and your routine is more stable"
+        },
+        "level4": {
+          "title": "Sacred Fire",
+          "description": "You've reached perfect balance. Your habit is now part of you."
+        }
+      },
+      "days": {
+        "single": "day streak",
+        "multiple": "days streak"
+      }
+    },
+    "tasks": {
+      "title": "Your Tasks",
+      "pending": "Pending tasks",
+      "completed": "Completed tasks",
+      "priority": {
+        "title": "Priority tasks",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      }
+    },
+    "pomodoro": {
+      "title": "Pomodoro",
+      "chronometer": "Chronometer",
+      "timer": "Timer",
+      "menu": {
+        "focus": "Focused",
+        "break": "Break",
+        "longBreak": "Long Break"
+      },
+      "cycles": "Cycles",
+      "addTask": {
+        "title": "Add your task",
+        "noTaskSelected": "No task selected",
+        "noTaskAvailable": "No tasks available"
+      }
+    },
+    "habits": {
+      "title": "Your Habits",
+      "completed": "Completed",
+      "notCompleted": "Not completed",
+      "noHabits": "¡Ups! There are no habits here...",
+      "noHabitsDescription": "Create one and start adding small achievements"
+    },
+    "agenda": {
+      "title": "Agenda",
+      "timeline": {
+        "title": "Agenda of the day",
+        "noEvents": "No events scheduled"
+      }
+    },
+    "mood": {
+      "title": "How are you feeling today?"
+    }
+  },
+  "Modal": {
+    "task": {
+      "title": "Task",
+      "description": "Description",
+      "priority": "Priority",
+      "actions": "Actions"
+    },
+    "event": {
+      "title": "Event",
+      "description": "Description",
+      "priority": {
+        "title": "Priority",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "actions": "Actions"
+    },
+    "habit": {
+      "title": "Habit",
+      "description": "Description",
+      "type": {
+        "title": "Type",
+        "study": "Study",
+        "sport": "Sport",
+        "food": "Food",
+        "drink": "Drink",
+        "work": "Work"
+      },
+      "frequency": {
+        "title": "Frequency",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+      }
+    },  
+    "pomodoroSettings": {
+      "pomodoroDuration": "Pomodoro Duration (minutes)",
+      "shortBreakDuration": "Short Break Duration (minutes)",
+      "longBreakDuration": "Long Break Duration (minutes)",
+      "rounds": "Rounds"
+    },
+    "error": {
+      "title": "The title is required",
+      "endDate": "The end date must be after the start date",
+      "update": "Error updating the task",
+      "create": "Error creating the task",
+      "unexpected": "Unexpected error. Please try again later."
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { enUS, es } from "date-fns/locale";
 import { useState, useEffect } from "react";
+import { useLocale } from "next-intl";
 
 interface SelectDateProps {
   handleDateChange: (date: Date) => void;
@@ -14,7 +15,7 @@ export default function YearMonthSelector({
   yearRange = [2020, 2030],
 }: SelectDateProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(date || new Date());
-
+  const locale = useLocale();
   const years = Array.from(
     { length: yearRange[1] - yearRange[0] + 1 },
     (_, i) => (yearRange[0] + i).toString()
@@ -49,7 +50,9 @@ export default function YearMonthSelector({
         </select>
       </div>
       <p className="flex-1 text-center capitalize">
-        {format(selectedDate, "MMMM", { locale: es })}
+        {format(selectedDate, "MMMM", {
+          locale: locale === "es" ? es : enUS,
+        })}
       </p>
     </div>
   );

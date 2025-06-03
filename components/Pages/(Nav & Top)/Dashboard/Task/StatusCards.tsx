@@ -1,4 +1,5 @@
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 
 export default function StatusCards({
@@ -10,25 +11,27 @@ export default function StatusCards({
   filter: string;
   tasks: TaskType[];
 }) {
+  const t = useTranslations("Dashboard.tasks");
+
   const items = [
     {
-      label: "Completada",
+      label: t("completed"),
       number: tasks.filter((t) => t.status === "completed").length,
     },
     {
-      label: "Alta",
+      label: t("priority.high"),
       number: tasks
         .filter((t) => t.priority === "high")
         .filter((t) => t.status !== "completed").length,
     },
     {
-      label: "Media",
+      label: t("priority.medium"),
       number: tasks
         .filter((t) => t.priority === "medium")
         .filter((t) => t.status !== "completed").length,
     },
     {
-      label: "Baja",
+      label: t("priority.low"),
       number: tasks
         .filter((t) => t.priority === "low")
         .filter((t) => t.status !== "completed").length,

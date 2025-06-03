@@ -3,6 +3,7 @@ import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { createTask } from "@/services/Task/createTask";
 import { updateTask } from "@/services/Task/updateTask";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 
 export default function ModalTaskUtils({
@@ -18,16 +19,17 @@ export default function ModalTaskUtils({
   setIsLoading: (isLoading: boolean) => void;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 }) {
+  const tDashboard = useTranslations("Dashboard.tasks");
+  const tModal = useTranslations("Modal.error");
+
   const validateTask = () => {
     if (!task.title.trim()) {
-      setError("El título es obligatorio");
+      setError(tModal("title"));
       return false;
     }
 
     if (task.endDate && task.startDate && task.endDate <= task.startDate) {
-      setError(
-        "La hora de finalización debe ser posterior a la hora de inicio"
-      );
+      setError(tModal("endDate"));
       return false;
     }
 
@@ -53,7 +55,7 @@ export default function ModalTaskUtils({
 
       if (!res.success) {
         const errorMessage =
-          typeof res.res === "string" ? res.res : "Error al modificar la tarea";
+          typeof res.res === "string" ? res.res : tModal("update");
         setError(errorMessage);
         console.error("Failed to modify task", res.res);
         return;
@@ -65,7 +67,7 @@ export default function ModalTaskUtils({
       setIsOpen({ text: "" });
     } catch (err) {
       console.error("Error inesperado:", err);
-      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+      setError(tModal("unexpected"));
     } finally {
       setIsLoading(false);
     }
@@ -83,14 +85,12 @@ export default function ModalTaskUtils({
         setTasks((prev) => [...prev, res.res]);
         setIsOpen({ text: "" });
       } else {
-        setError(
-          typeof res.res === "string" ? res.res : "Error al crear la tarea"
-        );
+        setError(typeof res.res === "string" ? res.res : tModal("create"));
         console.error("Failed to create task", res.res);
       }
     } catch (err) {
       console.error("Error inesperado:", err);
-      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
+      setError(tModal("unexpected"));
     } finally {
       setIsLoading(false);
     }
@@ -98,12 +98,12 @@ export default function ModalTaskUtils({
 
   const trad = () => {
     const priorityMap = {
-      high: "Alta",
-      medium: "Media",
-      low: "Baja",
+      high: tDashboard("priority.high"),
+      medium: tDashboard("priority.medium"),
+      low: tDashboard("priority.low"),
     };
 
-    return priorityMap[task.priority as keyof typeof priorityMap] || "";
+    return priorityMap[task.priority] || "";
   };
 
   return {
