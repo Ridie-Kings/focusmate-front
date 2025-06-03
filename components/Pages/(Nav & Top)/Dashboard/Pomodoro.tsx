@@ -6,17 +6,14 @@ import { useWebSocketStore } from "@/stores/websocketStore";
 import PomodoroContainer from "./Pomodoro/PomodoroContainer";
 import AddTask from "./Pomodoro/AddTask";
 import Commands from "@/components/Elements/Pomodoro/Commands";
+import { useTranslations } from "next-intl";
 
 export default function Pomodoro() {
-  const {
-    isType,
-    setIsType,
-    startedElement,
-    toggleChronometerMode,
-    isChronometer,
-  } = useTimerStore();
+  const { setIsType, startedElement, toggleChronometerMode, isChronometer } =
+    useTimerStore();
 
   const { status } = useWebSocketStore();
+  const t = useTranslations("Dashboard.pomodoro");
 
   const handleChangeType = (
     e: "pomodoro" | "cronometro" | "temporizador",
@@ -29,18 +26,18 @@ export default function Pomodoro() {
   return (
     <TemplateDashboard
       grid={`col-span-3 row-span-3`}
-      title={isType}
+      title={t("title")}
       link="/pomodoro"
       id="pomodoro-component"
       items={[
         {
-          label: "Pomodoro",
+          label: t("title"),
           icon: <Clock />,
           disabled: startedElement,
           onClick: () => handleChangeType("pomodoro", false),
         },
         {
-          label: "Cronometro",
+          label: t("chronometer"),
           icon: <TimerIcon />,
           disabled: startedElement,
           onClick: () => handleChangeType("cronometro", true),

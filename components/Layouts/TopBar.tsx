@@ -45,7 +45,7 @@ export default function TopBar() {
     >
       <div className="flex flex-col sm:flex-1 justify-center">
         <p className="sm:text-lg hidden sm:block text-primary-500 capitalize">
-          {t("title")}, {profil?.user?.fullname}!
+          {t("title", { name: profil?.user?.fullname ?? "" })}
         </p>
         <PageTitle />
       </div>

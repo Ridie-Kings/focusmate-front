@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import Timeline from "./Agenda/Timeline";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
+import { useTranslations } from "next-intl";
 
 import { useDashboardStore } from "@/stores/dashboardStore";
 import { isSameMonth } from "date-fns";
@@ -15,6 +16,7 @@ export default function Agenda() {
     useDashboardStore();
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
+  const t = useTranslations("Dashboard.agenda");
 
   useEffect(() => {
     if (currentMonth && isSameMonth(date ?? new Date(), currentMonth)) {
@@ -37,8 +39,8 @@ export default function Agenda() {
   return (
     <TemplateDashboard
       grid={`col-span-4 row-span-4 row-start-2`}
+      title={t("title")}
       link="/calendar"
-      title="Calendario"
       id="agenda-component"
     >
       <div className="flex flex-col xl:flex-row w-full h-full gap-4">

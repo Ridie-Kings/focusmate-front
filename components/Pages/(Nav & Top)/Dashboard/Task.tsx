@@ -6,10 +6,12 @@ import ListTask from "@/components/Pages/(Nav & Top)/Dashboard/Task/ListTask";
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import StatusCards from "@/components/Pages/(Nav & Top)/Dashboard/Task/StatusCards";
 import { useDashboardStore } from "@/stores/dashboardStore";
+import { useTranslations } from "next-intl";
 
 export default function Task({ tasksList }: { tasksList: TaskType[] }) {
   const { tasks, setTasks, loadingTask } = useDashboardStore();
   const [filter, setFilter] = useState<string>("");
+  const t = useTranslations("Dashboard.tasks");
 
   useEffect(() => {
     setTasks(tasksList);
@@ -18,7 +20,7 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
   return (
     <TemplateDashboard
       grid={`col-span-4 row-span-4 row-start-6 gap-0`}
-      title="Tus Tareas"
+      title={t("title")}
       link="/task"
       id="tasks-component"
     >
@@ -26,10 +28,10 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
       <div className="flex flex-col gap-3">
         <p className="text-primary-500">
           {filter === ""
-            ? "Tareas pendientes"
+            ? t("pending")
             : filter !== "Completada"
-            ? "Tareas " + filter + " prioridad"
-            : "Tareas " + filter}
+            ? t("priority.title")
+            : t("completed")}
         </p>
         <ListTask
           filter={filter}

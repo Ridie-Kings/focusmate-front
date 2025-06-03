@@ -7,6 +7,7 @@ import { useDashboardStore } from "@/stores/dashboardStore";
 import TaskCard from "./ListTask/TaskCard";
 import AnimationElementsListUtils from "@/lib/AnimationElementsListUtils";
 import LoadingStatus from "@/components/Elements/General/LoadingStatus";
+import { useTranslations } from "next-intl";
 
 export default function ListTask({
   filter,
@@ -20,6 +21,7 @@ export default function ListTask({
   loadingTask: boolean;
 }) {
   const listRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("Common.buttons");
 
   const [changingTaskIds, setChangingTaskIds] = useState<string[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
@@ -118,7 +120,7 @@ export default function ListTask({
           type="button"
           className="w-full"
         >
-          Nueva Tarea
+          {t("newTask")}
         </Button>
       </div>
     </div>

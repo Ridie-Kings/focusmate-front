@@ -11,12 +11,15 @@ import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import MountainHabits from "@/components/Elements/Svg/Mountain/MountainHabits";
 import { useDashboardStore } from "@/stores/dashboardStore";
 import { useModalStore } from "@/stores/modalStore";
+import { useTranslations } from "next-intl";
 
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   const { habits, setHabits } = useDashboardStore();
   const { setIsOpen } = useModalStore();
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
+  const t = useTranslations("Dashboard.habits");
+  const t2 = useTranslations("Common.buttons");
 
   useEffect(() => {
     setHabits(habitsList);
@@ -34,8 +37,8 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
   return (
     <TemplateDashboard
       grid={`col-span-3 row-span-6`}
-      title="Hábitos"
-      link="/dashboard"
+      title={t("title")}
+      link="/habits"
       id="habits-component"
     >
       <div className="w-full flex flex-col xl:flex-row items-center place-content-evenly">
@@ -47,11 +50,11 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
         <div className="flex flex-col gap-2 text-sm">
           <div className="flex items-center gap-2">
             <div className="bg-secondary-700 size-4 rounded-full" />
-            <p>Completados</p>
+            <p>{t("completed")}</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="bg-secondary-200 size-4 rounded-full" />
-            <p>No realizados</p>
+            <p>{t("notCompleted")}</p>
           </div>
         </div>
       </div>
@@ -61,12 +64,8 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
         <div className="bg-quaternary-100 rounded-2xl py-4 flex flex-col gap-3">
           <MountainHabits />
           <div className="flex flex-col items-center text-primary-500 gap-1 text-center">
-            <p className="text-xl font-medium">
-              ¡Ups! No hay hábitos por aquí...
-            </p>
-            <p className="text-sm">
-              Crea uno y empieza a sumar pequeños logros
-            </p>
+            <p className="text-xl font-medium">{t("noHabits")}</p>
+            <p className="text-sm">{t("noHabitsDescription")}</p>
           </div>
         </div>
       )}
@@ -76,7 +75,7 @@ export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
         button="tertiary"
         type="button"
       >
-        Nuevo Hábito
+        {t2("newHabit")}
       </Button>
     </TemplateDashboard>
   );

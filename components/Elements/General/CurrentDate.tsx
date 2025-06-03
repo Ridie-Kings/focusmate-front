@@ -1,7 +1,8 @@
 import { format } from "date-fns";
 import CircularTextTop from "../Svg/CircularTextTop";
 import CircularTextBottom from "../Svg/CircularTextBottom";
-import { es } from "date-fns/locale";
+import { es, enUS } from "date-fns/locale";
+import { useLocale } from "next-intl";
 
 export default function CurrentDate({
   background = true,
@@ -9,6 +10,7 @@ export default function CurrentDate({
   background?: boolean;
 }) {
   const today = new Date();
+  const locale = useLocale();
 
   return (
     <div
@@ -18,10 +20,10 @@ export default function CurrentDate({
       }`}
     >
       <p className="text-4xl capitalize">
-        {format(today, "eeee", { locale: es })}
+        {format(today, "eeee", { locale: locale === "es" ? es : enUS })}
       </p>
       <p className="text-2xl">
-        {format(today, "dd MMMM yyyy", { locale: es })}
+        {format(today, "dd MMMM yyyy", { locale: locale === "es" ? es : enUS })}
       </p>
       {background && (
         <>
