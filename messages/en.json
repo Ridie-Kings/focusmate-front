@@ -33,10 +33,17 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "success": "Success",
+    "send": "Send",
+    "sending": "Sending...",
     "save": "Save",
+    "saveLoading": "Saving...",
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
+    "description": "Description",
+    "status": "Status",
+    "selectDate": "Select Date",
+
     "buttons": {
       "newEvent": "New Event",
       "newTask": "New Task",
@@ -116,6 +123,56 @@
     },
     "mood": {
       "title": "How are you feeling today?"
+    }
+  },
+  "Modal": {
+    "task": {
+      "title": "Task",
+      "description": "Description",
+      "priority": "Priority",
+      "actions": "Actions"
+    },
+    "event": {
+      "title": "Event",
+      "description": "Description",
+      "priority": {
+        "title": "Priority",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "actions": "Actions"
+    },
+    "habit": {
+      "title": "Habit",
+      "description": "Description",
+      "type": {
+        "title": "Type",
+        "study": "Study",
+        "sport": "Sport",
+        "food": "Food",
+        "drink": "Drink",
+        "work": "Work"
+      },
+      "frequency": {
+        "title": "Frequency",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+      }
+    },  
+    "pomodoroSettings": {
+      "pomodoroDuration": "Pomodoro Duration (minutes)",
+      "shortBreakDuration": "Short Break Duration (minutes)",
+      "longBreakDuration": "Long Break Duration (minutes)",
+      "rounds": "Rounds"
+    },
+    "error": {
+      "title": "The title is required",
+      "endDate": "The end date must be after the start date",
+      "update": "Error updating the task",
+      "create": "Error creating the task",
+      "unexpected": "Unexpected error. Please try again later."
     }
   }
 }

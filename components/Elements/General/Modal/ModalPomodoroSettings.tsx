@@ -7,6 +7,7 @@ import { UpdatePomodoroById } from "@/services/Pomodoro/UpdatePomodoroById";
 import { useWebSocketStore } from "@/stores/websocketStore";
 import { useModalStore } from "@/stores/modalStore";
 import { useToastStore } from "@/stores/toastStore";
+import { useTranslations } from "next-intl";
 
 export default function ModalPomodoroSettings({
   status,
@@ -23,6 +24,8 @@ export default function ModalPomodoroSettings({
     rounds: status?.cycles || 4,
   });
   const { addToast } = useToastStore();
+  const tPomodoroSettings = useTranslations("Modal.pomodoroSettings");
+  const tCommon = useTranslations("Common");
 
   const handleChange = (field: string, value: number) => {
     setSettings((prev) => ({
@@ -75,7 +78,7 @@ export default function ModalPomodoroSettings({
   return (
     <div className="flex flex-col gap-4">
       <Input
-        label="Duración del Pomodoro (minutos)"
+        label={tPomodoroSettings("pomodoroDuration")}
         type="number"
         name="pomodoroDuration"
         value={settings.pomodoroDuration.toString()}
@@ -85,7 +88,7 @@ export default function ModalPomodoroSettings({
         className="flex-row grid grid-cols-2"
       />
       <Input
-        label="Duración del Descanso Corto (minutos)"
+        label={tPomodoroSettings("shortBreakDuration")}
         type="number"
         name="shortBreakDuration"
         value={settings.shortBreakDuration.toString()}
@@ -95,7 +98,7 @@ export default function ModalPomodoroSettings({
         className="flex-row grid grid-cols-2"
       />
       <Input
-        label="Duración del Descanso Largo (minutos)"
+        label={tPomodoroSettings("longBreakDuration")}
         type="number"
         name="longBreakDuration"
         value={settings.longBreakDuration.toString()}
@@ -105,7 +108,7 @@ export default function ModalPomodoroSettings({
         className="flex-row grid grid-cols-2"
       />
       <Input
-        label="Número de Rondas"
+        label={tPomodoroSettings("rounds")}
         name="rounds"
         type="number"
         value={settings.rounds.toString()}
@@ -116,7 +119,7 @@ export default function ModalPomodoroSettings({
         setIsOpen={setIsOpen}
         handleClick={handleSubmit}
         isLoading={isLoading}
-        text="Guardar"
+        text={tCommon("save")}
       />
     </div>
   );

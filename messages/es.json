@@ -33,10 +33,16 @@
     "loading": "Cargando...",
     "error": "Ocurrió un error",
     "success": "Éxito",
+    "send": "Enviar",
+    "sending": "Enviando...",
     "save": "Guardar",
+    "saveLoading": "Guardando...",
     "cancel": "Cancelar",
     "delete": "Eliminar",
     "edit": "Editar",
+    "description": "Descripción",
+    "status": "Estado",
+    "selectDate": "Selecciona la fecha",
     "buttons": {
       "newEvent": "Nuevo Evento",
       "newTask": "Nueva Tarea",
@@ -116,6 +122,56 @@
     },
     "mood": {
       "title": "¿Cómo te sientes hoy?"
+    }
+  },
+  "Modal": {
+    "task": {
+      "title": "Tarea",
+      "description": "Descripción",
+      "priority": "Prioridad",
+      "actions": "Acciones"
+    },
+    "event": {
+      "title": "Evento",
+      "description": "Descripción",
+      "priority": {
+        "title": "Prioridad",
+        "high": "Alta",
+        "medium": "Media",
+        "low": "Baja"
+      },
+      "actions": "Acciones"
+    },
+    "habit": {
+      "title": "Hábito",
+      "description": "Descripción",
+      "type": {
+        "title": "Tipo",
+        "study": "Estudio",
+        "sport": "Deporte",
+        "food": "Comida",
+        "drink": "Beber",
+        "work": "Trabajo"
+      },
+      "frequency": {
+        "title": "Frecuencia",
+        "daily": "Diario",
+        "weekly": "Semanal",
+        "monthly": "Cada Mes"
+      }
+    },
+    "pomodoroSettings": {
+      "pomodoroDuration": "Duración del Pomodoro (minutos)",
+      "shortBreakDuration": "Duración del Descanso Corto (minutos)",
+      "longBreakDuration": "Duración del Descanso Largo (minutos)",
+      "rounds": "Número de Rondas"
+    },
+    "error": {
+      "title": "El título es obligatorio",
+      "endDate": "La hora de finalización debe ser posterior a la hora de inicio",
+      "update": "Error al modificar la tarea",
+      "create": "Error al crear la tarea",
+      "unexpected": "Error inesperado. Por favor, inténtalo de nuevo más tarde."
     }
   }
 }

@@ -3,6 +3,7 @@ import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { Cake, Locate, Mail, PersonStanding, Phone } from "lucide-react";
 import { updateProfile } from "@/services/Profile/UpdateProfile";
 import { UpdateUser } from "@/services/User/UpdateUser";
+import { useTranslations } from "next-intl";
 
 export default function InformationUser({
   profile,
@@ -21,6 +22,7 @@ export default function InformationUser({
     text: string;
     type: "success" | "error";
   } | null>(null);
+  const t = useTranslations("Common");
 
   useEffect(() => {
     if (profile) {
@@ -174,13 +176,13 @@ export default function InformationUser({
                       onClick={handleSave}
                       className="bg-blue-500 text-white px-2 py-1 rounded"
                     >
-                      Guardar
+                      {t("save")}
                     </button>
                     <button
                       onClick={handleCancel}
                       className="bg-gray-500 text-white px-2 py-1 rounded"
                     >
-                      Cancelar
+                      {t("cancel")}
                     </button>
                   </div>
                 ) : (
@@ -212,13 +214,13 @@ export default function InformationUser({
                 onClick={handleSave}
                 className="bg-blue-500 text-white px-2 py-1 rounded"
               >
-                Guardar
+                {t("save")}
               </button>
               <button
                 onClick={handleCancel}
                 className="bg-gray-500 text-white px-2 py-1 rounded"
               >
-                Cancelar
+                {t("cancel")}
               </button>
             </div>
           ) : (

@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 interface PriorityItem {
   type: string;
   label: string;
@@ -12,11 +14,13 @@ export default function ModalPriorityPicker({
   onChange,
   top,
 }: ModalPriorityPickerProps) {
+  const t = useTranslations("Dashboard.tasks");
   const item: PriorityItem[] = [
-    { type: "high", label: "Alta" },
-    { type: "medium", label: "Media" },
-    { type: "low", label: "Baja" },
+    { type: "high", label: t("priority.high") },
+    { type: "medium", label: t("priority.medium") },
+    { type: "low", label: t("priority.low") },
   ];
+
   return (
     <div
       style={{ top }}
