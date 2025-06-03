@@ -5,6 +5,7 @@ import { logout } from "@/lib";
 import PlanButtons from "./NavBar/PlanButtons";
 import { getMyProfile } from "@/services/Profile/getMyProfile";
 import MobileMenu from "./NavBar/MobileMenu";
+import LanguageSwitcher from "./NavBar/LanguageSwitcher";
 
 export default async function NavBar() {
   const profile = await getMyProfile();
@@ -40,6 +41,7 @@ export default async function NavBar() {
         <div className="flex flex-col w-full items-center gap-2">
           <PlanButtons profile={profile.res} />
           <LogoutButtons handleLogout={handleLogout} />
+          <LanguageSwitcher />
         </div>
       </header>
       <MobileMenu profile={profile.res} handleLogout={handleLogout} />

@@ -48,6 +48,20 @@ export async function updateSession(
     }
   }
 
+  let locale = req.cookies.get("NEXT_LOCALE")?.value;
+
+  if (!locale) {
+    const acceptLanguage = req.headers.get("accept-language");
+    locale = acceptLanguage?.split(",")[0].split("-")[0] || "es";
+
+    const response = NextResponse.next();
+    response.cookies.set("NEXT_LOCALE", locale, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+    });
+    return response;
+  }
+
   return undefined;
 }
 
