@@ -15,7 +15,7 @@ export const defaultContextValue: TimerContextType = {
   isChronometer: false,
   toggleChronometerMode: () => {},
   setMenu: () => {},
-  menu: "enfoque",
+  menu: "focus",
   startedElement: false,
   setStartedElement: () => {},
   setIsType: () => {},
