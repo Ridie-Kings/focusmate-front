@@ -64,6 +64,9 @@ export default function TimerUtils({
 
     setCycles(totalCycles);
     resetTimerStore();
+    if (typeof document !== "undefined") {
+      document.title = `SherpApp | Para que estudiar no sea cuesta arriba`;
+    }
   }, [
     status,
     totalCycles,

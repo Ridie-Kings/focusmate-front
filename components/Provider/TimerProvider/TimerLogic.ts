@@ -164,6 +164,7 @@ export function useTimer({
           intervalRef.current = null;
           return;
         }
+
         if (typeof document !== "undefined") {
           document.title = `SherpApp | ${
             timeUtils.secondsToTime(currentSeconds).hours
