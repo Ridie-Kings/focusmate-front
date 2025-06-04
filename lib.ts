@@ -54,8 +54,10 @@ export async function updateSession(
     const acceptLanguage = req.headers.get("accept-language");
     locale = acceptLanguage?.split(",")[0].split("-")[0] || "es";
 
+    const finalLocale = locale === "en" || locale === "es" ? locale : "es";
+
     const response = NextResponse.next();
-    response.cookies.set("NEXT_LOCALE", locale, {
+    response.cookies.set("NEXT_LOCALE", finalLocale, {
       path: "/",
       maxAge: 60 * 60 * 24 * 365,
     });
