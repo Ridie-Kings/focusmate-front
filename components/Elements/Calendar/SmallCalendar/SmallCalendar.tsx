@@ -13,7 +13,7 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import WeekDays from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/WeekDays";
 import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
@@ -21,7 +21,8 @@ import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalen
 import Button from "@/components/Reusable/Button";
 import { useModalStore } from "@/stores/modalStore";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { useTranslations } from "next-intl";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -75,7 +76,6 @@ type CalendarProps = {
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   date: Date;
   btn?: boolean;
-  eventos?: boolean;
 };
 
 const SmallCalendar: React.FC<CalendarProps> = ({
@@ -84,10 +84,10 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   setDate,
   date,
   btn,
-  eventos,
 }) => {
-  const [events, setEvents] = useState<TaskType[]>();
+  const { events } = useDashboardStore();
   const { setIsOpen } = useModalStore();
+  const t = useTranslations("Common.buttons");
 
   const handlePreviousMonth = () => {
     setDate(subMonths(date, 1));
@@ -95,26 +95,6 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   const handleNextMonth = () => {
     setDate(addMonths(date, 1));
   };
-
-  useEffect(() => {
-    if (!eventos) return;
-
-    const firstDate = startOfWeek(startOfMonth(date ?? new Date()));
-    const secondDate = endOfWeek(endOfMonth(date ?? new Date()));
-
-    const handleGetCalendarByRange = async () => {
-      const event = await getCalendarByRange({ firstDate, secondDate });
-
-      if (event.success) {
-        setEvents(event.res);
-      } else {
-        console.error("Error al obtener el calendario", event.res);
-        setEvents([]);
-      }
-    };
-
-    handleGetCalendarByRange();
-  }, []);
 
   const handleMonthYearChange = (monthYear: string) => {
     setDate((currentDate) => {
@@ -134,7 +114,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
 
   return (
     <div
-      className="flex flex-col place-content-between"
+      className="flex flex-col place-content-between pb-2"
       id="small-calendar-component"
     >
       <div
@@ -157,7 +137,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
           button="tertiary"
           type="button"
         >
-          Nuevo Evento
+          {t("newEvent")}
         </Button>
       )}
     </div>

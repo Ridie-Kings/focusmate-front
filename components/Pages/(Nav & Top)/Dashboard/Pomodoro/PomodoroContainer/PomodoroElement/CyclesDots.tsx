@@ -1,7 +1,9 @@
 import { useTimerStore } from "@/stores/timerStore";
+import { useTranslations } from "next-intl";
 
 export default function CyclesDots({ size }: { size: "medium" | "large" }) {
   const { totalCycles, cycles } = useTimerStore();
+  const t = useTranslations("Dashboard.pomodoro");
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -28,7 +30,9 @@ export default function CyclesDots({ size }: { size: "medium" | "large" }) {
             )).reverse()
           : ""}
       </div>
-      <p className="text-xs text-gray-300">{totalCycles} Vueltas</p>
+      <p className="text-xs text-gray-300">
+        {totalCycles} {t("cycles")}
+      </p>
     </div>
   );
 }

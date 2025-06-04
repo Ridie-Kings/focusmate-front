@@ -46,12 +46,12 @@
     --color-neutral-200: #d1d1d1;
     --color-neutral-100: #f8f8f8;
 
-    --text-primary: #202020;
-    --text-secondary: #fff9f9;
-    --text-tertiary: #003c36;
-    --text-quaternary: #014e44;
-    --text-light: #d1d1d1;
-    --text-medium: #adadad;
+    --color-text-primary: #202020;
+    --color-text-secondary: #fff9f9;
+    --color-text-tertiary: #003c36;
+    --color-text-quaternary: #014e44;
+    --color-text-light: #d1d1d1;
+    --color-text-medium: #adadad;
   }
   .dark {
     --color-background-primary: #121212;
@@ -96,12 +96,12 @@
     --color-neutral-200: #303030;
     --color-neutral-100: #121212;
 
-    --text-primary: #ffffff;
-    --text-secondary: #303030;
-    --text-tertiary: #b1ddc3;
-    --text-quaternary: #88d6b3;
-    --text-light: #303030;
-    --text-medium: #777777;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #303030;
+    --color-text-tertiary: #b1ddc3;
+    --color-text-quaternary: #88d6b3;
+    --color-text-light: #303030;
+    --color-text-medium: #777777;
   }
 }
 
@@ -150,12 +150,12 @@
   --color-neutral-200: var(--color-neutral-200);
   --color-neutral-100: var(--color-neutral-100);
 
-  --text-primary: var(--text-primary);
-  --text-secondary: var(--text-secondary);
-  --text-tertiary: var(--text-tertiary);
-  --text-quaternary: var(--text-quaternary);
-  --text-light: var(--text-light);
-  --text-medium: var(--text-medium);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary: var(--color-text-tertiary);
+  --color-text-quaternary: var(--color-text-quaternary);
+  --color-text-light: var(--color-text-light);
+  --color-text-medium: var(--color-text-medium);
 
   --animate-opacStart: opacStart 0.5s ease-in-out;
   @keyframes opacStart {
@@ -270,6 +270,26 @@
     }
     100% {
       transform: translateY(0%);
+    }
+  }
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 8s ease-in-out infinite;
+  --animate-float-fast: float 4s ease-in-out infinite;
+  --animate-float-delay: float 6s ease-in-out 1s infinite;
+  --animate-float-delay-2: float 6s ease-in-out 2s infinite;
+  --animate-float-delay-3: float 6s ease-in-out 3s infinite;
+  --animate-float-delay-4: float 6s ease-in-out 4s infinite;
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
     }
   }
 }

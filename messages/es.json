@@ -1,0 +1,193 @@
+{
+  "HomePage": {
+    "title": "Bienvenido, {name}!"
+  },
+  "Auth": {
+    "login": {
+      "title": "¡Bienvenido de nuevo!",
+      "description": "Organiza tu tiempo, alcanza tus metas.",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Regístrate",
+      "loginButton": "Iniciar sesión",
+      "or": "O puedes",
+      "google": "Iniciar sesión con Google"
+    },
+    "register": {
+      "title": "Vamos a crear tu cuenta",
+      "description": "Completa estos detalles para comenzar tu camino hacia la organización y el éxito académico. ¡Es muy simple!",
+      "fullname": "Nombre completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "repeatpassword": "Repetir contraseña",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Iniciar sesión",
+      "registerButton": "Registrarse",
+      "or": "O puedes",
+      "google": "Registrarse con Google"
+    }
+  },
+  "Common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "success": "Éxito",
+    "send": "Enviar",
+    "sending": "Enviando...",
+    "save": "Guardar",
+    "saveLoading": "Guardando...",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "description": "Descripción",
+    "status": "Estado",
+    "selectDate": "Selecciona la fecha",
+    "buttons": {
+      "newEvent": "Nuevo Evento",
+      "newTask": "Nueva Tarea",
+      "newHabit": "Nuevo Hábito"
+    }
+  },
+  "Dashboard": {
+    "streaks": {
+      "title": "Tu Racha",
+      "levels": {
+        "level0": {
+          "title": "Leña húmeda",
+          "description": "Todavía no encendiste tu chispa... pero el bosque está lleno de posibilidades."
+        },
+        "level1": {
+          "title": "Chispa Inicial",
+          "description": "Comenzaste tu recorrido. Una chispa de intención basta para encender algo grande"
+        },
+        "level2": {
+          "title": "Fuego Encendido",
+          "description": "Se mantiene la fogata viva. La constancia empieza a notarse."
+        },
+        "level3": {
+          "title": "Guardiana del fuego",
+          "description": "Tu fuego no se apaga. Tu marcas el ritmo y tu rutina es mas estable"
+        },
+        "level4": {
+          "title": "Fuego sagrado",
+          "description": "Alcanzaste el equilibrio perfecto. Tu hábito ya es parte de ti."
+        }
+      },
+      "days": {
+        "single": "día seguido",
+        "multiple": "días seguidos"
+      }
+    },
+    "tasks": {
+      "title": "Tus Tareas",
+      "pending": "Tareas pendientes",
+      "completed": "Tareas completadas",
+      "priority": {
+        "title": "Tareas de prioridad",
+        "high": "Alta",
+        "medium": "Media",
+        "low": "Baja"
+      }
+    },
+    "pomodoro": {
+      "title": "Pomodoro",
+      "chronometer": "Cronómetro",
+      "timer": "Temporizador",
+      "menu": {
+        "focus": "Enfocado",
+        "break": "Descanso",
+        "longBreak": "Descanso largo"
+      },
+      "cycles": "Vueltas",
+      "addTask": {
+        "title": "Añade tu tarea",
+        "noTaskSelected": "Ninguna tarea seleccionada",
+        "noTaskAvailable": "No tienes tareas disponibles"
+      }
+    },
+    "habits": {
+      "title": "Tus Hábitos",
+      "completed": "Completados",
+      "notCompleted": "No realizados",
+      "noHabits": "¡Ups! No hay hábitos por aquí...",
+      "noHabitsDescription": "Crea uno y empieza a sumar pequeños logros"
+    },
+    "agenda": {
+      "title": "Agenda",
+      "timeline": {
+        "title": "Agenda del día",
+        "noEvents": "No hay eventos programados"
+      }
+    },
+    "mood": {
+      "title": "¿Cómo te sientes hoy?"
+    }
+  },
+  "Modal": {
+    "task": {
+      "title": "Tarea",
+      "description": "Descripción",
+      "priority": "Prioridad",
+      "actions": "Acciones"
+    },
+    "event": {
+      "title": "Evento",
+      "description": "Descripción",
+      "priority": {
+        "title": "Prioridad",
+        "high": "Alta",
+        "medium": "Media",
+        "low": "Baja"
+      },
+      "actions": "Acciones"
+    },
+    "habit": {
+      "title": "Hábito",
+      "description": "Descripción",
+      "type": {
+        "title": "Tipo",
+        "study": "Estudio",
+        "sport": "Deporte",
+        "food": "Comida",
+        "drink": "Beber",
+        "work": "Trabajo"
+      },
+      "frequency": {
+        "title": "Frecuencia",
+        "daily": "Diario",
+        "weekly": "Semanal",
+        "monthly": "Cada Mes"
+      }
+    },
+    "pomodoroSettings": {
+      "pomodoroDuration": "Duración del Pomodoro (minutos)",
+      "shortBreakDuration": "Duración del Descanso Corto (minutos)",
+      "longBreakDuration": "Duración del Descanso Largo (minutos)",
+      "rounds": "Número de Rondas"
+    },
+    "error": {
+      "title": "El título es obligatorio",
+      "endDate": "La hora de finalización debe ser posterior a la hora de inicio",
+      "update": "Error al modificar la tarea",
+      "create": "Error al crear la tarea",
+      "unexpected": "Error inesperado. Por favor, inténtalo de nuevo más tarde."
+    }
+  },
+  "PopUp": {
+    "title": "¿Necesitas ayuda?",
+    "description": "Estamos aquí para ayudarte. Si necesitas cualquier ayuda, por favor contáctanos."
+  },
+  "navBar": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "calendar": "Calendario",
+      "tasks": "Tareas",
+      "habits": "Hábitos",
+      "pomodoro": "Pomodoro",
+      "feedback": "Feedback"
+    },
+    "plan": "Mejora tu plan",
+    "close": "Cerrar sesión"
+  }
+}

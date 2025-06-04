@@ -59,11 +59,14 @@ export default function TimerUtils({
       initialTime: timeUtils.secondsToTime(status?.workDuration ?? 1500),
     }));
     setStartedElement(false);
-    setMenu("enfoque");
+    setMenu("focus");
     totalSecondsRef.current = status?.workDuration ?? 1500;
 
     setCycles(totalCycles);
     resetTimerStore();
+    if (typeof document !== "undefined") {
+      document.title = `SherpApp | Para que estudiar no sea cuesta arriba`;
+    }
   }, [
     status,
     totalCycles,

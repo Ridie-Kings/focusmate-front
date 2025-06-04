@@ -63,8 +63,6 @@ export function useTimer({
   });
 
   useEffect(() => {
-    console.log("isPlay", isPlay);
-
     if (typeof window !== "undefined") {
       audioRef.current = new Audio("/audio/ding-ding.mp3");
     }
@@ -87,7 +85,13 @@ export function useTimer({
 
           return {
             ...prev,
-            initialTime: timeUtils.secondsToTime(status.workDuration),
+            initialTime: timeUtils.secondsToTime(
+              status.state === "working"
+                ? status.workDuration
+                : status.state === "shortBreak"
+                ? status.shortBreak
+                : status.longBreak
+            ),
             currentTime: timeUtils.secondsToTime(timeInSeconds),
           };
         } catch (error) {
@@ -96,14 +100,14 @@ export function useTimer({
         }
       });
 
-      if (status.state === "working") setMenu("enfoque");
-      if (status.state === "shortBreak") setMenu("D/Corto");
-      if (status.state === "longBreak") setMenu("D/Largo");
+      if (status.state === "working") setMenu("focus");
+      if (status.state === "shortBreak") setMenu("break");
+      if (status.state === "longBreak") setMenu("longBreak");
 
       if (status?.pausedState === "paused") setIsPlay(false);
       else if (!isPlay && status.pausedState !== "paused") setIsPlay(true);
     } else if (status.state === "idle") {
-      setMenu("enfoque");
+      setMenu("focus");
       setIsPlay(false);
       setTime((prev) => ({
         ...prev,
@@ -145,25 +149,35 @@ export function useTimer({
     }
 
     if (isPlay) {
+      const startTime = Date.now();
+      const initialSeconds = timeUtils.timeToSeconds(time.currentTime);
+
       intervalRef.current = setInterval(() => {
-        setTime((prev) => {
-          const currentSeconds = timeUtils.timeToSeconds(prev.currentTime);
+        const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+        const currentSeconds = initialSeconds - elapsedSeconds;
 
-          if (currentSeconds <= 2) {
-            playEndSound();
-          }
-          if (currentSeconds <= 1) {
-            clearInterval(intervalRef.current as NodeJS.Timeout);
-            intervalRef.current = null;
-            return prev;
-          }
+        if (currentSeconds <= 2) {
+          playEndSound();
+        }
+        if (currentSeconds <= 1) {
+          clearInterval(intervalRef.current as NodeJS.Timeout);
+          intervalRef.current = null;
+          return;
+        }
 
-          return {
-            ...prev,
-            currentTime: timeUtils.secondsToTime(currentSeconds - 1),
-          };
-        });
-      }, 1000);
+        if (typeof document !== "undefined") {
+          document.title = `SherpApp | ${
+            timeUtils.secondsToTime(currentSeconds).hours
+          }:${timeUtils.secondsToTime(currentSeconds).min}:${
+            timeUtils.secondsToTime(currentSeconds).seg
+          }`;
+        }
+
+        setTime((prev) => ({
+          ...prev,
+          currentTime: timeUtils.secondsToTime(currentSeconds),
+        }));
+      }, 100);
     }
 
     if (status?.state === "completed" || status?.state === "finished") {

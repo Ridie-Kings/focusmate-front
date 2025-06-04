@@ -1,5 +1,6 @@
 import Button from "@/components/Reusable/Button";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 
 export default function BtnSend({
@@ -17,6 +18,7 @@ export default function BtnSend({
   text?: string;
   loadingText?: string;
 }) {
+  const t = useTranslations("Common");
   return (
     <div className="flex py-2 gap-2.5">
       <Button
@@ -26,14 +28,14 @@ export default function BtnSend({
         onClick={() => setIsOpen({ text: "" })}
         className="w-full"
       >
-        Cancelar
+        {t("cancel")}
       </Button>
       <Button
         size="large"
         onClick={handleClick}
         button="primary"
         type="button"
-        id="guardar"
+        id="save"
         className="w-full"
       >
         {isLoading ? loadingText : text}

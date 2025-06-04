@@ -2,6 +2,7 @@ import { CalendarItem } from "@/components/Elements/Calendar/SmallCalendar/Small
 import NavigationDate from "./NavigationDate";
 import Title from "./Title";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ModalDatePicker({
   onChange,
@@ -11,6 +12,7 @@ export default function ModalDatePicker({
   onChange: (e: { target: { value: string } }) => void;
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(date);
+  const t = useTranslations("Common");
 
   useEffect(() => {
     onChange({
@@ -37,13 +39,13 @@ export default function ModalDatePicker({
           }}
           className="text-sm text-primary-500 px-4 py-2 cursor-pointer"
         >
-          Cancelar
+          {t("cancel")}
         </button>
         <button
-          id="guardar"
+          id="save"
           className="text-sm text-primary-500 px-4 py-2 cursor-pointer"
         >
-          Guardar
+          {t("save")}
         </button>
       </div>
     </div>

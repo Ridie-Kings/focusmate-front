@@ -9,6 +9,7 @@ import InputModal from "@/components/Reusable/InputModal";
 import Button from "@/components/Reusable/Button";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
+import { useTranslations } from "next-intl";
 
 interface ContactForm {
   title: string;
@@ -37,6 +38,7 @@ export default function ModalContact({
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const t = useTranslations("Common");
 
   const validateForm = (): boolean => {
     const newErrors: Partial<ContactForm> = {};
@@ -148,7 +150,7 @@ export default function ModalContact({
           size="compact"
           onClick={() => setIsOpen({ text: "" })}
         >
-          Cancelar
+          {t("cancel")}
         </Button>
         <Button
           type="button"
@@ -156,7 +158,7 @@ export default function ModalContact({
           button="primary"
           onClick={handleSend}
         >
-          {isLoading ? "Enviando..." : "Enviar"}
+          {isLoading ? t("sending") : t("send")}
         </Button>
       </div>
     </div>

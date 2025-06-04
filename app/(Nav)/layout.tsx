@@ -10,6 +10,8 @@ import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 import Modal from "@/components/Elements/General/Modal";
 import WebSocketInitializer from "@/config/WebSocketInitializer";
 import TimerInitializer from "@/config/TimerInitializer";
+import { getLocale } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -30,9 +32,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const token = await getToken();
+
   if (!token) redirect("/login");
+  const locale = await getLocale();
+
   return (
-    <html lang="es">
+    <html lang={locale}>
       <head>
         <Script id="hotjar-tracking" strategy="afterInteractive">
           {`
@@ -49,15 +54,17 @@ export default async function RootLayout({
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        <NavBar />
-        <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
-          {children}
-          <PopUp />
-          <WebSocketInitializer token={token} />
-          <TimerInitializer />
-          <PWAInstallPrompt />
-        </main>
-        <Modal />
+        <NextIntlClientProvider>
+          <NavBar />
+          <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
+            {children}
+            <PopUp />
+            <WebSocketInitializer token={token} />
+            <TimerInitializer />
+            <PWAInstallPrompt />
+          </main>
+          <Modal />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

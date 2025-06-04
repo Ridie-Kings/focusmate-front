@@ -25,7 +25,7 @@ export default function InputModal({
 
   const modalRef = useClickOutside<HTMLDivElement>((event) => {
     if (menuOpen) setMenuOpen(false);
-    if (document.getElementById("guardar") === event.target) setMenuOpen(false);
+    if (document.getElementById("save") === event.target) setMenuOpen(false);
   });
 
   const handleOptionClick = (e: React.MouseEvent<HTMLDivElement>) => {

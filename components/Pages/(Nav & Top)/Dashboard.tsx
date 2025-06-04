@@ -9,38 +9,6 @@ import Habits from "./Dashboard/Habits";
 import Agenda from "./Dashboard/Agenda";
 import Task from "./Dashboard/Task";
 
-// const Pomodoro = dynamic(
-//   () => import("@/components/Pages/(Nav & Top)/Dashboard/Pomodoro"),
-//   {
-//     loading: () => <div>Loading...</div>,
-//   }
-// );
-
-// const Habits = dynamic(
-//   () => import("@/components/Pages/(Nav & Top)/Dashboard/Habits"),
-//   {
-//     loading: () => <div>Loading...</div>,
-//   }
-// );
-
-// const Agenda = dynamic(
-//   () => import("@/components/Pages/(Nav & Top)/Dashboard/Agenda"),
-//   {
-//     loading: () => <div>Loading...</div>,
-//   }
-// );
-
-// const TusTask = dynamic(
-//   () => import("@/components/Pages/(Nav & Top)/Dashboard/Task"),
-//   {
-//     loading: () => <div>Loading...</div>,
-//   }
-// );
-
-// const Streaks = dynamic(() => import("./Dashboard/Streaks"), {
-//   loading: () => <div>Loading...</div>,
-// });
-
 export default function Dashboard() {
   const { userInfo } = useDashboardStore();
   const { streaks, tasks, habits } = useDashboardData();

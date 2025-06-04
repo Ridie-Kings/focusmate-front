@@ -48,7 +48,7 @@ export default function HistoryTimer() {
 
   if (historyPomodoro.length === 0) {
     return (
-      <div className="w-full text-center py-8">
+      <div className="flex-1 text-center py-8">
         No se encontraron pomodoros en el historial.
       </div>
     );
@@ -64,7 +64,7 @@ export default function HistoryTimer() {
       {Object.entries(groupedPomodoros).map(([date, pomodoros]) => (
         <div key={date} className="mb-8">
           <div className="sticky top-0 flex items-center gap-2 mb-3 bg-gray-100 p-3 rounded-lg">
-            <Calendar className="text-blue-600" />
+            <Calendar className="text-secondary-600" />
             <h2 className="text-xl font-semibold capitalize">
               {formatDateToSpanish(date)}
             </h2>
@@ -77,7 +77,7 @@ export default function HistoryTimer() {
             {pomodoros.map((pomodoro, index) => (
               <div
                 key={index}
-                className="flex items-center p-3 border-l-4 border-blue-500 rounded-lg bg-gray-50"
+                className="flex items-center p-3 border-l-4 border-secondary-500 rounded-lg bg-gray-50"
               >
                 <Clock className="mr-2 text-gray-500" size={18} />
                 <span className="text-gray-700 font-medium">

@@ -68,7 +68,8 @@ export async function register(
   } catch (error: any) {
     return {
       success: false,
-      message: error || "An unexpected error occurred during registration.",
+      message:
+        error.message || "An unexpected error occurred during registration.",
     };
   }
 }

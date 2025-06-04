@@ -14,7 +14,7 @@ export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
   return (
     <div
       style={{ height: "calc(100vh - 125px)" }}
-      className="flex w-full gap-3 overflow-y-auto p-6"
+      className="flex w-full gap-3 overflow-hidden p-6"
     >
       <Column
         title="Pendientes"

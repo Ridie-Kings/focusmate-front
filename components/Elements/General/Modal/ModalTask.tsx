@@ -10,6 +10,7 @@ import { useDashboardStore } from "@/stores/dashboardStore";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import ModalTaskUtils from "@/lib/Task/ModalTaskUtils";
+import { useTranslations } from "next-intl";
 
 export default function ModalTask({
   setIsOpen,
@@ -19,6 +20,8 @@ export default function ModalTask({
   prevTask: TaskType;
 }) {
   const { setTasks } = useDashboardStore();
+  const t = useTranslations("Modal.task");
+  const tCommon = useTranslations("Common");
 
   const [task, setTask] = useState<tempTaskType>({
     _id: undefined,
@@ -70,7 +73,7 @@ export default function ModalTask({
               setTask((prev) => ({ ...prev, description: e.target.value }))
             }
             type="text"
-            placeholder="Descripción"
+            placeholder={t("description")}
             icon={<Text />}
           />
           <InputModal
@@ -92,8 +95,8 @@ export default function ModalTask({
         </div>
 
         <BtnSend
-          text={isEditMode ? "Modificar" : undefined}
-          loadingText={isEditMode ? "Modificando..." : undefined}
+          text={isEditMode ? tCommon("save") : undefined}
+          loadingText={isEditMode ? tCommon("saveLoading") : undefined}
           handleClick={isEditMode ? handleUpdateTask : handleSendTask}
           isLoading={isLoading}
           setIsOpen={setIsOpen}

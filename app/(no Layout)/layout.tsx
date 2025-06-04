@@ -4,6 +4,8 @@ import "../globals.css";
 import Carousel from "@/components/Layouts/Marquee";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 import Modal from "@/components/Elements/General/Modal";
+import { getLocale } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -18,21 +20,24 @@ export const metadata: Metadata = {
     "La herramienta de productividad diseñada para estudiantes y opositores que quieren organizar su estudio, medir su progreso y alcanzar sus metas.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   return (
-    <html lang="es">
+    <html lang={locale}>
       <body className={`${poppinsSans.variable} antialiased`}>
         {" "}
-        <main className="flex w-screen min-h-screen h-full flex-1">
-          <Carousel />
-          {children}
-          <PWAInstallPrompt />
-        </main>
-        <Modal />
+        <NextIntlClientProvider>
+          <main className="flex w-screen min-h-screen h-full flex-1">
+            <Carousel />
+            {children}
+            <PWAInstallPrompt />
+          </main>
+          <Modal />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import Button from "@/components/Reusable/Button";
+import { useTranslations } from "next-intl";
 
 export default function RenderActionButton({
   type,
@@ -7,6 +8,7 @@ export default function RenderActionButton({
   type: string;
   isLoading: boolean;
 }) {
+  const t = useTranslations("Auth");
   if (type === "login")
     return (
       <Button
@@ -15,7 +17,7 @@ export default function RenderActionButton({
         button="primary"
         state={isLoading ? "disabled" : "enabled"}
       >
-        Iniciar Sesión
+        {t("login.loginButton")}
       </Button>
     );
   else
@@ -26,7 +28,7 @@ export default function RenderActionButton({
         button="primary"
         state={isLoading ? "disabled" : "enabled"}
       >
-        Registrarse
+        {t("register.registerButton")}
       </Button>
     );
 }

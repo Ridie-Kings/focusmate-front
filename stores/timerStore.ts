@@ -84,7 +84,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
         },
       };
     }),
-  menu: "enfoque",
+  menu: "focus",
   setMenu: (menu) => set({ menu: menu as chipsIconType }),
   startedElement: false,
   setStartedElement: (started) => set({ startedElement: started as boolean }),

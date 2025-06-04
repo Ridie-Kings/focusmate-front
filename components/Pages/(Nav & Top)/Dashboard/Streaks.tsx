@@ -1,43 +1,58 @@
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
-import StreaksBg1 from "@/components/Elements/Svg/Streaks/StreaksBg1";
-import StreaksBg2 from "@/components/Elements/Svg/Streaks/StreaksBg2";
-import StreaksBg3 from "@/components/Elements/Svg/Streaks/StreaksBg3";
-import StreaksBgMax from "@/components/Elements/Svg/Streaks/StreaksBgMax";
-import StreaksNull from "@/components/Elements/Svg/Streaks/StreaksNull";
+import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
+
+const StreaksBg1 = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBg1")
+);
+const StreaksBg2 = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBg2")
+);
+const StreaksBg3 = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBg3")
+);
+const StreaksBgMax = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksBgMax")
+);
+const StreaksNull = dynamic(
+  () => import("@/components/Elements/Svg/Streaks/StreaksNull")
+);
 
 export default function Streaks({ number }: { number: number }) {
+  const t = useTranslations("Dashboard.streaks");
+
   const text = (): { title: string; desc: string } => {
     switch (number) {
       case 0:
         return {
-          title: "Leña húmeda",
-          desc: "Todavía no encendiste tu chispa… pero el bosque está lleno de posibilidades.. ",
+          title: t("levels.level0.title"),
+          desc: t("levels.level0.description"),
         };
       default:
         if (number >= 1 && number < 3)
           return {
-            title: "Chispa Inicial ",
-            desc: "Comenzaste tu recorrido. Una chispa de intención basta para encender algo grande",
+            title: t("levels.level1.title"),
+            desc: t("levels.level1.description"),
           };
         if (number >= 3 && number < 15) {
           return {
-            title: "Fuego Encendido ",
-            desc: "Se mantiene la fogata viva. La constancia empieza a notarse.",
+            title: t("levels.level2.title"),
+            desc: t("levels.level2.description"),
           };
         }
         if (number >= 15 && number < 30)
           return {
-            title: "Guardiana del fuego",
-            desc: "Tu fuego no se apaga. Tu marcas el ritmo y tu rutina es mas estable ",
+            title: t("levels.level3.title"),
+            desc: t("levels.level3.description"),
           };
         if (number >= 30)
           return {
-            title: "Fuego sagrado",
-            desc: "Alcanzaste el equilibrio perfecto. Tu hábito ya es parte de ti.",
+            title: t("levels.level4.title"),
+            desc: t("levels.level4.description"),
           };
         return {
-          title: "dasdsa",
-          desc: "dasda",
+          title: "",
+          desc: "",
         };
     }
   };
@@ -58,7 +73,7 @@ export default function Streaks({ number }: { number: number }) {
         <p className="text-xs text-secondary-700">{text().desc}</p>
       </div>
       <p className="p-2 text-sm bg-secondary-600 z-10 rounded-sm text-white">
-        {number} {number <= 1 ? "día seguido" : "días seguidos"}
+        {number} {number <= 1 ? t("days.single") : t("days.multiple")}
       </p>
       {number === 0 ? (
         <StreaksNull />
