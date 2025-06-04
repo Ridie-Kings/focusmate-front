@@ -48,7 +48,7 @@ export default function HistoryTimer() {
 
   if (historyPomodoro.length === 0) {
     return (
-      <div className="w-full text-center py-8">
+      <div className="flex-1 text-center py-8">
         No se encontraron pomodoros en el historial.
       </div>
     );
