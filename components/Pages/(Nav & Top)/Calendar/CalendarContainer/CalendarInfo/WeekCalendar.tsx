@@ -28,7 +28,7 @@ const getNowPosition = (date: Date) => {
   const hours = getHours(date);
   const minutes = getMinutes(date);
 
-  return 24 + hours * 2 * 88 + minutes * (88 / 30);
+  return 24 + hours * 2 * 68 + minutes * (68 / 30);
 };
 
 const EventItem = ({
