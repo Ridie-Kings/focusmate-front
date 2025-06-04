@@ -43,7 +43,7 @@ export default function AddTask({
   return (
     <div
       style={{ width: isSelectedMenu ? 448 : "" }}
-      className="mx-auto flex place-content-between items-center justify-end relative border-2 p-1 border-secondary-100 rounded-lg transition-all duration-300"
+      className="mx-auto min-w-50 flex place-content-between items-center justify-end relative border-2 p-1 border-secondary-100 rounded-lg transition-all duration-300"
       id="add-task-component"
     >
       <p className="text-sm text-gray-400 absolute left-1">
