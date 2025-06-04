@@ -1,104 +1,106 @@
 import { useEffect } from "react";
 import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 import { isSameDay } from "date-fns";
 
 const TOUR_STEPS = [
   {
     element: "#date-component",
     popover: {
-      title: "Current Date",
-      description: "Shows today's date and helps you track your daily progress",
+      title: "Fecha Actual",
+      description:
+        "Muestra la fecha de hoy y te ayuda a seguir tu progreso diario",
     },
   },
   {
     element: "#streaks-component",
     popover: {
-      title: "Streaks",
-      description: "Track your consecutive days of completing tasks and habits",
+      title: "Rachas",
+      description: "Sigue tus días consecutivos completando tareas y hábitos",
     },
   },
   {
     element: "#agenda-component",
     popover: {
       title: "Agenda",
-      description: "View and manage your daily schedule",
+      description: "Ver y gestionar tu horario diario",
     },
   },
   {
     element: "#agenda-component #small-calendar-component",
     popover: {
-      title: "Small Calendar",
-      description: "View your daily schedule",
+      title: "Calendario Pequeño",
+      description: "Ver tu horario diario",
     },
   },
   {
     element: "#agenda-component #timeline-component",
     popover: {
-      title: "Timeline",
-      description: "View your daily schedule",
+      title: "Línea de Tiempo",
+      description: "Ver tu horario diario",
     },
   },
   {
     element: "#pomodoro-component",
     popover: {
-      title: "Pomodoro Timer",
-      description: "Use the Pomodoro technique to boost your productivity",
+      title: "Temporizador Pomodoro",
+      description: "Usa la técnica Pomodoro para aumentar tu productividad",
     },
   },
   {
     element: "#pomodoro-component #nav-component",
     popover: {
-      title: "Nav",
-      description: "Navigate through the Pomodoro timer",
+      title: "Navegación",
+      description: "Navega por el temporizador Pomodoro",
     },
   },
   {
     element: "#pomodoro-component #timer-component",
     popover: {
-      title: "Timer",
-      description: "Start, pause, and reset the timer",
+      title: "Temporizador",
+      description: "Visualiza el tiempo restante del pomodoro actual",
     },
   },
   {
     element: "#pomodoro-component #add-task-component",
     popover: {
-      title: "Add Task",
-      description: "Add a task to the timer",
+      title: "Añadir Tarea",
+      description: "Añade una tarea al temporizador",
     },
   },
   {
     element: "#pomodoro-component #commands-component",
     popover: {
-      title: "Commands",
-      description: "Add a task to the timer",
+      title: "Comandos",
+      description: "Inicia, pausa y reinicia el temporizador",
     },
   },
   {
     element: "#pomodoro-component #settings",
     popover: {
-      title: "Settings",
-      description: "Change the timer settings",
+      title: "Configuración",
+      description: "Cambia la configuración del temporizador",
     },
   },
   {
     element: "#tasks-component",
     popover: {
-      title: "Tasks",
-      description: "Manage your daily tasks and to-dos",
+      title: "Tareas",
+      description: "Gestiona tus tareas y pendientes diarios",
     },
   },
   {
     element: "#habits-component",
     popover: {
-      title: "Habits",
-      description: "Track and build your daily habits",
+      title: "Hábitos",
+      description: "Sigue y construye tus hábitos diarios",
     },
   },
   {
     element: "#redirect",
     popover: {
-      title: "Redirect",
-      description: "Redirect to the dashboard",
+      title: "Redirección",
+      description: "Redirigir al la pagina seleccionada",
     },
   },
 ];
