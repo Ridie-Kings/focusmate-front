@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export default function RoundedVersion({
   children,
   safePercent,
@@ -6,7 +8,7 @@ export default function RoundedVersion({
   safePercent: number;
 }) {
   const strokeWidth = 15;
-
+  const [currentSize, setCurrentSize] = useState({ x: 0, y: 0 });
   const sizes = {
     sm: { x: 250, y: 400 },
     md: { x: 300, y: 450 },
@@ -26,7 +28,16 @@ export default function RoundedVersion({
     return sizes.sm;
   };
 
-  const currentSize = getCurrentSize();
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentSize(getCurrentSize());
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const perimeter = 2 * (currentSize.x + currentSize.y - 2 * strokeWidth);
   const strokeDashoffset = perimeter - (safePercent / 100) * perimeter;
 
