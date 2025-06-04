@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 import { isSameDay } from "date-fns";
 
 const TOUR_STEPS = [
