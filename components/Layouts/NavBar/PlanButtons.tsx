@@ -2,6 +2,7 @@
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { Gem } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function PlanButtons({
   profile,
@@ -9,6 +10,7 @@ export default function PlanButtons({
   profile: ProfileType | null;
 }) {
   const router = useRouter();
+  const t = useTranslations("navBar");
 
   const handleSend = async () => {
     try {
@@ -33,7 +35,7 @@ export default function PlanButtons({
       aria-label="Mejorar Plan"
     >
       <span className="font-medium text-white whitespace-nowrap transition-all duration-300 overflow-hidden md:max-w-0 group-hover:max-w-xs md:opacity-0 md:group-hover:opacity-100">
-        Mejorar Plan
+        {t("plan")}
       </span>
 
       <span className="text-white transition-all duration-300 opacity-0 group-hover:opacity-100">

@@ -12,35 +12,36 @@ import {
 } from "lucide-react";
 
 import { NavItem } from "@/interfaces/Nav/NavTypes";
+import { useTranslations } from "next-intl";
 
 const navigationItems: NavItem[] = [
   {
     id: 1,
-    label: "Dashboard",
+    label: "dashboard",
     link: "/dashboard",
     icon: <Grid2x2 size={24} />,
   },
   {
     id: 2,
-    label: "Pomodoro",
+    label: "pomodoro",
     link: "/pomodoro",
     icon: <Timer size={24} />,
   },
   {
     id: 3,
-    label: "Calendario",
+    label: "calendar",
     link: "/calendar",
     icon: <Calendar size={24} />,
   },
   {
     id: 4,
-    label: "Tareas",
+    label: "tasks",
     link: "/task",
     icon: <ListTodo size={24} />,
   },
   {
     id: 5,
-    label: "Feedback",
+    label: "feedback",
     link: "/support",
     icon: <MessageCircle size={24} />,
   },
@@ -48,6 +49,7 @@ const navigationItems: NavItem[] = [
 
 export default function Navigation({ onClick }: { onClick?: () => void }) {
   const pathname = usePathname();
+  const t = useTranslations("navBar.nav");
 
   return (
     <nav className="flex-grow py-4 w-full">
@@ -89,7 +91,7 @@ export default function Navigation({ onClick }: { onClick?: () => void }) {
                   font-medium transition-all duration-300 md:opacity-0 group-hover:opacity-100
                 `}
                 >
-                  {item.label}
+                  {t(item.label)}
                 </span>
 
                 <span

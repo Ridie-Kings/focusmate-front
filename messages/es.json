@@ -173,5 +173,21 @@
       "create": "Error al crear la tarea",
       "unexpected": "Error inesperado. Por favor, inténtalo de nuevo más tarde."
     }
+  },
+  "PopUp": {
+    "title": "¿Necesitas ayuda?",
+    "description": "Estamos aquí para ayudarte. Si necesitas cualquier ayuda, por favor contáctanos."
+  },
+  "navBar": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "calendar": "Calendario",
+      "tasks": "Tareas",
+      "habits": "Hábitos",
+      "pomodoro": "Pomodoro",
+      "feedback": "Feedback"
+    },
+    "plan": "Mejora tu plan",
+    "close": "Cerrar sesión"
   }
 }

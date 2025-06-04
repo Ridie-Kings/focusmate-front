@@ -1,10 +1,13 @@
 import { LogOut } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function LogoutButton({
   handleLogout,
 }: {
   handleLogout: () => Promise<void>;
 }) {
+  const t = useTranslations("navBar");
+
   return (
     <button
       className="
@@ -13,7 +16,7 @@ export default function LogoutButton({
         cursor-pointer transition-all duration-300 md:group-hover:w-full md:w-11 w-full
       "
       onClick={handleLogout}
-      aria-label="Cerrar Sesión"
+      aria-label={t("close")}
       type="button"
     >
       <span
@@ -23,7 +26,7 @@ export default function LogoutButton({
         md:opacity-0 group-hover:opacity-100
       "
       >
-        Cerrar Sesión
+        {t("close")}
       </span>
 
       <span

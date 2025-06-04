@@ -3,9 +3,11 @@ import { useState } from "react";
 import Link from "next/link";
 import WhiteLogo from "../Svg/Logos/WhiteLogo";
 import GreenLogo_fill from "../Svg/Logos/GreenLogo_Fill";
+import { useTranslations } from "next-intl";
 
 export default function PopUp() {
   const [isHovered, setIsHovered] = useState(false);
+  const t = useTranslations("PopUp");
 
   return (
     <Link
@@ -34,10 +36,8 @@ export default function PopUp() {
             isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
           }`}
         >
-          <h3 className="font-bold text-lg whitespace-nowrap">
-            ¿Necesitas ayuda?
-          </h3>
-          <p className="text-sm">Haz clic para contactar con soporte</p>
+          <h3 className="font-bold text-lg whitespace-nowrap">{t("title")}</h3>
+          <p className="text-sm">{t("description")}</p>
         </div>
       </div>
     </Link>
