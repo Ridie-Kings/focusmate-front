@@ -160,7 +160,7 @@
         "weekly": "Weekly",
         "monthly": "Monthly"
       }
-    },  
+    },
     "pomodoroSettings": {
       "pomodoroDuration": "Pomodoro Duration (minutes)",
       "shortBreakDuration": "Short Break Duration (minutes)",
@@ -174,5 +174,21 @@
       "create": "Error creating the task",
       "unexpected": "Unexpected error. Please try again later."
     }
+  },
+  "PopUp": {
+    "title": "Need help?",
+    "description": "We're here to help you. If you need any assistance, please contact us."
+  },
+  "navBar": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "calendar": "Calendar",
+      "tasks": "Tasks",
+      "habits": "Habits",
+      "pomodoro": "Pomodoro",
+      "feedback": "Feedback"
+    },
+    "plan": "Improve plan",
+    "close": "Logout"
   }
 }
