@@ -36,6 +36,7 @@ export default async function RootLayout({
   if (!token) {
     redirect("/login");
   }
+
   const locale = await getLocale();
   return (
     <html lang={locale} suppressHydrationWarning>
