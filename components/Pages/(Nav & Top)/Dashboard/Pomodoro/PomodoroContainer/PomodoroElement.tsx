@@ -35,10 +35,10 @@ export default function PomodoroElement({
           size={
             time.currentTime.hours >= 1
               ? size === "large"
-                ? "text-7xl 2xl:text-9xl"
+                ? "text-5xl md:text-6xl lg:text-7xl 2xl:text-9xl"
                 : "text-6xl"
               : size === "large"
-              ? "text-7xl 2xl:text-9xl"
+              ? "text-5xl md:text-6xl lg:text-7xl 2xl:text-9xl"
               : "text-6xl"
           }
           stacked={size === "large"}

@@ -37,20 +37,22 @@ export default function ListTask({
     capturePositions();
   }, [tasks]);
 
+  console.log(filter);
+
   useEffect(() => {
     const getFilteredTasks = () => {
       switch (filter) {
-        case "Completada":
+        case "completed":
           return tasks.filter((e) => e.status === "completed");
-        case "Alta":
+        case "high":
           return tasks.filter(
             (e) => e.priority === "high" && e.status !== "completed"
           );
-        case "Media":
+        case "medium":
           return tasks.filter(
             (e) => e.priority === "medium" && e.status !== "completed"
           );
-        case "Baja":
+        case "low":
           return tasks.filter(
             (e) => e.priority === "low" && e.status !== "completed"
           );

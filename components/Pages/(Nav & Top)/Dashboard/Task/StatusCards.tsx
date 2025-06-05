@@ -15,22 +15,26 @@ export default function StatusCards({
 
   const items = [
     {
+      id: "completed",
       label: t("completed"),
       number: tasks.filter((t) => t.status === "completed").length,
     },
     {
+      id: "high",
       label: t("priority.high"),
       number: tasks
         .filter((t) => t.priority === "high")
         .filter((t) => t.status !== "completed").length,
     },
     {
+      id: "medium",
       label: t("priority.medium"),
       number: tasks
         .filter((t) => t.priority === "medium")
         .filter((t) => t.status !== "completed").length,
     },
     {
+      id: "low",
       label: t("priority.low"),
       number: tasks
         .filter((t) => t.priority === "low")
@@ -41,14 +45,14 @@ export default function StatusCards({
   return (
     <ul className="flex w-full gap-3">
       {items.map((item) => (
-        <li key={item.label} className="w-1/4">
+        <li key={item.id} className="w-1/4">
           <div
             style={{
-              backgroundColor: filter === item.label ? "#248277" : "#D5EDE2",
-              color: filter === item.label ? "white" : "black",
+              backgroundColor: filter === item.id ? "#248277" : "#D5EDE2",
+              color: filter === item.id ? "white" : "black",
             }}
             className="flex flex-col border flex-1 w-full h-full px-2 py-3 text-sm rounded-lg cursor-pointer transition-all duration-300"
-            onClick={() => setFilter(filter === item.label ? "" : item.label)}
+            onClick={() => setFilter(filter === item.id ? "" : item.id)}
           >
             <span className="truncate">{item.label}</span>
             <span>{item.number}</span>
