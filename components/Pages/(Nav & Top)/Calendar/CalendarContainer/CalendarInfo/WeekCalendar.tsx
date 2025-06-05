@@ -10,6 +10,8 @@ import {
   getMinutes,
   isToday,
   format,
+  differenceInMinutes,
+  differenceInHours,
 } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
 import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
@@ -50,6 +52,8 @@ const EventItem = ({
   });
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
 
+  console.log(differenceInMinutes(event.endDate, event.startDate));
+
   return (
     <div
       className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"
@@ -63,6 +67,11 @@ const EventItem = ({
         <p className="text-sm">{event.title}</p>
         <Menu
           className={textColor}
+          position={
+            differenceInHours(event.endDate, event.startDate) < 1
+              ? "top-right"
+              : "bottom-right"
+          }
           items={[
             {
               label: "Modificar",

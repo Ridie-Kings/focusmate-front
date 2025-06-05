@@ -88,7 +88,7 @@ export default function TaskCard({
         {" "}
         <div className="flex items-center gap-3 text-primary-500">
           <p>{task.title}</p>{" "}
-          <p className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-900 delay-100 cursor-default truncate flex-1">
+          <p className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-900 delay-100 cursor-default truncate flex-1 sm:block hidden">
             {" "}
             {task.description}
           </p>
