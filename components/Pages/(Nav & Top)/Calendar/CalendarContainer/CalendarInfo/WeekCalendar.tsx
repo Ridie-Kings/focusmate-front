@@ -52,8 +52,6 @@ const EventItem = ({
   });
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
 
-  console.log(differenceInMinutes(event.endDate, event.startDate));
-
   return (
     <div
       className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"

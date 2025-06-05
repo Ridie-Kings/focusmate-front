@@ -2,18 +2,12 @@
 
 import { useState } from "react";
 
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
-
 import NavigationStats from "./DescriptionProfile/NavigationStats";
 import MembershipUser from "./DescriptionProfile/MembershipUser/MembershipUser";
 import AcademicUser from "./DescriptionProfile/AcademicUser/AcademicUser";
 import InformationUser from "./DescriptionProfile/InformationUser/InformationUser";
 
-export default function DescriptionProfile({
-  profile,
-}: {
-  profile: ProfileType | null;
-}) {
+export default function DescriptionProfile() {
   const [selectedPage, setSelectedPage] = useState<
     "info" | "academic" | "member"
   >("info");
@@ -29,7 +23,7 @@ export default function DescriptionProfile({
       ) : selectedPage === "academic" ? (
         <AcademicUser />
       ) : (
-        <InformationUser profile={profile} />
+        <InformationUser />
       )}
     </div>
   );

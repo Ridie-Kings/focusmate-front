@@ -37,8 +37,6 @@ export default function ListTask({
     capturePositions();
   }, [tasks]);
 
-  console.log(filter);
-
   useEffect(() => {
     const getFilteredTasks = () => {
       switch (filter) {

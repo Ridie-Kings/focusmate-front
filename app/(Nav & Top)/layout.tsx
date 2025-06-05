@@ -9,10 +9,11 @@ import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 import Modal from "@/components/Elements/General/Modal";
-import WebSocketInitializer from "@/config/WebSocketInitializer";
 import TimerInitializer from "@/config/TimerInitializer";
 import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import UserProfileInitializer from "@/config/UserProfileInitializer";
+import WebSocketInitializer from "@/config/WebSocketInitializer";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -57,6 +58,7 @@ export default async function RootLayout({
       <body className={`${poppinsSans.variable} antialiased`}>
         <WebSocketInitializer token={token} />
         <TimerInitializer />
+        <UserProfileInitializer />
         <NextIntlClientProvider>
           <Modal />
           <NavBar />

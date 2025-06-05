@@ -1,27 +1,154 @@
+"use client";
+import React from "react";
 import { useEffect, useState } from "react";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { Cake, Locate, Mail, PersonStanding, Phone } from "lucide-react";
-import { updateProfile } from "@/services/Profile/UpdateProfile";
-import { UpdateUser } from "@/services/User/UpdateUser";
 import { useTranslations } from "next-intl";
+import { useProfile, useProfileStore } from "@/stores/profileStore";
 
-export default function InformationUser({
-  profile,
+type FormData = {
+  fullname: string;
+  email: string;
+  bio: string;
+  birthDate: Date | null;
+  phoneNumber: number | null;
+};
+
+type Message = {
+  text: string;
+  type: "success" | "error";
+};
+
+type UserField = {
+  icon: React.ReactNode;
+  type: string;
+  title: string;
+  field: keyof FormData;
+};
+
+const userFields: UserField[] = [
+  {
+    icon: <PersonStanding />,
+    type: "text",
+    title: "Nombre Completo",
+    field: "fullname",
+  },
+  {
+    icon: <Cake />,
+    type: "date",
+    title: "Fecha de Nacimiento",
+    field: "birthDate",
+  },
+  {
+    icon: <Mail />,
+    type: "email",
+    title: "Correo Electrónico",
+    field: "email",
+  },
+  {
+    icon: <Phone />,
+    type: "tel",
+    title: "Número de Teléfono",
+    field: "phoneNumber",
+  },
+];
+
+const EditableField = ({
+  value,
+  type,
+  onSave,
+  onCancel,
+  onChange,
 }: {
-  profile: ProfileType | null;
-}) {
-  const [editingField, setEditingField] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
+  value: string | number | Date | null;
+  type: string;
+  onSave: () => void;
+  onCancel: () => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+}) => {
+  const t = useTranslations("Common");
+  const displayValue =
+    value instanceof Date
+      ? value.toISOString().split("T")[0]
+      : String(value || "");
+
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        type={type}
+        value={displayValue}
+        onChange={onChange}
+        className="border text-black px-2 py-1 rounded"
+      />
+      <button
+        onClick={onSave}
+        className="bg-blue-500 text-white px-2 py-1 rounded"
+      >
+        {t("save")}
+      </button>
+      <button
+        onClick={onCancel}
+        className="bg-gray-500 text-white px-2 py-1 rounded"
+      >
+        {t("cancel")}
+      </button>
+    </div>
+  );
+};
+
+const BioField = ({
+  value,
+  onSave,
+  onCancel,
+  onChange,
+}: {
+  value: string;
+  onSave: () => void;
+  onCancel: () => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+}) => {
+  const t = useTranslations("Common");
+
+  return (
+    <div className="flex items-center gap-2">
+      <textarea
+        value={value}
+        onChange={onChange}
+        className="bg-gray-800 text-white px-2 py-1 rounded w-full"
+      />
+      <button
+        onClick={onSave}
+        className="bg-blue-500 text-white px-2 py-1 rounded"
+      >
+        {t("save")}
+      </button>
+      <button
+        onClick={onCancel}
+        className="bg-gray-500 text-white px-2 py-1 rounded"
+      >
+        {t("cancel")}
+      </button>
+    </div>
+  );
+};
+
+export default function InformationUser() {
+  const profile = useProfile();
+  const { updateProfile, updateUser } = useProfileStore(
+    (state) => state.actions
+  );
+  const [editingField, setEditingField] = useState<keyof FormData | null>(null);
+  const [formData, setFormData] = useState<FormData>({
     fullname: "",
     email: "",
     bio: "",
-    birthDate: null as Date | null,
-    phoneNumber: null as number | null,
+    birthDate: null,
+    phoneNumber: null,
   });
-  const [message, setMessage] = useState<{
-    text: string;
-    type: "success" | "error";
-  } | null>(null);
+  const [message, setMessage] = useState<Message | null>(null);
   const t = useTranslations("Common");
 
   useEffect(() => {
@@ -38,7 +165,7 @@ export default function InformationUser({
     }
   }, [profile]);
 
-  const handleDoubleClick = (field: string) => {
+  const handleDoubleClick = (field: keyof FormData) => {
     setEditingField(field);
   };
 
@@ -54,16 +181,14 @@ export default function InformationUser({
         ? new Date(e.target.value)
         : e.target.value;
 
-    setFormData({ ...formData, [editingField]: value });
+    setFormData((prev) => ({ ...prev, [editingField]: value }));
   };
 
   const handleSave = async () => {
     if (!profile || !editingField) return;
 
     try {
-      let response;
-      const value = formData[editingField as keyof typeof formData];
-
+      const value = formData[editingField];
       const isUserField = [
         "fullname",
         "email",
@@ -71,30 +196,22 @@ export default function InformationUser({
         "phoneNumber",
       ].includes(editingField);
 
-      if (isUserField) {
-        response = await UpdateUser({
-          id: profile.user._id,
-          user: { [editingField]: value },
-        });
-      } else if (editingField === "bio") {
-        response = await updateProfile({
-          id: profile._id,
-          profile: { bio: value },
-        });
-      }
+      const response = isUserField
+        ? await updateUser({ [editingField]: value })
+        : await updateProfile({ bio: value as string });
 
       if (response?.success) {
         setMessage({
-          text: "Perfil actualizado correctamente",
+          text: response.message,
           type: "success",
         });
         setTimeout(() => setMessage(null), 3000);
       } else {
-        setMessage({ text: response?.res, type: "error" });
+        setMessage({ text: response.message, type: "error" });
       }
     } catch (err) {
       console.error(err);
-      setMessage({ text: "Error al actualizar el perfil", type: "error" });
+      setMessage({ text: err as string, type: "error" });
     } finally {
       setEditingField(null);
     }
@@ -114,89 +231,39 @@ export default function InformationUser({
 
       setFormData((prev) => ({
         ...prev,
-        [editingField]:
-          originalValues[editingField as keyof typeof originalValues],
+        [editingField]: originalValues[editingField],
       }));
     }
     setEditingField(null);
   };
 
-  const userFields = [
-    {
-      icon: <PersonStanding />,
-      type: "text",
-      title: "Nombre Completo",
-      field: "fullname",
-    },
-    {
-      icon: <Cake />,
-      type: "date",
-      title: "Fecha de Nacimiento",
-      field: "birthDate",
-    },
-    {
-      icon: <Mail />,
-      type: "email",
-      title: "Correo Electrónico",
-      field: "email",
-    },
-    {
-      icon: <Phone />,
-      type: "tel",
-      title: "Número de Teléfono",
-      field: "phoneNumber",
-    },
-  ];
-
   return (
     <div className="flex flex-col">
       <div className="grid sm:grid-cols-2">
-        {userFields.map(({ icon, type, title, field }) => {
-          const value = formData[field as keyof typeof formData];
-
-          const displayValue =
-            value instanceof Date
-              ? value.toISOString().split("T")[0]
-              : value || "";
-
-          return (
-            <div key={field} className="flex gap-4 sm:px-6 py-2">
-              {icon}
-              <div>
-                <p>{title}</p>
-                {editingField === field ? (
-                  <div className="flex items-center gap-2">
-                    <input
-                      type={type}
-                      value={displayValue}
-                      onChange={handleChange}
-                      className="border text-black px-2 py-1 rounded"
-                    />
-                    <button
-                      onClick={handleSave}
-                      className="bg-blue-500 text-white px-2 py-1 rounded"
-                    >
-                      {t("save")}
-                    </button>
-                    <button
-                      onClick={handleCancel}
-                      className="bg-gray-500 text-white px-2 py-1 rounded"
-                    >
-                      {t("cancel")}
-                    </button>
-                  </div>
-                ) : (
-                  <p
-                    className="text-sm text-gray-400 cursor-pointer"
-                    onDoubleClick={() => handleDoubleClick(field)}
-                  >
-                    {displayValue || `Añade tu ${title.toLowerCase()}`}
-                  </p>
-                )}
-              </div>
+        {userFields.map(({ icon, type, title, field }) => (
+          <div key={field} className="flex gap-4 sm:px-6 py-2">
+            {icon}
+            <div>
+              <p>{title}</p>
+              {editingField === field ? (
+                <EditableField
+                  value={formData[field]}
+                  type={type}
+                  onSave={handleSave}
+                  onCancel={handleCancel}
+                  onChange={handleChange}
+                />
+              ) : (
+                <p
+                  className="text-sm text-gray-400 cursor-pointer"
+                  onDoubleClick={() => handleDoubleClick(field)}
+                >
+                  {String(formData[field] || `Añade tu ${title.toLowerCase()}`)}
+                </p>
+              )}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
       <div className="flex gap-4 sm:px-6 py-2">
@@ -204,25 +271,12 @@ export default function InformationUser({
         <div>
           <p>Biografía</p>
           {editingField === "bio" ? (
-            <div className="flex items-center gap-2">
-              <textarea
-                value={formData.bio}
-                onChange={handleChange}
-                className="bg-gray-800 text-white px-2 py-1 rounded w-full"
-              />
-              <button
-                onClick={handleSave}
-                className="bg-blue-500 text-white px-2 py-1 rounded"
-              >
-                {t("save")}
-              </button>
-              <button
-                onClick={handleCancel}
-                className="bg-gray-500 text-white px-2 py-1 rounded"
-              >
-                {t("cancel")}
-              </button>
-            </div>
+            <BioField
+              value={formData.bio}
+              onSave={handleSave}
+              onCancel={handleCancel}
+              onChange={handleChange}
+            />
           ) : (
             <p
               className="text-sm text-gray-400 cursor-pointer"

@@ -1,20 +1,21 @@
+"use client";
 import Navigation from "./NavBar/Navigation";
 import LogoutButtons from "./NavBar/LogoutButtons";
 import TopLogo from "./NavBar/TopLogo";
 import { logout } from "@/lib";
 import PlanButtons from "./NavBar/PlanButtons";
-import { getMyProfile } from "@/services/Profile/getMyProfile";
 import MobileMenu from "./NavBar/MobileMenu";
 import LanguageSwitcher from "../Elements/General/LanguageSwitcher";
+import { useProfile, useClearProfile } from "@/stores/profileStore";
 
-export default async function NavBar() {
-  const profile = await getMyProfile();
+export default function NavBar() {
+  const profile = useProfile();
+  const clearProfile = useClearProfile();
 
   const handleLogout = async () => {
-    "use server";
-
     try {
       await logout();
+      clearProfile();
     } catch (error) {
       if (
         error instanceof Error &&
@@ -39,12 +40,12 @@ export default async function NavBar() {
         <Navigation />
         {/* <ThemeToggle /> */}
         <div className="flex flex-col w-full items-center gap-2">
-          <PlanButtons profile={profile.res} />
+          <PlanButtons profile={profile} />
           <LogoutButtons handleLogout={handleLogout} />
           <LanguageSwitcher />
         </div>
       </header>
-      <MobileMenu profile={profile.res} handleLogout={handleLogout} />
+      <MobileMenu profile={profile} handleLogout={handleLogout} />
     </>
   );
 }

@@ -1,41 +1,15 @@
 "use client";
-// import { Search } from "lucide-react";
-// import Notification from "./TopBar/Notification";
 import PageTitle from "./TopBar/PageTitle";
-import { getMyProfile } from "@/services/Profile/getMyProfile";
 import Image from "next/image";
 import Link from "next/link";
 import { UseScrollDirection } from "@/hooks/UseScrollDirection";
-import { useState, useEffect } from "react";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
-import { useDashboardStore } from "@/stores/dashboardStore";
-import LoadingState from "@/components/Elements/General/LoadingState";
 import { useTranslations } from "next-intl";
+import { useProfile } from "@/stores/profileStore";
 
 export default function TopBar() {
   const t = useTranslations("HomePage");
   const { isVisible } = UseScrollDirection();
-  const [profil, setProfil] = useState<ProfileType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const { setUserInfo } = useDashboardStore();
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getMyProfile();
-        if (data.success) {
-          setProfil(data.res);
-          setUserInfo(data.res as ProfileType);
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProfile();
-  }, []);
+  const profile = useProfile();
 
   return (
     <header
@@ -45,7 +19,7 @@ export default function TopBar() {
     >
       <div className="flex flex-col sm:flex-1 justify-center">
         <p className="sm:text-lg hidden sm:block text-primary-500 capitalize">
-          {t("title", { name: profil?.user?.fullname ?? "" })}
+          {t("title", { name: profile?.user?.fullname ?? "" })}
         </p>
         <PageTitle />
       </div>
@@ -59,21 +33,17 @@ export default function TopBar() {
           href={"/profile"}
           className="overflow-hidden rounded-full flex items-center justify-center cursor-pointer size-9"
         >
-          {isLoading ? (
-            <LoadingState size="sm" />
-          ) : (
-            <Image
-              src={
-                profil && profil?.avatar !== ""
-                  ? profil?.avatar
-                  : "/images/errors/errorImage.png"
-              }
-              width={36}
-              height={36}
-              alt="avatar"
-              className="w-full h-full object-cover"
-            />
-          )}
+          <Image
+            src={
+              profile && profile?.avatar !== ""
+                ? profile?.avatar
+                : "/images/errors/errorImage.png"
+            }
+            width={36}
+            height={36}
+            alt="avatar"
+            className="w-full h-full object-cover"
+          />
         </Link>
       </div>
     </header>
