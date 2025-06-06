@@ -2,7 +2,7 @@
 
 import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
 import { useState, useEffect } from "react";
-import { useCalendarStore } from "@/stores/calendarStore";
+import { useCalendarStore, useDate } from "@/stores/calendarStore";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
 import { isSameMonth } from "date-fns";
@@ -10,14 +10,22 @@ import { isSameMonth } from "date-fns";
 import CalendarUtils from "@/lib/CalendarUtils";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 import ListEvents from "./Calendar/CalendarContainer/ListEvents";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import {
+  useDashboardStore,
+  useEvents,
+  useLoadingEvents,
+} from "@/stores/dashboardStore";
 
 export default function CalendarPage() {
+  const { setLoading, setEvents } = useDashboardStore((state) => state.actions);
+  const loadingEvents = useLoadingEvents();
+  const events = useEvents();
+
+  const date = useDate();
+  const { setDate } = useCalendarStore((state) => state.actions);
+
   const [navType, setNavType] = useState<NavTypeType>("Día");
-  const { date, setDate } = useCalendarStore();
   const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
-  const { setLoadingEvents, events, setEvents, loadingEvents } =
-    useDashboardStore();
 
   useEffect(() => {
     const storedCalendar = localStorage.getItem("navCalendar") || "Día";
@@ -40,7 +48,7 @@ export default function CalendarPage() {
       date: date,
       setEvents,
       setCurrentMonth,
-      setLoadingEvents,
+      setLoading,
       currentMonth,
     });
 
@@ -55,7 +63,6 @@ export default function CalendarPage() {
       </div>
       <CalendarInfo
         events={events}
-        setEvents={setEvents}
         loadingEvents={loadingEvents}
         navType={navType}
         setNavType={(value) => {

@@ -2,10 +2,11 @@
 import { useEffect } from "react";
 import Column from "./Board/Status";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import { useDashboardStore, useTasks } from "@/stores/dashboardStore";
 
 export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
-  const { setTasks, tasks } = useDashboardStore();
+  const { setTasks } = useDashboardStore((state) => state.actions);
+  const tasks = useTasks();
 
   useEffect(() => {
     setTasks(prevTasks);

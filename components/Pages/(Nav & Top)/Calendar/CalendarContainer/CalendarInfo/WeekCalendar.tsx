@@ -10,7 +10,6 @@ import {
   getMinutes,
   isToday,
   format,
-  differenceInMinutes,
   differenceInHours,
 } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
@@ -21,8 +20,8 @@ import TimeBar from "@/components/Elements/Calendar/TimeBar";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import Menu from "@/components/Reusable/Menu";
 import AgendaUtils from "@/lib/AgendaUtils";
-import TaskUtils from "@/lib/Task/TaskUtils";
 import { useModalStore } from "@/stores/modalStore";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];
 
@@ -35,21 +34,17 @@ const getNowPosition = (date: Date) => {
 
 const EventItem = ({
   event,
-  setEvents,
   eventStartPosition,
   eventEndPosition,
 }: {
   event: TaskType;
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   eventStartPosition: number;
   eventEndPosition: number;
 }) => {
-  const { setIsOpen } = useModalStore();
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const { isLightColor } = AgendaUtils();
 
-  const { handleDeleteTask } = TaskUtils({
-    setEvents,
-  });
+  const { removeEvent } = useDashboardStore((state) => state.actions);
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
 
   return (
@@ -80,7 +75,7 @@ const EventItem = ({
               label: "Eliminar",
               color: "red",
               icon: <Trash2 />,
-              onClick: () => handleDeleteTask(event._id),
+              onClick: () => removeEvent(event._id),
             },
           ]}
         />
@@ -99,13 +94,11 @@ const EventItem = ({
 const DayColumn = ({
   day,
   events,
-  setEvents,
   selectedDate,
   setDate,
 }: {
   day: Date;
   events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   selectedDate: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) => {
@@ -144,7 +137,6 @@ const DayColumn = ({
               <EventItem
                 key={i}
                 event={event}
-                setEvents={setEvents}
                 eventStartPosition={eventStartPosition}
                 eventEndPosition={eventEndPosition}
               />
@@ -159,13 +151,11 @@ const WeekCalendarItem = ({
   date,
   setDate,
   events,
-  setEvents,
   scrollCalendar,
 }: {
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
 }) => {
   const startDate = startOfDay(startOfWeek(date, { weekStartsOn: 1 }));
@@ -206,7 +196,6 @@ const WeekCalendarItem = ({
           key={index}
           day={day}
           events={events}
-          setEvents={setEvents}
           selectedDate={date}
           setDate={setDate}
         />
@@ -217,13 +206,11 @@ const WeekCalendarItem = ({
 
 export default function WeekCalendar({
   events,
-  setEvents,
   date,
   setDate,
   scrollCalendar,
 }: {
   events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
@@ -234,7 +221,6 @@ export default function WeekCalendar({
       date={date}
       setDate={setDate}
       events={events}
-      setEvents={setEvents}
     />
   );
 }

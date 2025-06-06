@@ -10,25 +10,28 @@ interface TimerStore {
     currentTime: TimeType;
     initialTime: TimeType;
   };
-  setTime: Dispatch<
-    SetStateAction<{ currentTime: TimeType; initialTime: TimeType }>
-  >;
   isPlay: boolean;
-  setIsPlay: Dispatch<SetStateAction<boolean>>;
-  togglePlay: () => void;
-  resetTimer: () => void;
   isChronometer: boolean;
-  toggleChronometerMode: (e: boolean) => void;
   menu: chipsIconType;
-  setMenu: Dispatch<SetStateAction<chipsIconType>>;
   startedElement: boolean;
-  setStartedElement: Dispatch<SetStateAction<boolean>>;
   isType: TimerMode;
-  setIsType: (type: TimerMode) => void;
   cycles: number;
-  setCycles: Dispatch<SetStateAction<number>>;
   totalCycles: number;
-  setTotalCycles: Dispatch<SetStateAction<number>>;
+
+  actions: {
+    setTime: Dispatch<
+      SetStateAction<{ currentTime: TimeType; initialTime: TimeType }>
+    >;
+    setIsPlay: Dispatch<SetStateAction<boolean>>;
+    togglePlay: () => void;
+    resetTimer: () => void;
+    toggleChronometerMode: (e: boolean) => void;
+    setMenu: Dispatch<SetStateAction<chipsIconType>>;
+    setStartedElement: Dispatch<SetStateAction<boolean>>;
+    setIsType: (type: TimerMode) => void;
+    setCycles: Dispatch<SetStateAction<number>>;
+    setTotalCycles: Dispatch<SetStateAction<number>>;
+  };
 }
 
 export const useTimerStore = create<TimerStore>((set, get) => ({
@@ -36,62 +39,76 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
     currentTime: DEFAULT_FOCUS_TIME,
     initialTime: DEFAULT_FOCUS_TIME,
   },
-  setTime: (time) => {
-    set((state) => ({
-      time: typeof time === "function" ? time(state.time) : time,
-    }));
-  },
   isPlay: false,
-  setIsPlay: (isPlay) => set({ isPlay: isPlay as boolean }),
-  togglePlay: () => {
-    const state = get();
-
-    if (state.isChronometer) {
-      if (state.isPlay) {
-        set({ isPlay: false });
-      } else {
-        set({ isPlay: true });
-      }
-    } else {
-      if (state.isPlay) {
-        set({ isPlay: false });
-      } else {
-        set({ isPlay: true });
-      }
-    }
-  },
-  resetTimer: () => {
-    const state = get();
-    set({
-      time: {
-        currentTime: state.time.initialTime,
-        initialTime: state.time.initialTime,
-      },
-      isPlay: false,
-    });
-  },
   isChronometer: false,
-  toggleChronometerMode: (e: boolean) =>
-    set((state) => {
-      if (state.isPlay) return state;
-      return {
-        isChronometer: e,
-        time: {
-          ...state.time,
-          currentTime: e
-            ? { hours: 0, min: 0, seg: 0 }
-            : state.time.initialTime,
-        },
-      };
-    }),
   menu: "focus",
-  setMenu: (menu) => set({ menu: menu as chipsIconType }),
   startedElement: false,
-  setStartedElement: (started) => set({ startedElement: started as boolean }),
   isType: "pomodoro",
-  setIsType: (type) => set({ isType: type }),
   cycles: 0,
-  setCycles: (cycles) => set({ cycles: cycles as number }),
   totalCycles: 4,
-  setTotalCycles: (cycles) => set({ totalCycles: cycles as number }),
+
+  actions: {
+    setTime: (time) => {
+      set((state) => ({
+        time: typeof time === "function" ? time(state.time) : time,
+      }));
+    },
+    setIsPlay: (isPlay) => set({ isPlay: isPlay as boolean }),
+    togglePlay: () => {
+      const state = get();
+
+      if (state.isChronometer) {
+        if (state.isPlay) {
+          set({ isPlay: false });
+        } else {
+          set({ isPlay: true });
+        }
+      } else {
+        if (state.isPlay) {
+          set({ isPlay: false });
+        } else {
+          set({ isPlay: true });
+        }
+      }
+    },
+    resetTimer: () => {
+      const state = get();
+      set({
+        time: {
+          currentTime: state.time.initialTime,
+          initialTime: state.time.initialTime,
+        },
+        isPlay: false,
+      });
+    },
+    toggleChronometerMode: (e: boolean) =>
+      set((state) => {
+        if (state.isPlay) return state;
+        return {
+          isChronometer: e,
+          time: {
+            ...state.time,
+            currentTime: e
+              ? { hours: 0, min: 0, seg: 0 }
+              : state.time.initialTime,
+          },
+        };
+      }),
+    setMenu: (menu) => set({ menu: menu as chipsIconType }),
+    setStartedElement: (started) => set({ startedElement: started as boolean }),
+    setIsType: (type) => set({ isType: type }),
+    setCycles: (cycles) => set({ cycles: cycles as number }),
+    setTotalCycles: (cycles) => set({ totalCycles: cycles as number }),
+  },
 }));
+
+export const useCycles = () => useTimerStore((state) => state.cycles);
+export const useTotalCycles = () => useTimerStore((state) => state.totalCycles);
+export const useMenu = () => useTimerStore((state) => state.menu);
+export const useIsPlay = () => useTimerStore((state) => state.isPlay);
+export const useIsType = () => useTimerStore((state) => state.isType);
+export const useStartedElement = () =>
+  useTimerStore((state) => state.startedElement);
+export const useIsChronometer = () =>
+  useTimerStore((state) => state.isChronometer);
+export const useTime = () => useTimerStore((state) => state.time);

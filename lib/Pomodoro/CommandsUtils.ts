@@ -1,6 +1,10 @@
 import { useCallback } from "react";
-import { useWebSocketStore } from "@/stores/websocketStore";
-import { useTimerStore } from "@/stores/timerStore";
+import { useStatus, useWebSocketStore } from "@/stores/websocketStore";
+import {
+  useIsChronometer,
+  useStartedElement,
+  useTimerStore,
+} from "@/stores/timerStore";
 import { useModalStore } from "@/stores/modalStore";
 import { useToastStore } from "@/stores/toastStore";
 
@@ -12,15 +16,16 @@ import { CommandAction } from "@/interfaces/Pomodoro/Commands";
 import { StartPomodoroById } from "@/services/Pomodoro/StartPomodoroById";
 
 export default function CommandsUtils() {
-  const { status, handleJoinPomodoro } = useWebSocketStore();
-  const {
-    togglePlay,
-    resetTimer,
-    setStartedElement,
-    isChronometer,
-    startedElement,
-  } = useTimerStore();
-  const { setIsOpen } = useModalStore();
+  const status = useStatus();
+  const { handleJoinPomodoro } = useWebSocketStore((state) => state.actions);
+
+  const { togglePlay, resetTimer, setStartedElement } = useTimerStore(
+    (state) => state.actions
+  );
+  const isChronometer = useIsChronometer();
+  const startedElement = useStartedElement();
+
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const { addToast } = useToastStore();
 
   const handleClick = useCallback(

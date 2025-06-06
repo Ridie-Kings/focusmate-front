@@ -2,7 +2,7 @@
 import Button from "@/components/Reusable/Button";
 import { chipsIconType } from "@/components/Reusable/Chips";
 import React, { useMemo } from "react";
-import { useTimerStore } from "@/stores/timerStore";
+import { useMenu, useTimerStore } from "@/stores/timerStore";
 
 type TimerItem = {
   id: number;
@@ -11,7 +11,8 @@ type TimerItem = {
 };
 
 export default function TypeTimeButtons() {
-  const { menu, setMenu } = useTimerStore();
+  const menu = useMenu();
+  const { setMenu } = useTimerStore((state) => state.actions);
 
   const timerItems: TimerItem[] = useMemo(
     () => [

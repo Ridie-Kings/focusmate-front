@@ -2,7 +2,7 @@
 import CurrentDate from "@/components/Elements/General/CurrentDate";
 import { useDashboardData } from "@/hooks/UserDashboardData";
 import { useTour } from "@/hooks/UseTour";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import { useProfile } from "@/stores/profileStore";
 import Streaks from "./Dashboard/Streaks";
 import Pomodoro from "./Dashboard/Pomodoro";
 import Habits from "./Dashboard/Habits";
@@ -10,7 +10,7 @@ import Agenda from "./Dashboard/Agenda";
 import Task from "./Dashboard/Task";
 
 export default function Dashboard() {
-  const { userInfo } = useDashboardStore();
+  const userInfo = useProfile();
   const { streaks, tasks, habits } = useDashboardData();
 
   useTour(userInfo);

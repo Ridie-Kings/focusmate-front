@@ -19,7 +19,7 @@ export default function ModalTask({
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
   prevTask: TaskType;
 }) {
-  const { setTasks } = useDashboardStore();
+  const { setTasks } = useDashboardStore((state) => state.actions);
   const t = useTranslations("Modal.task");
   const tCommon = useTranslations("Common");
 

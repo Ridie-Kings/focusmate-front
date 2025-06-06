@@ -14,8 +14,8 @@ export default function ModalPomodoroSettings({
 }: {
   status: PomodoroStatusType;
 }) {
-  const { handleJoinPomodoro } = useWebSocketStore();
-  const { setIsOpen } = useModalStore();
+  const { handleJoinPomodoro } = useWebSocketStore((state) => state.actions);
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const [isLoading, setIsLoading] = useState(false);
   const [settings, setSettings] = useState({
     pomodoroDuration: status?.workDuration / 60 || 25,

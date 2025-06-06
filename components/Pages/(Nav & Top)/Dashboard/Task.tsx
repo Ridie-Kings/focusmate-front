@@ -5,11 +5,18 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import ListTask from "@/components/Pages/(Nav & Top)/Dashboard/Task/ListTask";
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import StatusCards from "@/components/Pages/(Nav & Top)/Dashboard/Task/StatusCards";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import {
+  useDashboardStore,
+  useLoadingTask,
+  useTasks,
+} from "@/stores/dashboardStore";
 import { useTranslations } from "next-intl";
 
 export default function Task({ tasksList }: { tasksList: TaskType[] }) {
-  const { tasks, setTasks, loadingTask } = useDashboardStore();
+  const { setTasks } = useDashboardStore((state) => state.actions);
+  const tasks = useTasks();
+  const loadingTask = useLoadingTask();
+
   const [filter, setFilter] = useState<string>("");
   const t = useTranslations("Dashboard.tasks");
 
@@ -33,12 +40,7 @@ export default function Task({ tasksList }: { tasksList: TaskType[] }) {
             ? t("priority.title")
             : t("completed")}
         </p>
-        <ListTask
-          filter={filter}
-          tasks={tasks}
-          setTasks={setTasks}
-          loadingTask={loadingTask}
-        />
+        <ListTask filter={filter} tasks={tasks} loadingTask={loadingTask} />
       </div>
     </TemplateDashboard>
   );

@@ -4,13 +4,13 @@ import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
-import TaskUtils from "@/lib/Task/TaskUtils";
 
 import { getHours, getMinutes, isSameDay, format } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
 
 import { SetStateAction, Dispatch, useRef, useEffect, useState } from "react";
 import SelectedEventInfo from "./DayCalendar/SelectedEventInfo";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 const getPosition = (date: Date) => {
   const hours = getHours(date);
@@ -22,21 +22,17 @@ const getPosition = (date: Date) => {
 const DayCalendarItem = ({
   date,
   events,
-  setEvents,
   setSelectedEvent,
 }: {
   date: Date;
   events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   setSelectedEvent: Dispatch<SetStateAction<TaskType | null>>;
 }) => {
   const scrollCalendar = useRef<HTMLDivElement>(null);
-  const { setIsOpen } = useModalStore();
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
 
-  const { handleDeleteTask } = TaskUtils({
-    setEvents,
-  });
+  const { removeEvent } = useDashboardStore((state) => state.actions);
 
   useEffect(() => {
     if (scrollCalendar.current) {
@@ -120,7 +116,7 @@ const DayCalendarItem = ({
                         label: "Eliminar",
                         color: "red",
                         icon: <Trash2 />,
-                        onClick: () => handleDeleteTask(event._id),
+                        onClick: () => removeEvent(event._id),
                       },
                     ]}
                   />
@@ -155,11 +151,9 @@ const DayCalendarItem = ({
 export default function DayCalendar({
   events,
   date,
-  setEvents,
 }: {
   events: TaskType[];
   date: Date;
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
   const [selectedEvent, setSelectedEvent] = useState<TaskType | null>(null);
 
@@ -168,7 +162,6 @@ export default function DayCalendar({
       <DayCalendarItem
         date={date}
         events={events}
-        setEvents={setEvents}
         setSelectedEvent={setSelectedEvent}
       />
       <SelectedEventInfo selectedEvent={selectedEvent} />

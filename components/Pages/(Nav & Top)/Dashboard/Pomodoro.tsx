@@ -1,18 +1,25 @@
 "use client";
 import TemplateDashboard from "../../../Elements/General/TemplateBox";
 import { Clock, Timer as TimerIcon } from "lucide-react";
-import { useTimerStore } from "@/stores/timerStore";
-import { useWebSocketStore } from "@/stores/websocketStore";
+import {
+  useIsChronometer,
+  useStartedElement,
+  useTimerStore,
+} from "@/stores/timerStore";
+import { useStatus } from "@/stores/websocketStore";
 import PomodoroContainer from "./Pomodoro/PomodoroContainer";
 import AddTask from "./Pomodoro/AddTask";
 import Commands from "@/components/Elements/Pomodoro/Commands";
 import { useTranslations } from "next-intl";
 
 export default function Pomodoro() {
-  const { setIsType, startedElement, toggleChronometerMode, isChronometer } =
-    useTimerStore();
+  const { setIsType, toggleChronometerMode } = useTimerStore(
+    (state) => state.actions
+  );
+  const isChronometer = useIsChronometer();
+  const startedElement = useStartedElement();
 
-  const { status } = useWebSocketStore();
+  const status = useStatus();
   const t = useTranslations("Dashboard.pomodoro");
 
   const handleChangeType = (

@@ -2,7 +2,7 @@
 import CircleTime from "./PomodoroElement/CircleTime";
 import { timeUtils } from "@/components/Provider/TimerProvider/TimeUtils";
 
-import { useTimerStore } from "@/stores/timerStore";
+import { useIsChronometer, useMenu, useTime } from "@/stores/timerStore";
 import Time from "./PomodoroElement/Time";
 import CyclesDots from "./PomodoroElement/CyclesDots";
 import MenuTitle from "./PomodoroElement/MenuTitle";
@@ -12,7 +12,9 @@ export default function PomodoroElement({
 }: {
   size: "medium" | "large";
 }) {
-  const { time, isChronometer, menu } = useTimerStore();
+  const isChronometer = useIsChronometer();
+  const time = useTime();
+  const menu = useMenu();
 
   return (
     <div

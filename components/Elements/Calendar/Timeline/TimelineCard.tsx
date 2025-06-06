@@ -1,26 +1,21 @@
 import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
-import TaskUtils from "@/lib/Task/TaskUtils";
 import { Check, Pen, Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function TimelineCard({
   event,
-  setEvents,
-  setTasks,
 }: {
-  setTasks: Dispatch<SetStateAction<TaskType[]>>;
   event: TaskType;
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
-  const { handleChangeStatus, handleDeleteTask } = TaskUtils({
-    setEvents,
-    setTasks,
-  });
-  const { setIsOpen } = useModalStore();
+  const { updateEvent, removeEvent } = useDashboardStore(
+    (state) => state.actions
+  );
+
+  const { setIsOpen } = useModalStore((state) => state.actions);
 
   const textColor = isLightColor(event.color) ? "text-black" : "text-white";
   const darkerColor = getDarkerColor(event.color);
@@ -76,18 +71,15 @@ export default function TimelineCard({
             label: "Hecho",
             icon: <Check size={20} />,
             onClick: () =>
-              handleChangeStatus(
-                event.status === "completed"
-                  ? ("dropped" as StatusType)
-                  : ("completed" as StatusType),
-                event._id
-              ),
+              updateEvent(event._id, {
+                status: event.status === "completed" ? "dropped" : "completed",
+              }),
           },
           {
             label: "Eliminar",
             color: "red",
             icon: <Trash2 size={20} />,
-            onClick: () => handleDeleteTask(event._id),
+            onClick: () => removeEvent(event._id),
           },
         ]}
       />

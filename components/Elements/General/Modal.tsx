@@ -12,10 +12,13 @@ import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import ModalTaskKanban from "./Modal/ModalTaskKanban";
-import { useModalStore } from "@/stores/modalStore";
+import { useIsOpen, useModalStore } from "@/stores/modalStore";
+import { useProfile } from "@/stores/profileStore";
 
 export default function Modal() {
-  const { isOpen, setIsOpen, profile } = useModalStore();
+  const isOpen = useIsOpen();
+  const profile = useProfile();
+  const { setIsOpen } = useModalStore((state) => state.actions);
 
   const [isClosing, setIsClosing] = useState(false);
 

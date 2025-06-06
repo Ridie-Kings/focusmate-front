@@ -1,9 +1,9 @@
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { HabitFormData, HabitsType } from "@/interfaces/Habits/HabitsType";
 import { createHabit } from "@/services/Habits/createHabit";
-import { removeHabit } from "@/services/Habits/removeHabit";
 import { updateHabit } from "@/services/Habits/updateHabit";
 import { useCallback } from "react";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function HabitsUtils({
   createdHabit,
@@ -22,6 +22,8 @@ export default function HabitsUtils({
   habits: HabitsType[];
   setHabits: React.Dispatch<React.SetStateAction<HabitsType[]>>;
 }) {
+  const { removeHabit } = useDashboardStore((state) => state.actions);
+
   const validateHabit = useCallback((): boolean => {
     if (!createdHabit || !createdHabit.name || !createdHabit.name.trim()) {
       if (setError) setError("El nombre del hábito es obligatorio");
@@ -79,7 +81,7 @@ export default function HabitsUtils({
       setHabits((prev) => prev.filter((habit) => habit._id !== id));
 
       try {
-        const res = await removeHabit({ _id: id });
+        const res = await removeHabit(id);
         if (!res.success) {
           console.error("Failed to delete habit:", res.res);
           setHabits((prev) => [...prev, habitToRemove]);

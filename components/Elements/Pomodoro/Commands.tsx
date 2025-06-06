@@ -2,13 +2,22 @@
 import { CommandAction, CommandsProps } from "@/interfaces/Pomodoro/Commands";
 import { useState } from "react";
 import CommandsHook from "@/hooks/Pomodoro/Commands";
-import { useTimerStore } from "@/stores/timerStore";
-import { useWebSocketStore } from "@/stores/websocketStore";
+import { useStatus } from "@/stores/websocketStore";
 import CommandsUtils from "@/lib/Pomodoro/CommandsUtils";
+import {
+  useIsPlay,
+  useIsType,
+  useMenu,
+  useStartedElement,
+} from "@/stores/timerStore";
 
 export default function Commands({ fullScreen = false }: CommandsProps) {
-  const { isPlay, menu, isType, startedElement } = useTimerStore();
-  const { status } = useWebSocketStore();
+  const isPlay = useIsPlay();
+  const menu = useMenu();
+  const isType = useIsType();
+  const startedElement = useStartedElement();
+
+  const status = useStatus();
   const { handleClick } = CommandsUtils();
 
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -33,9 +42,7 @@ export default function Commands({ fullScreen = false }: CommandsProps) {
           .map((button) => (
             <li key={button.id} id={button.id}>
               <button
-                onClick={() =>
-                  handleClick(button.id as CommandAction)
-                }
+                onClick={() => handleClick(button.id as CommandAction)}
                 onMouseEnter={() =>
                   button.id === "openFullScreen" && setShowTooltip(true)
                 }

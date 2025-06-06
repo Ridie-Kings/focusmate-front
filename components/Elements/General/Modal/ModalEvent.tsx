@@ -5,7 +5,6 @@ import BodyInputs from "./ModalEvent/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
 import TopInputs from "./Modal/TopInputs";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
-import { useDashboardStore } from "@/stores/dashboardStore";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import ModalEventUtils from "@/lib/ModalEventUtils";
@@ -28,7 +27,6 @@ const DEFAULT_TASK: tempTaskType = {
 };
 
 export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
-  const { setEvents, setTasks } = useDashboardStore();
   const initialDate = useMemo(
     () => (events instanceof Date ? events : new Date()),
     [events]
@@ -43,14 +41,13 @@ export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { handleSendEvent, handleUpdateEvent } = ModalEventUtils({
+  const { handleCreateEvent, handleUpdateEvent } = ModalEventUtils({
     setError,
-    setTasks,
-    setEvents,
     task,
     setIsLoading,
     setIsOpen,
   });
+
   useEffect(() => {
     if (events && events instanceof Object && "title" in events) {
       setTask(() => ({
@@ -88,7 +85,7 @@ export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
       <BtnSend
         text={isEditMode ? "Modificar" : undefined}
         loadingText={isEditMode ? "Modificando..." : undefined}
-        handleClick={isEditMode ? handleUpdateEvent : handleSendEvent}
+        handleClick={isEditMode ? handleUpdateEvent : handleCreateEvent}
         isLoading={isLoading}
         setIsOpen={setIsOpen}
       />

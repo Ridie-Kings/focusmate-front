@@ -5,7 +5,7 @@ import { useModalStore } from "@/stores/modalStore";
 import { useProfile } from "@/stores/profileStore";
 
 export default function SupportClient() {
-  const { setIsOpen } = useModalStore();
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const profile = useProfile();
 
   return (

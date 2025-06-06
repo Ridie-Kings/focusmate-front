@@ -1,5 +1,5 @@
 "use client";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import { useTasks } from "@/stores/dashboardStore";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
@@ -15,7 +15,7 @@ export default function AddTask({
   status: PomodoroStatusType | null;
   pomodoroId: string | undefined;
 }) {
-  const { tasks } = useDashboardStore();
+  const tasks = useTasks();
   const [selectedTask, setSelectedTask] = useState<TaskType | null>(
     status?.task || null
   );

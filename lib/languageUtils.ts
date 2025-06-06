@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 
-export default function languageUtils() {
+export default function LanguageUtils() {
   const router = useRouter();
   const locale = useLocale();
   const nextLocale = locale === "es" ? "en" : "es";

@@ -7,13 +7,21 @@ import Timeline from "./Agenda/Timeline";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 import { useTranslations } from "next-intl";
 
-import { useDashboardStore } from "@/stores/dashboardStore";
+import {
+  useDashboardStore,
+  useEvents,
+  useLoadingEvents,
+} from "@/stores/dashboardStore";
 import { isSameMonth } from "date-fns";
 import CalendarUtils from "@/lib/CalendarUtils";
 
 export default function Agenda() {
-  const { events, setEvents, setTasks, loadingEvents, setLoadingEvents } =
-    useDashboardStore();
+  const { setEvents, setLoading } = useDashboardStore(
+    (state) => state.actions
+  );
+  const loadingEvents = useLoadingEvents();
+  const events = useEvents();
+
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
   const t = useTranslations("Dashboard.agenda");
@@ -29,7 +37,7 @@ export default function Agenda() {
       date: date ?? new Date(),
       setEvents,
       setCurrentMonth,
-      setLoadingEvents,
+      setLoading,
       currentMonth,
     });
 
@@ -45,13 +53,7 @@ export default function Agenda() {
     >
       <div className="flex flex-col xl:flex-row w-full h-full gap-4">
         <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
-        <Timeline
-          date={date}
-          events={events}
-          setEvents={setEvents}
-          setTasks={setTasks}
-          loadingEvents={loadingEvents}
-        />
+        <Timeline date={date} events={events} loadingEvents={loadingEvents} />
       </div>
     </TemplateDashboard>
   );

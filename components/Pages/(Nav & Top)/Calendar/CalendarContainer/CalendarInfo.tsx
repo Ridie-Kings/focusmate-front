@@ -14,7 +14,6 @@ export default function CalendarInfo({
   date,
   setDate,
   events,
-  setEvents,
   loadingEvents,
 }: {
   navType: NavTypeType;
@@ -22,7 +21,6 @@ export default function CalendarInfo({
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
   events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   loadingEvents: boolean;
 }) {
   const scrollCalendar = useRef<HTMLDivElement>(null);
@@ -31,14 +29,11 @@ export default function CalendarInfo({
     if (loadingEvents) return <LoadingState />;
     switch (navType) {
       case "Día":
-        return (
-          <DayCalender events={events} date={date} setEvents={setEvents} />
-        );
+        return <DayCalender events={events} date={date} />;
       case "Semana":
         return (
           <WeekCalendar
             events={events}
-            setEvents={setEvents}
             date={date}
             setDate={setDate}
             scrollCalendar={scrollCalendar}

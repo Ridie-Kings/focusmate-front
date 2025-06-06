@@ -10,7 +10,7 @@ export default function CalendarUtils({
   date,
   setEvents,
   setCurrentMonth,
-  setLoadingEvents,
+  setLoading,
   currentMonth,
 }: {
   firstDate: Date;
@@ -18,7 +18,7 @@ export default function CalendarUtils({
   date: Date | undefined;
   setEvents: (events: TaskType[]) => void;
   setCurrentMonth: (month: Date) => void;
-  setLoadingEvents: (loading: boolean) => void;
+  setLoading: (key: "events" | "tasks" | "habits", value: boolean) => void;
   currentMonth: Date | undefined;
 }) {
   const handleGetCalendarByRange = async () => {
@@ -56,7 +56,7 @@ export default function CalendarUtils({
   };
 
   const handleGetCalendarOfMonthByDate = async (dateToFetch: Date) => {
-    setLoadingEvents(true);
+    setLoading("events", true);
 
     try {
       const events = await getCalendarOfMonthByDate({
@@ -77,7 +77,7 @@ export default function CalendarUtils({
 
       setEvents([]);
     } finally {
-      setLoadingEvents(false);
+      setLoading("events", false);
     }
   };
 

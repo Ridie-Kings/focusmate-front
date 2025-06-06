@@ -3,7 +3,6 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import MountainTask from "@/components/Elements/Svg/Mountain/MountainTask";
 import { useState, useEffect, useRef } from "react";
 import { useModalStore } from "@/stores/modalStore";
-import { useDashboardStore } from "@/stores/dashboardStore";
 import TaskCard from "./ListTask/TaskCard";
 import AnimationElementsListUtils from "@/lib/AnimationElementsListUtils";
 import LoadingStatus from "@/components/Elements/General/LoadingStatus";
@@ -12,12 +11,10 @@ import { useTranslations } from "next-intl";
 export default function ListTask({
   filter,
   tasks,
-  setTasks,
   loadingTask,
 }: {
   filter: string;
   tasks: TaskType[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
   loadingTask: boolean;
 }) {
   const listRef = useRef<HTMLDivElement>(null);
@@ -27,8 +24,7 @@ export default function ListTask({
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
-  const { setIsOpen } = useModalStore();
-  const { setEvents } = useDashboardStore();
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const { capturePositions, animateFLIP } = AnimationElementsListUtils({
     listRef,
   });
@@ -97,8 +93,6 @@ export default function ListTask({
                 task={task}
                 setIsChange={handleStatusChange}
                 isChange={changingTaskIds.includes(task._id)}
-                setEvents={setEvents}
-                setTasks={setTasks}
               />
             </div>
           ))

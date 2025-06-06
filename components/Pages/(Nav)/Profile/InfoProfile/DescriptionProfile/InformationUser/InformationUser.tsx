@@ -149,7 +149,6 @@ export default function InformationUser() {
     phoneNumber: null,
   });
   const [message, setMessage] = useState<Message | null>(null);
-  const t = useTranslations("Common");
 
   useEffect(() => {
     if (profile) {

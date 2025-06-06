@@ -1,10 +1,10 @@
 "use client";
-import languageUtils from "@/lib/languageUtils";
+import LanguageUtils from "@/lib/languageUtils";
 import { useLocale } from "next-intl";
 
 export default function LanguageSwitcher({ darkMode }: { darkMode?: boolean }) {
   const locale = useLocale();
-  const { handleSwitch } = languageUtils();
+  const { handleSwitch } = LanguageUtils();
 
   return (
     <button

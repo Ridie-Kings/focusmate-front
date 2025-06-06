@@ -2,14 +2,14 @@
 import Commands from "@/components/Elements/Pomodoro/Commands";
 import Timer from "./Dashboard/Pomodoro/PomodoroContainer";
 import HistoryTimer from "./Pomodoro/HistoryTimer";
-import { useTimerStore } from "@/stores/timerStore";
-import { useWebSocketStore } from "@/stores/websocketStore";
+import { useIsChronometer } from "@/stores/timerStore";
+import { useStatus } from "@/stores/websocketStore";
 import PomodoroNav from "./Pomodoro/PomodoroNav";
 import AddTask from "./Dashboard/Pomodoro/AddTask";
 
 export default function Pomodoro() {
-  const { isChronometer } = useTimerStore();
-  const { status } = useWebSocketStore();
+  const isChronometer = useIsChronometer();
+  const status = useStatus();
 
   return (
     <div className="flex flex-col sm:flex-row flex-1 gap-6 p-6 w-full">

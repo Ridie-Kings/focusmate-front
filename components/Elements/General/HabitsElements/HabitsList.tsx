@@ -20,7 +20,7 @@ const HabitItem = ({
   onRemove: (id: string) => void;
 }) => {
   const { _id, status, type, name, description } = habit;
-  const { setIsOpen } = useModalStore();
+  const { setIsOpen } = useModalStore((state) => state.actions);
 
   return (
     <li className="flex items-center gap-4">

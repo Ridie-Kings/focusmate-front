@@ -1,9 +1,10 @@
 "use client";
 import Time from "../PomodoroContainer/PomodoroElement/Time";
-import { useTimerStore } from "@/stores/timerStore";
+import { useIsChronometer, useTime } from "@/stores/timerStore";
 
 export default function Chronometer() {
-  const { time, isChronometer } = useTimerStore();
+  const isChronometer = useIsChronometer();
+  const time = useTime();
 
   return (
     <div

@@ -3,7 +3,7 @@ import { AudioLines, Text, AlertCircle } from "lucide-react";
 import InputModal from "@/components/Reusable/InputModal";
 
 import BtnSend from "./Modal/BtnSend";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import { useDashboardStore, useHabits } from "@/stores/dashboardStore";
 import HabitsUtils from "@/lib/HabitsUtils";
 import {
   HabitFormData,
@@ -14,7 +14,9 @@ import renderIconHabit from "@/config/RenderIconHabit";
 import { useTranslations } from "next-intl";
 
 export default function ModalHabit({ setIsOpen, prevHabit }: ModalHabitProps) {
-  const { setHabits, habits } = useDashboardStore();
+  const habits = useHabits();
+  const { setHabits } = useDashboardStore((state) => state.actions);
+
   const t = useTranslations("Modal.habit");
   const tFrequency = useTranslations("Modal.habit.frequency");
   const tType = useTranslations("Modal.habit.type");

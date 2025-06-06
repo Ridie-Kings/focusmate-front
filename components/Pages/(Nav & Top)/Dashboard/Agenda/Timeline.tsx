@@ -5,21 +5,17 @@ import MountainAgenda from "@/components/Elements/Svg/Mountain/MountainAgenda";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { isSameDay } from "date-fns";
 import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction, useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 interface TimelineProps {
   date: Date | undefined;
   events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
-  setTasks: Dispatch<SetStateAction<TaskType[]>>;
   loadingEvents: boolean;
 }
 
 export default function Timeline({
   date,
   events,
-  setEvents,
-  setTasks,
   loadingEvents,
 }: TimelineProps) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -62,10 +58,8 @@ export default function Timeline({
                 <div className="flex-1 flex flex-col gap-2 pt-1.5">
                   {filteredEvents.map((event, index) => (
                     <TimelineCard
-                      setTasks={setTasks}
                       key={`event-${index}-${event.title}`}
                       event={event}
-                      setEvents={setEvents}
                     />
                   ))}
                 </div>

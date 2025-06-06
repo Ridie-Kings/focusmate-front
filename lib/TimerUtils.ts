@@ -31,7 +31,9 @@ export default function TimerUtils({
   setCycles: Dispatch<SetStateAction<number>>;
   setStartedElement: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { resetTimer: resetTimerStore } = useTimerStore();
+  const { resetTimer: resetTimerStore } = useTimerStore(
+    (state) => state.actions
+  );
 
   const playEndSound = useCallback(() => {
     if (audioRef.current) {
