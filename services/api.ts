@@ -57,7 +57,7 @@ api.interceptors.response.use(
           "Demasiadas peticiones. Por favor, espera un momento."
         );
       case 500:
-        throw new ServerError("Error interno del servidor");
+        throw new ServerError("Error interno del servidor: " + data.message);
       default:
         throw new AppError(
           data.message ?? "Error desconocido",

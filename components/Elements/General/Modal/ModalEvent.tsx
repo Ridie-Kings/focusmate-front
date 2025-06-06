@@ -3,27 +3,33 @@ import { AlertCircle } from "lucide-react";
 
 import BodyInputs from "./ModalEvent/BodyInputs";
 import BtnSend from "./Modal/BtnSend";
-import TopInputs from "./Modal/TopInputs";
-import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import TopInputsEvents from "./Modal/TopInputsEvents";
+import { tempEventType } from "@/interfaces/Modal/ModalType";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import ModalEventUtils from "@/lib/ModalEventUtils";
 
 type ModalEventProps = {
-  events: TaskType;
+  events: tempEventType;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 };
 
-const DEFAULT_TASK: tempTaskType = {
+const DEFAULT_EVENT: tempEventType = {
   _id: undefined,
   title: "",
   description: "",
-  status: "pending",
+  location: "",
   startDate: new Date(),
   endDate: new Date(),
-  dueDate: new Date(),
-  priority: "high",
-  color: "#d5ede2",
+  duration: 1,
+  category: "General",
+  color: "",
+  recurrence: {
+    frequency: "none",
+    interval: 0,
+    daysOfWeek: [],
+    endDate: new Date(),
+    maxOccurrences: 0,
+  },
 };
 
 export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
@@ -32,39 +38,38 @@ export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
     [events]
   );
 
-  const [task, setTask] = useState<tempTaskType>({
-    ...DEFAULT_TASK,
+  const [event, setEvent] = useState<tempEventType>({
+    ...DEFAULT_EVENT,
     startDate: initialDate,
     endDate: initialDate,
-    dueDate: initialDate,
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { handleCreateEvent, handleUpdateEvent } = ModalEventUtils({
     setError,
-    task,
+    event,
     setIsLoading,
     setIsOpen,
   });
 
   useEffect(() => {
     if (events && events instanceof Object && "title" in events) {
-      setTask(() => ({
-        ...(events as tempTaskType),
+      setEvent(() => ({
+        ...(events as tempEventType),
       }));
     }
   }, [events]);
 
-  const isEditMode = Boolean(task._id);
+  const isEditMode = Boolean(event._id);
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <TopInputs
+      <TopInputsEvents
         error={error}
         setError={setError}
-        task={task}
-        setTask={setTask}
+        event={event}
+        setEvent={setEvent}
       />
 
       {error && (
@@ -78,8 +83,8 @@ export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
         date={initialDate}
         error={error}
         setError={setError}
-        task={task}
-        setTask={setTask}
+        event={event}
+        setEvent={setEvent}
       />
 
       <BtnSend

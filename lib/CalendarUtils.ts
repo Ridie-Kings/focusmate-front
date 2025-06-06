@@ -1,4 +1,5 @@
-import { TaskType } from "@/interfaces/Task/TaskType";
+"use client";
+import { CalendarType } from "@/interfaces/Calendar/CalendarType";
 import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 import { getCalendarOfMonthByDate } from "@/services/Calendar/getCalendarOfMonthByDate";
@@ -8,7 +9,7 @@ export default function CalendarUtils({
   firstDate,
   secondDate,
   date,
-  setEvents,
+  setCalendar,
   setCurrentMonth,
   setLoading,
   currentMonth,
@@ -16,24 +17,24 @@ export default function CalendarUtils({
   firstDate: Date;
   secondDate: Date;
   date: Date | undefined;
-  setEvents: (events: TaskType[]) => void;
+  setCalendar: (calendar: CalendarType) => void;
   setCurrentMonth: (month: Date) => void;
-  setLoading: (key: "events" | "tasks" | "habits", value: boolean) => void;
+  setLoading: (key: "calendar" | "tasks" | "habits", value: boolean) => void;
   currentMonth: Date | undefined;
 }) {
   const handleGetCalendarByRange = async () => {
     try {
       const event = await getCalendarByRange({ firstDate, secondDate });
       if (event.success) {
-        setEvents(event.res);
+        setCalendar(event.res);
       } else {
         console.error("Error al obtener el calendario client", event.res);
-        setEvents([]);
+        setCalendar({ events: [], tasks: [] });
       }
     } catch (error) {
       console.error("Error al obtener el calendario server", error);
 
-      setEvents([]);
+      setCalendar({ events: [], tasks: [] });
     }
   };
 
@@ -44,27 +45,27 @@ export default function CalendarUtils({
       });
 
       if (event.success) {
-        setEvents(event.res);
+        setCalendar(event.res);
       } else {
         console.error("Error al obtener el calendario client", event.res);
-        setEvents([]);
+        setCalendar({ events: [], tasks: [] });
       }
     } catch (error) {
       console.error("Error al obtener el calendario server", error);
-      setEvents([]);
+      setCalendar({ events: [], tasks: [] });
     }
   };
 
   const handleGetCalendarOfMonthByDate = async (dateToFetch: Date) => {
-    setLoading("events", true);
+    setLoading("calendar", true);
 
     try {
-      const events = await getCalendarOfMonthByDate({
+      const calendar = await getCalendarOfMonthByDate({
         date: dateToFetch,
       });
 
-      if (events.success) {
-        setEvents(events.res);
+      if (calendar.success) {
+        setCalendar(calendar.res);
 
         if (
           !currentMonth ||
@@ -75,9 +76,9 @@ export default function CalendarUtils({
     } catch (error) {
       console.error("Error al obtener el calendario", error);
 
-      setEvents([]);
+      setCalendar({ events: [], tasks: [] });
     } finally {
-      setLoading("events", false);
+      setLoading("calendar", false);
     }
   };
 

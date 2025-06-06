@@ -1,6 +1,6 @@
 "use server";
 import { apiClient } from "../api";
-import { PromiseCalendar } from "@/interfaces/Calendar/CalendarType";
+import { CalendarType } from "@/interfaces/Calendar/CalendarType";
 
 export async function getCalendarByRange({
   firstDate,
@@ -10,7 +10,7 @@ export async function getCalendarByRange({
   secondDate: Date;
 }): Promise<{
   success: boolean;
-  res: PromiseCalendar;
+  res: CalendarType;
 }> {
   try {
     const firstDateString = firstDate.toISOString().split("T")[0];
@@ -20,7 +20,7 @@ export async function getCalendarByRange({
       `calendar/${firstDateString}/${secondDateString}`
     );
 
-    return { success: true, res };
+    return { success: true, res: res.events };
   } catch (error: any) {
     console.error(`Error fetching calendar by range:`, error);
 

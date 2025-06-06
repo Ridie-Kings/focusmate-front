@@ -167,7 +167,7 @@ export default function Menu({
       menuRef.current.style.bottom = "";
 
       const basePosition = position || "bottom-right";
-      menuRef.current.className = `absolute flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-99999 min-w-40 mt-1 ${
+      menuRef.current.className = `absolute flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-99999 min-w-40 mt-1 text-black ${
         basePosition === "bottom-right"
           ? "top-full right-0"
           : basePosition === "bottom-left"

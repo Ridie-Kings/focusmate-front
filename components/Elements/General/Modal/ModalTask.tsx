@@ -4,7 +4,7 @@ import { AlertCircle, Award, Text } from "lucide-react";
 import BtnSend from "./Modal/BtnSend";
 import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
-import TopInputs from "./Modal/TopInputs";
+import TopInputs from "./Modal/TopInputsTasks";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { useDashboardStore } from "@/stores/dashboardStore";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";

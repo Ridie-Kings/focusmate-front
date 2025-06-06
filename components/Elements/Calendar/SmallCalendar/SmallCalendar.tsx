@@ -13,7 +13,7 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 
 import WeekDays from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/WeekDays";
 import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
@@ -21,8 +21,10 @@ import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalen
 import Button from "@/components/Reusable/Button";
 import { useModalStore } from "@/stores/modalStore";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { useEvents } from "@/stores/dashboardStore";
 import { useTranslations } from "next-intl";
+import { useCalendar } from "@/stores/dashboardStore";
+import { EventType } from "@/interfaces/Calendar/EventType";
+import { TimelineItem } from "../Timeline/TimelineCard";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -44,13 +46,13 @@ const generateMonthDays = (date: Date | undefined): Date[] => {
 type CalendarItemProps = {
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
-  events?: TaskType[];
+  calendar?: TimelineItem[];
 };
 
 export const CalendarItem: React.FC<CalendarItemProps> = ({
   date,
   setDate,
-  events,
+  calendar,
 }) => {
   const days = generateMonthDays(date);
 
@@ -64,7 +66,7 @@ export const CalendarItem: React.FC<CalendarItemProps> = ({
         date={date}
         days={days}
         setDate={setDate}
-        events={events}
+        calendar={calendar}
       />
     </div>
   );
@@ -85,7 +87,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
   date,
   btn,
 }) => {
-  const events = useEvents();
+  const calendar = useCalendar();
   const { setIsOpen } = useModalStore((state) => state.actions);
   const t = useTranslations("Common.buttons");
 
@@ -111,6 +113,23 @@ const SmallCalendar: React.FC<CalendarProps> = ({
       return newDate;
     });
   };
+  const timelineItems = useMemo(() => {
+    const events: TimelineItem[] = calendar.events.map((event) => ({
+      type: "event",
+      data: event,
+      startDate: new Date(event.startDate),
+    }));
+
+    const tasks: TimelineItem[] = calendar.tasks.map((task) => ({
+      type: "task",
+      data: task,
+      startDate: new Date(task.dueDate),
+    }));
+
+    return [...events, ...tasks].sort(
+      (a, b) => a.startDate.getTime() - b.startDate.getTime()
+    );
+  }, [date, calendar.events, calendar.tasks]);
 
   return (
     <div
@@ -128,7 +147,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
           handleYearChange={handleMonthYearChange}
           date={date}
         />
-        <CalendarItem date={date} setDate={setDate} events={events} />
+        <CalendarItem date={date} setDate={setDate} calendar={timelineItems} />
       </div>
       {btn && (
         <Button

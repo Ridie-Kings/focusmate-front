@@ -30,3 +30,22 @@ export type tempTaskType = {
   priority: "high" | "medium" | "low";
   color: string;
 };
+
+export type tempEventType = {
+  _id: string | undefined;
+  title: string;
+  description: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+  duration: number;
+  category: string;
+  color: string;
+  recurrence: {
+    frequency: "none" | "daily" | "weekly" | "monthly";
+    interval: number;
+    daysOfWeek: number[];
+    endDate: Date;
+    maxOccurrences: number;
+  };
+};

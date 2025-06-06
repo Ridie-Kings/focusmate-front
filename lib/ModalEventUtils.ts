@@ -1,27 +1,27 @@
-import { tempTaskType, TypeIsOpen } from "@/interfaces/Modal/ModalType";
+import { tempEventType, TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import { Dispatch, SetStateAction } from "react";
 import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function ModalEventUtils({
   setError,
-  task,
+  event,
   setIsLoading,
   setIsOpen,
 }: {
   setError: (error: string | null) => void;
-  task: tempTaskType;
+  event: tempEventType;
   setIsLoading: (isLoading: boolean) => void;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
 }) {
   const { addEvent, updateEvent } = useDashboardStore((state) => state.actions);
 
   const validateEvent = (): boolean => {
-    if (!task.title.trim()) {
+    if (!event.title.trim()) {
       setError("El título es obligatorio");
       return false;
     }
 
-    if (task.endDate && task.startDate && task.endDate <= task.startDate) {
+    if (event.endDate && event.startDate && event.endDate <= event.startDate) {
       setError(
         "La hora de finalización debe ser posterior a la hora de inicio"
       );
@@ -39,7 +39,7 @@ export default function ModalEventUtils({
     }
     setIsLoading(true);
 
-    const res = await updateEvent(task._id ?? "", task);
+    const res = await updateEvent(event._id ?? "", event);
 
     if (!res.success) {
       setError(res.res as string);
@@ -58,10 +58,13 @@ export default function ModalEventUtils({
 
     setIsLoading(true);
 
-    const res = await addEvent(task);
+    console.log(event);
+
+    const res = await addEvent(event);
 
     if (!res.success) {
       setError(res.res as string);
+      console.log(res);
       setIsLoading(false);
       return;
     }

@@ -1,56 +1,95 @@
 import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import AgendaUtils from "@/lib/AgendaUtils";
-import { Check, Pen, Trash2 } from "lucide-react";
+import { Calendar, Check, ClipboardCheck, Pen, Trash2 } from "lucide-react";
 import { useDashboardStore } from "@/stores/dashboardStore";
+import { EventType } from "@/interfaces/Calendar/EventType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 
-export default function TimelineCard({
-  event,
-}: {
-  event: TaskType;
-}) {
+export type TimelineItem = {
+  type: "event" | "task";
+  data: EventType | TaskType;
+  startDate: Date;
+};
+
+export default function TimelineCard({ items }: { items: TimelineItem }) {
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
-  const { updateEvent, removeEvent } = useDashboardStore(
+  const { removeEvent, updateTask, removeTask } = useDashboardStore(
     (state) => state.actions
   );
 
   const { setIsOpen } = useModalStore((state) => state.actions);
 
-  const textColor = isLightColor(event.color) ? "text-black" : "text-white";
-  const darkerColor = getDarkerColor(event.color);
+  const isEvent = items.type === "event";
+  const data = items.data;
+
+  const handleUpdate = () => {
+    if (isEvent) {
+      setIsOpen({ text: "event", other: data });
+    } else {
+      setIsOpen({ text: "task", other: data });
+    }
+  };
+
+  const handleRemove = () => {
+    if (isEvent) {
+      removeEvent(data._id);
+    } else {
+      removeTask(data._id);
+    }
+  };
+
+  const handleComplete = () => {
+    if (!isEvent) {
+      updateTask(data._id, {
+        status:
+          (data as TaskType).status === "completed" ? "dropped" : "completed",
+      });
+    }
+  };
+
+  const textColor = isLightColor(data.color) ? "text-black" : "text-white";
+  const darkerColor = getDarkerColor(data.color);
 
   return (
     <div
       style={{
-        backgroundColor: event.status === "completed" ? "" : event.color,
+        backgroundColor:
+          !isEvent && (data as TaskType).status === "completed"
+            ? ""
+            : data.color,
       }}
       className={`w-full h-26 p-4 rounded-lg relative flex flex-col justify-between transition-all duration-300 ease-in-out ${textColor} ${
-        event.status === "completed" ? "border-2 border-gray-500" : ""
+        !isEvent && (data as TaskType).status === "completed"
+          ? "border-2 border-gray-500"
+          : ""
       }`}
     >
-      <p className="font-medium">{event.title}</p>
+      <div className="flex items-center gap-2">
+        {isEvent ? <Calendar size={20} /> : <ClipboardCheck size={20} />}
+        <p className="font-medium">{data.title}</p>
+      </div>
       <div className="flex items-center justify-between w-full">
         <span className="flex flex-col items-center gap-1">
           <p className="text-sm">
-            {new Date(event.startDate).toLocaleTimeString("es-ES", {
+            {new Date(data.startDate).toLocaleTimeString("es-ES", {
               hour: "2-digit",
               minute: "2-digit",
             })}
           </p>
           <p className={`text-xs font-medium ${textColor}`}>Empieza</p>
         </span>
+
         <p
           style={{ backgroundColor: darkerColor }}
           className="px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white"
         >
-          {event.status === "completed"
-            ? "Terminado"
-            : formatDuration(event.startDate, event.endDate)}
+          {formatDuration(data.startDate, data.endDate)}
         </p>
+
         <span className="flex flex-col items-center gap-1">
           <p className="text-sm">
-            {new Date(event.endDate).toLocaleTimeString("es-ES", {
+            {new Date(data.endDate).toLocaleTimeString("es-ES", {
               hour: "2-digit",
               minute: "2-digit",
             })}
@@ -65,21 +104,18 @@ export default function TimelineCard({
           {
             label: "Modificar",
             icon: <Pen size={20} />,
-            onClick: () => setIsOpen({ text: "event", other: event }),
+            onClick: handleUpdate,
           },
           {
             label: "Hecho",
             icon: <Check size={20} />,
-            onClick: () =>
-              updateEvent(event._id, {
-                status: event.status === "completed" ? "dropped" : "completed",
-              }),
+            onClick: handleComplete,
           },
           {
             label: "Eliminar",
             color: "red",
             icon: <Trash2 size={20} />,
-            onClick: () => removeEvent(event._id),
+            onClick: handleRemove,
           },
         ]}
       />

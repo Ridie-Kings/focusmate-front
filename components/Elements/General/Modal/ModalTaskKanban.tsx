@@ -4,7 +4,7 @@ import { AlertCircle, Award, Text } from "lucide-react";
 import BtnSend from "./Modal/BtnSend";
 import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
-import TopInputs from "./Modal/TopInputs";
+import TopInputsTasks from "./Modal/TopInputsTasks";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
 import ModalTaskUtils from "@/lib/Task/ModalTaskUtils";
@@ -44,7 +44,7 @@ export default function ModalTaskKanban({
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
-        <TopInputs
+        <TopInputsTasks
           error={error}
           setError={setError}
           task={task}

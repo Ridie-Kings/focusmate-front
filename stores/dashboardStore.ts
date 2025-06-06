@@ -5,32 +5,35 @@ import { Dispatch, SetStateAction } from "react";
 import { createTask } from "@/services/Task/createTask";
 import { updateTask } from "@/services/Task/updateTask";
 import { deleteTask } from "@/services/Task/deleteTask";
-import { addHours } from "date-fns";
-import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
-import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { tempEventType, tempTaskType } from "@/interfaces/Modal/ModalType";
 import { createHabit } from "@/services/Habits/createHabit";
 import { updateHabit } from "@/services/Habits/updateHabit";
 import { deleteHabit } from "@/services/Habits/deleteHabit";
+import { createEvent } from "@/services/Calendar/createEvent";
+import { EventType } from "@/interfaces/Calendar/EventType";
+import { updateEvent } from "@/services/Calendar/updateEvent";
+import { deleteEvent } from "@/services/Calendar/deleteEvent";
+import { CalendarType } from "@/interfaces/Calendar/CalendarType";
 
 type ApiResponse<T> = { success: boolean; res: T | string };
 
 interface DashboardStore {
-  events: TaskType[];
+  calendar: CalendarType;
   tasks: TaskType[];
   habits: HabitsType[];
   loading: {
-    events: boolean;
+    calendar: boolean;
     tasks: boolean;
     habits: boolean;
   };
   actions: {
-    setEvents: Dispatch<SetStateAction<TaskType[]>>;
-    addEvent: (event: tempTaskType) => Promise<ApiResponse<TaskType>>;
+    setCalendar: Dispatch<SetStateAction<CalendarType>>;
+    addEvent: (event: tempEventType) => Promise<ApiResponse<EventType>>;
     removeEvent: (eventId: string) => Promise<ApiResponse<string>>;
     updateEvent: (
       eventId: string,
-      updatedEvent: Partial<TaskType>
-    ) => Promise<ApiResponse<TaskType>>;
+      updatedEvent: Partial<EventType>
+    ) => Promise<ApiResponse<EventType>>;
 
     setTasks: Dispatch<SetStateAction<TaskType[]>>;
     addTask: (task: tempTaskType) => Promise<ApiResponse<TaskType>>;
@@ -61,52 +64,39 @@ const handleApiError = (
 });
 
 export const useDashboardStore = create<DashboardStore>((set, get) => ({
-  events: [],
+  calendar: {
+    events: [],
+    tasks: [],
+  },
   tasks: [],
   habits: [],
   loading: {
-    events: true,
+    calendar: true,
     tasks: true,
     habits: true,
   },
 
   actions: {
-    setEvents: (newEvents) =>
+    setCalendar: (newCalendar) =>
       set((state) => ({
-        events:
-          typeof newEvents === "function" ? newEvents(state.events) : newEvents,
+        calendar:
+          typeof newCalendar === "function"
+            ? newCalendar(state.calendar)
+            : newCalendar,
       })),
 
     addEvent: async (newEvent) => {
       try {
-        const task = {
-          ...newEvent,
-          dueDate: addHours(
-            newEvent.dueDate ?? new Date(),
-            -(newEvent.dueDate?.getTimezoneOffset() ?? 0) / 60
-          ),
-        };
-
-        const res = await createTask({ task });
+        const res = await createEvent({ event: newEvent });
         if (!res.success)
           return handleApiError(res.res, "Error al crear la tarea");
 
         set((state) => ({
-          events: [...state.events, res.res],
-          tasks: [...state.tasks, res.res],
+          calendar: {
+            ...state.calendar,
+            events: [...state.calendar.events, res.res],
+          },
         }));
-
-        const calendarResponse = await addTaskToCalendar({ _id: res.res._id });
-        if (!calendarResponse.success) {
-          set((state) => ({
-            events: state.events.filter((event) => event._id !== res.res._id),
-            tasks: state.tasks.filter((task) => task._id !== res.res._id),
-          }));
-          return handleApiError(
-            calendarResponse.res,
-            "Error al añadir la tarea al calendario"
-          );
-        }
 
         return { success: true, res: res.res };
       } catch (error) {
@@ -116,36 +106,37 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
 
     removeEvent: async (eventId) => {
       try {
-        const res = await deleteTask({ _id: eventId });
+        const res = await deleteEvent({ _id: eventId });
         if (!res.success)
-          return handleApiError(res.res, "Error al eliminar la tarea");
+          return handleApiError(res.res, "Error al eliminar el evento");
 
         set((state) => ({
-          events: state.events.filter((event) => event._id !== eventId),
-          tasks: state.tasks.filter((task) => task._id !== eventId),
+          calendar: {
+            ...state.calendar,
+            events: state.calendar.events.filter(
+              (event) => event._id !== eventId
+            ),
+          },
         }));
 
-        return { success: true, res: "Tarea eliminada correctamente" };
+        return { success: true, res: "Evento eliminado correctamente" };
       } catch (error) {
-        console.error("Error al eliminar la tarea:", error);
-        return handleApiError(error, "Error al eliminar la tarea");
+        console.error("Error al eliminar el evento:", error);
+        return handleApiError(error, "Error al eliminar el evento");
       }
     },
 
     updateEvent: async (eventId, updatedEvent) => {
       try {
-        const res = await updateTask({
+        const res = await updateEvent({
           _id: eventId,
-          task: {
+          event: {
             title: updatedEvent.title,
             description: updatedEvent.description,
-            status: updatedEvent.status,
             startDate: updatedEvent.startDate,
             endDate: updatedEvent.endDate,
-            dueDate: updatedEvent.dueDate,
-            priority: updatedEvent.priority,
-            color: updatedEvent.color,
             category: updatedEvent.category || "default",
+            color: updatedEvent.color || "#000000",
           },
         });
 
@@ -153,12 +144,12 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
           return handleApiError(res.res, "Error al actualizar la tarea");
 
         set((state) => ({
-          events: state.events.map((event) =>
-            event._id === eventId ? res.res : event
-          ),
-          tasks: state.tasks.map((task) =>
-            task._id === eventId ? res.res : task
-          ),
+          calendar: {
+            ...state.calendar,
+            events: state.calendar.events.map((event) =>
+              event._id === eventId ? res.res : event
+            ),
+          },
         }));
 
         return { success: true, res: res.res };
@@ -211,6 +202,12 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
           return handleApiError(res.res, "Error al actualizar la tarea");
 
         set((state) => ({
+          calendar: {
+            ...state.calendar,
+            tasks: state.calendar.tasks.map((task) =>
+              task._id === taskId ? res.res : task
+            ),
+          },
           tasks: state.tasks.map((task) =>
             task._id === taskId ? res.res : task
           ),
@@ -283,12 +280,11 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
   },
 }));
 
-// Selectors
-export const useEvents = () => useDashboardStore((state) => state.events);
+export const useCalendar = () => useDashboardStore((state) => state.calendar);
 export const useTasks = () => useDashboardStore((state) => state.tasks);
 export const useHabits = () => useDashboardStore((state) => state.habits);
-export const useLoadingEvents = () =>
-  useDashboardStore((state) => state.loading.events);
+export const useLoadingCalendar = () =>
+  useDashboardStore((state) => state.loading.calendar);
 export const useLoadingTask = () =>
   useDashboardStore((state) => state.loading.tasks);
 export const useLoadingHabits = () =>
