@@ -2,19 +2,15 @@
 import { useTasks } from "@/stores/dashboardStore";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import AddTaskUtils from "@/lib/Pomodoro/AddTaskUtils";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useStatus } from "@/stores/websocketStore";
 
-export default function AddTask({
-  status,
-  pomodoroId,
-}: {
-  status: PomodoroStatusType | null;
-  pomodoroId: string | undefined;
-}) {
+export default function AddTask() {
+  const status = useStatus();
+
   const tasks = useTasks();
   const [selectedTask, setSelectedTask] = useState<TaskType | null>(
     status?.task || null
@@ -25,7 +21,7 @@ export default function AddTask({
   const { handleAddTaskToPomodoro, handleRemoveTaskFromPomodoro } =
     AddTaskUtils({
       status,
-      pomodoroId,
+      pomodoroId: status?._id,
       setSelectedTask,
     });
 

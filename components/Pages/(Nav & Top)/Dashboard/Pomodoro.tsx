@@ -19,7 +19,6 @@ export default function Pomodoro() {
   const isChronometer = useIsChronometer();
   const startedElement = useStartedElement();
 
-  const status = useStatus();
   const t = useTranslations("Dashboard.pomodoro");
 
   const handleChangeType = (
@@ -58,7 +57,7 @@ export default function Pomodoro() {
       ]}
     >
       <PomodoroContainer size="medium" />
-      {!isChronometer && <AddTask status={status} pomodoroId={status?._id} />}
+      {!isChronometer && <AddTask />}
       <Commands fullScreen={false} />
     </TemplateDashboard>
   );

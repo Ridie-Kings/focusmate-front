@@ -10,7 +10,7 @@ import MenuTitle from "./PomodoroElement/MenuTitle";
 export default function PomodoroElement({
   size,
 }: {
-  size: "medium" | "large";
+  size: "small" | "medium" | "large";
 }) {
   const isChronometer = useIsChronometer();
   const time = useTime();
@@ -29,7 +29,7 @@ export default function PomodoroElement({
           (timeUtils.timeToSeconds(time.currentTime) * 100) /
           timeUtils.timeToSeconds(time.initialTime)
         }
-        rounded={size === "large"}
+        size={size}
       >
         <MenuTitle size={size} menu={menu} />
         <Time

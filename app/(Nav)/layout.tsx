@@ -13,6 +13,7 @@ import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import UserProfileInitializer from "@/config/UserProfileInitializer";
 import WebSocketInitializer from "@/config/WebSocketInitializer";
+import { PersistentPomodoro } from "@/components/Elements/PersistentPomodoro/PersistentPomodoro";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -60,6 +61,7 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <NavBar />
           <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
+            <PersistentPomodoro />
             {children}
             <PopUp />
             <PWAInstallPrompt />

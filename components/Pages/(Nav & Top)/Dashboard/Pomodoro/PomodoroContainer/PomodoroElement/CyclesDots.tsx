@@ -1,7 +1,11 @@
 import { useCycles, useTotalCycles } from "@/stores/timerStore";
 import { useTranslations } from "next-intl";
 
-export default function CyclesDots({ size }: { size: "medium" | "large" }) {
+export default function CyclesDots({
+  size,
+}: {
+  size: "small" | "medium" | "large";
+}) {
   const totalCycles = useTotalCycles();
   const cycles = useCycles();
   const t = useTranslations("Dashboard.pomodoro");
