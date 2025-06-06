@@ -14,8 +14,6 @@ export const PersistentPomodoro = () => {
 
   if (pathname === "/dashboard" || pathname === "/pomodoro" || !status) return;
 
-  console.log(isOpen);
-
   return (
     <div
       className={`fixed top-4 right-4 z-50 bg-secondary-200 border border-secondary-400 rounded-lg shadow-lg p-4 transition-all duration-300 ${

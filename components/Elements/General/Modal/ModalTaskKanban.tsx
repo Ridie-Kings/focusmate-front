@@ -17,8 +17,7 @@ export default function ModalTaskKanban({
 }) {
   const { addTask, updateTask } = useDashboardStore((state) => state.actions);
   const isLoading = useDashboardStore((state) => state.loading.tasks);
-  console.log("dsadasda");
-  
+
   const [task, setTask] = useState<tempTaskType>({
     _id: undefined,
     title: "",
