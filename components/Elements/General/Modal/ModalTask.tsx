@@ -50,9 +50,11 @@ export default function ModalTask({
     setIsOpen({ text: "" });
   };
 
-  const handleUpdateTask = () => {
-    updateTask(task._id ?? "", task);
-    setIsOpen({ text: "" });
+  const handleUpdateTask = async () => {
+    const res = await updateTask(task._id ?? "", task);
+
+    if (res.success) setIsOpen({ text: "" });
+    else setError(res.res as string);
   };
 
   return (

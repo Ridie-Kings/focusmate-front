@@ -193,7 +193,20 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
 
     updateTask: async (taskId, updatedTask) => {
       try {
-        const res = await updateTask({ _id: taskId, task: updatedTask });
+        const res = await updateTask({
+          _id: taskId,
+          task: {
+            title: updatedTask.title,
+            description: updatedTask.description,
+            status: updatedTask.status,
+            startDate: updatedTask.startDate,
+            endDate: updatedTask.endDate,
+            dueDate: updatedTask.dueDate,
+            priority: updatedTask.priority,
+            color: updatedTask.color,
+            category: updatedTask.category || "default",
+          },
+        });
         if (!res.success)
           return handleApiError(res.res, "Error al actualizar la tarea");
 
