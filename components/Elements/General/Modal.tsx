@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
@@ -8,7 +8,7 @@ import ModalContact from "./Modal/ModalContact";
 
 import { X } from "lucide-react";
 import ModalPomodoroSettings from "./Modal/ModalPomodoroSettings";
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import ModalTaskKanban from "./Modal/ModalTaskKanban";
@@ -40,17 +40,7 @@ export default function Modal() {
           />
         );
       case "taskKanban":
-        return (
-          <ModalTaskKanban
-            setIsOpen={setIsOpen}
-            tasks={
-              isOpen.other as {
-                column: StatusType;
-                setTasks: Dispatch<SetStateAction<TaskType[]>>;
-              }
-            }
-          />
-        );
+        return <ModalTaskKanban setIsOpen={setIsOpen} />;
       case "habit":
         return (
           <ModalHabit

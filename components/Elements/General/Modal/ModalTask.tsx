@@ -19,7 +19,8 @@ export default function ModalTask({
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
   prevTask: TaskType;
 }) {
-  const { setTasks } = useDashboardStore((state) => state.actions);
+  const { addTask, updateTask } = useDashboardStore((state) => state.actions);
+  const isLoading = useDashboardStore((state) => state.loading.tasks);
   const t = useTranslations("Modal.task");
   const tCommon = useTranslations("Common");
 
@@ -33,15 +34,8 @@ export default function ModalTask({
   });
   const isEditMode = Boolean(task._id);
 
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { handleSendTask, handleUpdateTask, trad } = ModalTaskUtils({
-    setError,
-    setTasks,
-    task,
-    setIsLoading,
-    setIsOpen,
-  });
+  const { trad } = ModalTaskUtils({ task });
 
   useEffect(() => {
     if (prevTask && prevTask instanceof Object && "title" in prevTask) {
@@ -50,6 +44,16 @@ export default function ModalTask({
       }));
     }
   }, [prevTask]);
+
+  const handleSendTask = () => {
+    addTask(task);
+    setIsOpen({ text: "" });
+  };
+
+  const handleUpdateTask = () => {
+    updateTask(task._id ?? "", task);
+    setIsOpen({ text: "" });
+  };
 
   return (
     <>

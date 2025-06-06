@@ -33,7 +33,7 @@ interface DashboardStore {
     ) => Promise<ApiResponse<TaskType>>;
 
     setTasks: Dispatch<SetStateAction<TaskType[]>>;
-    addTask: (task: TaskType) => Promise<ApiResponse<TaskType>>;
+    addTask: (task: tempTaskType) => Promise<ApiResponse<TaskType>>;
     removeTask: (taskId: string) => void;
     updateTask: (
       taskId: string,
