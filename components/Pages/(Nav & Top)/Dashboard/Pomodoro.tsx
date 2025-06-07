@@ -6,7 +6,6 @@ import {
   useStartedElement,
   useTimerStore,
 } from "@/stores/timerStore";
-import { useStatus } from "@/stores/websocketStore";
 import PomodoroContainer from "./Pomodoro/PomodoroContainer";
 import AddTask from "./Pomodoro/AddTask";
 import Commands from "@/components/Elements/Pomodoro/Commands";

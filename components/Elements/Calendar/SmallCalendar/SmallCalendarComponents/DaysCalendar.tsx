@@ -1,5 +1,3 @@
-import { EventType } from "@/interfaces/Calendar/EventType";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { isSameDay } from "date-fns";
 import { Dispatch, SetStateAction } from "react";
 import { TimelineItem } from "../../Timeline/TimelineCard";

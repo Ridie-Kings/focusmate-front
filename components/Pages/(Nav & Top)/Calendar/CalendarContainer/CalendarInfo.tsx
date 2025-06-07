@@ -4,70 +4,38 @@ import DayCalender from "./CalendarInfo/DayCalendar";
 import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
 import { Dispatch, SetStateAction, useRef } from "react";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 import LoadingState from "@/components/Elements/General/LoadingState";
+import { useLoadingCalendar } from "@/stores/dashboardStore";
 
 export default function CalendarInfo({
   navType,
   setNavType,
-  date,
-  setDate,
-  events,
-  loadingEvents,
 }: {
   navType: NavTypeType;
   setNavType: Dispatch<SetStateAction<NavTypeType>>;
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
-  events: TaskType[];
-  loadingEvents: boolean;
 }) {
+  const loadingCalendar = useLoadingCalendar();
+
   const scrollCalendar = useRef<HTMLDivElement>(null);
 
   const renderCalenderType = () => {
-    if (loadingEvents) return <LoadingState />;
+    if (loadingCalendar) return <LoadingState />;
     switch (navType) {
       case "Día":
-        return <DayCalender events={events} date={date} />;
+        return <DayCalender />;
       case "Semana":
-        return (
-          <WeekCalendar
-            events={events}
-            date={date}
-            setDate={setDate}
-            scrollCalendar={scrollCalendar}
-          />
-        );
+        return <WeekCalendar scrollCalendar={scrollCalendar} />;
       case "Mes":
-        return (
-          <MonthCalendar
-            events={events}
-            date={date}
-            setNavType={setNavType}
-            setDate={setDate}
-          />
-        );
+        return <MonthCalendar setNavType={setNavType} />;
       default:
-        return (
-          <MonthCalendar
-            events={events}
-            date={date}
-            setNavType={setNavType}
-            setDate={setDate}
-          />
-        );
+        return <MonthCalendar setNavType={setNavType} />;
     }
   };
 
   return (
     <div className="flex flex-col flex-1 gap-10 sm:gap-0">
-      <NavInfo
-        navType={navType}
-        setNavType={setNavType}
-        setDate={setDate}
-        date={date}
-      />
+      <NavInfo navType={navType} setNavType={setNavType} />
       {renderCalenderType()}
     </div>
   );

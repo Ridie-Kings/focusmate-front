@@ -1,11 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 import InputModal from "@/components/Reusable/InputModal";
-import { Award, Calendar, Text, Timer } from "lucide-react";
+import { Calendar, Text, Timer } from "lucide-react";
 import { format } from "date-fns";
 import { enUS, es } from "date-fns/locale";
 import ModalDatePicker from "../ModalDatePicker/ModalDatePicker";
 import ModalTimePicker from "../ModalTimePicker/ModalTimePicker";
-import ModalPriorityPicker from "../ModalPriorityPicker/ModalPriorityPicker";
 import { tempEventType } from "@/interfaces/Modal/ModalType";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -23,20 +22,7 @@ export default function BodyInputs({
   date: Date;
 }) {
   const tCommon = useTranslations("Common");
-  const tPriority = useTranslations("Modal.event.priority");
   const locale = useLocale();
-  const trad = () => {
-    switch (event.priority) {
-      case "high":
-        return tPriority("high");
-      case "medium":
-        return tPriority("medium");
-      case "low":
-        return tPriority("low");
-      default:
-        return "";
-    }
-  };
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -65,7 +51,7 @@ export default function BodyInputs({
       /> */}
       <InputModal
         type="select"
-        placeholder={format(event.dueDate ?? new Date(), "dd MMMM yyyy", {
+        placeholder={format(event.startDate ?? new Date(), "dd MMMM yyyy", {
           locale: locale === "es" ? es : enUS,
         })}
         option={
@@ -75,7 +61,6 @@ export default function BodyInputs({
               setEvent((prev) => ({
                 ...prev,
                 startDate: new Date(e.target.value),
-                dueDate: new Date(e.target.value),
                 endDate: new Date(e.target.value),
               }));
             }}
@@ -141,23 +126,6 @@ export default function BodyInputs({
           propagand={true}
         />
       </div>
-      <InputModal
-        type="select"
-        defaultValue={event.priority}
-        placeholder={event?.priority ? trad() : tCommon("status")}
-        option={
-          <ModalPriorityPicker
-            top="20px"
-            onChange={(e) =>
-              setEvent((prev) => ({
-                ...prev,
-                priority: e.target.value as "high" | "medium" | "low",
-              }))
-            }
-          />
-        }
-        icon={<Award />}
-      />
     </div>
   );
 }

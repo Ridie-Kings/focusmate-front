@@ -2,27 +2,20 @@
 
 import CalendarInfo from "@/components/Pages/(Nav & Top)/Calendar/CalendarContainer/CalendarInfo";
 import { useState, useEffect } from "react";
-import { useCalendarStore, useDate } from "@/stores/calendarStore";
+import { useDate } from "@/stores/calendarStore";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 
 import { isSameMonth } from "date-fns";
 
-import CalendarUtils from "@/lib/CalendarUtils";
+import getCalendarUtils from "@/lib/GetCalendarUtils";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 import ListEvents from "./Calendar/CalendarContainer/ListEvents";
-import {
-  useDashboardStore,
-  useEvents,
-  useLoadingEvents,
-} from "@/stores/dashboardStore";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function CalendarPage() {
-  const { setLoading, setEvents } = useDashboardStore((state) => state.actions);
-  const loadingEvents = useLoadingEvents();
-  const events = useEvents();
+  const { setLoading } = useDashboardStore((state) => state.actions);
 
   const date = useDate();
-  const { setDate } = useCalendarStore((state) => state.actions);
 
   const [navType, setNavType] = useState<NavTypeType>("Día");
   const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
@@ -42,11 +35,9 @@ export default function CalendarPage() {
       return;
     }
 
-    const { handleGetCalendarOfMonthByDate } = CalendarUtils({
+    const { handleGetCalendarOfMonthByDate } = getCalendarUtils({
       firstDate: date ?? new Date(),
       secondDate: date ?? new Date(),
-      date: date,
-      setEvents,
       setCurrentMonth,
       setLoading,
       currentMonth,
@@ -58,12 +49,10 @@ export default function CalendarPage() {
   return (
     <section className="flex sm:flex-row flex-col flex-1 h-full sm:gap-6 p-6 overflow-hidden transition-all duration-300">
       <div className="w-full sm:w-1/3 xl:w-1/4 h-full flex flex-col gap-2">
-        <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
-        <ListEvents items={events} />
+        <SmallCalendar date={date ?? new Date()} inView btn />
+        <ListEvents />
       </div>
       <CalendarInfo
-        events={events}
-        loadingEvents={loadingEvents}
         navType={navType}
         setNavType={(value) => {
           if (typeof value === "function") {
@@ -76,8 +65,6 @@ export default function CalendarPage() {
             updateNavType(value);
           }
         }}
-        date={date ?? new Date()}
-        setDate={setDate}
       />
     </section>
   );

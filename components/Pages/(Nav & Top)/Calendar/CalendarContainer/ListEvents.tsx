@@ -1,11 +1,13 @@
 import { EllipsisVertical } from "lucide-react";
 import Dot from "@/components/Elements/General/Dot";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
+import CalendarUtils from "@/lib/CalendarUtils";
 
-export default function ListEvents({ items }: { items: TaskType[] }) {
-  if (items.length === 0) {
+export default function ListEvents() {
+  const { formatCalendar } = CalendarUtils();
+  if (formatCalendar.length === 0) {
     return (
       <div className="flex items-center justify-center h-full text-gray-400 text-sm">
         No hay eventos programados
@@ -13,7 +15,7 @@ export default function ListEvents({ items }: { items: TaskType[] }) {
     );
   }
 
-  const groupedEvents = items.reduce((acc, event) => {
+  const groupedEvents = formatCalendar.reduce((acc, event) => {
     const date = new Date(event.startDate);
     const dayKey = format(date, "yyyy-MM-dd");
     if (!acc[dayKey]) {
@@ -21,7 +23,7 @@ export default function ListEvents({ items }: { items: TaskType[] }) {
     }
     acc[dayKey].push(event);
     return acc;
-  }, {} as Record<string, TaskType[]>);
+  }, {} as Record<string, TimelineItem[]>);
 
   return (
     <ul className="flex flex-col gap-2 h-full flex-1 w-full overflow-y-auto px-2">
@@ -32,16 +34,16 @@ export default function ListEvents({ items }: { items: TaskType[] }) {
           </h3>
           {dayEvents.map((item) => (
             <div
-              key={item._id}
+              key={item.data._id}
               className="flex w-full justify-between items-center px-3 group"
             >
               <div className="flex gap-4 items-center">
-                <Dot size={15} backgroundColor={item.color} />
+                <Dot size={15} backgroundColor={item.data.color} />
                 <div className="flex items-center gap-3">
-                  <label className="text-sm">{item.title}</label>
-                  {item.description && (
+                  <label className="text-sm">{item.data.title}</label>
+                  {item.data.description && (
                     <span className="text-xs text-gray-400 line-clamp-1">
-                      {item.description}
+                      {item.data.description}
                     </span>
                   )}
                 </div>

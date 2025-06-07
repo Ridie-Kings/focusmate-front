@@ -1,7 +1,7 @@
 import Dot from "@/components/Elements/General/Dot";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
-
-import { TaskType } from "@/interfaces/Task/TaskType";
+import CalendarUtils from "@/lib/CalendarUtils";
+import { useCalendarStore } from "@/stores/calendarStore";
 
 import { format, isSameDay } from "date-fns";
 import { es } from "date-fns/locale";
@@ -11,22 +11,27 @@ import { Dispatch, memo, SetStateAction, useMemo } from "react";
 type CalendarDayProps = {
   day: Date;
   currentMonth: number;
-  events: TaskType[];
   setNavType: Dispatch<SetStateAction<NavTypeType>>;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
 };
 
 const CalendarDay = memo(
-  ({ day, currentMonth, events, setDate, setNavType }: CalendarDayProps) => {
+  ({ day, currentMonth, setNavType }: CalendarDayProps) => {
+    const { formatCalendar } = CalendarUtils();
+    const { setDate } = useCalendarStore((state) => state.actions);
+
     const isToday = isSameDay(day, new Date());
     const isCurrentMonth = day.getMonth() === currentMonth;
-    const dayEvents = useMemo(
-      () => events.filter((event) => isSameDay(new Date(event.startDate), day)),
-      [events, day]
+    const dayCalendarItems = useMemo(
+      () =>
+        formatCalendar.filter((calendarItem) =>
+          isSameDay(new Date(calendarItem.data.startDate), day)
+        ),
+      [formatCalendar, day]
     );
 
-    const visibleEvents = dayEvents.slice(0, 2);
-    const remainingCount = dayEvents.length > 2 ? dayEvents.length - 2 : 0;
+    const visibleCalendarItems = dayCalendarItems.slice(0, 2);
+    const remainingCount =
+      dayCalendarItems.length > 2 ? dayCalendarItems.length - 2 : 0;
 
     const handleSelectDay = () => {
       setDate(day);
@@ -47,26 +52,26 @@ const CalendarDay = memo(
       >
         {day.getDate()}
         <div className="text-xs">
-          {visibleEvents.map((event, i) => (
+          {visibleCalendarItems.map((calendarItem, i) => (
             <div
               key={`${i}-${day.toISOString()}`}
               className={`p-1 rounded flex flex-col ${
-                isSameDay(new Date(event.dueDate), new Date())
+                isSameDay(new Date(calendarItem.data.startDate), new Date())
                   ? "text-white"
                   : "text-primary-500"
               }`}
-              title={event.title}
+              title={calendarItem.data.title}
             >
               <div className="flex items-center gap-2 truncate">
                 <Dot
                   size={10}
                   backgroundColor={
-                    isSameDay(new Date(event.dueDate), new Date())
+                    isSameDay(new Date(calendarItem.data.startDate), new Date())
                       ? "white"
                       : "#014e44"
                   }
                 />
-                {event.title}
+                {calendarItem.data.title}
               </div>
             </div>
           ))}

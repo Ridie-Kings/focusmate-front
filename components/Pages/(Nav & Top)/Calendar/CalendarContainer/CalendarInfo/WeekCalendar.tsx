@@ -13,15 +13,17 @@ import {
   differenceInHours,
 } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
-import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 import Divider from "@/components/Elements/General/Divider";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import Menu from "@/components/Reusable/Menu";
 import AgendaUtils from "@/lib/AgendaUtils";
 import { useModalStore } from "@/stores/modalStore";
 import { useDashboardStore } from "@/stores/dashboardStore";
+import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
+import CalendarUtils from "@/lib/CalendarUtils";
+import { useCalendarStore, useDate } from "@/stores/calendarStore";
 
 const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];
 
@@ -33,35 +35,38 @@ const getNowPosition = (date: Date) => {
 };
 
 const EventItem = ({
-  event,
+  calendarItem,
   eventStartPosition,
   eventEndPosition,
 }: {
-  event: TaskType;
+  calendarItem: TimelineItem;
   eventStartPosition: number;
   eventEndPosition: number;
 }) => {
+  const calendarData = calendarItem.data;
   const { setIsOpen } = useModalStore((state) => state.actions);
   const { isLightColor } = AgendaUtils();
 
   const { removeEvent } = useDashboardStore((state) => state.actions);
-  const textColor = isLightColor(event.color) ? "text-black" : "text-white";
+  const textColor = isLightColor(calendarData.color)
+    ? "text-black"
+    : "text-white";
 
   return (
     <div
       className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"
       style={{
-        backgroundColor: event.color,
+        backgroundColor: calendarData.color,
         top: `${eventStartPosition}px`,
         height: `${eventEndPosition - eventStartPosition}px`,
       }}
     >
       <div className="w-full flex items-center place-content-between sticky top-15">
-        <p className="text-sm">{event.title}</p>
+        <p className="text-sm">{calendarData.title}</p>
         <Menu
           className={textColor}
           position={
-            differenceInHours(event.endDate, event.startDate) < 1
+            differenceInHours(calendarData.endDate, calendarData.startDate) < 1
               ? "top-right"
               : "bottom-right"
           }
@@ -75,17 +80,17 @@ const EventItem = ({
               label: "Eliminar",
               color: "red",
               icon: <Trash2 />,
-              onClick: () => removeEvent(event._id),
+              onClick: () => removeEvent(calendarData._id),
             },
           ]}
         />
       </div>
       <div
-        style={{ backgroundColor: event.color }}
+        style={{ backgroundColor: calendarData.color }}
         className={`${textColor} flex place-content-between w-full text-xs p-1 z-8`}
       >
-        <span>{format(event.startDate, "HH:mm")} </span>
-        <span>{format(event.endDate, "HH:mm")} </span>
+        <span>{format(calendarData.startDate, "HH:mm")} </span>
+        <span>{format(calendarData.endDate, "HH:mm")} </span>
       </div>
     </div>
   );
@@ -93,15 +98,14 @@ const EventItem = ({
 
 const DayColumn = ({
   day,
-  events,
   selectedDate,
-  setDate,
 }: {
   day: Date;
-  events: TaskType[];
   selectedDate: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) => {
+  const { setDate } = useCalendarStore((state) => state.actions);
+  const { formatCalendar } = CalendarUtils();
+
   return (
     <div className="flex flex-col gap-5">
       <div
@@ -127,16 +131,17 @@ const DayColumn = ({
       <div
         className={`text-center p-1 h-full rounded-lg transition-all duration-200 relative`}
       >
-        {events
-          .filter((event) => isSameDay(event.dueDate, day))
-          .map((event, i) => {
-            const eventStartPosition = getNowPosition(event.startDate);
-            const eventEndPosition = getNowPosition(event.endDate);
+        {formatCalendar
+          .filter((calendarItem) => isSameDay(calendarItem.data.startDate, day))
+          .map((calendarItem, i) => {
+            const calendarData = calendarItem.data;
+            const eventStartPosition = getNowPosition(calendarData.startDate);
+            const eventEndPosition = getNowPosition(calendarData.endDate);
 
             return (
               <EventItem
                 key={i}
-                event={event}
+                calendarItem={calendarItem}
                 eventStartPosition={eventStartPosition}
                 eventEndPosition={eventEndPosition}
               />
@@ -148,16 +153,12 @@ const DayColumn = ({
 };
 
 const WeekCalendarItem = ({
-  date,
-  setDate,
-  events,
   scrollCalendar,
 }: {
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
-  events: TaskType[];
   scrollCalendar: RefObject<HTMLDivElement | null>;
 }) => {
+  const date = useDate() ?? new Date();
+
   const startDate = startOfDay(startOfWeek(date, { weekStartsOn: 1 }));
   const endDate = endOfDay(endOfWeek(date, { weekStartsOn: 1 }));
 
@@ -192,35 +193,16 @@ const WeekCalendarItem = ({
       </div>
       <TimeBar pos={getNowPosition(new Date()) + 71} />
       {days.map((day, index) => (
-        <DayColumn
-          key={index}
-          day={day}
-          events={events}
-          selectedDate={date}
-          setDate={setDate}
-        />
+        <DayColumn key={index} day={day} selectedDate={date} />
       ))}
     </div>
   );
 };
 
 export default function WeekCalendar({
-  events,
-  date,
-  setDate,
   scrollCalendar,
 }: {
-  events: TaskType[];
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
 }) {
-  return (
-    <WeekCalendarItem
-      scrollCalendar={scrollCalendar}
-      date={date}
-      setDate={setDate}
-      events={events}
-    />
-  );
+  return <WeekCalendarItem scrollCalendar={scrollCalendar} />;
 }

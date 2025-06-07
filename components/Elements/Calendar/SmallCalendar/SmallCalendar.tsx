@@ -23,6 +23,7 @@ import { useModalStore } from "@/stores/modalStore";
 import { useTranslations } from "next-intl";
 import { useCalendar } from "@/stores/dashboardStore";
 import { TimelineItem } from "../Timeline/TimelineCard";
+import { useCalendarStore } from "@/stores/calendarStore";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -73,7 +74,6 @@ export const CalendarItem: React.FC<CalendarItemProps> = ({
 type CalendarProps = {
   className?: string;
   inView?: boolean;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
   date: Date;
   btn?: boolean;
 };
@@ -81,10 +81,10 @@ type CalendarProps = {
 const SmallCalendar: React.FC<CalendarProps> = ({
   className = "",
   inView,
-  setDate,
   date,
   btn,
 }) => {
+  const { setDate } = useCalendarStore((state) => state.actions);
   const calendar = useCalendar();
   const { setIsOpen } = useModalStore((state) => state.actions);
   const t = useTranslations("Common.buttons");

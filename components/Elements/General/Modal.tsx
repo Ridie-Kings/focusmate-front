@@ -14,6 +14,7 @@ import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import ModalTaskKanban from "./Modal/ModalTaskKanban";
 import { useIsOpen, useModalStore } from "@/stores/modalStore";
 import { useProfile } from "@/stores/profileStore";
+import { EventType } from "@/interfaces/Calendar/EventType";
 
 export default function Modal() {
   const isOpen = useIsOpen();
@@ -50,7 +51,10 @@ export default function Modal() {
         );
       case "event":
         return (
-          <ModalEvent setIsOpen={setIsOpen} events={isOpen.other as TaskType} />
+          <ModalEvent
+            setIsOpen={setIsOpen}
+            events={isOpen.other as EventType}
+          />
         );
       case "contact":
         return <ModalContact setIsOpen={setIsOpen} profile={profile} />;
