@@ -5,6 +5,7 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import { Pen, Trash2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useDashboardStore } from "@/stores/dashboardStore";
+import { useToastStore } from "@/stores/toastStore";
 
 export default function TaskCard({
   task,
@@ -19,6 +20,7 @@ export default function TaskCard({
   const { removeTask, updateTask } = useDashboardStore(
     (state) => state.actions
   );
+  const { addToast } = useToastStore();
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,22 +54,48 @@ export default function TaskCard({
     }
   }, [isChange]);
 
-  const handleStatus = () => {
+  const handleStatus = async () => {
     setIsChange(task._id);
-    setTimeout(() => {
-      updateTask(
+    setTimeout(async () => {
+      const res = await updateTask(
         task._id,
         task.status === "completed"
           ? { status: "pending" }
           : { status: "completed" }
       );
+      if (res.success) {
+        addToast({
+          message: "Tarea actualizada correctamente",
+          description: "La tarea ha sido actualizada correctamente",
+          type: "success",
+        });
+      } else {
+        addToast({
+          message: "Error al actualizar la tarea",
+          type: "error",
+          description: res.res as string,
+        });
+      }
     }, 1000);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     setIsChange(task._id);
-    setTimeout(() => {
-      removeTask(task._id);
+    setTimeout(async () => {
+      const res = await removeTask(task._id);
+      if (res.success) {
+        addToast({
+          message: "Tarea eliminada correctamente",
+          description: "La tarea ha sido eliminada correctamente",
+          type: "success",
+        });
+      } else {
+        addToast({
+          message: "Error al eliminar la tarea",
+          type: "error",
+          description: res.res as string,
+        });
+      }
     }, 1000);
   };
 

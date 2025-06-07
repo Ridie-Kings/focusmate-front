@@ -4,6 +4,7 @@ import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 import { getCalendarOfMonthByDate } from "@/services/Calendar/getCalendarOfMonthByDate";
 import { format, isSameMonth } from "date-fns";
+import { DashboardStore } from "@/stores/dashboardStore";
 
 export default function CalendarUtils({
   firstDate,
@@ -19,7 +20,7 @@ export default function CalendarUtils({
   date: Date | undefined;
   setCalendar: (calendar: CalendarType) => void;
   setCurrentMonth: (month: Date) => void;
-  setLoading: (key: "calendar" | "tasks" | "habits", value: boolean) => void;
+  setLoading: (key: keyof DashboardStore["loading"], value: boolean) => void;
   currentMonth: Date | undefined;
 }) {
   const handleGetCalendarByRange = async () => {

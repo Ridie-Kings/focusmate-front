@@ -48,7 +48,7 @@ export default function Timeline({ date, loadingEvents }: TimelineProps) {
       .map((task) => ({
         type: "task",
         data: task,
-        startDate: new Date(task.dueDate),
+        startDate: new Date(task.startDate),
       }));
 
     return [...events, ...tasks].sort(

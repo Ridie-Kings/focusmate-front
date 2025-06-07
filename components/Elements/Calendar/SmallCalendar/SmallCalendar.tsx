@@ -20,10 +20,8 @@ import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCale
 import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/CalendarNav";
 import Button from "@/components/Reusable/Button";
 import { useModalStore } from "@/stores/modalStore";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { useTranslations } from "next-intl";
 import { useCalendar } from "@/stores/dashboardStore";
-import { EventType } from "@/interfaces/Calendar/EventType";
 import { TimelineItem } from "../Timeline/TimelineCard";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {

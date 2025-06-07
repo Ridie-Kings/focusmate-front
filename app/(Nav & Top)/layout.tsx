@@ -15,6 +15,7 @@ import { NextIntlClientProvider } from "next-intl";
 import UserProfileInitializer from "@/config/UserProfileInitializer";
 import WebSocketInitializer from "@/config/WebSocketInitializer";
 import { PersistentPomodoro } from "@/components/Elements/PersistentPomodoro/PersistentPomodoro";
+import Toast from "@/components/Reusable/Toast";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -69,6 +70,7 @@ export default async function RootLayout({
             {children}
             <PopUp />
             <PWAInstallPrompt />
+            <Toast />
           </main>
         </NextIntlClientProvider>
       </body>

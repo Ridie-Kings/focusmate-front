@@ -7,15 +7,15 @@ import Timeline from "./Agenda/Timeline";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 import { useTranslations } from "next-intl";
 
-import { useDashboardStore, useLoadingCalendar } from "@/stores/dashboardStore";
 import { isSameMonth } from "date-fns";
 import CalendarUtils from "@/lib/CalendarUtils";
+import { useDashboardStore, useLoadingCalendar } from "@/stores/dashboardStore";
 
 export default function Agenda() {
   const { setCalendar, setLoading } = useDashboardStore(
     (state) => state.actions
   );
-  const loadingEvents = useLoadingCalendar();
+  const loadingCalendar = useLoadingCalendar();
 
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
@@ -48,7 +48,7 @@ export default function Agenda() {
     >
       <div className="flex flex-col xl:flex-row w-full h-full gap-4">
         <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
-        <Timeline date={date} loadingEvents={loadingEvents} />
+        <Timeline date={date} loadingEvents={loadingCalendar} />
       </div>
     </TemplateDashboard>
   );

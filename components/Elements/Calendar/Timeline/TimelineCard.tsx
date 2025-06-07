@@ -5,6 +5,7 @@ import { Calendar, Check, ClipboardCheck, Pen, Trash2 } from "lucide-react";
 import { useDashboardStore } from "@/stores/dashboardStore";
 import { EventType } from "@/interfaces/Calendar/EventType";
 import { TaskType } from "@/interfaces/Task/TaskType";
+import { useToastStore } from "@/stores/toastStore";
 
 export type TimelineItem = {
   type: "event" | "task";
@@ -17,6 +18,7 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
   const { removeEvent, updateTask, removeTask } = useDashboardStore(
     (state) => state.actions
   );
+  const { addToast } = useToastStore();
 
   const { setIsOpen } = useModalStore((state) => state.actions);
 
@@ -31,11 +33,37 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
     }
   };
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
     if (isEvent) {
-      removeEvent(data._id);
+      const res = await removeEvent(data._id);
+      if (res.success) {
+        addToast({
+          message: "Evento eliminado correctamente",
+          description: "El evento ha sido eliminado correctamente",
+          type: "success",
+        });
+      } else {
+        addToast({
+          message: "Error al eliminar el evento",
+          type: "error",
+          description: res.res as string,
+        });
+      }
     } else {
-      removeTask(data._id);
+      const res = await removeTask(data._id);
+      if (res.success) {
+        addToast({
+          message: "Tarea eliminada correctamente",
+          description: "La tarea ha sido eliminada correctamente",
+          type: "success",
+        });
+      } else {
+        addToast({
+          message: "Error al eliminar la tarea",
+          type: "error",
+          description: res.res as string,
+        });
+      }
     }
   };
 

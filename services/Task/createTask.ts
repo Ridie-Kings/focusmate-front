@@ -12,10 +12,12 @@ export async function createTask({ task }: { task: tempTaskType }): Promise<{
   try {
     const newTask = {
       ...task,
-      startDate: task.startDate ? task.startDate.toISOString() : undefined,
-      endDate: task.endDate ? task.endDate.toISOString() : undefined,
-      dueDate: task.dueDate ? format(task.dueDate, "yyyy-MM-dd") : undefined,
+      ...(task.startDate && { startDate: task.startDate.toISOString() }),
+      ...(task.endDate && { endDate: task.endDate.toISOString() }),
+      dueDate: format(task.dueDate ?? new Date(), "yyyy-MM-dd"),
     };
+
+    console.log("newTask", newTask);
 
     const res = await apiClient.post("tasks", newTask);
 
