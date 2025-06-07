@@ -58,13 +58,10 @@ export default function ModalEventUtils({
 
     setIsLoading(true);
 
-    console.log(event);
-
     const res = await addEvent(event);
 
     if (!res.success) {
       setError(res.res as string);
-      console.log(res);
       setIsLoading(false);
       return;
     }

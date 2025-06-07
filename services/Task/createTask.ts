@@ -17,8 +17,6 @@ export async function createTask({ task }: { task: tempTaskType }): Promise<{
       dueDate: format(task.dueDate ?? new Date(), "yyyy-MM-dd"),
     };
 
-    console.log("newTask", newTask);
-
     const res = await apiClient.post("tasks", newTask);
 
     return { success: true, res };

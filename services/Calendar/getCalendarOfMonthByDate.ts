@@ -18,12 +18,6 @@ export async function getCalendarOfMonthByDate({
     const firstDate = startOfWeek(startOfMonth(date));
     const secondDate = endOfWeek(endOfMonth(date));
 
-    console.log(
-      `calendar/${firstDate.toISOString().split("T")[0]}/${
-        secondDate.toISOString().split("T")[0]
-      }`
-    );
-
     const res = await apiClient.get(
       `calendar/${firstDate.toISOString().split("T")[0]}/${
         secondDate.toISOString().split("T")[0]
