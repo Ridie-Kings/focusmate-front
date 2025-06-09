@@ -116,15 +116,17 @@ const SmallCalendar: React.FC<CalendarProps> = ({
     const events: TimelineItem[] = calendar.events.map((event) => ({
       type: "event",
       data: event,
+      startDate: new Date(event.startDate),
     }));
 
     const tasks: TimelineItem[] = calendar.tasks.map((task) => ({
       type: "task",
       data: task,
+      startDate: new Date(task.dueDate),
     }));
 
     return [...events, ...tasks].sort(
-      (a, b) => a.data.startDate.getTime() - b.data.startDate.getTime()
+      (a, b) => a.startDate.getTime() - b.startDate.getTime()
     );
   }, [date, calendar.events, calendar.tasks]);
 

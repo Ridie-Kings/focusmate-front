@@ -19,7 +19,7 @@ export default function TimeLeftBar({
             }`}
           >
             {item.type === "event" ? (
-              <p>{format(item.data.startDate, "HH:mm", { locale: es })}</p>
+              <p>{format(item.startDate, "HH:mm", { locale: es })}</p>
             ) : (
               <div className="size-2 bg-primary-500 rounded-full" />
             )}

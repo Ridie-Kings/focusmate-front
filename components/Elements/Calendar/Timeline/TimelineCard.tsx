@@ -10,6 +10,7 @@ import { useToastStore } from "@/stores/toastStore";
 export type TimelineItem = {
   type: "event" | "task";
   data: EventType | TaskType;
+  startDate: Date;
 };
 
 export default function TimelineCard({ items }: { items: TimelineItem }) {
