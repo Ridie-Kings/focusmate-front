@@ -67,7 +67,7 @@ const MenuItem = ({
         }
 
         subMenu.style.left = "auto";
-        subMenu.style.right = "0%";
+        subMenu.style.right = "5%";
 
         const leftSpace = itemRect.left - parentRect.left;
         const rightSpace = parentRect.right - itemRect.right;
@@ -101,6 +101,10 @@ const MenuItem = ({
         className={`flex items-center justify-between gap-2 p-2 text-left cursor-pointer bg-white rounded w-full transition-all duration-300 ${
           item.color === "red"
             ? "hover:bg-red-100 hover:text-red-700"
+            : item.color === "orange"
+            ? "hover:bg-orange-100 hover:text-orange-700"
+            : item.color === "green"
+            ? "hover:bg-green-100 hover:text-green-700"
             : "hover:bg-gray-100"
         }`}
         onClick={() => {

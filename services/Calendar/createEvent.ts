@@ -18,6 +18,7 @@ export async function createEvent({
       startDate: event.startDate ? event.startDate.toISOString() : undefined,
       endDate: event.endDate ? event.endDate.toISOString() : undefined,
     };
+
     const res = await apiClient.post("events-calendar", newEvent);
 
     return { success: true, res };

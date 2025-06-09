@@ -90,12 +90,12 @@ export async function refreshSession(
 
     return newAccessToken;
   } catch (error) {
-    // console.error("Error al refrescar la sesión:", error);
-    // // Eliminar cookies inválidas
-    // const cookieStore = await cookies();
-    // cookieStore.delete("access_token");
-    // cookieStore.delete("refresh_token");
-    // return undefined;
+    console.error("Error al refrescar la sesión:", error);
+    // Eliminar cookies inválidas
+    const cookieStore = await cookies();
+    cookieStore.delete("access_token");
+    cookieStore.delete("refresh_token");
+    return undefined;
   }
 }
 

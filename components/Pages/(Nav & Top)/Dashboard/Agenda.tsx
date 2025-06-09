@@ -8,9 +8,9 @@ import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCal
 import { useTranslations } from "next-intl";
 
 import { isSameMonth } from "date-fns";
-import CalendarUtils from "@/lib/GetCalendarUtils";
 import { useDashboardStore, useLoadingCalendar } from "@/stores/dashboardStore";
 import { useDate } from "@/stores/calendarStore";
+import GetCalendarUtils from "@/lib/GetCalendarUtils";
 
 export default function Agenda() {
   const { setCalendar, setLoading } = useDashboardStore(
@@ -27,10 +27,12 @@ export default function Agenda() {
       return;
     }
 
-    const { handleGetCalendarOfMonthByDate } = CalendarUtils({
+    const { handleGetCalendarOfMonthByDate } = GetCalendarUtils({
       firstDate: date ?? new Date(),
       secondDate: date ?? new Date(),
       setCurrentMonth,
+      date,
+      setCalendar,
       setLoading,
       currentMonth,
     });

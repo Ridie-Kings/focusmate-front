@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { create } from "zustand";
 
-type ApiResponse<T> = { success: boolean; res: T | string };
-
 interface CalendarStore {
   date: Date | undefined;
   actions: {

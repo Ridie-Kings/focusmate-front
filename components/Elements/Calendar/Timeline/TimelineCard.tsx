@@ -10,7 +10,6 @@ import { useToastStore } from "@/stores/toastStore";
 export type TimelineItem = {
   type: "event" | "task";
   data: EventType | TaskType;
-  startDate: Date;
 };
 
 export default function TimelineCard({ items }: { items: TimelineItem }) {
@@ -87,7 +86,9 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
             ? ""
             : data.color,
       }}
-      className={`w-full h-26 p-4 rounded-lg relative flex flex-col justify-between transition-all duration-300 ease-in-out ${textColor} ${
+      className={`w-full p-4 rounded-lg relative flex flex-col justify-between transition-all duration-300 ease-in-out ${textColor} ${
+        isEvent ? "h-26" : "h-14"
+      } ${
         !isEvent && (data as TaskType).status === "completed"
           ? "border-2 border-gray-500"
           : ""
@@ -96,35 +97,51 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
       <div className="flex items-center gap-2">
         {isEvent ? <Calendar size={20} /> : <ClipboardCheck size={20} />}
         <p className="font-medium">{data.title}</p>
+        {!isEvent && (
+          <div className="flex items-center justify-between w-full">
+            <p className="text-sm">
+              Limite:{" "}
+              {new Date((data as TaskType).dueDate).toLocaleTimeString(
+                "es-ES",
+                {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )}
+            </p>
+          </div>
+        )}
       </div>
-      <div className="flex items-center justify-between w-full">
-        <span className="flex flex-col items-center gap-1">
-          <p className="text-sm">
-            {new Date(data.startDate).toLocaleTimeString("es-ES", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </p>
-          <p className={`text-xs font-medium ${textColor}`}>Empieza</p>
-        </span>
+      {isEvent && (
+        <div className="flex items-center justify-between w-full">
+          <span className="flex flex-col items-center gap-1">
+            <p className="text-sm">
+              {new Date(data.startDate).toLocaleTimeString("es-ES", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+            <p className={`text-xs font-medium ${textColor}`}>Empieza</p>
+          </span>
 
-        <p
-          style={{ backgroundColor: darkerColor }}
-          className="px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white"
-        >
-          {formatDuration(data.startDate, data.endDate)}
-        </p>
-
-        <span className="flex flex-col items-center gap-1">
-          <p className="text-sm">
-            {new Date(data.endDate).toLocaleTimeString("es-ES", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+          <p
+            style={{ backgroundColor: darkerColor }}
+            className="px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white"
+          >
+            {formatDuration(data.startDate, data.endDate)}
           </p>
-          <p className={`text-xs font-medium ${textColor}`}>Termina</p>
-        </span>
-      </div>
+
+          <span className="flex flex-col items-center gap-1">
+            <p className="text-sm">
+              {new Date(data.endDate).toLocaleTimeString("es-ES", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+            <p className={`text-xs font-medium ${textColor}`}>Termina</p>
+          </span>
+        </div>
+      )}
 
       <Menu
         className="absolute right-3 top-4"

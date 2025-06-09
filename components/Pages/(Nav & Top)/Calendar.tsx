@@ -13,7 +13,9 @@ import ListEvents from "./Calendar/CalendarContainer/ListEvents";
 import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function CalendarPage() {
-  const { setLoading } = useDashboardStore((state) => state.actions);
+  const { setLoading, setCalendar } = useDashboardStore(
+    (state) => state.actions
+  );
 
   const date = useDate();
 
@@ -38,7 +40,9 @@ export default function CalendarPage() {
     const { handleGetCalendarOfMonthByDate } = getCalendarUtils({
       firstDate: date ?? new Date(),
       secondDate: date ?? new Date(),
+      date,
       setCurrentMonth,
+      setCalendar,
       setLoading,
       currentMonth,
     });

@@ -47,7 +47,8 @@ export default function DaysCalendar({
     return (
       calendar &&
       calendar.filter(
-        (event) => event.startDate && isSameDay(new Date(event.startDate), day)
+        (event) =>
+          event.data.startDate && isSameDay(new Date(event.data.startDate), day)
       )
     );
   };

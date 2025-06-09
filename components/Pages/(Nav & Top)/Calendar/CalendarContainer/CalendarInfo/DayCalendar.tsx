@@ -43,12 +43,12 @@ const DayCalendarItem = ({
 
       if (todayEvents.length > 0) {
         const earliestEvent = todayEvents.reduce((earliest, current) =>
-          current.startDate < earliest.startDate ? current : earliest
+          current.data.startDate < earliest.data.startDate ? current : earliest
         );
 
         const scrollPosition = Math.max(
           0,
-          getPosition(earliestEvent.startDate) - 100
+          getPosition(earliestEvent.data.startDate) - 100
         );
 
         scrollCalendar.current.scrollTo({

@@ -124,14 +124,17 @@ export default function TaskCard({
                   {
                     label: "Alta",
                     onClick: () => updateTask(task._id, { priority: "high" }),
+                    color: "red",
                   },
                   {
                     label: "Media",
                     onClick: () => updateTask(task._id, { priority: "medium" }),
+                    color: "orange",
                   },
                   {
                     label: "Baja",
                     onClick: () => updateTask(task._id, { priority: "low" }),
+                    color: "green",
                   },
                 ],
               },

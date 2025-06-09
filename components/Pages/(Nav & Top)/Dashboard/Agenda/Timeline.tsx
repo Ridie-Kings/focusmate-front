@@ -15,9 +15,7 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
   const t = useTranslations("Dashboard.agenda.timeline");
 
   useEffect(() => {
-    if (!loadingEvents && isInitialLoading) {
-      setIsInitialLoading(false);
-    }
+    if (!loadingEvents && isInitialLoading) setIsInitialLoading(false);
   }, [loadingEvents, isInitialLoading]);
 
   const { formatCalendar } = CalendarUtils();

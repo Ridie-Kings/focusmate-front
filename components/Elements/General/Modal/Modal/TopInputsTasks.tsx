@@ -3,7 +3,7 @@ import ModalColorPicker from "../ModalColorPicker/ModalColorPicker";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { useTranslations } from "next-intl";
 
-export default function TopInputs({
+export default function TopInputsTasks({
   error,
   task,
   setTask,
@@ -14,7 +14,7 @@ export default function TopInputs({
   task: tempTaskType;
   setTask: Dispatch<SetStateAction<tempTaskType>>;
 }) {
-  const t = useTranslations("Modal.event");
+  const t = useTranslations("Modal.task");
 
   return (
     <div className="flex w-full place-content-between">

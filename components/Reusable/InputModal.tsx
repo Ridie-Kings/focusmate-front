@@ -10,6 +10,7 @@ interface InputModalProps {
   onChange?: (e: { target: { value: string } }) => void;
   propagand?: boolean;
   defaultValue?: string;
+  className?: string;
 }
 
 export default function InputModal({
@@ -18,6 +19,7 @@ export default function InputModal({
   icon,
   option,
   onChange,
+  className,
   propagand = true,
   defaultValue,
 }: InputModalProps) {
@@ -25,17 +27,23 @@ export default function InputModal({
 
   const modalRef = useClickOutside<HTMLDivElement>((event) => {
     if (menuOpen) setMenuOpen(false);
-    if (document.getElementById("save") === event.target) setMenuOpen(false);
   });
 
   const handleOptionClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (type === "select" && !propagand) e.stopPropagation();
+    if (
+      document.getElementById("save") === e.target ||
+      document.getElementById("close") === e.target
+    )
+      setMenuOpen(false);
   };
 
   switch (type) {
     case "text":
       return (
-        <div className="flex gap-2 border-b border-neutral-200 pb-2 w-full">
+        <div
+          className={`flex gap-2 border-b border-neutral-200 pb-2 w-full ${className}`}
+        >
           <span className="p-2">{icon}</span>
           <input
             type="text"
@@ -48,7 +56,9 @@ export default function InputModal({
       );
     case "select":
       return (
-        <div className="flex gap-2 border-b border-neutral-200 items-center pb-4 w-full">
+        <div
+          className={`flex gap-2 border-b border-neutral-200 items-center pb-4 w-full ${className}`}
+        >
           {icon !== "" && <span className="px-2">{icon}</span>}
           <div
             ref={modalRef}

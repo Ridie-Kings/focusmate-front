@@ -14,6 +14,7 @@ import { updateEvent } from "@/services/Calendar/updateEvent";
 import { deleteEvent } from "@/services/Calendar/deleteEvent";
 import { CalendarType } from "@/interfaces/Calendar/CalendarType";
 import { deleteTask } from "@/services/Task/deleteTask";
+import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
 
 type ApiResponse<T> = { success: boolean; res: T | string };
 
@@ -36,7 +37,10 @@ export interface DashboardStore {
     ) => Promise<ApiResponse<EventType>>;
 
     setTasks: Dispatch<SetStateAction<TaskType[]>>;
-    addTask: (task: tempTaskType) => Promise<ApiResponse<TaskType>>;
+    addTask: (
+      task: tempTaskType,
+      addTaskToCalendar: boolean
+    ) => Promise<ApiResponse<TaskType>>;
     removeTask: (taskId: string) => Promise<ApiResponse<string>>;
     updateTask: (
       taskId: string,
@@ -62,6 +66,21 @@ const handleApiError = (
   success: false,
   res: typeof error === "string" ? error : message,
 });
+
+const validateTask = (
+  task: tempTaskType,
+  addTaskToCalendar: boolean
+): string => {
+  if (!task.title.trim()) return "El título es obligatorio";
+
+  if (addTaskToCalendar && !task.dueDate) {
+    return "La fecha de finalización es obligatoria";
+  }
+
+  if (task.dueDate && task.startDate && task.dueDate <= task.startDate)
+    return "La hora de finalización debe ser posterior a la hora de inicio";
+  return "";
+};
 
 export const useDashboardStore = create<DashboardStore>((set, get) => ({
   calendar: {
@@ -163,13 +182,34 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
           typeof newTasks === "function" ? newTasks(state.tasks) : newTasks,
       })),
 
-    addTask: async (newTask) => {
+    addTask: async (newTask, addToCalendar) => {
       try {
+        const error = validateTask(newTask, addToCalendar);
+        if (error) return { success: false, res: error };
+
         const res = await createTask({ task: newTask });
         if (!res.success)
           return handleApiError(res.res, "Error al crear la tarea");
 
         set((state) => ({ tasks: [...state.tasks, res.res] }));
+
+        if (addToCalendar) {
+          const response = await addTaskToCalendar({ _id: res.res._id });
+          console.log(response);
+          if (!response.success)
+            return handleApiError(
+              response.res,
+              "Error al agregar la tarea a la agenda"
+            );
+
+          set((state) => ({
+            calendar: {
+              ...state.calendar,
+              tasks: [...state.calendar.tasks, res.res],
+            },
+          }));
+        }
+
         return { success: true, res: res.res };
       } catch (error) {
         return handleApiError(error, "Error al crear la tarea");

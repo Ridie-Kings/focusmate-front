@@ -3,25 +3,26 @@ import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
 import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
 import { getCalendarOfMonthByDate } from "@/services/Calendar/getCalendarOfMonthByDate";
 import { format, isSameMonth } from "date-fns";
-import { DashboardStore, useDashboardStore } from "@/stores/dashboardStore";
-import { useDate } from "@/stores/calendarStore";
+import { DashboardStore } from "@/stores/dashboardStore";
+import { CalendarType } from "@/interfaces/Calendar/CalendarType";
 
-export default function CalendarUtils({
+export default function getCalendarUtils({
   firstDate,
+  date,
   secondDate,
   setCurrentMonth,
+  setCalendar,
   setLoading,
   currentMonth,
 }: {
   firstDate: Date;
   secondDate: Date;
+  date: Date | undefined;
+  setCalendar: (calendar: CalendarType) => void;
   setCurrentMonth: (month: Date) => void;
   setLoading: (key: keyof DashboardStore["loading"], value: boolean) => void;
   currentMonth: Date | undefined;
 }) {
-  const { setCalendar } = useDashboardStore((state) => state.actions);
-  const date = useDate();
-
   const handleGetCalendarByRange = async () => {
     try {
       const event = await getCalendarByRange({ firstDate, secondDate });

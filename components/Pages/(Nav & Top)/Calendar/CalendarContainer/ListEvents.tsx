@@ -16,7 +16,7 @@ export default function ListEvents() {
   }
 
   const groupedEvents = formatCalendar.reduce((acc, event) => {
-    const date = new Date(event.startDate);
+    const date = new Date(event.data.startDate);
     const dayKey = format(date, "yyyy-MM-dd");
     if (!acc[dayKey]) {
       acc[dayKey] = [];

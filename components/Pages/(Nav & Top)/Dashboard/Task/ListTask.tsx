@@ -82,7 +82,7 @@ export default function ListTask({
     <div className="flex flex-col w-full gap-4">
       <div
         ref={listRef}
-        className="flex flex-col w-full gap-4 h-[296px] pt-1 overflow-y-auto overflow-x-hidden transition-all duration-300"
+        className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto overflow-x-hidden transition-all duration-300"
       >
         {loadingTask ? (
           <LoadingStatus text="tareas" />

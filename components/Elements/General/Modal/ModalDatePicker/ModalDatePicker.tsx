@@ -9,7 +9,7 @@ export default function ModalDatePicker({
   date,
 }: {
   date: Date;
-  onChange: (e: { target: { value: string } }) => void;
+  onChange: (e: { target: { value: string | undefined } }) => void;
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(date);
   const t = useTranslations("Common");
@@ -18,7 +18,7 @@ export default function ModalDatePicker({
     onChange({
       target: { value: selectedDate ? selectedDate.toISOString() : "" },
     });
-  }, [selectedDate, onChange]);
+  }, [selectedDate]);
 
   return (
     <div className="absolute -top-35 left-25 w-[360px] drop-shadow-lg rounded-lg bg-background-primary flex flex-col z-50">
@@ -33,9 +33,10 @@ export default function ModalDatePicker({
       />
       <div className="flex items-center justify-end p-2">
         <button
+          id="close"
           onClick={() => {
-            onChange({ target: { value: new Date().toISOString() } });
-            setSelectedDate(new Date());
+            onChange({ target: { value: undefined } });
+            setSelectedDate(undefined);
           }}
           className="text-sm text-primary-500 px-4 py-2 cursor-pointer"
         >

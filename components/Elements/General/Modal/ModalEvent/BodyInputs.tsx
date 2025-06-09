@@ -60,8 +60,8 @@ export default function BodyInputs({
             onChange={(e) => {
               setEvent((prev) => ({
                 ...prev,
-                startDate: new Date(e.target.value),
-                endDate: new Date(e.target.value),
+                startDate: new Date(e.target.value as string),
+                endDate: new Date(e.target.value as string),
               }));
             }}
           />
