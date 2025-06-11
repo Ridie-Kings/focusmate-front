@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Bell, User, Shield, Palette, Zap } from "lucide-react";
 import TemplateDashboard from "@/components/Elements/General/TemplateBox";
 import GeneralSettings from "./Settings/GeneralSettings";
@@ -18,7 +18,18 @@ export type SettingSection =
   | "account";
 
 export default function Settings() {
-  const [activeSection, setActiveSection] = useState<SettingSection>("general");
+  const [activeSection, setActiveSection] = useState<SettingSection>(() => {
+    if (typeof window !== "undefined") {
+      return (
+        (localStorage.getItem("settingsSection") as SettingSection) || "general"
+      );
+    }
+    return "general";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("settingsSection", activeSection);
+  }, [activeSection]);
 
   const sections: { id: SettingSection; icon: ReactNode; label: string }[] = [
     { id: "general", icon: <Zap size={20} />, label: "General" },

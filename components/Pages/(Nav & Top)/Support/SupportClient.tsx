@@ -9,7 +9,7 @@ export default function SupportClient() {
   const profile = useProfile();
 
   return (
-    <div className="flex flex-col gap-8 p-8 w-full justify-center items-center">
+    <div className="flex flex-col gap-8 p-8 w-full justify-center items-center h-screen">
       <p className="text-center text-primary-500 w-3/5 text-lg">
         En <b>SherpApp</b> queremos cubrir tus necesidades y ofrecerte
         exactamente lo que nos pidas. Esta página ha sido desarrollada pensando
