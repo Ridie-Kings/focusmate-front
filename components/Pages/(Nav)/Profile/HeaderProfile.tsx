@@ -3,10 +3,14 @@ import Image from "next/image";
 import LoadingState from "@/components/Elements/General/LoadingState";
 import { useProfile } from "@/stores/profileStore";
 import { useLoading } from "@/stores/profileStore";
+import { Camera, Pen, Trash2 } from "lucide-react";
+import Button from "@/components/Reusable/Button";
+import { useModalStore } from "@/stores/modalStore";
 
 export default function HeaderProfile() {
   const profile = useProfile();
   const loading = useLoading();
+  const { setIsOpen } = useModalStore((state) => state.actions);
 
   return (
     <div className="py-6 flex gap-2">
@@ -31,14 +35,20 @@ export default function HeaderProfile() {
           </p>
           <p>{profile?.user?.username}</p>
         </div>
-        {/* <div className="flex items-center gap-2">
-          <Button size="compact" button="primary" state="enabled" type="button">
+        <div className="flex items-center gap-2">
+          {/* <Button size="compact" button="primary" state="enabled" type="button">
             <p>Editar Perfil</p> <Pen size={24} />
-            </Button>
-          <Button size="compact" button="primary" state="enabled" type="button">
-          <p>Cambiar foto</p> <Camera className="flex-1" size={24} />
+          </Button> */}
+          <Button
+            size="compact"
+            button="danger"
+            state="enabled"
+            type="button"
+            onClick={() => setIsOpen({ text: "delete-account" })}
+          >
+            <p>Eliminar cuenta</p> <Trash2 className="flex-1" size={24} />
           </Button>
-          </div> */}
+        </div>
       </div>
     </div>
   );

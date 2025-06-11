@@ -15,11 +15,12 @@ import ModalTaskKanban from "./Modal/ModalTaskKanban";
 import { useIsOpen, useModalStore } from "@/stores/modalStore";
 import { useProfile } from "@/stores/profileStore";
 import { EventType } from "@/interfaces/Calendar/EventType";
+import ModalDeleteAccount from "./Modal/ModalDeleteAccount";
 
 export default function Modal() {
   const isOpen = useIsOpen();
   const profile = useProfile();
-  const { setIsOpen } = useModalStore((state) => state.actions);
+  const { setIsOpen } = useModalStore((state) => state.actions); // TODO: añadirlo en cada uno de los modales
 
   const [isClosing, setIsClosing] = useState(false);
 
@@ -62,6 +63,8 @@ export default function Modal() {
         return (
           <ModalPomodoroSettings status={isOpen.other as PomodoroStatusType} />
         );
+      case "delete-account":
+        return <ModalDeleteAccount />;
       default:
         return "";
     }

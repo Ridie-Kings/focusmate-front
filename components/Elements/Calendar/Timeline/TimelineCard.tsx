@@ -13,7 +13,13 @@ export type TimelineItem = {
   startDate: Date;
 };
 
-export default function TimelineCard({ items }: { items: TimelineItem }) {
+export default function TimelineCard({
+  items,
+  hasOverlappingEvents,
+}: {
+  items: TimelineItem;
+  hasOverlappingEvents: boolean;
+}) {
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
   const { removeEvent, updateTask, removeTask } = useDashboardStore(
     (state) => state.actions
@@ -83,9 +89,11 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
     <div
       style={{
         backgroundColor:
-          !isEvent && (data as TaskType).status === "completed"
+          (data as TaskType).status === "completed"
             ? ""
-            : data.color,
+            : data.color !== ""
+            ? data.color
+            : "#000000",
       }}
       className={`w-full p-4 rounded-lg relative flex flex-col justify-between transition-all duration-300 ease-in-out ${textColor} ${
         isEvent ? "h-26" : "h-14"
@@ -97,11 +105,11 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
     >
       <div className="flex items-center gap-2">
         {isEvent ? <Calendar size={20} /> : <ClipboardCheck size={20} />}
-        <p className="font-medium">{data.title}</p>
+        <p className="font-medium truncate">{data.title}</p>
         {!isEvent && (
-          <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-between">
             <p className="text-sm">
-              Limite:{" "}
+              {!hasOverlappingEvents && "Limite:"}{" "}
               {new Date((data as TaskType).dueDate).toLocaleTimeString(
                 "es-ES",
                 {
@@ -125,12 +133,14 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
             <p className={`text-xs font-medium ${textColor}`}>Empieza</p>
           </span>
 
-          <p
-            style={{ backgroundColor: darkerColor }}
-            className="px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white"
-          >
-            {formatDuration(data.startDate, data.endDate)}
-          </p>
+          {!hasOverlappingEvents && (
+            <p
+              style={{ backgroundColor: darkerColor }}
+              className="px-2 h-3/4 font-medium text-xs flex items-center rounded-sm text-white"
+            >
+              {formatDuration(data.startDate, data.endDate)}
+            </p>
+          )}
 
           <span className="flex flex-col items-center gap-1">
             <p className="text-sm">
@@ -144,27 +154,29 @@ export default function TimelineCard({ items }: { items: TimelineItem }) {
         </div>
       )}
 
-      <Menu
-        className="absolute right-3 top-4"
-        items={[
-          {
-            label: "Modificar",
-            icon: <Pen size={20} />,
-            onClick: handleUpdate,
-          },
-          {
-            label: "Hecho",
-            icon: <Check size={20} />,
-            onClick: handleComplete,
-          },
-          {
-            label: "Eliminar",
-            color: "red",
-            icon: <Trash2 size={20} />,
-            onClick: handleRemove,
-          },
-        ]}
-      />
+      {!hasOverlappingEvents && (
+        <Menu
+          className="absolute right-3 top-4"
+          items={[
+            {
+              label: "Modificar",
+              icon: <Pen size={20} />,
+              onClick: handleUpdate,
+            },
+            {
+              label: "Hecho",
+              icon: <Check size={20} />,
+              onClick: handleComplete,
+            },
+            {
+              label: "Eliminar",
+              color: "red",
+              icon: <Trash2 size={20} />,
+              onClick: handleRemove,
+            },
+          ]}
+        />
+      )}
     </div>
   );
 }

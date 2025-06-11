@@ -6,6 +6,8 @@ import { UpdateUser } from "@/services/User/UpdateUser";
 import { UserType } from "@/interfaces/User/UserType";
 
 type ProfileActions = {
+  clearProfile: () => void;
+
   setLoading: (loading: boolean) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   updateProfile: (
@@ -20,7 +22,6 @@ interface ProfileStore {
   profile: ProfileType | null;
   loading: boolean;
   isAuthenticated: boolean;
-  clearProfile: () => void;
   initProfile: () => Promise<void>;
   actions: ProfileActions;
 }
@@ -31,8 +32,6 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
   loading: true,
 
   isAuthenticated: false,
-
-  clearProfile: () => set({ profile: null, isAuthenticated: false }),
 
   initProfile: async () => {
     const { profile } = get();
@@ -51,6 +50,8 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
   },
 
   actions: {
+    clearProfile: () => set({ profile: null, isAuthenticated: false }),
+
     setLoading: (loading) => set({ loading: loading }),
 
     updateProfile: async (profile) => {
@@ -107,8 +108,5 @@ export const useProfile = () => useProfileStore((state) => state.profile);
 
 export const useInitProfile = () =>
   useProfileStore((state) => state.initProfile);
-
-export const useClearProfile = () =>
-  useProfileStore((state) => state.clearProfile);
 
 export const useLoading = () => useProfileStore((state) => state.loading);

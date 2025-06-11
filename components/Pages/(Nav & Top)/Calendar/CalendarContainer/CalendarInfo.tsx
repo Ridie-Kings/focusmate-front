@@ -21,6 +21,7 @@ export default function CalendarInfo({
 
   const renderCalenderType = () => {
     if (loadingCalendar) return <LoadingState />;
+
     switch (navType) {
       case "Día":
         return <DayCalender />;

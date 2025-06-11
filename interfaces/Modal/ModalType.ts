@@ -10,6 +10,7 @@ export type TypeIsOpen = {
     | "contact"
     | "pomodoroSettings"
     | "taskKanban"
+    | "delete-account"
     | "";
   other?: any;
 };

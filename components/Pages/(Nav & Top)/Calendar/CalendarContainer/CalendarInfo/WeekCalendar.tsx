@@ -56,13 +56,13 @@ const EventItem = ({
     <div
       className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"
       style={{
-        backgroundColor: calendarData.color,
+        backgroundColor: calendarData.color !== "" ? calendarData.color : "#000000",
         top: `${eventStartPosition}px`,
         height: `${eventEndPosition - eventStartPosition}px`,
       }}
     >
       <div className="w-full flex items-center place-content-between sticky top-15">
-        <p className="text-sm">{calendarData.title}</p>
+        <p className={`text-sm ${textColor}`}>{calendarData.title}</p>
         <Menu
           className={textColor}
           position={
@@ -104,7 +104,7 @@ const DayColumn = ({
   selectedDate: Date;
 }) => {
   const { setDate } = useCalendarStore((state) => state.actions);
-  const { formatCalendar } = CalendarUtils();
+  const { formatCalendar } = CalendarUtils({ navType: "week" });
 
   return (
     <div className="flex flex-col gap-5">

@@ -16,7 +16,7 @@ type CalendarDayProps = {
 
 const CalendarDay = memo(
   ({ day, currentMonth, setNavType }: CalendarDayProps) => {
-    const { formatCalendar } = CalendarUtils();
+    const { formatCalendar } = CalendarUtils({ navType: "day" });
     const { setDate } = useCalendarStore((state) => state.actions);
 
     const isToday = isSameDay(day, new Date());

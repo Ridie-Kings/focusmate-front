@@ -6,7 +6,7 @@ import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCa
 import CalendarUtils from "@/lib/CalendarUtils";
 
 export default function ListEvents() {
-  const { formatCalendar } = CalendarUtils();
+  const { formatCalendar } = CalendarUtils({ navType: "day" });
   if (formatCalendar.length === 0) {
     return (
       <div className="flex items-center justify-center h-full text-gray-400 text-sm">

@@ -1,22 +1,47 @@
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { TimelineItem } from "./TimelineCard";
-import { Dot } from "lucide-react";
 
 export default function TimeLeftBar({
   filteredEvents,
 }: {
   filteredEvents: TimelineItem[];
 }) {
+  const uniqueEvents = filteredEvents.reduce((acc, current) => {
+    const isDuplicate = acc.some(
+      (item) =>
+        item.type === current.type &&
+        item.startDate.getTime() === current.startDate.getTime() &&
+        (item as any).isOverlapping &&
+        (current as any).isOverlapping
+    );
+    if (!isDuplicate) {
+      acc.push(current);
+    }
+    return acc;
+  }, [] as TimelineItem[]);
+
+  const getHeight = (item: TimelineItem) => {
+    if (item.type === "event") return "max-h-[104px]";
+    const duplicates = filteredEvents.filter(
+      (event) =>
+        event.type === item.type &&
+        event.startDate.getTime() === item.startDate.getTime() &&
+        (event as any).isOverlapping &&
+        (item as any).isOverlapping
+    );
+    return duplicates.length > 2 ? "max-h-[71px]" : "max-h-[56px]";
+  };
+
   return (
     <div className="flex flex-col overflow-auto gap-2 pt-1.5">
-      {filteredEvents.length > 0 &&
-        filteredEvents.map((item) => (
+      {uniqueEvents.length > 0 &&
+        uniqueEvents.map((item) => (
           <div
             key={`timeline-marker-${item.data._id}`}
-            className={`flex flex-col items-center justify-center h-full text-primary-500 text-sm gap-2 ${
-              item.type === "event" ? "max-h-[104px]" : "max-h-[56px]"
-            }`}
+            className={`flex flex-col items-center justify-center h-full text-primary-500 text-sm gap-2 ${getHeight(
+              item
+            )}`}
           >
             {item.type === "event" ? (
               <p>{format(item.startDate, "HH:mm", { locale: es })}</p>

@@ -42,6 +42,7 @@ export default function ModalTask({
   });
   const isEditMode = Boolean(task._id);
 
+  // const [isAllDay, setIsAllDay] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { trad } = ModalTaskUtils({ task });
   const [addTaskToCalendar, setAddTaskToCalendar] = useState(false);
@@ -93,6 +94,21 @@ export default function ModalTask({
             placeholder={t("description")}
             icon={<Text />}
           />
+          {/* <div className="flex items-center place-content-between w-full gap-2 -mb-4">
+            <p>Todo el dia</p>
+            <Switch
+              value={isAllDay}
+              onChange={(e) => {
+                setIsAllDay(e);
+                setTask((prev) => ({
+                  ...prev,
+                  dueDate: prev.dueDate
+                    ? new Date(prev.dueDate?.setHours(0, 0, 0, 0))
+                    : prev.dueDate,
+                }));
+              }}
+            />
+          </div> */}
           <InputModal
             type="select"
             placeholder={

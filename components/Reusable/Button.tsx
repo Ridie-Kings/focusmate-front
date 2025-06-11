@@ -12,7 +12,7 @@ export default function Button({
   href,
   id,
 }: {
-  button: "primary" | "secondary" | "tertiary" | "pomodoro";
+  button: "primary" | "secondary" | "tertiary" | "pomodoro" | "danger";
   type: "button" | "submit" | "reset" | undefined;
   children: ReactNode;
   onClick?: (
@@ -95,6 +95,14 @@ export default function Button({
             : "border border-primary-500 opacity-50 text-quaternary-700 hover:bg-primary-500 hover:text-white active:bg-primary-700 cursor-pointer"
         }
               flex items-center justify-center rounded-full px-2.5 py-1 transition-all duration-300 cursor-pointer text-sm`
+      );
+    case "danger":
+      return renderContent(
+        `${commonClasses} px-4 py-2 ${
+          state === "disabled"
+            ? "bg-red-500"
+            : "bg-red-700 hover:bg-red-500 active:bg-red-500"
+        } relative group text-white cursor-pointer`
       );
     default:
       return null;

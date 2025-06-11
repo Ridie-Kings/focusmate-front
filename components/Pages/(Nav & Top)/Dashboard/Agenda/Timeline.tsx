@@ -5,10 +5,24 @@ import MountainAgenda from "@/components/Elements/Svg/Mountain/MountainAgenda";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import CalendarUtils from "@/lib/CalendarUtils";
+import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
 
 interface TimelineProps {
   loadingEvents: boolean;
 }
+
+const doIntervalsOverlap = (item1: TimelineItem, item2: TimelineItem) => {
+  if (item1.type === "task" || item2.type === "task") {
+    return item1.startDate.getTime() === item2.startDate.getTime();
+  }
+
+  const start1 = new Date(item1.startDate).getTime();
+  const end1 = new Date((item1.data as any).endDate).getTime();
+  const start2 = new Date(item2.startDate).getTime();
+  const end2 = new Date((item2.data as any).endDate).getTime();
+
+  return start1 <= end2 && end1 >= start2;
+};
 
 export default function Timeline({ loadingEvents }: TimelineProps) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -18,7 +32,30 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
     if (!loadingEvents && isInitialLoading) setIsInitialLoading(false);
   }, [loadingEvents, isInitialLoading]);
 
-  const { formatCalendar } = CalendarUtils();
+  const { formatCalendar } = CalendarUtils({ navType: "day" });
+
+  const itemsWithOverlap = formatCalendar.map((item) => {
+    const isOverlapping = formatCalendar.some(
+      (otherItem) => otherItem !== item && doIntervalsOverlap(item, otherItem)
+    );
+    return { ...item, isOverlapping };
+  });
+
+  const groupedItems = itemsWithOverlap.reduce((acc, item) => {
+    const groupKey = Object.keys(acc).find((key) => {
+      const groupItems = acc[parseInt(key)];
+      return groupItems.some((existingItem) =>
+        doIntervalsOverlap(item, existingItem)
+      );
+    });
+
+    if (groupKey) {
+      acc[parseInt(groupKey)].push(item);
+    } else {
+      acc[item.startDate.getTime()] = [item];
+    }
+    return acc;
+  }, {} as Record<number, (TimelineItem & { isOverlapping: boolean })[]>);
 
   return (
     <div
@@ -30,20 +67,47 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
       <p className="text-xl text-primary-500 text-center sticky top-0 bg-white">
         {t("title")}
       </p>
-      <div className="flex flex-1 gap-4">
+      <div className="flex gap-4">
         {loadingEvents ? (
           <LoadingStatus text="eventos" />
         ) : (
           <>
             {formatCalendar.length !== 0 ? (
               <>
-                <TimeLeftBar filteredEvents={formatCalendar} />
-                <div className="flex-1 flex flex-col gap-2 pt-1.5">
-                  {formatCalendar.map((item, index) => (
-                    <TimelineCard
-                      key={`${item.type}-${index}-${item.data.title}`}
-                      items={item}
-                    />
+                <TimeLeftBar filteredEvents={itemsWithOverlap} />
+                <div className="flex-1 flex flex-col gap-2 pt-1.5 min-w-0">
+                  {Object.entries(groupedItems).map(([timeKey, items]) => (
+                    <div
+                      key={timeKey}
+                      className={`gap-2 ${
+                        items.length > 2
+                          ? "flex overflow-x-auto"
+                          : "grid w-full"
+                      }`}
+                      style={
+                        items.length <= 2
+                          ? {
+                              gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))`,
+                            }
+                          : {}
+                      }
+                    >
+                      {items.map((item, index) => (
+                        <div
+                          key={`${item.type}-${index}-${item.data.title}`}
+                          className={`min-w-0 ${
+                            items.length > 2
+                              ? "flex-shrink-0 w-[calc(50%-0.5rem)]"
+                              : ""
+                          }`}
+                        >
+                          <TimelineCard
+                            items={item}
+                            hasOverlappingEvents={item.isOverlapping}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   ))}
                 </div>
               </>

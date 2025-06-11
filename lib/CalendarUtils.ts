@@ -1,4 +1,4 @@
-import { isSameDay } from "date-fns";
+import { isSameDay, isSameMonth, isSameWeek } from "date-fns";
 
 import { useMemo } from "react";
 
@@ -6,14 +6,22 @@ import { useCalendar } from "@/stores/dashboardStore";
 import { useDate } from "@/stores/calendarStore";
 import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
 
-export default function CalendarUtils() {
+export default function CalendarUtils({
+  navType,
+}: {
+  navType: "day" | "week" | "month";
+}) {
   const calendar = useCalendar();
   const date = useDate();
 
   const formatCalendar = useMemo(() => {
     const events: TimelineItem[] = calendar.events
       .filter((event) =>
-        isSameDay(new Date(event.startDate), date ?? new Date())
+        navType === "day"
+          ? isSameDay(new Date(event.startDate), date ?? new Date())
+          : navType === "week"
+          ? isSameWeek(new Date(event.startDate), date ?? new Date())
+          : isSameMonth(new Date(event.startDate), date ?? new Date())
       )
       .map((event) => ({
         type: "event",
@@ -22,7 +30,13 @@ export default function CalendarUtils() {
       }));
 
     const tasks: TimelineItem[] = calendar.tasks
-      .filter((task) => isSameDay(new Date(task.dueDate), date ?? new Date()))
+      .filter((task) =>
+        navType === "day"
+          ? isSameDay(new Date(task.dueDate), date ?? new Date())
+          : navType === "week"
+          ? isSameWeek(new Date(task.dueDate), date ?? new Date())
+          : isSameMonth(new Date(task.dueDate), date ?? new Date())
+      )
       .map((task) => ({
         type: "task",
         data: task,

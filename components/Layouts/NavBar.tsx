@@ -6,11 +6,11 @@ import { logout } from "@/lib";
 import PlanButtons from "./NavBar/PlanButtons";
 import MobileMenu from "./NavBar/MobileMenu";
 import LanguageSwitcher from "../Elements/General/LanguageSwitcher";
-import { useProfile, useClearProfile } from "@/stores/profileStore";
+import { useProfile, useProfileStore } from "@/stores/profileStore";
 
 export default function NavBar() {
   const profile = useProfile();
-  const clearProfile = useClearProfile();
+  const { clearProfile } = useProfileStore((state) => state.actions);
 
   const handleLogout = async () => {
     try {
