@@ -13,10 +13,7 @@ export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
   }, [prevTasks]);
 
   return (
-    <div
-      style={{ height: "calc(100vh - 125px)" }}
-      className="flex w-full gap-3 overflow-hidden p-6"
-    >
+    <div className="flex h-screen w-full gap-3 overflow-hidden p-6">
       <Column
         title="Pendientes"
         status="pending"

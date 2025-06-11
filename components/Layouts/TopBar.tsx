@@ -8,14 +8,11 @@ import { useProfile } from "@/stores/profileStore";
 
 export default function TopBar() {
   const t = useTranslations("HomePage");
-  const { isVisible } = UseScrollDirection();
   const profile = useProfile();
 
   return (
     <header
-      className={`sticky top-0 left-0 right-0 flex place-content-between pr-15 py-2 px-6 sm:p-6 w-full border-b border-primary-200 bg-white z-50 transition-transform duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`fixed top-0 right-0 flex place-content-between pr-15 py-2 px-6 sm:p-6 w-[calc(100%-88px)] border-b border-primary-200 bg-white z-50 transition-all duration-300 -translate-y-[85%] opacity-0 hover:opacity-100 hover:translate-y-0`}
     >
       <div className="flex flex-col sm:flex-1 justify-center">
         <p className="sm:text-lg hidden sm:block text-primary-500 capitalize">

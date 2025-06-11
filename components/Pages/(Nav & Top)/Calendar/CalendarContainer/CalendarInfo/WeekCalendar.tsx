@@ -56,7 +56,8 @@ const EventItem = ({
     <div
       className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"
       style={{
-        backgroundColor: calendarData.color !== "" ? calendarData.color : "#000000",
+        backgroundColor:
+          calendarData.color !== "" ? calendarData.color : "#000000",
         top: `${eventStartPosition}px`,
         height: `${eventEndPosition - eventStartPosition}px`,
       }}
@@ -179,7 +180,7 @@ const WeekCalendarItem = ({
   return (
     <div
       ref={scrollCalendar}
-      className="grid grid-cols-8 w-full h-screen sm:h-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
+      className="grid grid-cols-8 w-full h-screen sm:h-full rounded-xl relative gap-2 overflow-auto xl:h-[calc(100vh-152px)] 2xl:h-[calc(100vh-360px)]"
     >
       <div className="flex flex-col gap-5 relative">
         <div
