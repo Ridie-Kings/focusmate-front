@@ -106,10 +106,10 @@ export default function TimelineCard({
       <div className="flex items-center gap-2">
         {isEvent ? <Calendar size={20} /> : <ClipboardCheck size={20} />}
         <p className="font-medium truncate">{data.title}</p>
-        {!isEvent && (
+        {!isEvent && !hasOverlappingEvents && (
           <div className="flex items-center justify-between">
             <p className="text-sm">
-              {!hasOverlappingEvents && "Limite:"}{" "}
+              Limite:{" "}
               {new Date((data as TaskType).dueDate).toLocaleTimeString(
                 "es-ES",
                 {

@@ -57,6 +57,20 @@ export default function StatsboardContainer() {
   };
 
   return (
+    <iframe
+      style={{
+        backgroundColor: "#21313C",
+        border: "none",
+        borderRadius: "2px",
+        boxShadow: "0 2px 10px 0 rgba(70, 76, 79, .2)",
+        width: "100vw",
+        height: "100vh",
+      }}
+      src="https://charts.mongodb.com/charts-sherapp-vqxoqzx/embed/dashboards?id=9c2308bd-233a-4f75-9eea-a9b9ca1d423b&filter=%7B%22username%22%3A%7B%22%24nin%22%3A%5B%22albocoki%22%2C%22AliciaMoral%20Gallego%22%2C%22allanboussemart.734%22%2C%22anitabadillo%22%2C%22Bobito%22%2C%22Bramvan%20Oijen%22%2C%22carlos%40inkup.io%22%2C%22zn.ana22%22%2C%22cllopez%22%2C%22cllopez14%22%2C%22EduardoPertierra%22%2C%22FranSalvatierra%22%2C%22ftdev42%22%2C%22juanandres%22%2C%22juanandubb%22%2C%22MatiSargo%22%2C%22Matisargo%22%2C%22sarguensargo%22%2C%22sherp.918%22%2C%22test.493%22%2C%22mati%20test%22%5D%7D%7D&theme=dark&autoRefresh=true&maxDataAge=14400&showTitleAndDesc=false&scalingWidth=fixed&scalingHeight=scale"
+    ></iframe>
+  );
+
+  return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 border-b px-5 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between py-4">
