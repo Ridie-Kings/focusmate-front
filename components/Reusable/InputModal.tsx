@@ -25,7 +25,7 @@ export default function InputModal({
 }: InputModalProps) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
-  const modalRef = useClickOutside<HTMLDivElement>((event) => {
+  const modalRef = useClickOutside<HTMLDivElement>(() => {
     if (menuOpen) setMenuOpen(false);
   });
 

@@ -2,7 +2,6 @@
 import PageTitle from "./TopBar/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
-import { UseScrollDirection } from "@/hooks/UseScrollDirection";
 import { useTranslations } from "next-intl";
 import { useProfile } from "@/stores/profileStore";
 

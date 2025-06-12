@@ -1,5 +1,5 @@
 import { ChevronLeft, EllipsisVertical } from "lucide-react";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState, MouseEvent } from "react";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { createPortal } from "react-dom";
 
@@ -16,7 +16,7 @@ interface MenuProps {
   trigger?: ReactNode;
   position?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
   className?: string;
-  onClick?: (e: any) => void;
+  onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 const findOverflowParent = (

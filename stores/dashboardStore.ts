@@ -39,7 +39,7 @@ export interface DashboardStore {
     setTasks: Dispatch<SetStateAction<TaskType[]>>;
     addTask: (
       task: tempTaskType,
-      addTaskToCalendar: boolean
+      addTaskToCalendar?: boolean
     ) => Promise<ApiResponse<TaskType>>;
     removeTask: (taskId: string) => Promise<ApiResponse<string>>;
     updateTask: (
@@ -184,7 +184,7 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
 
     addTask: async (newTask, addToCalendar) => {
       try {
-        const error = validateTask(newTask, addToCalendar);
+        const error = validateTask(newTask, (addToCalendar = false));
         if (error) return { success: false, res: error };
 
         const res = await createTask({ task: newTask });

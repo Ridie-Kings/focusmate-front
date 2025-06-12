@@ -1,5 +1,5 @@
 import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
-import { typeRedirect, typeText } from "@/interfaces/Modal/ModalType";
+import { typeRedirect } from "@/interfaces/Modal/ModalType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { useDashboardStore } from "@/stores/dashboardStore";
 import { useModalStore } from "@/stores/modalStore";

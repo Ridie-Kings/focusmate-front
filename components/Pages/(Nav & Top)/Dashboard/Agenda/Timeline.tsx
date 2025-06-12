@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import CalendarUtils from "@/lib/CalendarUtils";
 import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
 import { useModalStore } from "@/stores/modalStore";
+import { EventType } from "@/interfaces/Calendar/EventType";
 
 interface TimelineProps {
   loadingEvents: boolean;
@@ -18,9 +19,9 @@ const doIntervalsOverlap = (item1: TimelineItem, item2: TimelineItem) => {
   }
 
   const start1 = new Date(item1.startDate).getTime();
-  const end1 = new Date((item1.data as any).endDate).getTime();
+  const end1 = new Date((item1.data as EventType).endDate).getTime();
   const start2 = new Date(item2.startDate).getTime();
-  const end2 = new Date((item2.data as any).endDate).getTime();
+  const end2 = new Date((item2.data as EventType).endDate).getTime();
 
   return start1 <= end2 && end1 >= start2;
 };

@@ -1,11 +1,8 @@
-import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
 import AgendaUtils from "@/lib/AgendaUtils";
 import { Calendar, Check, ClipboardCheck, Pen, Trash2 } from "lucide-react";
-import { useDashboardStore } from "@/stores/dashboardStore";
 import { EventType } from "@/interfaces/Calendar/EventType";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { useToastStore } from "@/stores/toastStore";
 import TimelineUtils from "@/lib/TimelineUtils";
 
 export type TimelineItem = {

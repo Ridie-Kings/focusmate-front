@@ -1,5 +1,4 @@
-import { tempEventType, TypeIsOpen } from "@/interfaces/Modal/ModalType";
-import { Dispatch, SetStateAction } from "react";
+import { tempEventType } from "@/interfaces/Modal/ModalType";
 import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function ModalEventUtils({

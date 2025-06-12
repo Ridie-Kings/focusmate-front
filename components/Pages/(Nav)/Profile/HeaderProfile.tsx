@@ -3,7 +3,7 @@ import Image from "next/image";
 import LoadingState from "@/components/Elements/General/LoadingState";
 import { useProfile } from "@/stores/profileStore";
 import { useLoading } from "@/stores/profileStore";
-import { Camera, Pen, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Button from "@/components/Reusable/Button";
 import { useModalStore } from "@/stores/modalStore";
 

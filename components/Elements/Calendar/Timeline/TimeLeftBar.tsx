@@ -1,6 +1,10 @@
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { TimelineItem } from "./TimelineCard";
+import { TimelineItem as BaseTimelineItem } from "./TimelineCard";
+
+type TimelineItem = BaseTimelineItem & {
+  isOverlapping: boolean;
+};
 
 export default function TimeLeftBar({
   filteredEvents,
@@ -12,8 +16,8 @@ export default function TimeLeftBar({
       (item) =>
         item.type === current.type &&
         item.startDate.getTime() === current.startDate.getTime() &&
-        (item as any).isOverlapping &&
-        (current as any).isOverlapping
+        item.isOverlapping &&
+        current.isOverlapping
     );
     if (!isDuplicate) {
       acc.push(current);
@@ -27,8 +31,8 @@ export default function TimeLeftBar({
       (event) =>
         event.type === item.type &&
         event.startDate.getTime() === item.startDate.getTime() &&
-        (event as any).isOverlapping &&
-        (item as any).isOverlapping
+        event.isOverlapping &&
+        item.isOverlapping
     );
     return duplicates.length > 2 ? "max-h-[71px]" : "max-h-[56px]";
   };
