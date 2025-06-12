@@ -49,7 +49,7 @@ api.interceptors.response.use(
         throw new AppError("Recurso no encontrado", data.error ?? "NOT_FOUND");
       case 409:
         throw new AppError(
-          data.message ?? "Error de conflicto",
+          data.message ?? "Error de conflicto: " + data.message,
           data.error ?? "CONFLICT"
         );
       case 429:
