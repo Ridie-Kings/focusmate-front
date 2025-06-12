@@ -6,12 +6,12 @@ export default function ModalEventUtils({
   setError,
   event,
   setIsLoading,
-  setIsOpen,
+  handleClose,
 }: {
   setError: (error: string | null) => void;
   event: tempEventType;
   setIsLoading: (isLoading: boolean) => void;
-  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
+  handleClose: () => void;
 }) {
   const { addEvent, updateEvent } = useDashboardStore((state) => state.actions);
 
@@ -48,7 +48,7 @@ export default function ModalEventUtils({
     }
 
     setIsLoading(false);
-    setIsOpen({ text: "" });
+    handleClose();
   };
 
   const handleCreateEvent = async () => {
@@ -67,7 +67,7 @@ export default function ModalEventUtils({
     }
 
     setIsLoading(false);
-    setIsOpen({ text: "" });
+    handleClose();
   };
   return {
     handleCreateEvent,

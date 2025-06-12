@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import CalendarUtils from "@/lib/CalendarUtils";
 import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
+import { useModalStore } from "@/stores/modalStore";
 
 interface TimelineProps {
   loadingEvents: boolean;
@@ -27,6 +28,7 @@ const doIntervalsOverlap = (item1: TimelineItem, item2: TimelineItem) => {
 export default function Timeline({ loadingEvents }: TimelineProps) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const t = useTranslations("Dashboard.agenda.timeline");
+  const { setIsOpen } = useModalStore((state) => state.actions);
 
   useEffect(() => {
     if (!loadingEvents && isInitialLoading) setIsInitialLoading(false);
@@ -67,61 +69,60 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
       <p className="text-xl text-primary-500 text-center sticky top-0 bg-white">
         {t("title")}
       </p>
-      <div className="flex gap-4">
-        {loadingEvents ? (
-          <LoadingStatus text="eventos" />
-        ) : (
-          <>
-            {formatCalendar.length !== 0 ? (
-              <>
-                <TimeLeftBar filteredEvents={itemsWithOverlap} />
-                <div className="flex-1 flex flex-col gap-2 pt-1.5 min-w-0">
-                  {Object.entries(groupedItems).map(([timeKey, items]) => (
-                    <div
-                      key={timeKey}
-                      className={`gap-2 ${
-                        items.length > 2
-                          ? "flex overflow-x-auto"
-                          : "grid w-full"
-                      }`}
-                      style={
-                        items.length <= 2
-                          ? {
-                              gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))`,
-                            }
-                          : {}
-                      }
-                    >
-                      {items.map((item, index) => (
-                        <div
-                          key={`${item.type}-${index}-${item.data.title}`}
-                          className={`min-w-0 ${
-                            items.length > 2
-                              ? "flex-shrink-0 w-[calc(50%-0.5rem)]"
-                              : ""
-                          }`}
-                        >
-                          <TimelineCard
-                            items={item}
-                            hasOverlappingEvents={item.isOverlapping}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="flex flex-col items-center gap-3 justify-center p-2 bg-quaternary-100 rounded-2xl w-full h-full">
-                <MountainAgenda />
-                <p className="text-primary-500 2xl:text-xl text-center font-medium">
-                  {t("noEvents")}
-                </p>
+      {loadingEvents ? (
+        <LoadingStatus text="eventos" />
+      ) : (
+        <>
+          {formatCalendar.length !== 0 ? (
+            <div className="flex gap-4">
+              <TimeLeftBar filteredEvents={itemsWithOverlap} />
+              <div className="flex-1 flex flex-col gap-2 pt-1.5 min-w-0">
+                {Object.entries(groupedItems).map(([timeKey, items]) => (
+                  <div
+                    key={timeKey}
+                    className={`gap-2 items-center ${
+                      items.length > 2 ? "flex" : "grid w-full"
+                    }`}
+                  >
+                    {items.slice(0, 2).map((item, index) => (
+                      <div
+                        key={`${item.type}-${index}-${item.data.title}`}
+                        className={`min-w-0 ${
+                          items.length > 2
+                            ? "flex-shrink-0 w-[calc(50%-1.5rem)]"
+                            : ""
+                        }`}
+                      >
+                        <TimelineCard
+                          item={item}
+                          hasOverlappingEvents={item.isOverlapping}
+                        />
+                      </div>
+                    ))}
+                    {items.length > 2 && (
+                      <p
+                        className="cursor-pointer"
+                        onClick={() =>
+                          setIsOpen({ text: "show-more", other: items })
+                        }
+                      >
+                        + {items.length - 2}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
-            )}
-          </>
-        )}
-      </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-3 justify-center p-2 bg-quaternary-100 rounded-2xl w-full h-full">
+              <MountainAgenda />
+              <p className="text-primary-500 2xl:text-xl text-center font-medium">
+                {t("noEvents")}
+              </p>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

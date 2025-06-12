@@ -2,17 +2,23 @@ import { Dispatch, SetStateAction } from "react";
 import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import { StatusType } from "@/interfaces/Task/TaskType";
 
+export type typeText =
+  | "task"
+  | "habit"
+  | "event"
+  | "contact"
+  | "pomodoroSettings"
+  | "taskKanban"
+  | "delete-account"
+  | "show-more"
+  | "";
+
+export type typeRedirect = { text: typeText; other?: any };
+
 export type TypeIsOpen = {
-  text:
-    | "task"
-    | "habit"
-    | "event"
-    | "contact"
-    | "pomodoroSettings"
-    | "taskKanban"
-    | "delete-account"
-    | "";
+  text: typeText;
   other?: any;
+  redirect?: typeRedirect;
 };
 export type ModalContextType = {
   isOpen: TypeIsOpen;

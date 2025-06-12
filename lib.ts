@@ -119,8 +119,8 @@ export async function logout(): Promise<boolean> {
     // }
 
     // Eliminar cookies de sesión
-    cookieStore.delete("access_token");
-    cookieStore.delete("refresh_token");
+    // cookieStore.delete("access_token");
+    // cookieStore.delete("refresh_token");
 
     return true;
   } catch (error) {

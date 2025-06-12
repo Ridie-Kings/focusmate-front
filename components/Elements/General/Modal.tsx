@@ -16,6 +16,7 @@ import { useIsOpen, useModalStore } from "@/stores/modalStore";
 import { useProfile } from "@/stores/profileStore";
 import { EventType } from "@/interfaces/Calendar/EventType";
 import ModalDeleteAccount from "./Modal/ModalDeleteAccount";
+import ModalShowMore from "./Modal/ModalShowMore";
 
 export default function Modal() {
   const isOpen = useIsOpen();
@@ -27,7 +28,10 @@ export default function Modal() {
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
-      setIsOpen({ text: "", other: null });
+      setIsOpen({
+        text: isOpen.redirect?.text ? isOpen.redirect.text : "",
+        other: isOpen.redirect?.other ? isOpen.redirect?.other : null,
+      });
       setIsClosing(false);
     }, 300);
   };
@@ -37,6 +41,7 @@ export default function Modal() {
       case "task":
         return (
           <ModalTask
+            handleClose={handleClose}
             setIsOpen={setIsOpen}
             prevTask={isOpen.other as TaskType}
           />
@@ -53,6 +58,7 @@ export default function Modal() {
       case "event":
         return (
           <ModalEvent
+            handleClose={handleClose}
             setIsOpen={setIsOpen}
             events={isOpen.other as EventType}
           />
@@ -65,6 +71,8 @@ export default function Modal() {
         );
       case "delete-account":
         return <ModalDeleteAccount />;
+      case "show-more":
+        return <ModalShowMore list={isOpen.other} />;
       default:
         return "";
     }

@@ -11,6 +11,7 @@ import ModalEventUtils from "@/lib/ModalEventUtils";
 type ModalEventProps = {
   events: tempEventType;
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
+  handleClose: () => void;
 };
 
 const DEFAULT_EVENT: tempEventType = {
@@ -32,7 +33,11 @@ const DEFAULT_EVENT: tempEventType = {
   },
 };
 
-export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
+export default function ModalEvent({
+  setIsOpen,
+  events,
+  handleClose,
+}: ModalEventProps) {
   const initialDate = useMemo(
     () => (events instanceof Date ? events : new Date()),
     [events]
@@ -50,7 +55,7 @@ export default function ModalEvent({ setIsOpen, events }: ModalEventProps) {
     setError,
     event,
     setIsLoading,
-    setIsOpen,
+    handleClose,
   });
 
   useEffect(() => {

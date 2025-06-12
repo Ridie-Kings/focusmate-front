@@ -6,6 +6,7 @@ import { useDashboardStore } from "@/stores/dashboardStore";
 import { EventType } from "@/interfaces/Calendar/EventType";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { useToastStore } from "@/stores/toastStore";
+import TimelineUtils from "@/lib/TimelineUtils";
 
 export type TimelineItem = {
   type: "event" | "task";
@@ -14,73 +15,18 @@ export type TimelineItem = {
 };
 
 export default function TimelineCard({
-  items,
+  item,
   hasOverlappingEvents,
 }: {
-  items: TimelineItem;
+  item: TimelineItem;
   hasOverlappingEvents: boolean;
 }) {
   const { isLightColor, getDarkerColor, formatDuration } = AgendaUtils();
-  const { removeEvent, updateTask, removeTask } = useDashboardStore(
-    (state) => state.actions
-  );
-  const { addToast } = useToastStore();
 
-  const { setIsOpen } = useModalStore((state) => state.actions);
+  const { handleComplete, handleRemove, handleUpdate } = TimelineUtils();
 
-  const isEvent = items.type === "event";
-  const data = items.data;
-
-  const handleUpdate = () => {
-    if (isEvent) {
-      setIsOpen({ text: "event", other: data });
-    } else {
-      setIsOpen({ text: "task", other: data });
-    }
-  };
-
-  const handleRemove = async () => {
-    if (isEvent) {
-      const res = await removeEvent(data._id);
-      if (res.success) {
-        addToast({
-          message: "Evento eliminado correctamente",
-          description: "El evento ha sido eliminado correctamente",
-          type: "success",
-        });
-      } else {
-        addToast({
-          message: "Error al eliminar el evento",
-          type: "error",
-          description: res.res as string,
-        });
-      }
-    } else {
-      const res = await removeTask(data._id);
-      if (res.success) {
-        addToast({
-          message: "Tarea eliminada correctamente",
-          description: "La tarea ha sido eliminada correctamente",
-          type: "success",
-        });
-      } else {
-        addToast({
-          message: "Error al eliminar la tarea",
-          type: "error",
-          description: res.res as string,
-        });
-      }
-    }
-  };
-
-  const handleComplete = () => {
-    if (!isEvent) {
-      updateTask(data._id, {
-        status:
-          (data as TaskType).status === "completed" ? "dropped" : "completed",
-      });
-    }
-  };
+  const isEvent = item.type === "event";
+  const data = item.data;
 
   const textColor = isLightColor(data.color) ? "text-black" : "text-white";
   const darkerColor = getDarkerColor(data.color);
@@ -154,29 +100,27 @@ export default function TimelineCard({
         </div>
       )}
 
-      {!hasOverlappingEvents && (
-        <Menu
-          className="absolute right-3 top-4"
-          items={[
-            {
-              label: "Modificar",
-              icon: <Pen size={20} />,
-              onClick: handleUpdate,
-            },
-            {
-              label: "Hecho",
-              icon: <Check size={20} />,
-              onClick: handleComplete,
-            },
-            {
-              label: "Eliminar",
-              color: "red",
-              icon: <Trash2 size={20} />,
-              onClick: handleRemove,
-            },
-          ]}
-        />
-      )}
+      <Menu
+        className="absolute right-3 top-4"
+        items={[
+          {
+            label: "Modificar",
+            icon: <Pen size={20} />,
+            onClick: () => handleUpdate({ item }),
+          },
+          {
+            label: "Hecho",
+            icon: <Check size={20} />,
+            onClick: () => handleComplete({ item }),
+          },
+          {
+            label: "Eliminar",
+            color: "red",
+            icon: <Trash2 size={20} />,
+            onClick: () => handleRemove({ item }),
+          },
+        ]}
+      />
     </div>
   );
 }

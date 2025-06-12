@@ -20,9 +20,11 @@ import ModalTimePicker from "./ModalTimePicker/ModalTimePicker";
 export default function ModalTask({
   setIsOpen,
   prevTask,
+  handleClose,
 }: {
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
   prevTask: TaskType;
+  handleClose: () => void;
 }) {
   const { addTask, updateTask } = useDashboardStore((state) => state.actions);
   const isLoading = useDashboardStore((state) => state.loading.tasks);
@@ -58,14 +60,14 @@ export default function ModalTask({
   const handleSendTask = async () => {
     const res = await addTask(task, addTaskToCalendar);
 
-    if (res.success) setIsOpen({ text: "" });
+    if (res.success) handleClose();
     else setError(res.res as string);
   };
 
   const handleUpdateTask = async () => {
     const res = await updateTask(task._id ?? "", task);
 
-    if (res.success) setIsOpen({ text: "" });
+    if (res.success) handleClose();
     else setError(res.res as string);
   };
 
