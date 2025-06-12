@@ -60,8 +60,8 @@ api.interceptors.response.use(
         throw new ServerError("Error interno del servidor: " + data.message);
       default:
         throw new AppError(
-          data.message ?? "Error desconocido",
-          data.error ?? "UNKNOWN_ERROR",
+          data.message ?? "Error desconocido: " + data.message,
+          data.error ?? "UNKNOWN_ERROR: " + data.error,
           status
         );
     }
