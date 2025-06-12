@@ -69,7 +69,9 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
 
     if (state.success) {
       localStorage.removeItem(storageKey);
-      router.push("/dashboard");
+      console.log(state);
+
+      // router.push("/dashboard");
     } else {
       setError(state.message);
       setTimeout(() => {

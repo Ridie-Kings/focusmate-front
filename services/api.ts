@@ -49,7 +49,7 @@ api.interceptors.response.use(
         throw new AppError("Recurso no encontrado", data.error ?? "NOT_FOUND");
       case 409:
         throw new AppError(
-          data.message ?? "Error de conflicto",
+          data.message ?? "Error de conflicto: " + data.message,
           data.error ?? "CONFLICT"
         );
       case 429:
@@ -60,8 +60,8 @@ api.interceptors.response.use(
         throw new ServerError("Error interno del servidor: " + data.message);
       default:
         throw new AppError(
-          data.message ?? "Error desconocido",
-          data.error ?? "UNKNOWN_ERROR",
+          data.message ?? "Error desconocido: " + data.message,
+          data.error ?? "UNKNOWN_ERROR: " + data.error,
           status
         );
     }
