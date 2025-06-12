@@ -3,7 +3,7 @@ export default function Switch({
   onChange,
 }: {
   value: boolean;
-  onChange: (value: unknown) => unknown;
+  onChange: (value: boolean) => void;
 }) {
   return (
     <button

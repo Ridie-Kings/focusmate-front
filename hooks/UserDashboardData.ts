@@ -7,8 +7,9 @@ import { useDashboardStore } from "@/stores/dashboardStore";
 
 export const useDashboardData = () => {
   const [streaks, setStreaks] = useState<number>(0);
-  const { setLoadingTask, setLoadingHabits, setTasks, setHabits } =
-    useDashboardStore();
+  const { setLoading, setTasks, setHabits } = useDashboardStore(
+    (state) => state.actions
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,15 +29,15 @@ export const useDashboardData = () => {
         setTasks([]);
         setHabits([]);
       } finally {
-        setLoadingTask(false);
-        setLoadingHabits(false);
+        setLoading("tasks", false);
+        setLoading("habits", false);
       }
     };
 
-    setLoadingTask(true);
-    setLoadingHabits(true);
+    setLoading("tasks", true);
+    setLoading("habits", true);
     fetchData();
-  }, [setLoadingTask, setLoadingHabits, setTasks, setHabits]);
+  }, [setLoading, setTasks, setHabits]);
 
   return {
     streaks,

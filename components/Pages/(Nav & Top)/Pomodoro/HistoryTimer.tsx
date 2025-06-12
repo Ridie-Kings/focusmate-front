@@ -56,7 +56,7 @@ export default function HistoryTimer() {
 
   return (
     <div
-      style={{ maxHeight: "calc(100vh - 173px)" }}
+      style={{ maxHeight: "calc(100vh - 48px)" }}
       className="flex-1 max-w-4xl overflow-y-auto mx-auto px-4 py-6"
     >
       <h1 className="text-2xl font-bold mb-6">Historial de Pomodoros</h1>

@@ -1,51 +1,19 @@
 "use client";
-// import { Search } from "lucide-react";
-// import Notification from "./TopBar/Notification";
 import PageTitle from "./TopBar/PageTitle";
-import { getMyProfile } from "@/services/Profile/getMyProfile";
 import Image from "next/image";
 import Link from "next/link";
-import { UseScrollDirection } from "@/hooks/UseScrollDirection";
-import { useState, useEffect } from "react";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
-import { useDashboardStore } from "@/stores/dashboardStore";
-import LoadingState from "@/components/Elements/General/LoadingState";
 import { useTranslations } from "next-intl";
+import { useProfile } from "@/stores/profileStore";
 
 export default function TopBar() {
   const t = useTranslations("HomePage");
-  const { isVisible } = UseScrollDirection();
-  const [profil, setProfil] = useState<ProfileType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const { setUserInfo } = useDashboardStore();
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getMyProfile();
-        if (data.success) {
-          setProfil(data.res);
-          setUserInfo(data.res as ProfileType);
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProfile();
-  }, []);
+  const profile = useProfile();
 
   return (
-    <header
-      className={`sticky top-0 left-0 right-0 flex place-content-between pr-15 py-2 px-6 sm:p-6 w-full border-b border-primary-200 bg-white z-50 transition-transform duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      }`}
-    >
+    <header className="fixed top-0 right-0 flex place-content-between pr-15 py-2 px-6 sm:p-6 w-[calc(100%-88px)] border-b border-primary-200/25 drop-shadow-2xl bg-white/40 backdrop-blur-lg z-50 transition-all duration-300 -translate-y-[85%] opacity-0 hover:opacity-100 hover:translate-y-0 group">
       <div className="flex flex-col sm:flex-1 justify-center">
-        <p className="sm:text-lg hidden sm:block text-primary-500 capitalize">
-          {t("title", { name: profil?.user?.fullname ?? "" })}
+        <p className="sm:text-lg hidden sm:block text-primary-700 capitalize -translate-y-5 group-hover:translate-0 transition-all duration-700">
+          {t("title", { name: profile?.user?.fullname ?? "" })}
         </p>
         <PageTitle />
       </div>
@@ -59,21 +27,17 @@ export default function TopBar() {
           href={"/profile"}
           className="overflow-hidden rounded-full flex items-center justify-center cursor-pointer size-9"
         >
-          {isLoading ? (
-            <LoadingState size="sm" />
-          ) : (
-            <Image
-              src={
-                profil && profil?.avatar !== ""
-                  ? profil?.avatar
-                  : "/images/errors/errorImage.png"
-              }
-              width={36}
-              height={36}
-              alt="avatar"
-              className="w-full h-full object-cover"
-            />
-          )}
+          <Image
+            src={
+              profile && profile?.avatar !== ""
+                ? profile?.avatar
+                : "/images/errors/errorImage.png"
+            }
+            width={36}
+            height={36}
+            alt="avatar"
+            className="w-full h-full object-cover"
+          />
         </Link>
       </div>
     </header>

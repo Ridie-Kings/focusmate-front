@@ -1,89 +1,54 @@
-import { TaskType } from "@/interfaces/Task/TaskType";
-import { getCalendarByDate } from "@/services/Calendar/getCalendarByDate";
-import { getCalendarByRange } from "@/services/Calendar/getCalendarByRange";
-import { getCalendarOfMonthByDate } from "@/services/Calendar/getCalendarOfMonthByDate";
-import { format, isSameMonth } from "date-fns";
+import { isSameDay, isSameMonth, isSameWeek } from "date-fns";
+
+import { useMemo } from "react";
+
+import { useCalendar } from "@/stores/dashboardStore";
+import { useDate } from "@/stores/calendarStore";
+import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
 
 export default function CalendarUtils({
-  firstDate,
-  secondDate,
-  date,
-  setEvents,
-  setCurrentMonth,
-  setLoadingEvents,
-  currentMonth,
+  navType,
 }: {
-  firstDate: Date;
-  secondDate: Date;
-  date: Date | undefined;
-  setEvents: (events: TaskType[]) => void;
-  setCurrentMonth: (month: Date) => void;
-  setLoadingEvents: (loading: boolean) => void;
-  currentMonth: Date | undefined;
+  navType: "day" | "week" | "month";
 }) {
-  const handleGetCalendarByRange = async () => {
-    try {
-      const event = await getCalendarByRange({ firstDate, secondDate });
-      if (event.success) {
-        setEvents(event.res);
-      } else {
-        console.error("Error al obtener el calendario client", event.res);
-        setEvents([]);
-      }
-    } catch (error) {
-      console.error("Error al obtener el calendario server", error);
+  const calendar = useCalendar();
+  const date = useDate();
 
-      setEvents([]);
-    }
-  };
+  const formatCalendar = useMemo(() => {
+    const events: TimelineItem[] = calendar.events
+      .filter((event) =>
+        navType === "day"
+          ? isSameDay(new Date(event.startDate), date ?? new Date())
+          : navType === "week"
+          ? isSameWeek(new Date(event.startDate), date ?? new Date())
+          : isSameMonth(new Date(event.startDate), date ?? new Date())
+      )
+      .map((event) => ({
+        type: "event",
+        data: event,
+        startDate: new Date(event.startDate),
+      }));
 
-  const handleGetCalendarByDate = async () => {
-    try {
-      const event = await getCalendarByDate({
-        date: format(date ?? new Date(), "yyyy-MM-dd"),
-      });
+    const tasks: TimelineItem[] = calendar.tasks
+      .filter((task) =>
+        navType === "day"
+          ? isSameDay(new Date(task.dueDate), date ?? new Date())
+          : navType === "week"
+          ? isSameWeek(new Date(task.dueDate), date ?? new Date())
+          : isSameMonth(new Date(task.dueDate), date ?? new Date())
+      )
+      .map((task) => ({
+        type: "task",
+        data: task,
+        startDate: new Date(task.dueDate),
+      }));
 
-      if (event.success) {
-        setEvents(event.res);
-      } else {
-        console.error("Error al obtener el calendario client", event.res);
-        setEvents([]);
-      }
-    } catch (error) {
-      console.error("Error al obtener el calendario server", error);
-      setEvents([]);
-    }
-  };
-
-  const handleGetCalendarOfMonthByDate = async (dateToFetch: Date) => {
-    setLoadingEvents(true);
-
-    try {
-      const events = await getCalendarOfMonthByDate({
-        date: dateToFetch,
-      });
-
-      if (events.success) {
-        setEvents(events.res);
-
-        if (
-          !currentMonth ||
-          !isSameMonth(dateToFetch, currentMonth ?? new Date())
-        )
-          setCurrentMonth(dateToFetch);
-      }
-    } catch (error) {
-      console.error("Error al obtener el calendario", error);
-
-      setEvents([]);
-    } finally {
-      setLoadingEvents(false);
-    }
-  };
+    return [...events, ...tasks].sort(
+      (a, b) => a.startDate.getTime() - b.startDate.getTime()
+    );
+  }, [date, calendar.events, calendar.tasks]);
 
   return {
-    handleGetCalendarByRange,
-    handleGetCalendarByDate,
-    handleGetCalendarOfMonthByDate,
+    formatCalendar,
   };
 }

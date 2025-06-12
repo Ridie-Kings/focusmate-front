@@ -4,19 +4,20 @@ import { AlertCircle, Award, Text } from "lucide-react";
 import BtnSend from "./Modal/BtnSend";
 import InputModal from "@/components/Reusable/InputModal";
 import ModalPriorityPicker from "./ModalPriorityPicker/ModalPriorityPicker";
-import TopInputs from "./Modal/TopInputs";
+import TopInputsTasks from "./Modal/TopInputsTasks";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
 import { TypeIsOpen } from "@/interfaces/Modal/ModalType";
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
 import ModalTaskUtils from "@/lib/Task/ModalTaskUtils";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function ModalTaskKanban({
   setIsOpen,
-  tasks,
 }: {
   setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
-  tasks: { column: StatusType; setTasks: Dispatch<SetStateAction<TaskType[]>> };
 }) {
+  const { addTask, updateTask } = useDashboardStore((state) => state.actions);
+  const isLoading = useDashboardStore((state) => state.loading.tasks);
+
   const [task, setTask] = useState<tempTaskType>({
     _id: undefined,
     title: "",
@@ -27,20 +28,23 @@ export default function ModalTaskKanban({
   });
   const isEditMode = Boolean(task._id);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const handleSendTask = () => {
+    addTask(task);
+    setIsOpen({ text: "" });
+  };
+
+  const handleUpdateTask = () => {
+    updateTask(task._id ?? "", task);
+    setIsOpen({ text: "" });
+  };
+
   const [error, setError] = useState<string | null>(null);
-  const { handleSendTask, handleUpdateTask, trad } = ModalTaskUtils({
-    setError,
-    setTasks: tasks.setTasks,
-    task,
-    setIsLoading,
-    setIsOpen,
-  });
+  const { trad } = ModalTaskUtils({ task });
 
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
-        <TopInputs
+        <TopInputsTasks
           error={error}
           setError={setError}
           task={task}

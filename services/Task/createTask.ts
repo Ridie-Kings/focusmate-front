@@ -3,7 +3,6 @@
 import { apiClient } from "../api";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import { tempTaskType } from "@/interfaces/Modal/ModalType";
-import { format } from "date-fns";
 
 export async function createTask({ task }: { task: tempTaskType }): Promise<{
   success: boolean;
@@ -12,10 +11,11 @@ export async function createTask({ task }: { task: tempTaskType }): Promise<{
   try {
     const newTask = {
       ...task,
-      startDate: task.startDate ? task.startDate.toISOString() : undefined,
-      endDate: task.endDate ? task.endDate.toISOString() : undefined,
-      dueDate: task.dueDate ? format(task.dueDate, "yyyy-MM-dd") : undefined,
+      ...(task.startDate && { startDate: task.startDate.toISOString() }),
+      ...(task.endDate && { endDate: task.endDate.toISOString() }),
+      ...(task.dueDate && { dueDate: task.dueDate.toISOString() }),
     };
+    console.log(newTask);
 
     const res = await apiClient.post("tasks", newTask);
 

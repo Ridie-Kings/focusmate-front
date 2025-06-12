@@ -10,7 +10,7 @@ type AddCardProps = {
 };
 
 const AddCard = ({ column, setCards }: AddCardProps) => {
-  const { setIsOpen } = useModalStore();
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const t = useTranslations("Common.buttons");
 
   return (

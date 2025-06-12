@@ -8,18 +8,18 @@ import { es } from "date-fns/locale";
 import CurrentDate from "@/components/Elements/General/CurrentDate";
 import ButtonDropDown from "@/components/Reusable/ButtonDropDown";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
+import { useCalendarStore, useDate } from "@/stores/calendarStore";
 
 export default function NavInfo({
   navType,
   setNavType,
-  setDate,
-  date,
 }: {
   navType: NavTypeType;
   setNavType: Dispatch<SetStateAction<NavTypeType>>;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
-  date: Date;
 }) {
+  const date = useDate() ?? new Date();
+  const { setDate } = useCalendarStore((state) => state.actions);
+
   const handleCalendar = (item: NavTypeType) => {
     setNavType(item);
     if (localStorage) localStorage.setItem("navCalendar", item);

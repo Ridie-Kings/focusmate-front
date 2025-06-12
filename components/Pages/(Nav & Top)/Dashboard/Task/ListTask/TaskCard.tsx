@@ -1,31 +1,26 @@
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import { useModalStore } from "@/stores/modalStore";
 import Menu from "@/components/Reusable/Menu";
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
-import TaskUtils from "@/lib/Task/TaskUtils";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import { Pen, Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { useToastStore } from "@/stores/toastStore";
 
 export default function TaskCard({
   task,
-  setTasks,
-  setEvents,
   setIsChange,
   isChange,
 }: {
   setIsChange: (taskId: string) => void;
   isChange: boolean;
   task: TaskType;
-  setTasks: Dispatch<SetStateAction<TaskType[]>>;
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
 }) {
-  const { setIsOpen } = useModalStore();
-  const { handleDeleteTask, handleChangeStatus, handleChangePriority } =
-    TaskUtils({
-      setTasks,
-      setEvents,
-    });
-
+  const { setIsOpen } = useModalStore((state) => state.actions);
+  const { removeTask, updateTask } = useDashboardStore(
+    (state) => state.actions
+  );
+  const { addToast } = useToastStore();
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,22 +54,48 @@ export default function TaskCard({
     }
   }, [isChange]);
 
-  const handleStatus = () => {
+  const handleStatus = async () => {
     setIsChange(task._id);
-    setTimeout(() => {
-      handleChangeStatus(
+    setTimeout(async () => {
+      const res = await updateTask(
+        task._id,
         task.status === "completed"
-          ? ("pending" as StatusType)
-          : ("completed" as StatusType),
-        task._id
+          ? { status: "pending" }
+          : { status: "completed" }
       );
+      if (res.success) {
+        addToast({
+          message: "Tarea actualizada correctamente",
+          description: "La tarea ha sido actualizada correctamente",
+          type: "success",
+        });
+      } else {
+        addToast({
+          message: "Error al actualizar la tarea",
+          type: "error",
+          description: res.res as string,
+        });
+      }
     }, 1000);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     setIsChange(task._id);
-    setTimeout(() => {
-      handleDeleteTask(task._id);
+    setTimeout(async () => {
+      const res = await removeTask(task._id);
+      if (res.success) {
+        addToast({
+          message: "Tarea eliminada correctamente",
+          description: "La tarea ha sido eliminada correctamente",
+          type: "success",
+        });
+      } else {
+        addToast({
+          message: "Error al eliminar la tarea",
+          type: "error",
+          description: res.res as string,
+        });
+      }
     }, 1000);
   };
 
@@ -88,7 +109,7 @@ export default function TaskCard({
         {" "}
         <div className="flex items-center gap-3 text-primary-500">
           <p>{task.title}</p>{" "}
-          <p className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-900 delay-100 cursor-default truncate flex-1">
+          <p className="text-sm opacity-0 group-hover:opacity-100 transition-all duration-900 delay-100 cursor-default truncate flex-1 sm:block hidden">
             {" "}
             {task.description}
           </p>
@@ -102,15 +123,18 @@ export default function TaskCard({
                 subMenu: [
                   {
                     label: "Alta",
-                    onClick: () => handleChangePriority("high", task._id),
+                    onClick: () => updateTask(task._id, { priority: "high" }),
+                    color: "red",
                   },
                   {
                     label: "Media",
-                    onClick: () => handleChangePriority("medium", task._id),
+                    onClick: () => updateTask(task._id, { priority: "medium" }),
+                    color: "orange",
                   },
                   {
                     label: "Baja",
-                    onClick: () => handleChangePriority("low", task._id),
+                    onClick: () => updateTask(task._id, { priority: "low" }),
+                    color: "green",
                   },
                 ],
               },

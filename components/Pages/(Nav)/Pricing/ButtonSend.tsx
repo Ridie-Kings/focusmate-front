@@ -1,12 +1,13 @@
 "use client";
 import Button from "@/components/Reusable/Button";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { useProfile } from "@/stores/profileStore";
 import { useState } from "react";
 
-export default function ButtonSend({ profile }: { profile: ProfileType }) {
+export default function ButtonSend() {
   const [isLoading, setIsLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const profile = useProfile();
 
   const handleSend = async () => {
     try {
@@ -17,8 +18,8 @@ export default function ButtonSend({ profile }: { profile: ProfileType }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          _id: profile.user._id,
-          email: profile.user.email,
+          _id: profile?.user._id,
+          email: profile?.user.email,
         }),
       });
 

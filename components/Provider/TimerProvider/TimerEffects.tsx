@@ -1,64 +1,91 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { useTimerStore } from "@/stores/timerStore";
-import { useWebSocketStore } from "@/stores/websocketStore";
+import {
+  useIsChronometer,
+  useIsPlay,
+  useMenu,
+  useTime,
+  useCycles,
+  useTotalCycles,
+  useIsType,
+  useTimerStore,
+} from "@/stores/timerStore";
+import { useStatus, useWebSocketStore } from "@/stores/websocketStore";
 import { useTimer } from "./TimerLogic";
 import { useChronometer } from "./ChronometerLogic";
 
 export default function TimerEffects() {
-  const timerState = useTimerStore();
-  const wsState = useWebSocketStore();
+  const {
+    setIsPlay,
+    setTime,
+    setMenu,
+    setStartedElement,
+    setCycles,
+    setTotalCycles,
+  } = useTimerStore((state) => state.actions);
+
+  const isPlay = useIsPlay();
+  const isChronometer = useIsChronometer();
+  const time = useTime();
+  const menu = useMenu();
+  const cycles = useCycles();
+  const totalCycles = useTotalCycles();
+  const isType = useIsType();
+
+  const status = useStatus();
+  const { setStatus } = useWebSocketStore((state) => state.actions);
+
   const timerControlsRef = useRef<ReturnType<typeof useTimer> | null>(null);
   const chronometerControlsRef = useRef<ReturnType<
     typeof useChronometer
   > | null>(null);
 
   const timerControls = useTimer({
-    status: wsState.status,
-    setStatus: wsState.setStatus,
-    isPlay: timerState.isPlay && !timerState.isChronometer,
-    setIsPlay: timerState.setIsPlay,
-    time: timerState.time,
-    setTime: timerState.setTime,
-    menu: timerState.menu,
-    setMenu: timerState.setMenu,
-    setStartedElement: timerState.setStartedElement,
-    setCycles: timerState.setCycles,
-    setTotalCycles: timerState.setTotalCycles,
-    cycles: timerState.cycles,
-    totalCycles: timerState.totalCycles,
-    isChronometer: timerState.isChronometer,
+    status: status,
+    setStatus: setStatus,
+    isPlay: isPlay && !isChronometer,
+    setIsPlay: setIsPlay,
+    time: time,
+    setTime: setTime,
+    menu: menu,
+    setMenu: setMenu,
+    setStartedElement: setStartedElement,
+    setCycles: setCycles,
+    setTotalCycles: setTotalCycles,
+    cycles: cycles,
+    totalCycles: totalCycles,
+    isChronometer: isChronometer,
   });
 
   const chronometerControls = useChronometer({
-    menu: timerState.menu,
-    isType: timerState.isType,
-    time: timerState.time,
-    setTime: timerState.setTime,
-    isPlay: timerState.isPlay && timerState.isChronometer,
-    setIsPlay: timerState.setIsPlay,
-    isChronometer: timerState.isChronometer,
+    menu: menu,
+    isType: isType,
+    time: time,
+    setTime: setTime,
+    isPlay: isPlay && isChronometer,
+    setIsPlay: setIsPlay,
+    isChronometer: isChronometer,
   });
 
   useEffect(() => {
-    if (!timerState.isChronometer) {
+    if (!isChronometer) {
       timerControlsRef.current = timerControls;
     }
-  }, [timerControls, timerState.isChronometer]);
+  }, [timerControls, isChronometer]);
 
   useEffect(() => {
-    if (timerState.isChronometer) {
+    if (isChronometer) {
       chronometerControlsRef.current = chronometerControls;
     }
-  }, [chronometerControls, timerState.isChronometer]);
+  }, [chronometerControls, isChronometer]);
 
   useEffect(() => {
-    if (timerState.isChronometer) {
+    if (isChronometer) {
       timerControlsRef.current = null;
     } else {
       chronometerControlsRef.current = null;
     }
-  }, [timerState.isChronometer]);
+  }, [isChronometer]);
 
   return null;
 }

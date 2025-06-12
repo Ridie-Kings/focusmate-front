@@ -2,22 +2,19 @@
 import { MailWarning, Lightbulb } from "lucide-react";
 import Button from "@/components/Reusable/Button";
 import { useModalStore } from "@/stores/modalStore";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
+import { useProfile } from "@/stores/profileStore";
 
-interface SupportClientProps {
-  profile: ProfileType | null;
-}
+export default function SupportClient() {
+  const { setIsOpen } = useModalStore((state) => state.actions);
+  const profile = useProfile();
 
-export default function SupportClient({ profile }: SupportClientProps) {
-  const { setIsOpen } = useModalStore();
-  console.info(profile);
   return (
-    <div className="flex flex-col gap-8 p-8 w-full justify-center items-center">
+    <div className="flex flex-col gap-8 p-8 w-full justify-center items-center h-screen">
       <p className="text-center text-primary-500 w-3/5 text-lg">
         En <b>SherpApp</b> queremos cubrir tus necesidades y ofrecerte
         exactamente lo que nos pidas. Esta página ha sido desarrollada pensando
-        en ti, <span className=" capitalize">{profile?.user.fullname}</span>: tú
-        eres lo más importante. ¡Cuéntanos tu idea o problema, y lo haremos
+        en ti, <span className=" capitalize">{profile?.user?.fullname}</span>:
+        tú eres lo más importante. ¡Cuéntanos tu idea o problema, y lo haremos
         realidad!
       </p>
       <div className="flex flex-col md:flex-row gap-8 p-8 w-full justify-center items-center">

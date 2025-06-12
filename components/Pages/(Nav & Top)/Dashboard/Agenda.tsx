@@ -7,14 +7,18 @@ import Timeline from "./Agenda/Timeline";
 import SmallCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendar";
 import { useTranslations } from "next-intl";
 
-import { useDashboardStore } from "@/stores/dashboardStore";
 import { isSameMonth } from "date-fns";
-import CalendarUtils from "@/lib/CalendarUtils";
+import { useDashboardStore, useLoadingCalendar } from "@/stores/dashboardStore";
+import { useDate } from "@/stores/calendarStore";
+import GetCalendarUtils from "@/lib/GetCalendarUtils";
 
 export default function Agenda() {
-  const { events, setEvents, setTasks, loadingEvents, setLoadingEvents } =
-    useDashboardStore();
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const { setCalendar, setLoading } = useDashboardStore(
+    (state) => state.actions
+  );
+  const date = useDate();
+  const loadingCalendar = useLoadingCalendar();
+
   const [currentMonth, setCurrentMonth] = useState<Date | undefined>(undefined);
   const t = useTranslations("Dashboard.agenda");
 
@@ -23,18 +27,18 @@ export default function Agenda() {
       return;
     }
 
-    const { handleGetCalendarOfMonthByDate } = CalendarUtils({
+    const { handleGetCalendarOfMonthByDate } = GetCalendarUtils({
       firstDate: date ?? new Date(),
       secondDate: date ?? new Date(),
-      date: date ?? new Date(),
-      setEvents,
       setCurrentMonth,
-      setLoadingEvents,
+      date,
+      setCalendar,
+      setLoading,
       currentMonth,
     });
 
     handleGetCalendarOfMonthByDate(date ?? new Date());
-  }, [date, setEvents]);
+  }, [date, setCalendar]);
 
   return (
     <TemplateDashboard
@@ -44,14 +48,8 @@ export default function Agenda() {
       id="agenda-component"
     >
       <div className="flex flex-col xl:flex-row w-full h-full gap-4">
-        <SmallCalendar setDate={setDate} date={date ?? new Date()} inView btn />
-        <Timeline
-          date={date}
-          events={events}
-          setEvents={setEvents}
-          setTasks={setTasks}
-          loadingEvents={loadingEvents}
-        />
+        <SmallCalendar date={date ?? new Date()} inView btn />
+        <Timeline loadingEvents={loadingCalendar} />
       </div>
     </TemplateDashboard>
   );

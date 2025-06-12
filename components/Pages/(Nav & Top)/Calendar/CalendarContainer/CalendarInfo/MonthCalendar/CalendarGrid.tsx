@@ -1,4 +1,3 @@
-import { TaskType } from "@/interfaces/Task/TaskType";
 import {
   addDays,
   endOfMonth,
@@ -10,19 +9,11 @@ import { es } from "date-fns/locale";
 import { Dispatch, memo, SetStateAction, useMemo } from "react";
 import CalendarDay from "./CalendarGrid/CalendarDay";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
+import { useDate } from "@/stores/calendarStore";
 
 const CalendarGrid = memo(
-  ({
-    events,
-    date = new Date(),
-    setDate,
-    setNavType,
-  }: {
-    events: TaskType[];
-    date?: Date;
-    setDate: Dispatch<SetStateAction<Date | undefined>>;
-    setNavType: Dispatch<SetStateAction<NavTypeType>>;
-  }) => {
+  ({ setNavType }: { setNavType: Dispatch<SetStateAction<NavTypeType>> }) => {
+    const date = useDate() ?? new Date();
     const currentMonth = date.getMonth();
 
     const days = useMemo(() => {
@@ -47,9 +38,7 @@ const CalendarGrid = memo(
             key={day.toISOString()}
             day={day}
             currentMonth={currentMonth}
-            events={events}
             setNavType={setNavType}
-            setDate={setDate}
           />
         ))}
       </div>

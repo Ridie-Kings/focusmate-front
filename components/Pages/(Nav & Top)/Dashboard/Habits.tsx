@@ -9,13 +9,15 @@ import Button from "@/components/Reusable/Button";
 
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import MountainHabits from "@/components/Elements/Svg/Mountain/MountainHabits";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import { useDashboardStore, useHabits } from "@/stores/dashboardStore";
 import { useModalStore } from "@/stores/modalStore";
 import { useTranslations } from "next-intl";
 
 export default function Habits({ habitsList }: { habitsList: HabitsType[] }) {
-  const { habits, setHabits } = useDashboardStore();
-  const { setIsOpen } = useModalStore();
+  const habits = useHabits();
+  const { setHabits } = useDashboardStore((state) => state.actions);
+  const { setIsOpen } = useModalStore((state) => state.actions);
+
   const [porcent, setPorcent] = useState<number>(0);
   const [doneCount, setDoneCount] = useState(0);
   const t = useTranslations("Dashboard.habits");

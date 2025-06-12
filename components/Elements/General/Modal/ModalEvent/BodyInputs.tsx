@@ -1,49 +1,35 @@
 import { Dispatch, SetStateAction } from "react";
 import InputModal from "@/components/Reusable/InputModal";
-import { Award, Calendar, Text, Timer } from "lucide-react";
+import { Calendar, Text, Timer } from "lucide-react";
 import { format } from "date-fns";
 import { enUS, es } from "date-fns/locale";
 import ModalDatePicker from "../ModalDatePicker/ModalDatePicker";
 import ModalTimePicker from "../ModalTimePicker/ModalTimePicker";
-import ModalPriorityPicker from "../ModalPriorityPicker/ModalPriorityPicker";
-import { tempTaskType } from "@/interfaces/Modal/ModalType";
+import { tempEventType } from "@/interfaces/Modal/ModalType";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function BodyInputs({
   error,
-  task,
-  setTask,
+  event,
+  setEvent,
   setError,
   date,
 }: {
   error: string | null;
   setError: Dispatch<SetStateAction<string | null>>;
-  task: tempTaskType;
-  setTask: Dispatch<SetStateAction<tempTaskType>>;
+  event: tempEventType;
+  setEvent: Dispatch<SetStateAction<tempEventType>>;
   date: Date;
 }) {
   const tCommon = useTranslations("Common");
-  const tPriority = useTranslations("Modal.event.priority");
   const locale = useLocale();
-  const trad = () => {
-    switch (task.priority) {
-      case "high":
-        return tPriority("high");
-      case "medium":
-        return tPriority("medium");
-      case "low":
-        return tPriority("low");
-      default:
-        return "";
-    }
-  };
 
   return (
     <div className="flex flex-col gap-6 w-full">
       <InputModal
-        defaultValue={task.description}
+        defaultValue={event.description}
         onChange={(e) =>
-          setTask((prev) => ({ ...prev, description: e.target.value }))
+          setEvent((prev) => ({ ...prev, description: e.target.value }))
         }
         type="text"
         placeholder={tCommon("description")}
@@ -65,18 +51,17 @@ export default function BodyInputs({
       /> */}
       <InputModal
         type="select"
-        placeholder={format(task.dueDate ?? new Date(), "dd MMMM yyyy", {
+        placeholder={format(event.startDate ?? new Date(), "dd MMMM yyyy", {
           locale: locale === "es" ? es : enUS,
         })}
         option={
           <ModalDatePicker
             date={date}
             onChange={(e) => {
-              setTask((prev) => ({
+              setEvent((prev) => ({
                 ...prev,
-                startDate: new Date(e.target.value),
-                dueDate: new Date(e.target.value),
-                endDate: new Date(e.target.value),
+                startDate: new Date(e.target.value as string),
+                endDate: new Date(e.target.value as string),
               }));
             }}
           />
@@ -87,21 +72,21 @@ export default function BodyInputs({
       <div className="flex">
         <InputModal
           type="select"
-          placeholder={format(task.startDate ?? new Date(), "HH:mm", {
+          placeholder={format(event.startDate ?? new Date(), "HH:mm", {
             locale: locale === "es" ? es : enUS,
           })}
           option={
             <ModalTimePicker
-              defaultValue={task.startDate}
+              defaultValue={event.startDate}
               onChange={(e) => {
-                const newStartDate = new Date(task.startDate ?? new Date());
+                const newStartDate = new Date(event.startDate ?? new Date());
                 newStartDate.setHours(
                   e.target.value.hours,
                   e.target.value.min,
                   0,
                   0
                 );
-                setTask((prev) => ({
+                setEvent((prev) => ({
                   ...prev,
                   startDate: newStartDate,
                 }));
@@ -114,14 +99,14 @@ export default function BodyInputs({
         />
         <InputModal
           type="select"
-          placeholder={format(task.endDate ?? new Date(), "HH:mm", {
+          placeholder={format(event.endDate ?? new Date(), "HH:mm", {
             locale: es,
           })}
           option={
             <ModalTimePicker
-              defaultValue={task.endDate}
+              defaultValue={event.endDate}
               onChange={(e) => {
-                const newEndDate = new Date(task.endDate ?? new Date());
+                const newEndDate = new Date(event.endDate ?? new Date());
                 newEndDate.setHours(
                   e.target.value.hours,
                   e.target.value.min,
@@ -129,7 +114,7 @@ export default function BodyInputs({
                   0
                 );
 
-                setTask((prev) => ({
+                setEvent((prev) => ({
                   ...prev,
                   endDate: newEndDate,
                 }));
@@ -141,23 +126,6 @@ export default function BodyInputs({
           propagand={true}
         />
       </div>
-      <InputModal
-        type="select"
-        defaultValue={task.priority}
-        placeholder={task?.priority ? trad() : tCommon("status")}
-        option={
-          <ModalPriorityPicker
-            top="20px"
-            onChange={(e) =>
-              setTask((prev) => ({
-                ...prev,
-                priority: e.target.value as "high" | "medium" | "low",
-              }))
-            }
-          />
-        }
-        icon={<Award />}
-      />
     </div>
   );
 }

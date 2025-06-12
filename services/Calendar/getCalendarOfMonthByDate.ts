@@ -4,7 +4,7 @@ import { startOfMonth } from "date-fns";
 import { endOfWeek } from "date-fns";
 import { startOfWeek } from "date-fns";
 import { apiClient } from "../api";
-import { PromiseCalendar } from "@/interfaces/Calendar/CalendarType";
+import { CalendarType } from "@/interfaces/Calendar/CalendarType";
 
 export async function getCalendarOfMonthByDate({
   date,
@@ -12,7 +12,7 @@ export async function getCalendarOfMonthByDate({
   date: Date;
 }): Promise<{
   success: boolean;
-  res: PromiseCalendar;
+  res: CalendarType;
 }> {
   try {
     const firstDate = startOfWeek(startOfMonth(date));
@@ -24,7 +24,7 @@ export async function getCalendarOfMonthByDate({
       }`
     );
 
-    return { success: true, res };
+    return { success: true, res: res };
   } catch (error: any) {
     console.error(`Error fetching calendar by range:`, error);
 

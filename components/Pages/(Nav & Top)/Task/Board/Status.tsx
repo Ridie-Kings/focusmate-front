@@ -45,12 +45,7 @@ const Column = ({ title, cards, status, setCards }: ColumnProps) => {
       >
         {filteredCards.map((c) => {
           return (
-            <Card
-              key={c._id}
-              task={c}
-              setTasks={setCards}
-              handleDragStart={handleDragStart}
-            />
+            <Card key={c._id} task={c} handleDragStart={handleDragStart} />
           );
         })}
         <DropIndicator beforeId={null} column={status} />

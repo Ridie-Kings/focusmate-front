@@ -2,20 +2,18 @@
 import { useEffect } from "react";
 import Column from "./Board/Status";
 import { TaskType } from "@/interfaces/Task/TaskType";
-import { useDashboardStore } from "@/stores/dashboardStore";
+import { useDashboardStore, useTasks } from "@/stores/dashboardStore";
 
 export const Board = ({ prevTasks }: { prevTasks: TaskType[] }) => {
-  const { setTasks, tasks } = useDashboardStore();
+  const { setTasks } = useDashboardStore((state) => state.actions);
+  const tasks = useTasks();
 
   useEffect(() => {
     setTasks(prevTasks);
   }, [prevTasks]);
 
   return (
-    <div
-      style={{ height: "calc(100vh - 125px)" }}
-      className="flex w-full gap-3 overflow-hidden p-6"
-    >
+    <div className="flex h-screen w-full gap-3 overflow-hidden p-6">
       <Column
         title="Pendientes"
         status="pending"

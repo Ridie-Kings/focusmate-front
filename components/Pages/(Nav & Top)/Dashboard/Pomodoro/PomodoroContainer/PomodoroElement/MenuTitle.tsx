@@ -4,7 +4,7 @@ export default function MenuTitle({
   size,
   menu,
 }: {
-  size: "medium" | "large";
+  size: "small" | "medium" | "large";
   menu: string;
 }) {
   const t = useTranslations("Dashboard.pomodoro.menu");

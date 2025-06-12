@@ -13,16 +13,17 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 
 import WeekDays from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/WeekDays";
 import DaysCalendar from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/DaysCalendar";
 import CalendarNav from "@/components/Elements/Calendar/SmallCalendar/SmallCalendarComponents/CalendarNav";
 import Button from "@/components/Reusable/Button";
 import { useModalStore } from "@/stores/modalStore";
-import { TaskType } from "@/interfaces/Task/TaskType";
-import { useDashboardStore } from "@/stores/dashboardStore";
 import { useTranslations } from "next-intl";
+import { useCalendar } from "@/stores/dashboardStore";
+import { TimelineItem } from "../Timeline/TimelineCard";
+import { useCalendarStore } from "@/stores/calendarStore";
 
 const generateMonthDays = (date: Date | undefined): Date[] => {
   const safeDate = date || new Date();
@@ -44,13 +45,13 @@ const generateMonthDays = (date: Date | undefined): Date[] => {
 type CalendarItemProps = {
   date: Date;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
-  events?: TaskType[];
+  calendar?: TimelineItem[];
 };
 
 export const CalendarItem: React.FC<CalendarItemProps> = ({
   date,
   setDate,
-  events,
+  calendar,
 }) => {
   const days = generateMonthDays(date);
 
@@ -64,7 +65,7 @@ export const CalendarItem: React.FC<CalendarItemProps> = ({
         date={date}
         days={days}
         setDate={setDate}
-        events={events}
+        calendar={calendar}
       />
     </div>
   );
@@ -73,7 +74,6 @@ export const CalendarItem: React.FC<CalendarItemProps> = ({
 type CalendarProps = {
   className?: string;
   inView?: boolean;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
   date: Date;
   btn?: boolean;
 };
@@ -81,12 +81,12 @@ type CalendarProps = {
 const SmallCalendar: React.FC<CalendarProps> = ({
   className = "",
   inView,
-  setDate,
   date,
   btn,
 }) => {
-  const { events } = useDashboardStore();
-  const { setIsOpen } = useModalStore();
+  const { setDate } = useCalendarStore((state) => state.actions);
+  const calendar = useCalendar();
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const t = useTranslations("Common.buttons");
 
   const handlePreviousMonth = () => {
@@ -112,6 +112,24 @@ const SmallCalendar: React.FC<CalendarProps> = ({
     });
   };
 
+  const timelineItems = useMemo(() => {
+    const events: TimelineItem[] = calendar.events.map((event) => ({
+      type: "event",
+      data: event,
+      startDate: new Date(event.startDate),
+    }));
+
+    const tasks: TimelineItem[] = calendar.tasks.map((task) => ({
+      type: "task",
+      data: task,
+      startDate: new Date(task.dueDate),
+    }));
+
+    return [...events, ...tasks].sort(
+      (a, b) => a.startDate.getTime() - b.startDate.getTime()
+    );
+  }, [date, calendar.events, calendar.tasks]);
+
   return (
     <div
       className="flex flex-col place-content-between pb-2"
@@ -128,7 +146,7 @@ const SmallCalendar: React.FC<CalendarProps> = ({
           handleYearChange={handleMonthYearChange}
           date={date}
         />
-        <CalendarItem date={date} setDate={setDate} events={events} />
+        <CalendarItem date={date} setDate={setDate} calendar={timelineItems} />
       </div>
       {btn && (
         <Button

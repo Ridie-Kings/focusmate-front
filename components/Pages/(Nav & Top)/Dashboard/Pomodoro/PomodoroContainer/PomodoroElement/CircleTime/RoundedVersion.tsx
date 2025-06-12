@@ -10,10 +10,10 @@ export default function RoundedVersion({
   const strokeWidth = 15;
   const [currentSize, setCurrentSize] = useState({ x: 0, y: 0 });
   const sizes = {
-    sm: { x: 250, y: 400 },
-    md: { x: 300, y: 450 },
-    lg: { x: 225, y: 350 },
-    xl: { x: 300, y: 450 },
+    sm: { x: 250, y: 300 },
+    md: { x: 250, y: 300 },
+    lg: { x: 225, y: 340 },
+    xl: { x: 275, y: 450 },
     "2xl": { x: 450, y: 600 },
   };
 

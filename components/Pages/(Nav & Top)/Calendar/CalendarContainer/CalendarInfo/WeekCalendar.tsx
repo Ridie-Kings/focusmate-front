@@ -10,17 +10,20 @@ import {
   getMinutes,
   isToday,
   format,
+  differenceInHours,
 } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
-import { Dispatch, RefObject, SetStateAction, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 import Divider from "@/components/Elements/General/Divider";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import Menu from "@/components/Reusable/Menu";
 import AgendaUtils from "@/lib/AgendaUtils";
-import TaskUtils from "@/lib/Task/TaskUtils";
 import { useModalStore } from "@/stores/modalStore";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
+import CalendarUtils from "@/lib/CalendarUtils";
+import { useCalendarStore, useDate } from "@/stores/calendarStore";
 
 const WeekDay = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"];
 
@@ -31,38 +34,62 @@ const getNowPosition = (date: Date) => {
   return 24 + hours * 2 * 68 + minutes * (68 / 30);
 };
 
+// const findOverlappingEvents = (
+//   events: TimelineItem[],
+//   currentEvent: TimelineItem
+// ) => {
+//   return events.filter((event) => {
+//     const currentStart = new Date(event.startDate).getTime();
+//     const currentEnd = new Date(event.data.endDate).getTime();
+//     const eventStart = new Date(currentEvent.startDate).getTime();
+//     const eventEnd = new Date(currentEvent.data.endDate).getTime();
+
+//     return (
+//       (currentStart <= eventEnd && currentEnd >= eventStart) ||
+//       (eventStart <= currentEnd && eventEnd >= currentStart)
+//     );
+//   });
+// };
+
 const EventItem = ({
-  event,
-  setEvents,
+  calendarItem,
   eventStartPosition,
   eventEndPosition,
 }: {
-  event: TaskType;
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
+  calendarItem: TimelineItem;
   eventStartPosition: number;
   eventEndPosition: number;
 }) => {
-  const { setIsOpen } = useModalStore();
+  const calendarData = calendarItem.data;
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const { isLightColor } = AgendaUtils();
+  const { removeEvent } = useDashboardStore((state) => state.actions);
 
-  const { handleDeleteTask } = TaskUtils({
-    setEvents,
-  });
-  const textColor = isLightColor(event.color) ? "text-black" : "text-white";
+  const textColor = isLightColor(calendarData.color)
+    ? "text-black"
+    : "text-white";
+
+  const backgroundColor =
+    calendarData.color !== "" ? calendarData.color : "#000000";
 
   return (
     <div
-      className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"
+      className={`absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between z-2 transition-all duration-500`}
       style={{
-        backgroundColor: event.color,
+        backgroundColor,
         top: `${eventStartPosition}px`,
         height: `${eventEndPosition - eventStartPosition}px`,
       }}
     >
       <div className="w-full flex items-center place-content-between sticky top-15">
-        <p className="text-sm">{event.title}</p>
+        <p className={`text-sm ${textColor}`}>{calendarData.title}</p>
         <Menu
           className={textColor}
+          position={
+            differenceInHours(calendarData.endDate, calendarData.startDate) < 1
+              ? "top-right"
+              : "bottom-right"
+          }
           items={[
             {
               label: "Modificar",
@@ -73,17 +100,17 @@ const EventItem = ({
               label: "Eliminar",
               color: "red",
               icon: <Trash2 />,
-              onClick: () => handleDeleteTask(event._id),
+              onClick: () => removeEvent(calendarData._id),
             },
           ]}
         />
       </div>
       <div
-        style={{ backgroundColor: event.color }}
-        className={`${textColor} flex place-content-between w-full text-xs p-1 z-8`}
+        style={{ backgroundColor }}
+        className={`${textColor} flex place-content-between w-full text-xs p-1 z-1`}
       >
-        <span>{format(event.startDate, "HH:mm")} </span>
-        <span>{format(event.endDate, "HH:mm")} </span>
+        <span>{format(calendarData.startDate, "HH:mm")} </span>
+        <span>{format(calendarData.endDate, "HH:mm")} </span>
       </div>
     </div>
   );
@@ -91,17 +118,14 @@ const EventItem = ({
 
 const DayColumn = ({
   day,
-  events,
-  setEvents,
   selectedDate,
-  setDate,
 }: {
   day: Date;
-  events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   selectedDate: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
 }) => {
+  const { setDate } = useCalendarStore((state) => state.actions);
+  const { formatCalendar } = CalendarUtils({ navType: "week" });
+
   return (
     <div className="flex flex-col gap-5">
       <div
@@ -127,17 +151,27 @@ const DayColumn = ({
       <div
         className={`text-center p-1 h-full rounded-lg transition-all duration-200 relative`}
       >
-        {events
-          .filter((event) => isSameDay(event.dueDate, day))
-          .map((event, i) => {
-            const eventStartPosition = getNowPosition(event.startDate);
-            const eventEndPosition = getNowPosition(event.endDate);
+        {formatCalendar
+          .filter((calendarItem) => isSameDay(calendarItem.data.startDate, day))
+          .map((calendarItem, i) => {
+            const calendarData = calendarItem.data;
+            const eventStartPosition = getNowPosition(calendarData.startDate);
+            const eventEndPosition = getNowPosition(calendarData.endDate);
+
+            // const overlappingEvents = findOverlappingEvents(
+            //   formatCalendar.filter((item) =>
+            //     isSameDay(item.data.startDate, day)
+            //   ),
+            //   calendarItem
+            // );
+            // const eventIndex = overlappingEvents.findIndex(
+            //   (event) => event === calendarItem
+            // );
 
             return (
               <EventItem
                 key={i}
-                event={event}
-                setEvents={setEvents}
+                calendarItem={calendarItem}
                 eventStartPosition={eventStartPosition}
                 eventEndPosition={eventEndPosition}
               />
@@ -148,19 +182,13 @@ const DayColumn = ({
   );
 };
 
-const WeekCalendarItem = ({
-  date,
-  setDate,
-  events,
-  setEvents,
+export default function WeekCalendar({
   scrollCalendar,
 }: {
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
-  events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
   scrollCalendar: RefObject<HTMLDivElement | null>;
-}) => {
+}) {
+  const date = useDate() ?? new Date();
+
   const startDate = startOfDay(startOfWeek(date, { weekStartsOn: 1 }));
   const endDate = endOfDay(endOfWeek(date, { weekStartsOn: 1 }));
 
@@ -181,7 +209,7 @@ const WeekCalendarItem = ({
   return (
     <div
       ref={scrollCalendar}
-      className="grid grid-cols-8 w-full h-screen sm:h-full rounded-xl relative gap-2 overflow-auto 2xl:h-[calc(100vh-360px)] xl:h-[calc(100vh-200px)]"
+      className="grid grid-cols-8 w-full rounded-xl relative gap-2 overflow-y-auto overflow-x-hidden h-[calc(100vh-152px)]"
     >
       <div className="flex flex-col gap-5 relative">
         <div
@@ -195,39 +223,8 @@ const WeekCalendarItem = ({
       </div>
       <TimeBar pos={getNowPosition(new Date()) + 71} />
       {days.map((day, index) => (
-        <DayColumn
-          key={index}
-          day={day}
-          events={events}
-          setEvents={setEvents}
-          selectedDate={date}
-          setDate={setDate}
-        />
+        <DayColumn key={index} day={day} selectedDate={date} />
       ))}
     </div>
-  );
-};
-
-export default function WeekCalendar({
-  events,
-  setEvents,
-  date,
-  setDate,
-  scrollCalendar,
-}: {
-  events: TaskType[];
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
-  scrollCalendar: RefObject<HTMLDivElement | null>;
-}) {
-  return (
-    <WeekCalendarItem
-      scrollCalendar={scrollCalendar}
-      date={date}
-      setDate={setDate}
-      events={events}
-      setEvents={setEvents}
-    />
   );
 }

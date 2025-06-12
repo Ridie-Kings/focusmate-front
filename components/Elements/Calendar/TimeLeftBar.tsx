@@ -24,7 +24,7 @@ export default function TimeLeftBar({
                   .toString()
                   .padStart(2, "0")}`}
               </div>
-              <div className="absolute left-full w-[819px] border-b-2 border-neutral-200 border-dashed -z-10" />
+              <div className="absolute left-full w-[1400px] border-b-2 border-neutral-200 border-dashed -z-10" />
             </div>
           );
         })}

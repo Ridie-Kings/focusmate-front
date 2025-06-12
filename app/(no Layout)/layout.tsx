@@ -6,6 +6,7 @@ import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 import Modal from "@/components/Elements/General/Modal";
 import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import Toast from "@/components/Reusable/Toast";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -37,6 +38,7 @@ export default async function RootLayout({
             <PWAInstallPrompt />
           </main>
           <Modal />
+          <Toast />
         </NextIntlClientProvider>
       </body>
     </html>

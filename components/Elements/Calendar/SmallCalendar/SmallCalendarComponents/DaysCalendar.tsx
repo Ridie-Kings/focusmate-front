@@ -1,13 +1,13 @@
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { isSameDay } from "date-fns";
 import { Dispatch, SetStateAction } from "react";
+import { TimelineItem } from "../../Timeline/TimelineCard";
 
 interface DaysCalendarProps {
   isToday: (day: Date) => boolean;
   date: Date | undefined;
   days: Date[];
   setDate: Dispatch<SetStateAction<Date | undefined>>;
-  events?: TaskType[];
+  calendar?: TimelineItem[];
 }
 
 export default function DaysCalendar({
@@ -15,7 +15,7 @@ export default function DaysCalendar({
   date,
   days,
   setDate,
-  events,
+  calendar,
 }: DaysCalendarProps) {
   const currentMonth = date?.getMonth();
 
@@ -45,9 +45,9 @@ export default function DaysCalendar({
 
   const getEventsForDay = (day: Date) => {
     return (
-      events &&
-      events.filter(
-        (event) => event.dueDate && isSameDay(new Date(event.dueDate), day)
+      calendar &&
+      calendar.filter(
+        (event) => event.startDate && isSameDay(new Date(event.startDate), day)
       )
     );
   };
@@ -68,7 +68,7 @@ export default function DaysCalendar({
           >
             <div>{day.getDate()}</div>
 
-            {events && hasEvents && (
+            {calendar && hasEvents && (
               <div className="flex items-center justify-center mt-1 space-x-0.5">
                 {dayEvents.length <= 3 ? (
                   Array.from({ length: dayEvents.length }).map((_, i) => (

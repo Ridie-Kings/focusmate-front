@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { StatusType } from "../Task/TaskType";
+import { StatusType, TaskType } from "../Task/TaskType";
+import { EventType } from "./EventType";
 
 export type CalendarContextType = {
   date: Date | undefined;
@@ -30,3 +31,8 @@ export type PromiseCalendar = {
 }[];
 
 export type NavTypeType = "Día" | "Semana" | "Mes";
+
+export type CalendarType = {
+  events: EventType[];
+  tasks: TaskType[];
+};

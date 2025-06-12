@@ -6,6 +6,7 @@ export type ToastItem = {
   id: string;
   type: ToastType;
   message: string;
+  description?: string;
   duration?: number;
 };
 

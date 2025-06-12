@@ -3,7 +3,6 @@ import { TaskType } from "@/interfaces/Task/TaskType";
 import MountainTask from "@/components/Elements/Svg/Mountain/MountainTask";
 import { useState, useEffect, useRef } from "react";
 import { useModalStore } from "@/stores/modalStore";
-import { useDashboardStore } from "@/stores/dashboardStore";
 import TaskCard from "./ListTask/TaskCard";
 import AnimationElementsListUtils from "@/lib/AnimationElementsListUtils";
 import LoadingStatus from "@/components/Elements/General/LoadingStatus";
@@ -12,12 +11,10 @@ import { useTranslations } from "next-intl";
 export default function ListTask({
   filter,
   tasks,
-  setTasks,
   loadingTask,
 }: {
   filter: string;
   tasks: TaskType[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
   loadingTask: boolean;
 }) {
   const listRef = useRef<HTMLDivElement>(null);
@@ -27,8 +24,7 @@ export default function ListTask({
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
-  const { setIsOpen } = useModalStore();
-  const { setEvents } = useDashboardStore();
+  const { setIsOpen } = useModalStore((state) => state.actions);
   const { capturePositions, animateFLIP } = AnimationElementsListUtils({
     listRef,
   });
@@ -40,17 +36,17 @@ export default function ListTask({
   useEffect(() => {
     const getFilteredTasks = () => {
       switch (filter) {
-        case "Completada":
+        case "completed":
           return tasks.filter((e) => e.status === "completed");
-        case "Alta":
+        case "high":
           return tasks.filter(
             (e) => e.priority === "high" && e.status !== "completed"
           );
-        case "Media":
+        case "medium":
           return tasks.filter(
             (e) => e.priority === "medium" && e.status !== "completed"
           );
-        case "Baja":
+        case "low":
           return tasks.filter(
             (e) => e.priority === "low" && e.status !== "completed"
           );
@@ -86,7 +82,7 @@ export default function ListTask({
     <div className="flex flex-col w-full gap-4">
       <div
         ref={listRef}
-        className="flex flex-col w-full gap-4 h-[296px] pt-1 overflow-y-auto overflow-x-hidden transition-all duration-300"
+        className="flex flex-col w-full gap-4 h-[296px] overflow-y-auto overflow-x-hidden transition-all duration-300"
       >
         {loadingTask ? (
           <LoadingStatus text="tareas" />
@@ -97,8 +93,6 @@ export default function ListTask({
                 task={task}
                 setIsChange={handleStatusChange}
                 isChange={changingTaskIds.includes(task._id)}
-                setEvents={setEvents}
-                setTasks={setTasks}
               />
             </div>
           ))

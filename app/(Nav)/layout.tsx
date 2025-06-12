@@ -8,10 +8,13 @@ import PopUp from "@/components/Elements/General/PopUp";
 import Script from "next/script";
 import PWAInstallPrompt from "@/components/Elements/General/PWAInstallPrompt";
 import Modal from "@/components/Elements/General/Modal";
-import WebSocketInitializer from "@/config/WebSocketInitializer";
 import TimerInitializer from "@/config/TimerInitializer";
 import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import UserProfileInitializer from "@/config/UserProfileInitializer";
+import WebSocketInitializer from "@/config/WebSocketInitializer";
+import { PersistentPomodoro } from "@/components/Elements/PersistentPomodoro/PersistentPomodoro";
+import Toast from "@/components/Reusable/Toast";
 
 const poppinsSans = Poppins({
   variable: "--font-poppins",
@@ -53,15 +56,17 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className={`${poppinsSans.variable} antialiased`}>
-        {" "}
+        <UserProfileInitializer />
+        <WebSocketInitializer token={token} />
+        <TimerInitializer />
         <NextIntlClientProvider>
           <NavBar />
           <main className="flex flex-col min-h-screen h-full md:w-auto w-screen flex-1">
+            <PersistentPomodoro />
             {children}
             <PopUp />
-            <WebSocketInitializer token={token} />
-            <TimerInitializer />
             <PWAInstallPrompt />
+            <Toast />
           </main>
           <Modal />
         </NextIntlClientProvider>

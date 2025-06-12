@@ -1,15 +1,11 @@
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
 import DescriptionProfile from "./InfoProfile/DescriptionProfile";
 import Acheivements from "./Acheivements";
 
-export default function InfoProfile({
-  profile,
-}: {
-  profile: ProfileType | null;
-}) {
+export default function InfoProfile() {
+
   return (
     <div className="flex flex-col lg:flex-row gap-6 flex-1">
-      <DescriptionProfile profile={profile} />
+      <DescriptionProfile />
       <Acheivements />
     </div>
   );

@@ -1,7 +1,7 @@
 "use server";
 import { apiClient } from "../api";
 
-export async function removeHabit({
+export async function deleteHabit({
   _id,
 }: {
   _id: string;

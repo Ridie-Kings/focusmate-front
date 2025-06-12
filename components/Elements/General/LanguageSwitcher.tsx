@@ -1,16 +1,10 @@
 "use client";
+import LanguageUtils from "@/lib/languageUtils";
 import { useLocale } from "next-intl";
-import { useRouter } from "next/navigation";
 
 export default function LanguageSwitcher({ darkMode }: { darkMode?: boolean }) {
   const locale = useLocale();
-  const router = useRouter();
-  const nextLocale = locale === "es" ? "en" : "es";
-
-  const handleSwitch = () => {
-    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`;
-    router.refresh();
-  };
+  const { handleSwitch } = LanguageUtils();
 
   return (
     <button

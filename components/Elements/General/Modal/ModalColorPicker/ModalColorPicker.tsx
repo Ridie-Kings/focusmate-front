@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import AgendaUtils from "@/lib/AgendaUtils";
 
 export default function ModalColorPicker({
   defaultValue,
@@ -10,6 +11,11 @@ export default function ModalColorPicker({
 }) {
   const [open, setOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState(defaultValue);
+  const { isLightColor } = AgendaUtils();
+
+  useEffect(() => {
+    setSelectedColor(defaultValue);
+  }, [defaultValue]);
 
   const modalRef = useClickOutside<HTMLDivElement>(() => {
     if (open) setOpen(false);
@@ -34,6 +40,8 @@ export default function ModalColorPicker({
     }
   };
 
+  const textColor = isLightColor(selectedColor) ? "text-black" : "text-white";
+
   return (
     <div className="relative flex items-center" ref={modalRef}>
       <button
@@ -43,9 +51,11 @@ export default function ModalColorPicker({
         aria-expanded={open}
       >
         <span
-          className="rounded-lg px-2 text-white"
+          className={`rounded-lg px-2 ${textColor}`}
           onClick={() => setOpen(!open)}
-          style={{ backgroundColor: selectedColor }}
+          style={{
+            backgroundColor: selectedColor !== "" ? selectedColor : "#000000",
+          }}
         >
           Color
         </span>

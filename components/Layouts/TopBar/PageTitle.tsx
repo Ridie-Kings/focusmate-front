@@ -16,6 +16,8 @@ export default function PageTitle() {
     return pathname.split("/")[1].split("-").join(" ");
   };
   return (
-    <h1 className="text-xl sm:text-4xl md:text-5xl capitalize">{title()}</h1>
+    <h1 className="text-xl sm:text-4xl md:text-5xl capitalize -translate-y-10 group-hover:translate-0 transition-all duration-700">
+      {title()}
+    </h1>
   );
 }

@@ -1,33 +1,26 @@
-import { tempTaskType, TypeIsOpen } from "@/interfaces/Modal/ModalType";
-import { TaskType } from "@/interfaces/Task/TaskType";
-import { addTaskToCalendar } from "@/services/Calendar/addTaskToCalendar";
-import { createTask } from "@/services/Task/createTask";
-import { updateTask } from "@/services/Task/updateTask";
-import { addHours } from "date-fns";
-import { Dispatch, SetStateAction } from "react";
+import { tempEventType } from "@/interfaces/Modal/ModalType";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 export default function ModalEventUtils({
   setError,
-  task,
-  setTasks,
-  setEvents,
+  event,
   setIsLoading,
-  setIsOpen,
+  handleClose,
 }: {
   setError: (error: string | null) => void;
-  task: tempTaskType;
-  setTasks: Dispatch<SetStateAction<TaskType[]>>;
-  setEvents: Dispatch<SetStateAction<TaskType[]>>;
+  event: tempEventType;
   setIsLoading: (isLoading: boolean) => void;
-  setIsOpen: Dispatch<SetStateAction<TypeIsOpen>>;
+  handleClose: () => void;
 }) {
+  const { addEvent, updateEvent } = useDashboardStore((state) => state.actions);
+
   const validateEvent = (): boolean => {
-    if (!task.title.trim()) {
+    if (!event.title.trim()) {
       setError("El título es obligatorio");
       return false;
     }
 
-    if (task.endDate && task.startDate && task.endDate <= task.startDate) {
+    if (event.endDate && event.startDate && event.endDate <= event.startDate) {
       setError(
         "La hora de finalización debe ser posterior a la hora de inicio"
       );
@@ -43,115 +36,40 @@ export default function ModalEventUtils({
     if (!validateEvent()) {
       return;
     }
+    setIsLoading(true);
 
-    try {
-      setIsLoading(true);
-      const res = await updateTask({
-        _id: task._id ?? "",
-        task: {
-          color: task.color,
-          description: task.description,
-          title: task.title,
-          dueDate: task.dueDate,
-          startDate: task.startDate,
-          endDate: task.endDate,
-          priority: task.priority,
-          status: task.status,
-        },
-      });
+    const res = await updateEvent(event._id ?? "", event);
 
-      if (!res.success) {
-        const errorMessage =
-          typeof res.res === "string" ? res.res : "Error al modificar la tarea";
-        setError(errorMessage);
-        console.error("Failed to modify task", res.res);
-        return;
-      }
-
-      setEvents((prev) =>
-        prev.map((event) => (event._id === task._id ? res.res : event))
-      );
-
-      setTasks((prev) =>
-        prev.map((prevTask) => (prevTask._id === task._id ? res.res : prevTask))
-      );
-
-      setIsOpen({ text: "" });
-    } catch (err) {
-      console.error("Error inesperado:", err);
-      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
-    } finally {
+    if (!res.success) {
+      setError(res.res as string);
       setIsLoading(false);
-    }
-  };
-
-  const handleSendEvent = async () => {
-    setError(null);
-
-    if (!validateEvent()) {
       return;
     }
 
-    try {
-      setIsLoading(true);
-      const res = await createTask({
-        task: {
-          ...task,
-          dueDate: addHours(
-            task.dueDate ?? new Date(),
-            -(task.dueDate?.getTimezoneOffset() ?? 0) / 60
-          ),
-        },
-      });
+    setIsLoading(false);
+    handleClose();
+  };
 
-      if (!res.success) {
-        const errorMessage =
-          typeof res.res === "string" ? res.res : "Error al crear la tarea";
-        setError(errorMessage);
-        console.error("Failed to create task", res.res);
-        return;
-      }
+  const handleCreateEvent = async () => {
+    setError(null);
 
-      setEvents((prev) => [...prev, res.res]);
-      setTasks((prev) => [...prev, res.res]);
+    if (!validateEvent()) return;
 
-      try {
-        const calendarResponse = await addTaskToCalendar({
-          _id: res.res._id,
-        });
+    setIsLoading(true);
 
-        if (!calendarResponse.success) {
-          console.error(
-            "Error al añadir la tarea al calendario:",
-            calendarResponse.res
-          );
+    const res = await addEvent(event);
 
-          setEvents((prev) =>
-            prev.filter((event) => event._id !== res.res._id)
-          );
-          setTasks((prev) => prev.filter((task) => task._id !== res.res._id));
-
-          setError(calendarResponse.res);
-          return;
-        }
-      } catch (calendarError) {
-        console.error(
-          "Error al comunicarse con el servicio de calendario:",
-          calendarError
-        );
-        return;
-      }
-
-      setIsOpen({ text: "" });
-    } catch (err) {
-      console.error("Error inesperado:", err);
-      setError("Error inesperado. Por favor, inténtalo de nuevo más tarde.");
-    } finally {
+    if (!res.success) {
+      setError(res.res as string);
       setIsLoading(false);
+      return;
     }
+
+    setIsLoading(false);
+    handleClose();
   };
   return {
-    handleSendEvent,
+    handleCreateEvent,
     handleUpdateEvent,
   };
 }

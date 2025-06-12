@@ -1,17 +1,10 @@
-import { TaskType } from "@/interfaces/Task/TaskType";
 import CalendarGrid from "./MonthCalendar/CalendarGrid";
 import { Dispatch, SetStateAction } from "react";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 
 export default function MonthCalendar({
-  events,
-  date = new Date(),
-  setDate,
   setNavType,
 }: {
-  events: TaskType[];
-  date?: Date;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
   setNavType: Dispatch<SetStateAction<NavTypeType>>;
 }) {
   const weekdays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sáb", "Dom"];
@@ -29,12 +22,7 @@ export default function MonthCalendar({
         ))}
       </div>
 
-      <CalendarGrid
-        date={date}
-        events={events}
-        setDate={setDate}
-        setNavType={setNavType}
-      />
+      <CalendarGrid setNavType={setNavType} />
     </div>
   );
 }

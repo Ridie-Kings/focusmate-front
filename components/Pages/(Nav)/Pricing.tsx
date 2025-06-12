@@ -1,9 +1,6 @@
-import { getMyProfile } from "@/services/Profile/getMyProfile";
 import ButtonSend from "./Pricing/ButtonSend";
-import { ProfileType } from "@/interfaces/Profile/ProfileType";
 
-export default async function Pricing() {
-  const profile = await getMyProfile();
+export default function Pricing() {
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center gap-6 p-9 text-primary-500 bg-background-primary">
@@ -19,7 +16,7 @@ export default async function Pricing() {
         mejor, organizarte y alcanzar tus objetivos. <br />
         Te avisaremos en cuanto esté disponible. Muchas gracias.
       </p>
-      <ButtonSend profile={profile.res as ProfileType} />
+      <ButtonSend />
       <svg
         width="1440"
         height="1024"

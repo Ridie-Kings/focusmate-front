@@ -1,11 +1,11 @@
 import { Bell, LinkIcon, MapPin, Palette, Plus, User } from "lucide-react";
 import { Clock } from "lucide-react";
-import { TaskType } from "@/interfaces/Task/TaskType";
 import { Pen } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import Menu from "@/components/Reusable/Menu";
 import Image from "next/image";
+import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
 
 const mockParticipants = [
   { name: "Alice", avatar: "https://randomuser.me/api/portraits/women/1.jpg" },
@@ -14,22 +14,25 @@ const mockParticipants = [
 ];
 
 export default function SelectedEventInfo({
-  selectedEvent,
+  selectedCalendarItem,
 }: {
-  selectedEvent: TaskType | null;
+  selectedCalendarItem: TimelineItem | null;
 }) {
+  const selectedEventData = selectedCalendarItem?.data;
   return (
     <div
       className={`h-full bg-white dark:bg-gray-900 rounded-2xl shadow-lg transition-all duration-300 flex-nowrap ${
-        selectedEvent ? "w-1/3 p-6" : "w-0"
+        selectedEventData ? "w-1/3 p-6" : "w-0"
       }`}
     >
-      {selectedEvent && (
+      {selectedEventData && (
         <div className="flex flex-col gap-6">
           <div className="flex items-start justify-between">
             <div>
               <div className="text-gray-400 text-xs">Evento</div>
-              <div className="text-primary-500 mb-2">{selectedEvent.title}</div>
+              <div className="text-primary-500 mb-2">
+                {selectedEventData.title}
+              </div>
             </div>
             <Menu
               items={[
@@ -46,7 +49,7 @@ export default function SelectedEventInfo({
                 <span>Comienza</span>
               </div>
               <div className="text-sm text-gray-400 mt-1">
-                {format(selectedEvent.startDate, "HH:mm")}
+                {format(selectedEventData.startDate, "HH:mm")}
               </div>
             </div>
             <div>
@@ -55,7 +58,7 @@ export default function SelectedEventInfo({
                 <span>Finaliza</span>
               </div>
               <div className="text-sm text-gray-400 mt-1">
-                {format(selectedEvent.endDate, "HH:mm")}{" "}
+                {format(selectedEventData.endDate, "HH:mm")}{" "}
               </div>
             </div>
           </div>
@@ -98,7 +101,7 @@ export default function SelectedEventInfo({
               <span>Categoria</span>
             </div>
             <div className="text-sm text-gray-400">
-              {selectedEvent.category || "No Categoria"}
+              {selectedEventData.category || "No Categoria"}
             </div>
           </div>
 
@@ -108,10 +111,10 @@ export default function SelectedEventInfo({
               <span>Color del Evento</span>
             </div>
             <span
-              style={{ color: selectedEvent.color }}
+              style={{ color: selectedEventData.color }}
               className="text-sm text-gray-400"
             >
-              {selectedEvent.color}
+              {selectedEventData.color}
             </span>
           </div>
 

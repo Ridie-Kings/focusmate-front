@@ -1,6 +1,7 @@
 import { ChevronLeft, EllipsisVertical } from "lucide-react";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState, MouseEvent } from "react";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import { createPortal } from "react-dom";
 
 interface MenuItemProps {
   label: string;
@@ -15,6 +16,7 @@ interface MenuProps {
   trigger?: ReactNode;
   position?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
   className?: string;
+  onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 const findOverflowParent = (
@@ -67,7 +69,7 @@ const MenuItem = ({
         }
 
         subMenu.style.left = "auto";
-        subMenu.style.right = "0%";
+        subMenu.style.right = "5%";
 
         const leftSpace = itemRect.left - parentRect.left;
         const rightSpace = parentRect.right - itemRect.right;
@@ -101,6 +103,10 @@ const MenuItem = ({
         className={`flex items-center justify-between gap-2 p-2 text-left cursor-pointer bg-white rounded w-full transition-all duration-300 ${
           item.color === "red"
             ? "hover:bg-red-100 hover:text-red-700"
+            : item.color === "orange"
+            ? "hover:bg-orange-100 hover:text-orange-700"
+            : item.color === "green"
+            ? "hover:bg-green-100 hover:text-green-700"
             : "hover:bg-gray-100"
         }`}
         onClick={() => {
@@ -140,9 +146,11 @@ export default function Menu({
   trigger,
   position = "bottom-right",
   className,
+  onClick,
 }: MenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
   const closeMenu = () => setIsOpen(false);
 
@@ -151,95 +159,73 @@ export default function Menu({
   });
 
   useEffect(() => {
-    if (isOpen && menuRef.current && triggerRef.current) {
-      const overflowParent = findOverflowParent(triggerRef.current);
+    const handleScroll = () => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    };
 
-      let parentRect: DOMRect;
-      if (overflowParent) {
-        parentRect = overflowParent.getBoundingClientRect();
-      } else {
-        parentRect = new DOMRect(0, 0, window.innerWidth, window.innerHeight);
+    window.addEventListener("scroll", handleScroll, true);
+    return () => window.removeEventListener("scroll", handleScroll, true);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+
+      let top = 0;
+      let left = 0;
+
+      switch (position) {
+        case "bottom-right":
+          top = rect.bottom;
+          left = rect.right;
+          break;
+        case "bottom-left":
+          top = rect.bottom;
+          left = rect.left;
+          break;
+        case "top-right":
+          top = rect.top;
+          left = rect.right;
+          break;
+        case "top-left":
+          top = rect.top;
+          left = rect.left;
+          break;
       }
 
-      menuRef.current.style.left = "";
-      menuRef.current.style.right = "";
-      menuRef.current.style.top = "";
-      menuRef.current.style.bottom = "";
-
-      const basePosition = position || "bottom-right";
-      menuRef.current.className = `absolute flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-99999 min-w-40 mt-1 ${
-        basePosition === "bottom-right"
-          ? "top-full right-0"
-          : basePosition === "bottom-left"
-          ? "top-full left-0"
-          : basePosition === "top-right"
-          ? "bottom-full right-0"
-          : "bottom-full left-0"
-      }`;
-
-      setTimeout(() => {
-        if (!menuRef.current) return;
-
-        const updatedMenuRect = menuRef.current.getBoundingClientRect();
-
-        if (updatedMenuRect.right > parentRect.right) {
-          menuRef.current.style.left = "auto";
-          menuRef.current.style.right = "0";
-        }
-
-        if (updatedMenuRect.left < parentRect.left) {
-          menuRef.current.style.left = "0";
-          menuRef.current.style.right = "auto";
-        }
-
-        if (updatedMenuRect.bottom > parentRect.bottom) {
-          menuRef.current.style.top = "auto";
-          menuRef.current.style.bottom = "100%";
-        }
-
-        if (updatedMenuRect.top < parentRect.top) {
-          menuRef.current.style.top = "100%";
-          menuRef.current.style.bottom = "auto";
-        }
-      }, 0);
+      setMenuPosition({ top, left });
     }
   }, [isOpen, position]);
-
-  const getBasePositionClasses = () => {
-    switch (position) {
-      case "bottom-right":
-        return "top-full right-0";
-      case "bottom-left":
-        return "top-full left-0";
-      case "top-right":
-        return "bottom-full right-0";
-      case "top-left":
-        return "bottom-full left-0";
-      default:
-        return "top-full right-0";
-    }
-  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className={className ?? "relative inline-block"}>
+    <div onClick={onClick} className={className ?? "relative inline-block"}>
       <div ref={triggerRef} onClick={toggleMenu} className="cursor-pointer">
         {trigger || <EllipsisVertical className="h-5 w-5" />}
       </div>
 
-      {isOpen && (
-        <div
-          ref={menuRef}
-          className={`absolute mt-1 flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-90 min-w-40 ${getBasePositionClasses()}`}
-        >
-          {items.map((item, index) => (
-            <MenuItem key={index} item={item} closeMenu={closeMenu} />
-          ))}
-        </div>
-      )}
+      {isOpen &&
+        createPortal(
+          <div
+            ref={menuRef}
+            className="fixed flex flex-col drop-shadow-lg bg-white rounded-lg p-2 gap-1 z-[9999] min-w-40"
+            style={{
+              top: `${menuPosition.top}px`,
+              left: `${menuPosition.left}px`,
+              transform: position.includes("right") ? "translateX(-100%)" : "",
+            }}
+          >
+            {items.map((item, index) => (
+              <MenuItem key={index} item={item} closeMenu={closeMenu} />
+            ))}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

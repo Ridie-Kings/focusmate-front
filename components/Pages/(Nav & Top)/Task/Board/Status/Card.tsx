@@ -1,25 +1,21 @@
 import Divider from "@/components/Elements/General/Divider";
 import PriorityBadge from "@/components/Elements/General/PriorityBadge";
 import Menu from "@/components/Reusable/Menu";
-import { Dispatch, SetStateAction } from "react";
 import { AlarmCheck } from "lucide-react";
 import { format } from "date-fns";
 import { TaskType } from "@/interfaces/Task/TaskType";
 import DropIndicator from "./DropIndicator";
 import { useModalStore } from "@/stores/modalStore";
-import TaskUtils from "@/lib/Task/TaskUtils";
+import { useDashboardStore } from "@/stores/dashboardStore";
 
 type CardProps = {
   handleDragStart: (e: React.DragEvent, card: TaskType) => void;
   task: TaskType;
-  setTasks: Dispatch<SetStateAction<TaskType[]>>;
 };
 
-const Card = ({ task, setTasks, handleDragStart }: CardProps) => {
-  const { setIsOpen } = useModalStore();
-  const { handleDeleteTask } = TaskUtils({
-    setTasks,
-  });
+const Card = ({ task, handleDragStart }: CardProps) => {
+  const { setIsOpen } = useModalStore((state) => state.actions);
+  const { removeTask } = useDashboardStore((state) => state.actions);
 
   return (
     <>
@@ -53,7 +49,7 @@ const Card = ({ task, setTasks, handleDragStart }: CardProps) => {
                 {
                   label: "Eliminar",
                   color: "red",
-                  onClick: () => handleDeleteTask(task._id),
+                  onClick: () => removeTask(task._id),
                 },
               ]}
             />

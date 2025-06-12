@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import ModalTask from "./Modal/ModalTask";
 import ModalHabit from "./Modal/ModalHabit";
@@ -8,21 +8,30 @@ import ModalContact from "./Modal/ModalContact";
 
 import { X } from "lucide-react";
 import ModalPomodoroSettings from "./Modal/ModalPomodoroSettings";
-import { StatusType, TaskType } from "@/interfaces/Task/TaskType";
+import { TaskType } from "@/interfaces/Task/TaskType";
 import { PomodoroStatusType } from "@/interfaces/websocket/WebSocketProvider";
 import { HabitsType } from "@/interfaces/Habits/HabitsType";
 import ModalTaskKanban from "./Modal/ModalTaskKanban";
-import { useModalStore } from "@/stores/modalStore";
+import { useIsOpen, useModalStore } from "@/stores/modalStore";
+import { useProfile } from "@/stores/profileStore";
+import { EventType } from "@/interfaces/Calendar/EventType";
+import ModalDeleteAccount from "./Modal/ModalDeleteAccount";
+import ModalShowMore from "./Modal/ModalShowMore";
 
 export default function Modal() {
-  const { isOpen, setIsOpen, profile } = useModalStore();
+  const isOpen = useIsOpen();
+  const profile = useProfile();
+  const { setIsOpen } = useModalStore((state) => state.actions); // TODO: añadirlo en cada uno de los modales
 
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
-      setIsOpen({ text: "", other: null });
+      setIsOpen({
+        text: isOpen.redirect?.text ? isOpen.redirect.text : "",
+        other: isOpen.redirect?.other ? isOpen.redirect?.other : null,
+      });
       setIsClosing(false);
     }, 300);
   };
@@ -32,22 +41,13 @@ export default function Modal() {
       case "task":
         return (
           <ModalTask
+            handleClose={handleClose}
             setIsOpen={setIsOpen}
             prevTask={isOpen.other as TaskType}
           />
         );
       case "taskKanban":
-        return (
-          <ModalTaskKanban
-            setIsOpen={setIsOpen}
-            tasks={
-              isOpen.other as {
-                column: StatusType;
-                setTasks: Dispatch<SetStateAction<TaskType[]>>;
-              }
-            }
-          />
-        );
+        return <ModalTaskKanban setIsOpen={setIsOpen} />;
       case "habit":
         return (
           <ModalHabit
@@ -57,7 +57,11 @@ export default function Modal() {
         );
       case "event":
         return (
-          <ModalEvent setIsOpen={setIsOpen} events={isOpen.other as TaskType} />
+          <ModalEvent
+            handleClose={handleClose}
+            setIsOpen={setIsOpen}
+            events={isOpen.other as EventType}
+          />
         );
       case "contact":
         return <ModalContact setIsOpen={setIsOpen} profile={profile} />;
@@ -65,6 +69,10 @@ export default function Modal() {
         return (
           <ModalPomodoroSettings status={isOpen.other as PomodoroStatusType} />
         );
+      case "delete-account":
+        return <ModalDeleteAccount />;
+      case "show-more":
+        return <ModalShowMore list={isOpen.other} />;
       default:
         return "";
     }

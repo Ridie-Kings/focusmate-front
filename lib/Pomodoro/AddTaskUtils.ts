@@ -15,7 +15,7 @@ export default function AddTaskUtils({
   pomodoroId: string | undefined;
   setSelectedTask: Dispatch<SetStateAction<TaskType | null>>;
 }) {
-  const { handleJoinPomodoro } = useWebSocketStore();
+  const { handleJoinPomodoro } = useWebSocketStore((state) => state.actions);
 
   const handleAddTaskToPomodoro = async (task: TaskType | null) => {
     if (!task) return;
