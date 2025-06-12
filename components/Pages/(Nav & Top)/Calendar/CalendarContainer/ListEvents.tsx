@@ -27,10 +27,10 @@ export default function ListEvents() {
   }, {} as Record<string, TimelineItem[]>);
 
   return (
-    <ul className="flex flex-col gap-2 h-full flex-1 w-full overflow-y-auto px-2">
+    <ul className="flex flex-col gap-2 h-full w-full overflow-y-auto px-2">
       {Object.entries(groupedEvents).map(([dayKey, dayEvents]) => (
         <li key={dayKey} className="flex flex-col gap-2">
-          <h3 className="capitalize px-3 py-1">
+          <h3 className="capitalize px-3 py-1 sticky top-0 bg-white">
             {format(new Date(dayKey), "EEEE d 'de' MMMM", { locale: es })}
           </h3>
           {dayEvents.map((item) => (
