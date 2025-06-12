@@ -90,12 +90,12 @@ export async function refreshSession(
 
     return newAccessToken;
   } catch (error) {
-    // console.error("Error al refrescar la sesión:", error);
-    // // Eliminar cookies inválidas
-    // const cookieStore = await cookies();
-    // cookieStore.delete("access_token");
-    // cookieStore.delete("refresh_token");
-    // return undefined;
+    console.error("Error al refrescar la sesión:", error);
+    // Eliminar cookies inválidas
+    const cookieStore = await cookies();
+    cookieStore.delete("access_token");
+    cookieStore.delete("refresh_token");
+    return undefined;
   }
 }
 
@@ -119,8 +119,8 @@ export async function logout(): Promise<boolean> {
     // }
 
     // Eliminar cookies de sesión
-    // cookieStore.delete("access_token");
-    // cookieStore.delete("refresh_token");
+    cookieStore.delete("access_token");
+    cookieStore.delete("refresh_token");
 
     return true;
   } catch (error) {

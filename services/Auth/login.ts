@@ -48,7 +48,7 @@ export default async function login(
       message: "Login successful",
     };
   } catch (error: any) {
-    console.log("error", error);
+    console.log("error login", error);
     return {
       success: false,
       message: error.message || "Unexpected error during login",

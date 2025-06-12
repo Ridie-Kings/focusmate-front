@@ -126,7 +126,7 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
               {RenderActionLinks({ type })}
             </div>
           )}
-          {error && <p className="text-red-500 text-sm">{commonT("error")}</p>}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="flex flex-col gap-4">
             {type === "login" ? (
               RenderActionButton({ type, isLoading })
