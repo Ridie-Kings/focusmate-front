@@ -13,7 +13,7 @@ import {
   differenceInHours,
 } from "date-fns";
 import { Pen, Trash2 } from "lucide-react";
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useState } from "react";
 import Divider from "@/components/Elements/General/Divider";
 import TimeLeftBar from "@/components/Elements/Calendar/TimeLeftBar";
 import TimeBar from "@/components/Elements/Calendar/TimeBar";
@@ -34,30 +34,53 @@ const getNowPosition = (date: Date) => {
   return 24 + hours * 2 * 68 + minutes * (68 / 30);
 };
 
+const findOverlappingEvents = (
+  events: TimelineItem[],
+  currentEvent: TimelineItem
+) => {
+  return events.filter((event) => {
+    const currentStart = new Date(event.startDate).getTime();
+    const currentEnd = new Date(event.data.endDate).getTime();
+    const eventStart = new Date(currentEvent.startDate).getTime();
+    const eventEnd = new Date(currentEvent.data.endDate).getTime();
+
+    return (
+      (currentStart <= eventEnd && currentEnd >= eventStart) ||
+      (eventStart <= currentEnd && eventEnd >= currentStart)
+    );
+  });
+};
+
 const EventItem = ({
   calendarItem,
   eventStartPosition,
   eventEndPosition,
+  overlappingEvents,
+  eventIndex,
 }: {
   calendarItem: TimelineItem;
   eventStartPosition: number;
   eventEndPosition: number;
+  overlappingEvents: TimelineItem[];
+  eventIndex: number;
 }) => {
   const calendarData = calendarItem.data;
   const { setIsOpen } = useModalStore((state) => state.actions);
   const { isLightColor } = AgendaUtils();
-
   const { removeEvent } = useDashboardStore((state) => state.actions);
+
   const textColor = isLightColor(calendarData.color)
     ? "text-black"
     : "text-white";
 
+  const backgroundColor =
+    calendarData.color !== "" ? calendarData.color : "#000000";
+
   return (
     <div
-      className="absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between"
+      className={`absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between z-2 transition-all duration-500`}
       style={{
-        backgroundColor:
-          calendarData.color !== "" ? calendarData.color : "#000000",
+        backgroundColor,
         top: `${eventStartPosition}px`,
         height: `${eventEndPosition - eventStartPosition}px`,
       }}
@@ -87,8 +110,8 @@ const EventItem = ({
         />
       </div>
       <div
-        style={{ backgroundColor: calendarData.color }}
-        className={`${textColor} flex place-content-between w-full text-xs p-1 z-8`}
+        style={{ backgroundColor }}
+        className={`${textColor} flex place-content-between w-full text-xs p-1 z-1`}
       >
         <span>{format(calendarData.startDate, "HH:mm")} </span>
         <span>{format(calendarData.endDate, "HH:mm")} </span>
@@ -139,12 +162,24 @@ const DayColumn = ({
             const eventStartPosition = getNowPosition(calendarData.startDate);
             const eventEndPosition = getNowPosition(calendarData.endDate);
 
+            const overlappingEvents = findOverlappingEvents(
+              formatCalendar.filter((item) =>
+                isSameDay(item.data.startDate, day)
+              ),
+              calendarItem
+            );
+            const eventIndex = overlappingEvents.findIndex(
+              (event) => event === calendarItem
+            );
+
             return (
               <EventItem
                 key={i}
                 calendarItem={calendarItem}
                 eventStartPosition={eventStartPosition}
                 eventEndPosition={eventEndPosition}
+                overlappingEvents={overlappingEvents}
+                eventIndex={eventIndex}
               />
             );
           })}
@@ -153,11 +188,11 @@ const DayColumn = ({
   );
 };
 
-const WeekCalendarItem = ({
+export default function WeekCalendar({
   scrollCalendar,
 }: {
   scrollCalendar: RefObject<HTMLDivElement | null>;
-}) => {
+}) {
   const date = useDate() ?? new Date();
 
   const startDate = startOfDay(startOfWeek(date, { weekStartsOn: 1 }));
@@ -198,12 +233,4 @@ const WeekCalendarItem = ({
       ))}
     </div>
   );
-};
-
-export default function WeekCalendar({
-  scrollCalendar,
-}: {
-  scrollCalendar: RefObject<HTMLDivElement | null>;
-}) {
-  return <WeekCalendarItem scrollCalendar={scrollCalendar} />;
 }
