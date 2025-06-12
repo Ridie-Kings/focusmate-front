@@ -64,10 +64,10 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
     <div
       id="timeline-component"
       className={`flex-1 ${
-        formatCalendar.length === 0 ? "" : "min-h-44 max-h-[500px]"
-      } overflow-y-auto overflow-x-hidden flex flex-col gap-4 py-2`}
+        formatCalendar.length === 0 ? "" : "min-h-44 max-h-[460px]"
+      } overflow-y-auto overflow-x-hidden flex flex-col gap-4`}
     >
-      <p className="text-xl text-primary-500 text-center sticky top-0 bg-white">
+      <p className="text-xl text-primary-500 text-center sticky top-0 bg-white z-10 py-2">
         {t("title")}
       </p>
       {loadingEvents ? (
