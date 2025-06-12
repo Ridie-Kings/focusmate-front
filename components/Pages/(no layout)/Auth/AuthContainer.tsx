@@ -18,7 +18,6 @@ import LanguageSwitcher from "@/components/Elements/General/LanguageSwitcher";
 
 export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   const t = useTranslations("Auth");
-  const commonT = useTranslations("Common");
 
   const config = AUTH_CONFIG[type];
 
@@ -69,9 +68,8 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
 
     if (state.success) {
       localStorage.removeItem(storageKey);
-      console.log(state);
 
-      // router.push("/dashboard");
+      router.push("/dashboard");
     } else {
       setError(state.message);
       setTimeout(() => {
