@@ -59,6 +59,7 @@ export default function ModalTask({
 
   const handleSendTask = async () => {
     const res = await addTask(task, addTaskToCalendar);
+    console.log(res, { addTaskToCalendar });
 
     if (res.success) handleClose();
     else setError(res.res as string);

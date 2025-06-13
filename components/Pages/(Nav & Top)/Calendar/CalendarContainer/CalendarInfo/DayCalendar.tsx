@@ -188,8 +188,8 @@ const DayCalendarItem = ({
                       icon: <Pen size={20} />,
                       onClick: () =>
                         setIsOpen({
-                          text: "event",
-                          other: calendarItem,
+                          text: calendarItem.type,
+                          other: calendarItem.data,
                         }),
                     },
                     {

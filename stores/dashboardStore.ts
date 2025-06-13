@@ -39,7 +39,7 @@ export interface DashboardStore {
     setTasks: Dispatch<SetStateAction<TaskType[]>>;
     addTask: (
       task: tempTaskType,
-      addTaskToCalendar?: boolean
+      addToCalendar?: boolean
     ) => Promise<ApiResponse<TaskType>>;
     removeTask: (taskId: string) => Promise<ApiResponse<string>>;
     updateTask: (
@@ -69,7 +69,7 @@ const handleApiError = (
 
 const validateTask = (
   task: tempTaskType,
-  addTaskToCalendar: boolean
+  addTaskToCalendar?: boolean
 ): string => {
   if (!task.title.trim()) return "El título es obligatorio";
 
@@ -184,18 +184,23 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
 
     addTask: async (newTask, addToCalendar) => {
       try {
-        const error = validateTask(newTask, (addToCalendar = false));
+        const error = validateTask(newTask, addToCalendar);
         if (error) return { success: false, res: error };
 
         const res = await createTask({ task: newTask });
+        console.log("create task", res);
+
         if (!res.success)
           return handleApiError(res.res, "Error al crear la tarea");
 
         set((state) => ({ tasks: [...state.tasks, res.res] }));
+        console.log("addTaskto calendar", addToCalendar);
 
         if (addToCalendar) {
           const response = await addTaskToCalendar({ _id: res.res._id });
-          console.log(response);
+
+          console.log("add task", response);
+
           if (!response.success)
             return handleApiError(
               response.res,

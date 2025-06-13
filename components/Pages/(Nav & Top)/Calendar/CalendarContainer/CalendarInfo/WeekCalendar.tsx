@@ -61,6 +61,7 @@ const EventItem = ({
   eventEndPosition: number;
 }) => {
   const calendarData = calendarItem.data;
+  const isEvent = calendarItem.type === "event";
   const { setIsOpen } = useModalStore((state) => state.actions);
   const { isLightColor } = AgendaUtils();
   const { removeEvent } = useDashboardStore((state) => state.actions);
@@ -74,7 +75,7 @@ const EventItem = ({
 
   return (
     <div
-      className={`absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between z-2 transition-all duration-500`}
+      className={`absolute w-[95%] p-2 rounded-lg flex flex-col items-start place-content-between z-2 transition-all duration-500 h-50`}
       style={{
         backgroundColor,
         top: `${eventStartPosition}px`,
@@ -105,13 +106,15 @@ const EventItem = ({
           ]}
         />
       </div>
-      <div
-        style={{ backgroundColor }}
-        className={`${textColor} flex place-content-between w-full text-xs p-1 z-1`}
-      >
-        <span>{format(calendarData.startDate, "HH:mm")} </span>
-        <span>{format(calendarData.endDate, "HH:mm")} </span>
-      </div>
+      {isEvent && (
+        <div
+          style={{ backgroundColor }}
+          className={`${textColor} flex place-content-between w-full text-xs p-1 z-1`}
+        >
+          <span>{format(calendarData.startDate, "HH:mm")} </span>
+          <span>{format(calendarData.endDate, "HH:mm")} </span>
+        </div>
+      )}
     </div>
   );
 };
@@ -125,6 +128,12 @@ const DayColumn = ({
 }) => {
   const { setDate } = useCalendarStore((state) => state.actions);
   const { formatCalendar } = CalendarUtils({ navType: "week" });
+
+  console.log(
+    formatCalendar.filter((calendarItem) =>
+      isSameDay(calendarItem.startDate, day)
+    )
+  );
 
   return (
     <div className="flex flex-col gap-5">
@@ -152,10 +161,10 @@ const DayColumn = ({
         className={`text-center p-1 h-full rounded-lg transition-all duration-200 relative`}
       >
         {formatCalendar
-          .filter((calendarItem) => isSameDay(calendarItem.data.startDate, day))
+          .filter((calendarItem) => isSameDay(calendarItem.startDate, day))
           .map((calendarItem, i) => {
             const calendarData = calendarItem.data;
-            const eventStartPosition = getNowPosition(calendarData.startDate);
+            const eventStartPosition = getNowPosition(calendarItem.startDate);
             const eventEndPosition = getNowPosition(calendarData.endDate);
 
             // const overlappingEvents = findOverlappingEvents(
