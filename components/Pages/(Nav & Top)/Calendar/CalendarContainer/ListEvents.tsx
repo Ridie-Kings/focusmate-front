@@ -1,12 +1,19 @@
-import { EllipsisVertical } from "lucide-react";
+import { Pen, Trash2 } from "lucide-react";
 import Dot from "@/components/Elements/General/Dot";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
 import CalendarUtils from "@/lib/CalendarUtils";
+import Menu from "@/components/Reusable/Menu";
+import { useDashboardStore } from "@/stores/dashboardStore";
+import { useModalStore } from "@/stores/modalStore";
 
 export default function ListEvents() {
   const { formatCalendar } = CalendarUtils({ navType: "week" });
+  const { removeEvent, removeTask } = useDashboardStore(
+    (state) => state.actions
+  );
+  const { setIsOpen } = useModalStore((state) => state.actions);
 
   if (formatCalendar.length === 0) {
     return (
@@ -49,12 +56,25 @@ export default function ListEvents() {
                   )}
                 </div>
               </div>
-              <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <EllipsisVertical
-                  size={18}
-                  className="text-black hover:text-gray-400 cursor-pointer"
-                />
-              </button>
+              <Menu
+                items={[
+                  {
+                    label: "Modificar",
+                    icon: <Pen size={20} />,
+                    onClick: () =>
+                      setIsOpen({ text: item.type, other: item.data }),
+                  },
+                  {
+                    label: "Eliminar",
+                    color: "red",
+                    icon: <Trash2 />,
+                    onClick: () =>
+                      item.type === "event"
+                        ? removeEvent(item.data._id)
+                        : removeTask(item.data._id),
+                  },
+                ]}
+              />
             </div>
           ))}
         </li>

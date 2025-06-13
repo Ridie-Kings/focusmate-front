@@ -17,7 +17,6 @@ export default function CalendarInfo({
 }) {
   const loadingCalendar = useLoadingCalendar();
 
-  const scrollCalendar = useRef<HTMLDivElement>(null);
 
   const renderCalenderType = () => {
     if (loadingCalendar) return <LoadingState />;
@@ -26,7 +25,7 @@ export default function CalendarInfo({
       case "Día":
         return <DayCalender />;
       case "Semana":
-        return <WeekCalendar scrollCalendar={scrollCalendar} />;
+        return <WeekCalendar />;
       case "Mes":
         return <MonthCalendar setNavType={setNavType} />;
       default:
