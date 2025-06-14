@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import CalendarUtils from "@/lib/CalendarUtils";
 import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
-import { useModalStore } from "@/stores/modalStore";
 import { EventType } from "@/interfaces/Calendar/EventType";
 import Link from "next/link";
 
@@ -30,7 +29,6 @@ const doIntervalsOverlap = (item1: TimelineItem, item2: TimelineItem) => {
 export default function Timeline({ loadingEvents }: TimelineProps) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const t = useTranslations("Dashboard.agenda.timeline");
-  const { setIsOpen } = useModalStore((state) => state.actions);
 
   useEffect(() => {
     if (!loadingEvents && isInitialLoading) setIsInitialLoading(false);

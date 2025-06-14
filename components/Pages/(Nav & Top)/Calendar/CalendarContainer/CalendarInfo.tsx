@@ -3,7 +3,7 @@ import NavInfo from "./CalendarInfo/NavInfo";
 import DayCalender from "./CalendarInfo/DayCalendar";
 import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 import LoadingState from "@/components/Elements/General/LoadingState";
 import { useLoadingCalendar } from "@/stores/dashboardStore";
