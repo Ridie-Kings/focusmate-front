@@ -81,7 +81,11 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
                   <div
                     key={timeKey}
                     className={`gap-2 items-center ${
-                      items.length > 2 ? "flex" : "grid grid-cols-2 w-full"
+                      items.length > 2
+                        ? "flex"
+                        : items.length === 1
+                        ? "grid w-full"
+                        : "grid grid-cols-2 w-full"
                     }`}
                   >
                     {items.slice(0, 2).map((item, index) => (
