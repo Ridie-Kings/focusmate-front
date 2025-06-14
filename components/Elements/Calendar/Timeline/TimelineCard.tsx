@@ -73,7 +73,9 @@ export default function TimelineCard({
                 minute: "2-digit",
               })}
             </p>
-            <p className={`text-xs font-medium ${textColor}`}>Empieza</p>
+            {!hasOverlappingEvents && (
+              <p className={`text-xs font-medium ${textColor}`}>Empieza</p>
+            )}
           </span>
 
           {!hasOverlappingEvents && (
@@ -92,7 +94,9 @@ export default function TimelineCard({
                 minute: "2-digit",
               })}
             </p>
-            <p className={`text-xs font-medium ${textColor}`}>Termina</p>
+            {!hasOverlappingEvents && (
+              <p className={`text-xs font-medium ${textColor}`}>Termina</p>
+            )}
           </span>
         </div>
       )}

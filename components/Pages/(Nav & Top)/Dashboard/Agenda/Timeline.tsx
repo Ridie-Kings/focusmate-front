@@ -6,8 +6,8 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import CalendarUtils from "@/lib/CalendarUtils";
 import { TimelineItem } from "@/components/Elements/Calendar/Timeline/TimelineCard";
-import { useModalStore } from "@/stores/modalStore";
 import { EventType } from "@/interfaces/Calendar/EventType";
+import Link from "next/link";
 
 interface TimelineProps {
   loadingEvents: boolean;
@@ -29,7 +29,6 @@ const doIntervalsOverlap = (item1: TimelineItem, item2: TimelineItem) => {
 export default function Timeline({ loadingEvents }: TimelineProps) {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const t = useTranslations("Dashboard.agenda.timeline");
-  const { setIsOpen } = useModalStore((state) => state.actions);
 
   useEffect(() => {
     if (!loadingEvents && isInitialLoading) setIsInitialLoading(false);
@@ -82,7 +81,7 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
                   <div
                     key={timeKey}
                     className={`gap-2 items-center ${
-                      items.length > 2 ? "flex" : "grid w-full"
+                      items.length > 2 ? "flex" : "grid grid-cols-2 w-full"
                     }`}
                   >
                     {items.slice(0, 2).map((item, index) => (
@@ -101,14 +100,9 @@ export default function Timeline({ loadingEvents }: TimelineProps) {
                       </div>
                     ))}
                     {items.length > 2 && (
-                      <p
-                        className="cursor-pointer"
-                        onClick={() =>
-                          setIsOpen({ text: "show-more", other: items })
-                        }
-                      >
+                      <Link className="cursor-pointer" href={"/calendar"}>
                         + {items.length - 2}
-                      </p>
+                      </Link>
                     )}
                   </div>
                 ))}

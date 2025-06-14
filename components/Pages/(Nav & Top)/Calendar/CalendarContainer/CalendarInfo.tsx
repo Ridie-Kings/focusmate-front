@@ -3,7 +3,7 @@ import NavInfo from "./CalendarInfo/NavInfo";
 import DayCalender from "./CalendarInfo/DayCalendar";
 import WeekCalendar from "./CalendarInfo/WeekCalendar";
 import MonthCalendar from "./CalendarInfo/MonthCalendar";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { NavTypeType } from "@/interfaces/Calendar/CalendarType";
 import LoadingState from "@/components/Elements/General/LoadingState";
 import { useLoadingCalendar } from "@/stores/dashboardStore";
@@ -17,7 +17,6 @@ export default function CalendarInfo({
 }) {
   const loadingCalendar = useLoadingCalendar();
 
-  const scrollCalendar = useRef<HTMLDivElement>(null);
 
   const renderCalenderType = () => {
     if (loadingCalendar) return <LoadingState />;
@@ -26,7 +25,7 @@ export default function CalendarInfo({
       case "Día":
         return <DayCalender />;
       case "Semana":
-        return <WeekCalendar scrollCalendar={scrollCalendar} />;
+        return <WeekCalendar />;
       case "Mes":
         return <MonthCalendar setNavType={setNavType} />;
       default:

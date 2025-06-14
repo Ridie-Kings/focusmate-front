@@ -131,11 +131,16 @@ const DayCalendarItem = ({
           const totalOverlapping = overlappingEvents.length;
           const width = `${98 / totalOverlapping}%`;
           const left = `${(100 / totalOverlapping) * eventIndex}%`;
+          const totalHeight = eventEndPosition - eventStartPosition;
 
           return (
             <div
               key={index}
-              className="absolute hover:shadow-lg text-black px-8 py-6 rounded-lg drop-shadow-xl flex flex-col place-content-between transition-all duration-300"
+              className={`absolute hover:shadow-lg text-black ${
+                totalHeight < 100
+                  ? "px-4 items-center justify-center"
+                  : "px-8 py-6"
+              }   rounded-lg drop-shadow-xl flex flex-col place-content-between transition-all duration-300`}
               onDoubleClick={() => {
                 if (calendarItem.type === "task") return;
                 setSelectedCalendarItem((prev) =>
@@ -188,8 +193,8 @@ const DayCalendarItem = ({
                       icon: <Pen size={20} />,
                       onClick: () =>
                         setIsOpen({
-                          text: "event",
-                          other: calendarItem,
+                          text: calendarItem.type,
+                          other: calendarItem.data,
                         }),
                     },
                     {
@@ -201,7 +206,7 @@ const DayCalendarItem = ({
                   ]}
                 />
               </div>
-              {calendarItem.type === "event" && (
+              {calendarItem.type === "event" && totalHeight > 100 && (
                 <div
                   style={{
                     backgroundColor: calendarItem.data.color,
@@ -209,21 +214,31 @@ const DayCalendarItem = ({
                   className="flex place-content-between items-center w-full z-10"
                 >
                   <span className={textColor}>
-                    {format(calendarData.startDate, "HH:mm aaa", {
-                      locale: es,
-                    })}{" "}
-                  </span>
-                  <p
-                    style={{ backgroundColor: darkerColor }}
-                    className="flex items-center py-0.5 px-2 text-sm rounded-full text-white"
-                  >
-                    {formatDuration(
+                    {format(
                       calendarData.startDate,
-                      calendarData.endDate
-                    )}
-                  </p>
+                      totalOverlapping < 3 ? "HH:mm aaa" : "HH:mm",
+                      {
+                        locale: es,
+                      }
+                    )}{" "}
+                  </span>
+                  {totalOverlapping < 3 && (
+                    <p
+                      style={{ backgroundColor: darkerColor }}
+                      className="flex items-center py-0.5 px-2 text-sm rounded-full text-white"
+                    >
+                      {formatDuration(
+                        calendarData.startDate,
+                        calendarData.endDate
+                      )}
+                    </p>
+                  )}
                   <span className={textColor}>
-                    {format(calendarData.endDate, "HH:mm aaa", { locale: es })}{" "}
+                    {format(
+                      calendarData.endDate,
+                      totalOverlapping < 3 ? "HH:mm aaa" : "HH:mm",
+                      { locale: es }
+                    )}{" "}
                   </span>
                 </div>
               )}

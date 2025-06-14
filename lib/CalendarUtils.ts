@@ -16,13 +16,15 @@ export default function CalendarUtils({
 
   const formatCalendar = useMemo(() => {
     const events: TimelineItem[] = calendar.events
-      .filter((event) =>
-        navType === "day"
-          ? isSameDay(new Date(event.startDate), date ?? new Date())
-          : navType === "week"
-          ? isSameWeek(new Date(event.startDate), date ?? new Date())
-          : isSameMonth(new Date(event.startDate), date ?? new Date())
-      )
+      .filter((event) => {
+        if (navType === "day") {
+          return isSameDay(new Date(event.startDate), date ?? new Date());
+        } else if (navType === "week") {
+          return isSameWeek(new Date(event.startDate), date ?? new Date());
+        } else {
+          return isSameMonth(new Date(event.startDate), date ?? new Date());
+        }
+      })
       .map((event) => ({
         type: "event",
         data: event,
@@ -46,7 +48,7 @@ export default function CalendarUtils({
     return [...events, ...tasks].sort(
       (a, b) => a.startDate.getTime() - b.startDate.getTime()
     );
-  }, [date, calendar.events, calendar.tasks]);
+  }, [date, calendar.events, calendar.tasks, navType]);
 
   return {
     formatCalendar,
