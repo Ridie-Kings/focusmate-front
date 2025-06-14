@@ -54,7 +54,7 @@ export default function CalendarPage() {
     <section className="flex sm:flex-row flex-col flex-1 max-h-screen sm:gap-6 p-6 overflow-hidden transition-all duration-300">
       <div className="w-full sm:w-1/3 xl:w-1/4 2xl:w-1/5 flex flex-col gap-2">
         <SmallCalendar date={date ?? new Date()} inView btn />
-        <ListEvents />
+        <ListEvents navType={navType} />
       </div>
       <CalendarInfo
         navType={navType}

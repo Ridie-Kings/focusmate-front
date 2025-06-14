@@ -18,7 +18,7 @@ const AddCard = ({ column, setCards }: AddCardProps) => {
       onClick={() =>
         setIsOpen({ text: "taskKanban", other: { column, setTasks: setCards } })
       }
-      className="sticky bottom-0 bg-white flex w-[95%] items-center gap-1.5 px-3 py-1.5 justify-center border border-primary-500 rounded-lg hover:bg-secondary-200 transition-all duration-300 text-primary-500 cursor-pointer"
+      className="bg-white flex w-[95%] items-center gap-1.5 px-3 py-1.5 justify-center border border-primary-500 rounded-lg hover:bg-secondary-200 transition-all duration-300 text-primary-500 cursor-pointer"
     >
       <span>{t("newTask")}</span>
       <Plus />

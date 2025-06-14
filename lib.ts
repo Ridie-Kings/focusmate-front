@@ -2,6 +2,8 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { apiClient } from "./services/api";
+import { getMyProfile } from "./services/Profile/getMyProfile";
+import { notFound } from "next/navigation";
 
 export async function getToken(): Promise<string | undefined> {
   const cookieStore = await cookies();
@@ -23,6 +25,14 @@ export async function updateSession(
     "/passwordrecovery",
   ]);
   const authOnlyPaths = new Set(["/login", "/register"]);
+
+  if (pathname === "/statsboard") {
+    const profile = await getMyProfile();
+
+    if (profile.res?.user.role !== "admin") {
+      return new NextResponse(null, { status: 404 });
+    }
+  }
 
   if (pathname === "/") {
     if (accessToken || refreshToken) {
