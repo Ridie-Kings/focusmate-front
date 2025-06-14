@@ -104,6 +104,13 @@
         "title": "Añade tu tarea",
         "noTaskSelected": "Ninguna tarea seleccionada",
         "noTaskAvailable": "No tienes tareas disponibles"
+      },
+      "history": {
+        "state": {
+          "finished": "Abortado",
+          "completed": "Completado",
+          "working": "En progreso"
+        }
       }
     },
     "habits": {

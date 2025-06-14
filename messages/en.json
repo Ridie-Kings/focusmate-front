@@ -105,6 +105,13 @@
         "title": "Add your task",
         "noTaskSelected": "No task selected",
         "noTaskAvailable": "No tasks available"
+      },
+      "history": {
+        "state": {
+          "finished": "Aborted",
+          "completed": "Completed",
+          "working": "In Progress"
+        }
       }
     },
     "habits": {

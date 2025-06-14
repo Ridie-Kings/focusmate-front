@@ -5,8 +5,11 @@ import { Calendar, Clock } from "lucide-react";
 import { Pomodoro } from "@/interfaces/websocket/WebSocketProvider";
 import LoadingStatus from "@/components/Elements/General/LoadingStatus";
 import HistoryTimerUtils from "@/lib/HistoryTimerUtils";
+import { useTranslations } from "next-intl";
 
 export default function HistoryTimer() {
+  const t = useTranslations("Dashboard.pomodoro.history.state");
+
   const [historyPomodoro, setHistoryPomodoro] = useState<Pomodoro[]>([]);
   const [groupedPomodoros, setGroupedPomodoros] = useState<
     Record<string, Pomodoro[]>
@@ -105,8 +108,16 @@ export default function HistoryTimer() {
                   </>
                 )}
                 {pomodoro.state && (
-                  <span className="ml-auto bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
-                    {pomodoro.state}
+                  <span
+                    className={`ml-auto   px-2 py-1 rounded-full text-xs ${
+                      pomodoro.state === "working"
+                        ? "bg-amber-100 text-amber-800"
+                        : pomodoro.state === "finished"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-green-100 text-green-800"
+                    }`}
+                  >
+                    {t(pomodoro.state)}
                   </span>
                 )}
                 {/* <Menu items={[]} /> */}
