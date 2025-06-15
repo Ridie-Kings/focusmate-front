@@ -23,3 +23,8 @@ export type AuthResponse = {
   success: boolean;
   message: string;
 };
+
+type das = {
+  mes: string;
+  items: number[];
+}[];

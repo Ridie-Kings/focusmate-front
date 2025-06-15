@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export default function StatsCard({
   item,
 }: {
-  item: { label: string; number: string; icon: ReactNode };
+  item: { label: string; number: number; icon: ReactNode };
 }) {
   return (
     <div className="flex-1 p-4 flex items-center place-content-between overflow-hidden relative gap-2.5 bg-primary-500 rounded-2xl text-white">

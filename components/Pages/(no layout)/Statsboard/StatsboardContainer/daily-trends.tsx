@@ -1,7 +1,7 @@
 "use client";
 
-import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
-import { GetStatsWeekByUserId } from "@/services/Dashboard/GetStatsWeekByUserId";
+import { GetGlobalInfo } from "@/services/MyStats/GetGlobalInfo";
+import { GetStatsWeekByUserId } from "@/services/MyStats/GetStatsWeekByUserId";
 import { useState, useEffect } from "react";
 import {
   BarChart,

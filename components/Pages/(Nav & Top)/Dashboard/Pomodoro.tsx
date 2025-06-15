@@ -3,6 +3,7 @@ import TemplateDashboard from "../../../Elements/General/TemplateBox";
 import { Clock, Timer as TimerIcon } from "lucide-react";
 import {
   useIsChronometer,
+  useIsType,
   useStartedElement,
   useTimerStore,
 } from "@/stores/timerStore";
@@ -17,6 +18,7 @@ export default function Pomodoro() {
   );
   const isChronometer = useIsChronometer();
   const startedElement = useStartedElement();
+  const isType = useIsType();
 
   const t = useTranslations("Dashboard.pomodoro");
 
@@ -31,7 +33,7 @@ export default function Pomodoro() {
   return (
     <TemplateDashboard
       grid={`col-span-3 row-span-3`}
-      title={t("title")}
+      title={isType}
       link="/pomodoro"
       id="pomodoro-component"
       items={[

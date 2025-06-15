@@ -40,16 +40,11 @@ export type PromiseGetPomodoroStats = {
 };
 
 export type PromiseGetTasksStats = {
+  totalTasks: number;
+  totalActualTasks: number;
   completedTasks: number;
   pendingTasks: number;
-  recentTasks: any;
-  tasksByCategory: {};
-  tasksByPriority: {
-    high: number;
-    medium: number;
-    low: number;
-  };
-  totalTasks: number;
+  droppedTasks: number;
 };
 
 export type PromiseGetUserActivityStats = {

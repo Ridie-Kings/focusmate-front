@@ -11,8 +11,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { CalendarDays, CheckCircle } from "lucide-react";
-import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
-import { GetStatsBoardInfoUser } from "@/services/Dashboard/GetStatsBoardInfoUser";
+import { GetGlobalInfo } from "@/services/MyStats/GetGlobalInfo";
+import { GetStatsBoardInfoUser } from "@/services/MyStats/GetStatsBoardInfoUser";
 
 interface HabitsOverviewProps {
   selectedUser?: string | null;

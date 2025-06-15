@@ -5,39 +5,38 @@ import {
   Hourglass,
   NotepadText,
 } from "lucide-react";
+
 import StatsCard from "./mystats/StatsCard";
+import { GetUserLogs } from "@/services/User/GetUserLogs";
 import StatsTask from "./mystats/StatsTask";
-import StatsPomodoro from "./mystats/StatsPomodoro";
-import { GetMyStats } from "@/services/Dashboard/GetMyStats";
-import StatsHabits from "./mystats/StatsHabits";
 
 export default async function MyStats() {
-  const info = await GetMyStats();
+  const userLogs = await GetUserLogs();
 
   const items = [
     {
       label: "Tareas Completadas",
-      number: info.data.tasks.completedTasks.toString(),
+      number: userLogs.res.Tasks.completedTasks,
       icon: <BookText />,
     },
     {
       label: "Ciclos Pomodoro",
-      number: info.data.pomodoro.completedPomodoros.toString(),
+      number: userLogs.res.Pomodoros.completedPomodoros,
       icon: <AlarmClockCheck />,
     },
     {
       label: "Habitos Completados",
-      number: info.data.habits.completedToday.toString(),
+      number: userLogs.res.Habits.activeHabits,
       icon: <NotepadText />,
     },
     {
       label: "Tiempo estudiado",
-      number: info.data.pomodoro.totalTimeFormatted.toString(),
+      number: userLogs.res.Pomodoros.totalTimeDone / 3600,
       icon: <Hourglass />,
     },
     {
       label: "Streaks",
-      number: info.data.userActivity.streak.toString(),
+      number: userLogs.res.Streak.currentStreak,
       icon: <FireExtinguisher />,
     },
   ];
@@ -51,10 +50,10 @@ export default async function MyStats() {
         ))}
       </div>
       <div className="w-full grid grid-cols-2 gap-6">
-        <StatsTask stats={info.data.tasks} />
-        <StatsPomodoro stats={info.data.pomodoro} />
+        <StatsTask stats={userLogs.res.Tasks} />
+        {/* <StatsPomodoro stats={info.data.pomodoro} /> */}
       </div>
-      <StatsHabits stats={info.data.habits} />
+      {/* <StatsHabits stats={info.data.habits} /> */}
     </main>
   );
 }

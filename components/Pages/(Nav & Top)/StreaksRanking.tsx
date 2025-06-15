@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Trophy, Flame, Crown } from "lucide-react";
-import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
+import { GetGlobalInfo } from "@/services/MyStats/GetGlobalInfo";
 import LoadingState from "@/components/Elements/General/LoadingState";
 
 interface UserStreak {

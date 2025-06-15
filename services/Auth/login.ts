@@ -24,7 +24,6 @@ export default async function login(
     }
 
     const res = await apiClient.post("auth/login", userData);
-    console.log(res);
 
     const { access_token, refresh_token } = res;
 

@@ -59,7 +59,6 @@ export default function ModalTask({
 
   const handleSendTask = async () => {
     const res = await addTask(task, addTaskToCalendar);
-    console.log(res, { addTaskToCalendar });
 
     if (res.success) handleClose();
     else setError(res.res as string);
@@ -182,13 +181,15 @@ export default function ModalTask({
             }
             icon={<Award />}
           />
-          <div className="flex items-center place-content-between gap-2">
-            <span>Agregar al calendario</span>
-            <Switch
-              value={addTaskToCalendar}
-              onChange={(e) => setAddTaskToCalendar(e)}
-            />
-          </div>
+          {!prevTask && (
+            <div className="flex items-center place-content-between gap-2">
+              <span>Agregar al calendario</span>
+              <Switch
+                value={addTaskToCalendar}
+                onChange={(e) => setAddTaskToCalendar(e)}
+              />
+            </div>
+          )}
         </div>
 
         <BtnSend

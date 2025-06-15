@@ -28,6 +28,7 @@ export default function CalendarItem({
 
   const backgroundColor =
     calendarData.color !== "" ? calendarData.color : "#000000";
+  const totalHeight = eventEndPosition - eventStartPosition;
 
   return (
     <div
@@ -62,21 +63,27 @@ export default function CalendarItem({
           ]}
         />
       </div>
-      {isEvent ? (
-        <div
-          style={{ backgroundColor }}
-          className={`${textColor} flex place-content-between w-full text-xs p-1 z-1`}
-        >
-          <span>{format(calendarData.startDate, "HH:mm")} </span>
-          <span>{format(calendarData.endDate, "HH:mm")} </span>
-        </div>
-      ) : (
-        <div
-          style={{ backgroundColor }}
-          className={`${textColor} flex w-full items-center justify-center text-xs p-1 z-1`}
-        >
-          <span>{format((calendarData as TaskType).dueDate, "HH:mm")} </span>
-        </div>
+      {totalHeight > 100 && (
+        <>
+          {isEvent ? (
+            <div
+              style={{ backgroundColor }}
+              className={`${textColor} flex place-content-between w-full text-xs p-1 z-1`}
+            >
+              <span>{format(calendarData.startDate, "HH:mm")} </span>
+              <span>{format(calendarData.endDate, "HH:mm")} </span>
+            </div>
+          ) : (
+            <div
+              style={{ backgroundColor }}
+              className={`${textColor} flex w-full items-center justify-center text-xs p-1 z-1`}
+            >
+              <span>
+                {format((calendarData as TaskType).dueDate, "HH:mm")}{" "}
+              </span>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

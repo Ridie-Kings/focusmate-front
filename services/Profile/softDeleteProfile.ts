@@ -7,9 +7,7 @@ export async function softDeleteProfile(): Promise<{
   res: string;
 }> {
   try {
-    const res = await apiClient.delete("users/delete/soft");
-
-    console.log(res);
+    await apiClient.delete("users/delete/soft");
 
     return { success: true, res: "Cuenta eliminada correctamente" };
   } catch (error: any) {

@@ -42,7 +42,7 @@ export default function AddTask() {
       className="mx-auto min-w-40 flex place-content-between items-center justify-end relative border-2 p-1 border-secondary-100 rounded-lg transition-all duration-300"
       id="add-task-component"
     >
-      <p className="text-sm text-gray-400 absolute left-1">
+      <p className="text-sm text-gray-400 absolute left-2">
         {selectedTask ? selectedTask.title : t("addTask.noTaskSelected")}
       </p>
       {selectedTask ? (

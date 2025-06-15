@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Calendar } from "lucide-react";
-import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
-import { GetStatsBoardInfoUser } from "@/services/Dashboard/GetStatsBoardInfoUser";
+import { GetGlobalInfo } from "@/services/MyStats/GetGlobalInfo";
+import { GetStatsBoardInfoUser } from "@/services/MyStats/GetStatsBoardInfoUser";
 
 interface UserActivityProps {
   selectedUser?: string | null;

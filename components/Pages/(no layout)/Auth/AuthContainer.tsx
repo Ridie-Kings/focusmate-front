@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import { AUTH_CONFIG } from "@/config/AuthConfig";
@@ -18,6 +18,8 @@ import LanguageSwitcher from "@/components/Elements/General/LanguageSwitcher";
 
 export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
   const t = useTranslations("Auth");
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   const config = AUTH_CONFIG[type];
 
@@ -63,20 +65,21 @@ export const AuthContainer = ({ type }: { type: keyof typeof AUTH_CONFIG }) => {
     message: "",
   });
 
+  console.log(redirect);
+
   useEffect(() => {
     if (!state.message) return;
 
     if (state.success) {
       localStorage.removeItem(storageKey);
-
-      router.push("/dashboard");
+      router.push(redirect ? "/" + redirect : "/dashboard");
     } else {
       setError(state.message);
       setTimeout(() => {
         setError("");
       }, 5000);
     }
-  }, [state, type, storageKey, router]);
+  }, [state, type, storageKey, router, redirect]);
 
   const handleSubmit = useCallback(
     (formData: FormData) => {

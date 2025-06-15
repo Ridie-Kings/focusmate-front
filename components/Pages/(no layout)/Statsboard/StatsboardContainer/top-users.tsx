@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Trophy } from "lucide-react";
-import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
+import { GetGlobalInfo } from "@/services/MyStats/GetGlobalInfo";
 
 interface TopUsersProps {
   selectedUser?: string | null;

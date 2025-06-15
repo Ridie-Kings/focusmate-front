@@ -15,7 +15,6 @@ export async function createTask({ task }: { task: tempTaskType }): Promise<{
       ...(task.endDate && { endDate: task.endDate.toISOString() }),
       ...(task.dueDate && { dueDate: task.dueDate.toISOString() }),
     };
-    console.log(newTask);
 
     const res = await apiClient.post("tasks", newTask);
 

@@ -188,18 +188,14 @@ export const useDashboardStore = create<DashboardStore>((set, get) => ({
         if (error) return { success: false, res: error };
 
         const res = await createTask({ task: newTask });
-        console.log("create task", res);
 
         if (!res.success)
           return handleApiError(res.res, "Error al crear la tarea");
 
         set((state) => ({ tasks: [...state.tasks, res.res] }));
-        console.log("addTaskto calendar", addToCalendar);
 
         if (addToCalendar) {
           const response = await addTaskToCalendar({ _id: res.res._id });
-
-          console.log("add task", response);
 
           if (!response.success)
             return handleApiError(

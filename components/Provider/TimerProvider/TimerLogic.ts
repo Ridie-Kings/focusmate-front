@@ -166,11 +166,16 @@ export function useTimer({
         }
 
         if (typeof document !== "undefined") {
-          document.title = `SherpApp | ${
-            timeUtils.secondsToTime(currentSeconds).hours
-          }:${timeUtils.secondsToTime(currentSeconds).min}:${
-            timeUtils.secondsToTime(currentSeconds).seg
-          }`;
+          document.title = `SherpApp | ${timeUtils
+            .secondsToTime(currentSeconds)
+            .hours.toString()
+            .padStart(2, "0")}:${timeUtils
+            .secondsToTime(currentSeconds)
+            .min.toString()
+            .padStart(2, "0")}:${timeUtils
+            .secondsToTime(currentSeconds)
+            .seg.toString()
+            .padStart(2, "0")}`;
         }
 
         setTime((prev) => ({

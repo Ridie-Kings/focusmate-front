@@ -25,7 +25,7 @@ export default function StatsTask({ stats }: { stats: PromiseGetTasksStats }) {
       <div className="flex flex-col w-full gap-4 text-sm text-primary-500">
         <div className="flex w-full px-4 place-content-between">
           <p>Tareas Incompletas</p>
-          <p>{stats.pendingTasks}</p>
+          <p>{stats.droppedTasks}</p>
         </div>
         <div className="flex w-full px-4 place-content-between">
           <p>Tareas Completadas</p>
@@ -33,7 +33,7 @@ export default function StatsTask({ stats }: { stats: PromiseGetTasksStats }) {
         </div>
         <div className="flex w-full px-4 place-content-between">
           <p>Creadas</p>
-          <p>{stats.totalTasks}</p>
+          <p>{stats.totalActualTasks}</p>
         </div>
         <div className="flex w-full px-4 place-content-between">
           <p>Pendientes</p>

@@ -50,9 +50,9 @@ export default function TemplateBox({
               style={{
                 width: 100 / items.length + "%",
                 transform: `translateX(${
-                  title === "Pomodoro"
+                  title === "pomodoro"
                     ? "0"
-                    : title === "Cronómetro" || title === "Chronometer"
+                    : title === "cronometro" || title === "Chronometer"
                     ? "100%"
                     : "200%"
                 })`,

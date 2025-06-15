@@ -1,12 +1,12 @@
 "use server";
 import { apiClient } from "../api";
 
-export async function GetMyStatsWeek(): Promise<{
+export async function GetMyStatsMonth(): Promise<{
   success: boolean;
   data: any;
 }> {
   try {
-    const res = await apiClient.get(`/dashboard/stats/week`);
+    const res = await apiClient.get(`user-logs/tasks/1-2025/6-2025`);
 
     return { success: true, data: res };
   } catch (error: any) {

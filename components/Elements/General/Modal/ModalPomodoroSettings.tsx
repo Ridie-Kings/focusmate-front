@@ -66,10 +66,6 @@ export default function ModalPomodoroSettings({
 
       if (res.success) {
         handleJoinPomodoro(res.res._id);
-        addToast({
-          type: "success",
-          message: "Pomodoro creado correctamente",
-        });
       }
     }
     setIsOpen({ text: "" });

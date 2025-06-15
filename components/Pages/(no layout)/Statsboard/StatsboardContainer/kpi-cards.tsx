@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Clock, CheckSquare, Calendar, Activity, Users } from "lucide-react";
-import { GetGlobalInfo } from "@/services/Dashboard/GetGlobalInfo";
-import { GetStatsBoardInfoUser } from "@/services/Dashboard/GetStatsBoardInfoUser";
+import { GetGlobalInfo } from "@/services/MyStats/GetGlobalInfo";
+import { GetStatsBoardInfoUser } from "@/services/MyStats/GetStatsBoardInfoUser";
 import LoadingState from "@/components/Elements/General/LoadingState";
 
 interface KpiCardsProps {

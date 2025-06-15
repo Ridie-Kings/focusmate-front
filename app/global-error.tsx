@@ -1,17 +1,18 @@
 "use client";
 import { logout } from "@/lib";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function GlobalError() {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleRemoveTokens = async () => {
       setTimeout(async () => {
         await logout();
-        router.push("/login");
+        router.push(`/login?redirect=${pathname.split("/")[1]}`);
         router.refresh();
       }, 1000);
     };
