@@ -35,7 +35,7 @@ export default function CyclesDots({
             )).reverse()
           : ""}
       </div>
-      <p className="text-xs text-gray-300">
+      <p className="text-xs text-gray-400">
         {totalCycles} {t("cycles")}
       </p>
     </div>

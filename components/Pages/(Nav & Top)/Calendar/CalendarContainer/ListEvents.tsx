@@ -41,13 +41,12 @@ export default function ListEvents({ navType }: { navType: NavTypeType }) {
     <ul className="flex flex-col gap-2 h-full w-full overflow-y-auto px-2">
       {navType === "Día" ? (
         <p className="text-xs">
-          Calendario del dia{" "}
+          Agenda del dia{" "}
           {format(new Date(), "EEEE d 'de' MMMM", { locale: es })}
         </p>
       ) : (
         <p className="text-xs">
-          Calendario de la semana de{" "}
-          {format(new Date(), "MMMM", { locale: es })}
+          Agenda de la semana de {format(new Date(), "MMMM", { locale: es })}
         </p>
       )}
 
